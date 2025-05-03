@@ -47,12 +47,33 @@ const Navbar = () => {
     const navRef = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
     const [isMounted, setIsMounted] = useState(false);
+    const [mobileView, setMobileView] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
+
+        // Check if the screen is mobile sized
+        const checkMobileView = () => {
+            setMobileView(window.innerWidth < 640);
+        };
+
+        checkMobileView();
+        window.addEventListener('resize', checkMobileView);
+
+        return () => {
+            window.removeEventListener('resize', checkMobileView);
+        };
     }, []);
 
+    // Filter out some items for mobile to prevent overcrowding
+    const displayNavItems = mobileView
+        ? navItems.filter(item =>
+            ['home', 'experience', 'projects', 'contact', 'separator-1', 'github', 'theme'].includes(item.id))
+        : navItems;
+
     const resetIcons = (index: number) => {
+        if (mobileView) return; // Skip animation on mobile
+
         const transformations = [
             { offset: -2 },
             { offset: -1 },
@@ -71,6 +92,8 @@ const Navbar = () => {
     };
 
     const focusIcon = (index: number) => {
+        if (mobileView) return; // Skip animation on mobile
+
         if (focusedIndex !== null) {
             resetIcons(focusedIndex);
         }
@@ -87,7 +110,7 @@ const Navbar = () => {
         transformations.forEach(({ offset, scale, translateY }) => {
             const itemIndex = index + offset;
             const item = itemsRef.current[itemIndex];
-            if (item && !navItems[itemIndex]?.type) {
+            if (item && !displayNavItems[itemIndex]?.type) {
                 item.style.transform = `scale(${scale}) translateY(${translateY}px)`;
             }
         });
@@ -110,24 +133,30 @@ const Navbar = () => {
     }
 
     return (
-        <div className="fixed bottom-2 sm:bottom-4 lg:bottom-8 2xl:bottom-12 left-1/2 transform -translate-x-1/2 z-50 w-[90%] sm:w-auto">
+        <div className="fixed bottom-2 sm:bottom-4 lg:bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-[95%]">
             <nav
                 ref={navRef}
-                className={`flex gap-1 sm:gap-2 lg:gap-3 p-2 sm:p-3 lg:p-4 rounded-full ${
+                className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-2 lg:gap-3'} p-1.5 sm:p-2 lg:p-4 rounded-full ${
                     isDarkTheme ? 'bg-neutral-900 shadow-lg shadow-black/30' : 'bg-white shadow-lg shadow-black/10'
                 } transition-all duration-300`}
             >
-                {navItems.map((item, index) =>
+                {displayNavItems.map((item, index) =>
                     item.type === 'separator' ? (
                         <div
                             key={item.id}
-                            className="w-px h-6 sm:h-7 lg:h-8 bg-gray-300 dark:bg-gray-700 my-auto mx-1 opacity-20"
+                            className={`w-px h-5 sm:h-6 lg:h-8 bg-gray-300 dark:bg-gray-700 my-auto mx-0.5 sm:mx-1 opacity-20 ${
+                                mobileView ? 'mx-0' : ''
+                            }`}
                         />
                     ) : (
                         <div
                             key={item.id}
                             ref={(el) => { itemsRef.current[index] = el; }}
-                            className="relative flex-1 flex-shrink-0 min-w-10 sm:min-w-12 lg:min-w-14 h-10 sm:h-12 lg:h-14 flex items-center justify-center rounded-full cursor-pointer origin-bottom transition-transform duration-200"
+                            className={`relative flex items-center justify-center rounded-full cursor-pointer origin-bottom transition-transform duration-200 ${
+                                mobileView
+                                    ? 'w-10 h-10'
+                                    : 'w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12'
+                            }`}
                             onMouseEnter={() => {
                                 setShowTooltip(item.id);
                                 focusIcon(index);
@@ -150,7 +179,11 @@ const Navbar = () => {
                                     href={item.path}
                                     className="flex items-center justify-center w-full h-full"
                                 >
-                                    <div className={`w-8 sm:w-9 lg:w-10 h-8 sm:h-9 lg:h-10 flex items-center justify-center rounded-full ${
+                                    <div className={`flex items-center justify-center rounded-full ${
+                                        mobileView
+                                            ? 'w-8 h-8'
+                                            : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9'
+                                        } ${
                                         isDarkTheme ? 'bg-white/10 hover:bg-white/20' : 'bg-black/5 hover:bg-black/10'
                                     } transition-all duration-200`}>
                                         {item.icon && (
@@ -158,14 +191,18 @@ const Navbar = () => {
                                                 className={`${
                                                     isDarkTheme ? 'text-gray-300 group-hover:text-white' : 'text-gray-600 group-hover:text-black'
                                                 } transition-colors duration-200`}
-                                                size={24}
+                                                size={mobileView ? 20 : 22}
                                             />
                                         )}
                                     </div>
                                 </Link>
                             ) : (
                                 <div
-                                    className={`w-8 sm:w-9 lg:w-10 h-8 sm:h-9 lg:h-10 flex items-center justify-center rounded-full ${
+                                    className={`flex items-center justify-center rounded-full ${
+                                        mobileView
+                                            ? 'w-8 h-8'
+                                            : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9'
+                                        } ${
                                         isDarkTheme ? 'bg-white/10 hover:bg-white/20' : 'bg-black/5 hover:bg-black/10'
                                     } transition-all duration-200`}
                                 >
@@ -173,12 +210,12 @@ const Navbar = () => {
                                         isDarkTheme ? (
                                             <Sun
                                                 className="text-gray-300 transition-colors duration-200"
-                                                size={24}
+                                                size={mobileView ? 20 : 22}
                                             />
                                         ) : (
                                             <Moon
                                                 className="text-gray-600 transition-colors duration-200"
-                                                size={24}
+                                                size={mobileView ? 20 : 22}
                                             />
                                         )
                                     ) : item.icon ? (
@@ -186,12 +223,12 @@ const Navbar = () => {
                                             className={`${
                                                 isDarkTheme ? 'text-gray-300' : 'text-gray-600'
                                             } transition-colors duration-200`}
-                                            size={24}
+                                            size={mobileView ? 20 : 22}
                                         />
                                     ) : null}
                                 </div>
                             )}
-                            {showTooltip === item.id && (
+                            {showTooltip === item.id && !mobileView && (
                                 <div
                                     className={`absolute top-[-1.75rem] sm:top-[-2rem] lg:top-[-2.5rem] left-1/2 transform -translate-x-1/2 ${
                                         isDarkTheme ? 'bg-neutral-800 text-white' : 'bg-white text-black'

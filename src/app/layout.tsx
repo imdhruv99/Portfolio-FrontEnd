@@ -1,6 +1,9 @@
+import './globals.css';
+import '../components/Navbar/Navbar.css';
+
 import type { Metadata } from 'next';
 import { Cormorant_Garamond } from 'next/font/google';
-import './globals.css';
+
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Navbar from '@/components/Navbar';
 
