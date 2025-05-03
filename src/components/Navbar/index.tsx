@@ -42,12 +42,13 @@ const navItems: NavItem[] = [
 const Navbar = () => {
     const [showTooltip, setShowTooltip] = useState<string>('');
     const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-    const { theme, setTheme } = useTheme();
-    const isDarkTheme = theme === 'dark';
+    const { theme, setTheme, resolvedTheme } = useTheme();
+    const isDarkTheme = theme === 'dark' || (theme === 'system' && resolvedTheme === 'dark');
     const navRef = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
     const [isMounted, setIsMounted] = useState(false);
     const [mobileView, setMobileView] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
@@ -125,9 +126,23 @@ const Navbar = () => {
     };
 
     const toggleTheme = () => {
-        setTheme(isDarkTheme ? 'light' : 'dark');
+        // Prevent multiple clicks during animation
+        if (isAnimating) return;
+
+        setIsAnimating(true);
+
+        // Toggle theme - explicitly set to light or dark, avoiding system theme
+        const newTheme = isDarkTheme ? 'light' : 'dark';
+        console.log(`Changing theme from ${theme} to ${newTheme}`);
+        setTheme(newTheme);
+
+        // Reset animation state after animation completes
+        setTimeout(() => {
+            setIsAnimating(false);
+        }, 500); // Match the animation duration
     };
 
+    // Don't render anything during SSR
     if (!isMounted) {
         return null;
     }
@@ -136,15 +151,15 @@ const Navbar = () => {
         <div className="fixed bottom-2 sm:bottom-4 lg:bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-[95%]">
             <nav
                 ref={navRef}
-                className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-2 lg:gap-3'} p-1.5 sm:p-2 lg:p-4 rounded-full ${
-                    isDarkTheme ? 'bg-neutral-900 shadow-lg shadow-black/30' : 'bg-white shadow-lg shadow-black/10'
-                } transition-all duration-300`}
+                className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-2 lg:gap-3'} p-1.5 sm:p-2 lg:p-4 rounded-full theme-transition ${
+                    isDarkTheme ? 'bg-slate-800 shadow-lg shadow-black/30' : 'bg-slate-100 shadow-lg shadow-black/10'
+                }`}
             >
                 {displayNavItems.map((item, index) =>
                     item.type === 'separator' ? (
                         <div
                             key={item.id}
-                            className={`w-px h-5 sm:h-6 lg:h-8 bg-gray-300 dark:bg-gray-700 my-auto mx-0.5 sm:mx-1 opacity-20 ${
+                            className={`w-px h-5 sm:h-6 lg:h-8 bg-gray-300 dark:bg-gray-700 my-auto mx-0.5 sm:mx-1 opacity-20 theme-transition ${
                                 mobileView ? 'mx-0' : ''
                             }`}
                         />
@@ -179,18 +194,18 @@ const Navbar = () => {
                                     href={item.path}
                                     className="flex items-center justify-center w-full h-full"
                                 >
-                                    <div className={`flex items-center justify-center rounded-full ${
+                                    <div className={`flex items-center justify-center rounded-full theme-transition ${
                                         mobileView
                                             ? 'w-8 h-8'
                                             : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9'
                                         } ${
-                                        isDarkTheme ? 'bg-white/10 hover:bg-white/20' : 'bg-black/5 hover:bg-black/10'
-                                    } transition-all duration-200`}>
+                                        isDarkTheme ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+                                    }`}>
                                         {item.icon && (
                                             <item.icon
-                                                className={`${
-                                                    isDarkTheme ? 'text-gray-300 group-hover:text-white' : 'text-gray-600 group-hover:text-black'
-                                                } transition-colors duration-200`}
+                                                className={`theme-transition ${
+                                                    isDarkTheme ? 'text-slate-200' : 'text-slate-700'
+                                                }`}
                                                 size={mobileView ? 20 : 22}
                                             />
                                         )}
@@ -198,31 +213,33 @@ const Navbar = () => {
                                 </Link>
                             ) : (
                                 <div
-                                    className={`flex items-center justify-center rounded-full ${
+                                    className={`flex items-center justify-center rounded-full theme-transition ${
                                         mobileView
                                             ? 'w-8 h-8'
                                             : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9'
                                         } ${
-                                        isDarkTheme ? 'bg-white/10 hover:bg-white/20' : 'bg-black/5 hover:bg-black/10'
-                                    } transition-all duration-200`}
+                                        isDarkTheme ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+                                    }`}
                                 >
                                     {item.id === 'theme' ? (
-                                        isDarkTheme ? (
-                                            <Sun
-                                                className="text-gray-300 transition-colors duration-200"
-                                                size={mobileView ? 20 : 22}
-                                            />
-                                        ) : (
-                                            <Moon
-                                                className="text-gray-600 transition-colors duration-200"
-                                                size={mobileView ? 20 : 22}
-                                            />
-                                        )
+                                        <div className={isAnimating ? 'theme-toggle-animation' : ''}>
+                                            {isDarkTheme ? (
+                                                <Sun
+                                                    className="text-slate-200 theme-transition"
+                                                    size={mobileView ? 20 : 22}
+                                                />
+                                            ) : (
+                                                <Moon
+                                                    className="text-slate-700 theme-transition"
+                                                    size={mobileView ? 20 : 22}
+                                                />
+                                            )}
+                                        </div>
                                     ) : item.icon ? (
                                         <item.icon
-                                            className={`${
-                                                isDarkTheme ? 'text-gray-300' : 'text-gray-600'
-                                            } transition-colors duration-200`}
+                                            className={`theme-transition ${
+                                                isDarkTheme ? 'text-slate-200' : 'text-slate-700'
+                                            }`}
                                             size={mobileView ? 20 : 22}
                                         />
                                     ) : null}
@@ -230,8 +247,8 @@ const Navbar = () => {
                             )}
                             {showTooltip === item.id && !mobileView && (
                                 <div
-                                    className={`absolute top-[-1.75rem] sm:top-[-2rem] lg:top-[-2.5rem] left-1/2 transform -translate-x-1/2 ${
-                                        isDarkTheme ? 'bg-neutral-800 text-white' : 'bg-white text-black'
+                                    className={`absolute top-[-1.75rem] sm:top-[-2rem] lg:top-[-2.5rem] left-1/2 transform -translate-x-1/2 theme-transition ${
+                                        isDarkTheme ? 'bg-slate-700 text-slate-200' : 'bg-slate-200 text-slate-800'
                                     } px-2 py-1 rounded-lg text-xs sm:text-sm whitespace-nowrap shadow-lg pointer-events-none
                                     font-serif animate-fadeIn z-50`}
                                     style={{

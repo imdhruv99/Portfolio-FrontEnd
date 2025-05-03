@@ -1,8 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5f7fa;
+  --foreground: #334155;
+
+  --theme-transition-duration: 0.5s;
+  --theme-transition-timing: ease;
+}
+
+html[data-theme="dark"] {
+  --background: #1e293b;
+  --foreground: #e2e8f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]),
+  html[data-theme="system"] {
+    --background: #1e293b;
+    --foreground: #e2e8f0;
+  }
 }
 
 @theme inline {
@@ -13,19 +29,39 @@
   --font-serif: var(--font-cormorant);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 .animate-fadeIn {
   animation: fadeIn 0.2s ease-in-out forwards;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
+              color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+.theme-transition {
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
+              color var(--theme-transition-duration) var(--theme-transition-timing),
+              border-color var(--theme-transition-duration) var(--theme-transition-timing),
+              box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+@keyframes themeToggleAnimation {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.theme-toggle-animation {
+  animation: themeToggleAnimation 0.5s ease-in-out forwards;
 }

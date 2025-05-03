@@ -26,12 +26,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${cormorantGaramond.variable} font-sans`}>
+      <body className={`${cormorantGaramond.variable} font-sans theme-transition`}>
         <ThemeProvider
-          attribute="class"
+          attribute="data-theme"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
+          disableTransitionOnChange={false}
+          themes={['light', 'dark', 'system']}
         >
           {children}
           <Navbar />
