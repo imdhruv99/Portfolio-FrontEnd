@@ -36,7 +36,7 @@ const navItems: NavItem[] = [
     { id: 'instagram', label: 'Instagram', icon: InstagramLogo, path: 'https://www.instagram.com/_imdhruv99_/' },
     { id: 'linkedin', label: 'LinkedIn', icon: LinkedinLogo, path: 'https://www.linkedin.com/in/imdhruv99/' },
     { id: 'separator-2', label: 'separator-2', type: 'separator', icon: null, path: null },
-    { id: 'theme', label: 'Toggle Theme', icon: null, path: null },
+    { id: 'theme', label: 'Theme', icon: null, path: null },
 ];
 
 const Navbar = () => {
@@ -152,7 +152,7 @@ const Navbar = () => {
             <nav
                 ref={navRef}
                 className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-1.5 lg:gap-2'} p-1 sm:p-1.5 lg:p-3 rounded-full theme-transition ${
-                    isDarkTheme ? 'bg-gray-900 shadow-lg shadow-black/30' : 'bg-white shadow-lg shadow-black/15'
+                    isDarkTheme ? 'bg-neutral-800 shadow-md shadow-neutral-900/40' : 'bg-white shadow-md shadow-neutral-300'
                 }`}
             >
                 {displayNavItems.map((item, index) =>
@@ -199,12 +199,12 @@ const Navbar = () => {
                                             ? 'w-7 h-7'
                                             : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
                                         } ${
-                                        isDarkTheme ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
+                                        isDarkTheme ? 'bg-neutral-600 hover:bg-neutral-700' : 'bg-gray-100 hover:bg-gray-200'
                                     }`}>
                                         {item.icon && (
                                             <item.icon
                                                 className={`theme-transition ${
-                                                    isDarkTheme ? 'text-gray-200' : 'text-gray-700'
+                                                    isDarkTheme ? 'text-white-200' : 'text-gray-700'
                                                 }`}
                                                 size={mobileView ? 18 : 20}
                                             />
@@ -218,7 +218,7 @@ const Navbar = () => {
                                             ? 'w-7 h-7'
                                             : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
                                         } ${
-                                        isDarkTheme ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
+                                        isDarkTheme ? 'bg-neutral-600 hover:bg-neutral-700' : 'bg-gray-100 hover:bg-gray-200'
                                     }`}
                                 >
                                     {item.id === 'theme' ? (
@@ -248,7 +248,7 @@ const Navbar = () => {
                             {showTooltip === item.id && !mobileView && (
                                 <div
                                     className={`absolute top-[-1.5rem] sm:top-[-1.5rem] lg:top-[-1.75rem] left-1/2 transform -translate-x-1/2 theme-transition ${
-                                        isDarkTheme ? 'bg-gray-800 text-gray-200' : 'bg-gray-100 text-gray-800'
+                                        isDarkTheme ? 'bg-neutral-600 hover:bg-neutral-700' : 'bg-gray-100 text-gray-800'
                                     } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none
                                     font-serif animate-fadeIn z-50`}
                                     style={{
