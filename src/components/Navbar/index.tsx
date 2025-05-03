@@ -69,7 +69,7 @@ const Navbar = () => {
     // Filter out some items for mobile to prevent overcrowding
     const displayNavItems = mobileView
         ? navItems.filter(item =>
-            ['home', 'experience', 'projects', 'contact', 'separator-1', 'github', 'theme'].includes(item.id))
+            ['home', 'experience', 'projects', 'education', 'contact', 'separator-1', 'github', 'linkedin', 'instagram', 'separator-2','theme'].includes(item.id))
         : navItems;
 
     const resetIcons = (index: number) => {
@@ -152,14 +152,14 @@ const Navbar = () => {
             <nav
                 ref={navRef}
                 className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-1.5 lg:gap-2'} p-1 sm:p-1.5 lg:p-3 rounded-full theme-transition ${
-                    isDarkTheme ? 'bg-gray-900 shadow-lg shadow-black/30' : 'bg-slate-100 shadow-lg shadow-black/10'
+                    isDarkTheme ? 'bg-gray-900 shadow-lg shadow-black/30' : 'bg-white shadow-lg shadow-black/15'
                 }`}
             >
                 {displayNavItems.map((item, index) =>
                     item.type === 'separator' ? (
                         <div
                             key={item.id}
-                            className={`w-px h-4 sm:h-5 lg:h-6 bg-gray-300 dark:bg-gray-500 my-auto mx-0.5 sm:mx-0.5 opacity-30 theme-transition ${
+                            className={`w-px h-4 sm:h-5 lg:h-6 bg-gray-400 dark:bg-gray-600 my-auto mx-0.5 sm:mx-0.5 opacity-40 theme-transition ${
                                 mobileView ? 'mx-0' : ''
                             }`}
                         />
@@ -199,12 +199,12 @@ const Navbar = () => {
                                             ? 'w-7 h-7'
                                             : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
                                         } ${
-                                        isDarkTheme ? 'bg-gray-800 hover:bg-gray-700' : 'bg-slate-200 hover:bg-slate-300'
+                                        isDarkTheme ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
                                     }`}>
                                         {item.icon && (
                                             <item.icon
                                                 className={`theme-transition ${
-                                                    isDarkTheme ? 'text-gray-200' : 'text-slate-700'
+                                                    isDarkTheme ? 'text-gray-200' : 'text-gray-700'
                                                 }`}
                                                 size={mobileView ? 18 : 20}
                                             />
@@ -218,7 +218,7 @@ const Navbar = () => {
                                             ? 'w-7 h-7'
                                             : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
                                         } ${
-                                        isDarkTheme ? 'bg-gray-800 hover:bg-gray-700' : 'bg-slate-200 hover:bg-slate-300'
+                                        isDarkTheme ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
                                     }`}
                                 >
                                     {item.id === 'theme' ? (
@@ -230,7 +230,7 @@ const Navbar = () => {
                                                 />
                                             ) : (
                                                 <Moon
-                                                    className="text-slate-700 theme-transition"
+                                                    className="text-gray-700 theme-transition"
                                                     size={mobileView ? 18 : 20}
                                                 />
                                             )}
@@ -238,7 +238,7 @@ const Navbar = () => {
                                     ) : item.icon ? (
                                         <item.icon
                                             className={`theme-transition ${
-                                                isDarkTheme ? 'text-gray-200' : 'text-slate-700'
+                                                isDarkTheme ? 'text-gray-200' : 'text-gray-700'
                                             }`}
                                             size={mobileView ? 18 : 20}
                                         />
@@ -247,13 +247,14 @@ const Navbar = () => {
                             )}
                             {showTooltip === item.id && !mobileView && (
                                 <div
-                                    className={`absolute top-[-1.75rem] sm:top-[-1.75rem] lg:top-[-2rem] left-1/2 transform -translate-x-1/2 theme-transition ${
-                                        isDarkTheme ? 'bg-gray-800 text-gray-200' : 'bg-slate-200 text-slate-800'
-                                    } px-2 py-1 rounded-lg text-xs whitespace-nowrap shadow-lg pointer-events-none
+                                    className={`absolute top-[-1.5rem] sm:top-[-1.5rem] lg:top-[-1.75rem] left-1/2 transform -translate-x-1/2 theme-transition ${
+                                        isDarkTheme ? 'bg-gray-800 text-gray-200' : 'bg-gray-100 text-gray-800'
+                                    } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none
                                     font-serif animate-fadeIn z-50`}
                                     style={{
                                         animation: 'fadeIn 0.2s ease-in-out forwards',
-                                        fontFamily: 'Cormorant Garamond, serif'
+                                        fontFamily: 'Cormorant Garamond, serif',
+                                        fontSize: '0.7rem'
                                     }}
                                 >
                                     {item.label}
