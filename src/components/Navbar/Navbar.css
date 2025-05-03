@@ -24,13 +24,13 @@ to {
 
 @media screen and (max-width: 639px) {
 .navbar-mobile-fix {
-    padding: 4px !important;
-    gap: 2px !important;
+    padding: 3px !important;
+    gap: 1px !important;
 }
 
 .navbar-mobile-fix .nav-icon {
-    width: 28px !important;
-    height: 28px !important;
+    width: 26px !important;
+    height: 26px !important;
 }
 }
 

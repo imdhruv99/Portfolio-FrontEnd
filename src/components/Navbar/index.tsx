@@ -148,18 +148,18 @@ const Navbar = () => {
     }
 
     return (
-        <div className="fixed bottom-2 sm:bottom-4 lg:bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-[95%]">
+        <div className="fixed bottom-2 sm:bottom-3 lg:bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-[95%]">
             <nav
                 ref={navRef}
-                className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-2 lg:gap-3'} p-1.5 sm:p-2 lg:p-4 rounded-full theme-transition ${
-                    isDarkTheme ? 'bg-slate-800 shadow-lg shadow-black/30' : 'bg-slate-100 shadow-lg shadow-black/10'
+                className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-1.5 lg:gap-2'} p-1 sm:p-1.5 lg:p-3 rounded-full theme-transition ${
+                    isDarkTheme ? 'bg-gray-900 shadow-lg shadow-black/30' : 'bg-slate-100 shadow-lg shadow-black/10'
                 }`}
             >
                 {displayNavItems.map((item, index) =>
                     item.type === 'separator' ? (
                         <div
                             key={item.id}
-                            className={`w-px h-5 sm:h-6 lg:h-8 bg-gray-300 dark:bg-gray-700 my-auto mx-0.5 sm:mx-1 opacity-20 theme-transition ${
+                            className={`w-px h-4 sm:h-5 lg:h-6 bg-gray-300 dark:bg-gray-500 my-auto mx-0.5 sm:mx-0.5 opacity-30 theme-transition ${
                                 mobileView ? 'mx-0' : ''
                             }`}
                         />
@@ -169,8 +169,8 @@ const Navbar = () => {
                             ref={(el) => { itemsRef.current[index] = el; }}
                             className={`relative flex items-center justify-center rounded-full cursor-pointer origin-bottom transition-transform duration-200 ${
                                 mobileView
-                                    ? 'w-10 h-10'
-                                    : 'w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12'
+                                    ? 'w-8 h-8'
+                                    : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10'
                             }`}
                             onMouseEnter={() => {
                                 setShowTooltip(item.id);
@@ -196,17 +196,17 @@ const Navbar = () => {
                                 >
                                     <div className={`flex items-center justify-center rounded-full theme-transition ${
                                         mobileView
-                                            ? 'w-8 h-8'
-                                            : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9'
+                                            ? 'w-7 h-7'
+                                            : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
                                         } ${
-                                        isDarkTheme ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+                                        isDarkTheme ? 'bg-gray-800 hover:bg-gray-700' : 'bg-slate-200 hover:bg-slate-300'
                                     }`}>
                                         {item.icon && (
                                             <item.icon
                                                 className={`theme-transition ${
-                                                    isDarkTheme ? 'text-slate-200' : 'text-slate-700'
+                                                    isDarkTheme ? 'text-gray-200' : 'text-slate-700'
                                                 }`}
-                                                size={mobileView ? 20 : 22}
+                                                size={mobileView ? 18 : 20}
                                             />
                                         )}
                                     </div>
@@ -215,41 +215,41 @@ const Navbar = () => {
                                 <div
                                     className={`flex items-center justify-center rounded-full theme-transition ${
                                         mobileView
-                                            ? 'w-8 h-8'
-                                            : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9'
+                                            ? 'w-7 h-7'
+                                            : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
                                         } ${
-                                        isDarkTheme ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+                                        isDarkTheme ? 'bg-gray-800 hover:bg-gray-700' : 'bg-slate-200 hover:bg-slate-300'
                                     }`}
                                 >
                                     {item.id === 'theme' ? (
                                         <div className={isAnimating ? 'theme-toggle-animation' : ''}>
                                             {isDarkTheme ? (
                                                 <Sun
-                                                    className="text-slate-200 theme-transition"
-                                                    size={mobileView ? 20 : 22}
+                                                    className="text-gray-200 theme-transition"
+                                                    size={mobileView ? 18 : 20}
                                                 />
                                             ) : (
                                                 <Moon
                                                     className="text-slate-700 theme-transition"
-                                                    size={mobileView ? 20 : 22}
+                                                    size={mobileView ? 18 : 20}
                                                 />
                                             )}
                                         </div>
                                     ) : item.icon ? (
                                         <item.icon
                                             className={`theme-transition ${
-                                                isDarkTheme ? 'text-slate-200' : 'text-slate-700'
+                                                isDarkTheme ? 'text-gray-200' : 'text-slate-700'
                                             }`}
-                                            size={mobileView ? 20 : 22}
+                                            size={mobileView ? 18 : 20}
                                         />
                                     ) : null}
                                 </div>
                             )}
                             {showTooltip === item.id && !mobileView && (
                                 <div
-                                    className={`absolute top-[-1.75rem] sm:top-[-2rem] lg:top-[-2.5rem] left-1/2 transform -translate-x-1/2 theme-transition ${
-                                        isDarkTheme ? 'bg-slate-700 text-slate-200' : 'bg-slate-200 text-slate-800'
-                                    } px-2 py-1 rounded-lg text-xs sm:text-sm whitespace-nowrap shadow-lg pointer-events-none
+                                    className={`absolute top-[-1.75rem] sm:top-[-1.75rem] lg:top-[-2rem] left-1/2 transform -translate-x-1/2 theme-transition ${
+                                        isDarkTheme ? 'bg-gray-800 text-gray-200' : 'bg-slate-200 text-slate-800'
+                                    } px-2 py-1 rounded-lg text-xs whitespace-nowrap shadow-lg pointer-events-none
                                     font-serif animate-fadeIn z-50`}
                                     style={{
                                         animation: 'fadeIn 0.2s ease-in-out forwards',

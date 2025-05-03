@@ -2,21 +2,21 @@
 
 :root {
   --background: #f5f7fa;
-  --foreground: #334155;
+  --foreground: #3c3d3f;
 
   --theme-transition-duration: 0.5s;
   --theme-transition-timing: ease;
 }
 
 html[data-theme="dark"] {
-  --background: #1e293b;
-  --foreground: #e2e8f0;
+  --background: #202020;
+  --foreground: #d7dce2;
 }
 
 @media (prefers-color-scheme: dark) {
   html:not([data-theme]),
   html[data-theme="system"] {
-    --background: #1e293b;
+    --background: #121212;
     --foreground: #e2e8f0;
   }
 }
