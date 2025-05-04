@@ -1,6 +1,22 @@
-export default function Main() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] theme-transition">
-    </div>
-  );
+'use client';
+
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import Home from '@/components/Home';
+
+export default function ProjectsPage() {
+    const { theme, resolvedTheme } = useTheme();
+    const [isMounted, setIsMounted] = useState(false);
+    const isDarkTheme =
+        theme === 'dark' || (theme === 'system' && resolvedTheme === 'dark');
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return null;
+    }
+
+    return <Home isDarkTheme={isDarkTheme} />;
 }
