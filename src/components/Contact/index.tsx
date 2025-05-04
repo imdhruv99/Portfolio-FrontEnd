@@ -58,10 +58,10 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
                                 href="https://linkedin.com/in/imdhruv99"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center p-5 bg-white/25 dark:bg-black/25 backdrop-blur-lg rounded-lg border border-white/10 dark:border-white/5 transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg hover:border-white/20 dark:hover:border-white/15 overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group"
+                                className="flex items-center p-5 bg-white/70 dark:bg-black/25 backdrop-blur-lg rounded-lg border border-white/30 dark:border-white/5 transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg hover:border-white/40 dark:hover:border-white/15 overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group"
                             >
                                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
-                                <div className="flex-shrink-0 mr-4 flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 dark:bg-white/5 transition-all duration-300 group-hover:bg-white/15 dark:group-hover:bg-white/10 group-hover:scale-105">
+                                <div className="flex-shrink-0 mr-4 flex items-center justify-center w-11 h-11 rounded-xl bg-white/30 dark:bg-white/5 transition-all duration-300 group-hover:bg-white/15 dark:group-hover:bg-white/10 group-hover:scale-105">
                                     <LinkedinLogo weight="bold" size={24} />
                                 </div>
                                 <div className="flex-grow text-left">
@@ -80,10 +80,10 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
                             {/* Email */}
                             <a
                                 href="mailto:dhruvprajapati.work@gmail.com"
-                                className="flex items-center p-5 bg-white/25 dark:bg-black/25 backdrop-blur-lg rounded-lg border border-white/10 dark:border-white/5 transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg hover:border-white/20 dark:hover:border-white/15 overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group"
+                                className="flex items-center p-5 bg-white/70 dark:bg-black/25 backdrop-blur-lg rounded-lg border border-white/30 dark:border-white/5 transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg hover:border-white/40 dark:hover:border-white/15 overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group"
                             >
                                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
-                                <div className="flex-shrink-0 mr-4 flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 dark:bg-white/5 transition-all duration-300 group-hover:bg-white/15 dark:group-hover:bg-white/10 group-hover:scale-105">
+                                <div className="flex-shrink-0 mr-4 flex items-center justify-center w-11 h-11 rounded-xl bg-white/30 dark:bg-white/5 transition-all duration-300 group-hover:bg-white/15 dark:group-hover:bg-white/10 group-hover:scale-105">
                                     <Mailbox weight="bold" size={24} />
                                 </div>
                                 <div className="flex-grow text-left">
@@ -104,10 +104,10 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
                                 href="https://github.com/imdhruv99"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center p-5 bg-white/25 dark:bg-black/25 backdrop-blur-lg rounded-lg border border-white/10 dark:border-white/5 transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg hover:border-white/20 dark:hover:border-white/15 overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group"
+                                className="flex items-center p-5 bg-white/70 dark:bg-black/25 backdrop-blur-lg rounded-lg border border-white/30 dark:border-white/5 transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg hover:border-white/40 dark:hover:border-white/15 overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group"
                             >
                                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
-                                <div className="flex-shrink-0 mr-4 flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 dark:bg-white/5 transition-all duration-300 group-hover:bg-white/15 dark:group-hover:bg-white/10 group-hover:scale-105">
+                                <div className="flex-shrink-0 mr-4 flex items-center justify-center w-11 h-11 rounded-xl bg-white/30 dark:bg-white/5 transition-all duration-300 group-hover:bg-white/15 dark:group-hover:bg-white/10 group-hover:scale-105">
                                     <GithubLogo weight="bold" size={24} />
                                 </div>
                                 <div className="flex-grow text-left">
