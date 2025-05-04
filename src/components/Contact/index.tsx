@@ -36,20 +36,20 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
                 </div>
             </div>
 
-            {/* Content Card - Centered */}
-            <section className="relative z-10 w-full flex items-center justify-center px-4">
-                <div className="flex items-center justify-center min-h-screen w-full">
-                    <div className="w-full max-w-3xl mx-auto bg-gradient-to-br from-white/10 to-white/20 dark:from-black/10 dark:to-black/20 backdrop-blur-sm rounded-xl shadow-lg border border-white/10 dark:border-black/10 p-6 md:p-8 lg:p-10 animate-fadeIn">
+            {/* Content Card - Centered with Flex */}
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+                <div className="w-full max-w-3xl mx-auto px-4">
+                    <div className="bg-gradient-to-br from-white to-white/20 dark:from-black/10 dark:to-black/20 backdrop-blur-sm rounded-xl shadow-lg border border-white/10 dark:border-black/10 p-6 md:p-8 lg:p-10">
                         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-center mb-6 relative">
-                            <span className="inline-block mx-auto">
+                            <span className="block w-fit mx-auto">
                                 Get in Touch
                                 <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-0.5 bg-current opacity-30 mt-2"></span>
                             </span>
                         </h1>
-
                         <p className="text-base md:text-lg text-center opacity-80 max-w-2xl mx-auto mb-8 font-serif leading-relaxed">
-                            Let's build something amazing together. I'm always
-                            open to new opportunities and exciting projects.
+                            Let&apos;s build something amazing together.
+                            I&apos;m always open to new opportunities and
+                            exciting projects.
                         </p>
 
                         <div className="flex flex-col md:flex-row justify-center gap-5 mb-8 w-full">
@@ -69,7 +69,7 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
                                         LinkedIn
                                     </h3>
                                     <p className="text-sm opacity-70">
-                                        Let's connect professionally
+                                        Let&apos;s connect professionally
                                     </p>
                                 </div>
                                 <div className="flex-shrink-0 opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
@@ -126,15 +126,15 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
 
                         <div className="mt-8 max-w-2xl mx-auto leading-relaxed text-base opacity-85 pt-4 border-t border-white/10 dark:border-white/5">
                             <p className="text-center px-2 sm:px-4">
-                                Whether you're looking to collaborate on a
+                                Whether you&apos;re looking to collaborate on a
                                 project, have a question about my work, or just
-                                want to say hello, I'd love to hear from you. I
-                                typically respond within 24-48 hours.
+                                want to say hello, I&apos;d love to hear from
+                                you. I typically respond within 24-48 hours.
                             </p>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
     );
 };
