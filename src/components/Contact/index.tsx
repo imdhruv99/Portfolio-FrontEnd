@@ -39,7 +39,7 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
             {/* Content Card - Centered with Flex */}
             <div className="absolute inset-0 flex items-center justify-center z-10">
                 <div className="w-full max-w-3xl mx-auto px-4">
-                    <div className="bg-gradient-to-br from-white to-white/20 dark:from-black/10 dark:to-black/20 backdrop-blur-sm rounded-xl shadow-lg border border-white/10 dark:border-black/10 p-6 md:p-8 lg:p-10">
+                    <div className="backdrop-blur-sm rounded-xl shadow-lg border border-white/10 dark:border-black/10 p-6 md:p-8 lg:p-10">
                         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-center mb-6 relative">
                             <span className="block w-fit mx-auto">
                                 Get in Touch
