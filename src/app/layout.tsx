@@ -8,36 +8,38 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import Navbar from '@/components/Navbar';
 
 const cormorantGaramond = Cormorant_Garamond({
-  subsets: ['latin'],
-  variable: '--font-cormorant',
-  display: 'swap',
-  weight: '400',
+    subsets: ['latin'],
+    variable: '--font-cormorant',
+    display: 'swap',
+    weight: '400',
 });
 
 export const metadata: Metadata = {
-  title: 'Portfolio - Dhruv Prajapati',
-  description: 'Portfolio of Dhruv Prajapati',
+    title: 'Portfolio - Dhruv Prajapati',
+    description: 'Portfolio of Dhruv Prajapati',
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${cormorantGaramond.variable} font-sans theme-transition`}>
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange={false}
-          themes={['light', 'dark', 'system']}
-        >
-          {children}
-          <Navbar />
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en" suppressHydrationWarning>
+            <body
+                className={`${cormorantGaramond.variable} font-sans theme-transition`}
+            >
+                <ThemeProvider
+                    attribute="data-theme"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange={false}
+                    themes={['light', 'dark', 'system']}
+                >
+                    {children}
+                    <Navbar />
+                </ThemeProvider>
+            </body>
+        </html>
+    );
 }

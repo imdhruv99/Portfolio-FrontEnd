@@ -1,67 +1,73 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #f5f7fa;
-  --foreground: #3c3d3f;
+    --background: #f5f7fa;
+    --foreground: #3c3d3f;
 
-  --theme-transition-duration: 0.5s;
-  --theme-transition-timing: ease;
+    --theme-transition-duration: 0.5s;
+    --theme-transition-timing: ease;
 }
 
-html[data-theme="dark"] {
-  --background: #0f0f0f;
-  --foreground: #f0f0f0;
+html[data-theme='dark'] {
+    --background: #0f0f0f;
+    --foreground: #f0f0f0;
 }
 
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme]),
-  html[data-theme="system"] {
-    --background: #121212;
-    --foreground: #e2e8f0;
-  }
+    html:not([data-theme]),
+    html[data-theme='system'] {
+        --background: #121212;
+        --foreground: #e2e8f0;
+    }
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-cormorant);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+    --font-serif: var(--font-cormorant);
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.2s ease-in-out forwards;
+    animation: fadeIn 0.2s ease-in-out forwards;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
-              color var(--theme-transition-duration) var(--theme-transition-timing);
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+    transition:
+        background-color var(--theme-transition-duration)
+            var(--theme-transition-timing),
+        color var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
 .theme-transition {
-  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
-              color var(--theme-transition-duration) var(--theme-transition-timing),
-              border-color var(--theme-transition-duration) var(--theme-transition-timing),
-              box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
+    transition:
+        background-color var(--theme-transition-duration)
+            var(--theme-transition-timing),
+        color var(--theme-transition-duration) var(--theme-transition-timing),
+        border-color var(--theme-transition-duration)
+            var(--theme-transition-timing),
+        box-shadow var(--theme-transition-duration)
+            var(--theme-transition-timing);
 }
 
 @keyframes themeToggleAnimation {
-  0% {
-    transform: scale(0.95);
-    opacity: 0.7;
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+    0% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .theme-toggle-animation {
-  animation: themeToggleAnimation 0.5s ease-in-out forwards;
+    animation: themeToggleAnimation 0.5s ease-in-out forwards;
 }
