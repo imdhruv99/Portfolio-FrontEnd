@@ -15,7 +15,6 @@ const Projects = ({ isDarkTheme }: ProjectsProps) => {
                     Projects
                 </div>
             </section>
-            {/* { Timeline Section } */}
         </div>
     );
 };

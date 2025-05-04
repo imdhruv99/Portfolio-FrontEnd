@@ -15,7 +15,6 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
                     Contact
                 </div>
             </section>
-            {/* { Timeline Section } */}
         </div>
     );
 };

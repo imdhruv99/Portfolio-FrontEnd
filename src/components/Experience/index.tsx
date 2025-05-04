@@ -7,7 +7,6 @@ interface ExperienceProps {
 }
 
 const Experience = ({ isDarkTheme }: ExperienceProps) => {
-
     return (
         <div className="experience-container">
             {/* Hero Section*/}
@@ -16,7 +15,6 @@ const Experience = ({ isDarkTheme }: ExperienceProps) => {
                     Experience
                 </div>
             </section>
-            {/* { Timeline Section } */}
         </div>
     );
 };
