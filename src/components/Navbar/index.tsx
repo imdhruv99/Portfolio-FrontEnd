@@ -152,7 +152,7 @@ const Navbar = () => {
             <nav
                 ref={navRef}
                 className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-1.5 lg:gap-2'} p-1 sm:p-1.5 lg:p-3 rounded-full theme-transition ${
-                    isDarkTheme ? 'bg-neutral-800 shadow-md shadow-neutral-900/40' : 'bg-white shadow-md shadow-neutral-300'
+                    isDarkTheme ? 'bg-neutral-900 shadow-md shadow-neutral-900/40' : 'bg-white shadow-md shadow-neutral-300'
                 }`}
             >
                 {displayNavItems.map((item, index) =>
@@ -199,7 +199,7 @@ const Navbar = () => {
                                             ? 'w-7 h-7'
                                             : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
                                         } ${
-                                        isDarkTheme ? 'bg-neutral-600 hover:bg-neutral-700' : 'bg-gray-100 hover:bg-gray-200'
+                                        isDarkTheme ? 'bg-neutral-700 hover:bg-neutral-700' : 'bg-gray-100 hover:bg-gray-200'
                                     }`}>
                                         {item.icon && (
                                             <item.icon
@@ -218,7 +218,7 @@ const Navbar = () => {
                                             ? 'w-7 h-7'
                                             : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
                                         } ${
-                                        isDarkTheme ? 'bg-neutral-600 hover:bg-neutral-700' : 'bg-gray-100 hover:bg-gray-200'
+                                        isDarkTheme ? 'bg-neutral-700 hover:bg-neutral-700' : 'bg-gray-100 hover:bg-gray-200'
                                     }`}
                                 >
                                     {item.id === 'theme' ? (

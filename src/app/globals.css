@@ -9,8 +9,8 @@
 }
 
 html[data-theme="dark"] {
-  --background: #1a1a1a;
-  --foreground: #d7dce2;
+  --background: #0f0f0f;
+  --foreground: #f0f0f0;
 }
 
 @media (prefers-color-scheme: dark) {
