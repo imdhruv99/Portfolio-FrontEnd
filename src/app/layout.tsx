@@ -4,7 +4,7 @@ import '../components/Navbar/Navbar.css';
 import type { Metadata } from 'next';
 import { Cormorant_Garamond } from 'next/font/google';
 
-import { ThemeProvider } from '@/components/ThemeProvider';
+import { ThemeProvider, ThemeScript } from '@/components/ThemeProvider';
 import Navbar from '@/components/Navbar';
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -26,6 +26,13 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
+            <head>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: ThemeScript
+                    }}
+                />
+            </head>
             <body
                 className={`${cormorantGaramond.variable} font-sans theme-transition`}
             >
@@ -33,7 +40,7 @@ export default function RootLayout({
                     attribute="data-theme"
                     defaultTheme="system"
                     enableSystem
-                    disableTransitionOnChange={false}
+                    disableTransitionOnChange={false} // We'll handle transitions manually
                     themes={['light', 'dark', 'system']}
                 >
                     {children}
