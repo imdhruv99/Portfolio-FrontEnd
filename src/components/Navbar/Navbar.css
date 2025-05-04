@@ -1,12 +1,12 @@
 @keyframes fadeIn {
-from {
-    opacity: 0;
-    transform: translate(-50%, 0.5rem);
-}
-to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-}
+    from {
+        opacity: 0;
+        transform: translate(-50%, 0.5rem);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
 }
 
 .animate-fadeIn {
@@ -23,15 +23,15 @@ to {
 }
 
 @media screen and (max-width: 639px) {
-.navbar-mobile-fix {
-    padding: 3px !important;
-    gap: 1px !important;
-}
+    .navbar-mobile-fix {
+        padding: 3px !important;
+        gap: 1px !important;
+    }
 
-.navbar-mobile-fix .nav-icon {
-    width: 26px !important;
-    height: 26px !important;
-}
+    .navbar-mobile-fix .nav-icon {
+        width: 26px !important;
+        height: 26px !important;
+    }
 }
 
 /* Theme toggle ripple effect */

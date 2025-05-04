@@ -1,30 +1,30 @@
 /** @type {import('tailwindcss').Config} */
 const config = {
-    darkMode: ["class"],
+    darkMode: ['class'],
     content: [
-        "./pages/**/*.{ts,tsx}",
-        "./components/**/*.{ts,tsx}",
-        "./app/**/*.{ts,tsx}",
-        "./src/**/*.{ts,tsx}",
+        './pages/**/*.{ts,tsx}',
+        './components/**/*.{ts,tsx}',
+        './app/**/*.{ts,tsx}',
+        './src/**/*.{ts,tsx}',
     ],
-    darkMode: ["class", '[data-theme="dark"]'],
+    darkMode: ['class', '[data-theme="dark"]'],
     theme: {
         extend: {
             fontFamily: {
-                serif: ["var(--font-cormorant)", "serif"],
+                serif: ['var(--font-cormorant)', 'serif'],
             },
             fontSize: {
-                "2xs": "0.625rem",
+                '2xs': '0.625rem',
             },
             screens: {
-                "3xl": "1920px",
-                "4xl": "2560px",
-                "5xl": "3840px",
+                '3xl': '1920px',
+                '4xl': '2560px',
+                '5xl': '3840px',
             },
             backgroundImage: {
-                "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-                "gradient-conic":
-                    "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                'gradient-conic':
+                    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
             },
         },
     },

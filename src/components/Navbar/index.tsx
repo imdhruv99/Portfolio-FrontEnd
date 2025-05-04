@@ -14,8 +14,8 @@ import {
     InstagramLogo,
     LinkedinLogo,
     Sun,
-    Moon
-  } from '@phosphor-icons/react';
+    Moon,
+} from '@phosphor-icons/react';
 
 type NavItem = {
     id: string;
@@ -27,15 +27,57 @@ type NavItem = {
 
 const navItems: NavItem[] = [
     { id: 'home', label: 'Home', icon: HouseSimple, path: '/' },
-    { id: 'experience', label: 'Experience', icon: Briefcase, path: '/experience' },
-    { id: 'education', label: 'Education', icon: GraduationCap, path: '/education' },
-    { id: 'projects', label: 'Projects', icon: LightbulbFilament, path: '/projects' },
+    {
+        id: 'experience',
+        label: 'Experience',
+        icon: Briefcase,
+        path: '/experience',
+    },
+    {
+        id: 'education',
+        label: 'Education',
+        icon: GraduationCap,
+        path: '/education',
+    },
+    {
+        id: 'projects',
+        label: 'Projects',
+        icon: LightbulbFilament,
+        path: '/projects',
+    },
     { id: 'contact', label: 'Contact', icon: UserCircle, path: '/contact' },
-    { id: 'separator-1', label: 'separator-1', type: 'separator', icon: null, path: null },
-    { id: 'github', label: 'Github', icon: GithubLogo, path: 'https://github.com/imdhruv99' },
-    { id: 'instagram', label: 'Instagram', icon: InstagramLogo, path: 'https://www.instagram.com/_imdhruv99_/' },
-    { id: 'linkedin', label: 'LinkedIn', icon: LinkedinLogo, path: 'https://www.linkedin.com/in/imdhruv99/' },
-    { id: 'separator-2', label: 'separator-2', type: 'separator', icon: null, path: null },
+    {
+        id: 'separator-1',
+        label: 'separator-1',
+        type: 'separator',
+        icon: null,
+        path: null,
+    },
+    {
+        id: 'github',
+        label: 'Github',
+        icon: GithubLogo,
+        path: 'https://github.com/imdhruv99',
+    },
+    {
+        id: 'instagram',
+        label: 'Instagram',
+        icon: InstagramLogo,
+        path: 'https://www.instagram.com/_imdhruv99_/',
+    },
+    {
+        id: 'linkedin',
+        label: 'LinkedIn',
+        icon: LinkedinLogo,
+        path: 'https://www.linkedin.com/in/imdhruv99/',
+    },
+    {
+        id: 'separator-2',
+        label: 'separator-2',
+        type: 'separator',
+        icon: null,
+        path: null,
+    },
     { id: 'theme', label: 'Theme', icon: null, path: null },
 ];
 
@@ -43,7 +85,8 @@ const Navbar = () => {
     const [showTooltip, setShowTooltip] = useState<string>('');
     const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
     const { theme, setTheme, resolvedTheme } = useTheme();
-    const isDarkTheme = theme === 'dark' || (theme === 'system' && resolvedTheme === 'dark');
+    const isDarkTheme =
+        theme === 'dark' || (theme === 'system' && resolvedTheme === 'dark');
     const navRef = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
     const [isMounted, setIsMounted] = useState(false);
@@ -68,8 +111,21 @@ const Navbar = () => {
 
     // Filter out some items for mobile to prevent overcrowding
     const displayNavItems = mobileView
-        ? navItems.filter(item =>
-            ['home', 'experience', 'projects', 'education', 'contact', 'separator-1', 'github', 'linkedin', 'instagram', 'separator-2','theme'].includes(item.id))
+        ? navItems.filter((item) =>
+              [
+                  'home',
+                  'experience',
+                  'projects',
+                  'education',
+                  'contact',
+                  'separator-1',
+                  'github',
+                  'linkedin',
+                  'instagram',
+                  'separator-2',
+                  'theme',
+              ].includes(item.id),
+          )
         : navItems;
 
     const resetIcons = (index: number) => {
@@ -152,7 +208,9 @@ const Navbar = () => {
             <nav
                 ref={navRef}
                 className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-1.5 lg:gap-2'} p-1 sm:p-1.5 lg:p-3 rounded-full theme-transition ${
-                    isDarkTheme ? 'bg-neutral-900 shadow-md shadow-neutral-900/40' : 'bg-white shadow-md shadow-neutral-300'
+                    isDarkTheme
+                        ? 'bg-neutral-900 shadow-md shadow-neutral-900/40'
+                        : 'bg-white shadow-md shadow-neutral-300'
                 }`}
             >
                 {displayNavItems.map((item, index) =>
@@ -166,7 +224,9 @@ const Navbar = () => {
                     ) : (
                         <div
                             key={item.id}
-                            ref={(el) => { itemsRef.current[index] = el; }}
+                            ref={(el) => {
+                                itemsRef.current[index] = el;
+                            }}
                             className={`relative flex items-center justify-center rounded-full cursor-pointer origin-bottom transition-transform duration-200 ${
                                 mobileView
                                     ? 'w-8 h-8'
@@ -194,17 +254,23 @@ const Navbar = () => {
                                     href={item.path}
                                     className="flex items-center justify-center w-full h-full"
                                 >
-                                    <div className={`flex items-center justify-center rounded-full theme-transition ${
-                                        mobileView
-                                            ? 'w-7 h-7'
-                                            : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
+                                    <div
+                                        className={`flex items-center justify-center rounded-full theme-transition ${
+                                            mobileView
+                                                ? 'w-7 h-7'
+                                                : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
                                         } ${
-                                        isDarkTheme ? 'bg-neutral-700 hover:bg-neutral-700' : 'bg-gray-100 hover:bg-gray-200'
-                                    }`}>
+                                            isDarkTheme
+                                                ? 'bg-neutral-700 hover:bg-neutral-700'
+                                                : 'bg-gray-100 hover:bg-gray-200'
+                                        }`}
+                                    >
                                         {item.icon && (
                                             <item.icon
                                                 className={`theme-transition ${
-                                                    isDarkTheme ? 'text-white-200' : 'text-gray-700'
+                                                    isDarkTheme
+                                                        ? 'text-white-200'
+                                                        : 'text-gray-700'
                                                 }`}
                                                 size={mobileView ? 18 : 20}
                                             />
@@ -217,12 +283,20 @@ const Navbar = () => {
                                         mobileView
                                             ? 'w-7 h-7'
                                             : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
-                                        } ${
-                                        isDarkTheme ? 'bg-neutral-700 hover:bg-neutral-700' : 'bg-gray-100 hover:bg-gray-200'
+                                    } ${
+                                        isDarkTheme
+                                            ? 'bg-neutral-700 hover:bg-neutral-700'
+                                            : 'bg-gray-100 hover:bg-gray-200'
                                     }`}
                                 >
                                     {item.id === 'theme' ? (
-                                        <div className={isAnimating ? 'theme-toggle-animation' : ''}>
+                                        <div
+                                            className={
+                                                isAnimating
+                                                    ? 'theme-toggle-animation'
+                                                    : ''
+                                            }
+                                        >
                                             {isDarkTheme ? (
                                                 <Sun
                                                     className="text-gray-200 theme-transition"
@@ -238,7 +312,9 @@ const Navbar = () => {
                                     ) : item.icon ? (
                                         <item.icon
                                             className={`theme-transition ${
-                                                isDarkTheme ? 'text-gray-200' : 'text-gray-700'
+                                                isDarkTheme
+                                                    ? 'text-gray-200'
+                                                    : 'text-gray-700'
                                             }`}
                                             size={mobileView ? 18 : 20}
                                         />
@@ -248,13 +324,16 @@ const Navbar = () => {
                             {showTooltip === item.id && !mobileView && (
                                 <div
                                     className={`absolute top-[-1.5rem] sm:top-[-1.5rem] lg:top-[-1.75rem] left-1/2 transform -translate-x-1/2 theme-transition ${
-                                        isDarkTheme ? 'bg-neutral-600 hover:bg-neutral-700' : 'bg-gray-100 text-gray-800'
+                                        isDarkTheme
+                                            ? 'bg-neutral-600 hover:bg-neutral-700'
+                                            : 'bg-gray-100 text-gray-800'
                                     } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none
                                     font-serif animate-fadeIn z-50`}
                                     style={{
-                                        animation: 'fadeIn 0.2s ease-in-out forwards',
+                                        animation:
+                                            'fadeIn 0.2s ease-in-out forwards',
                                         fontFamily: 'Cormorant Garamond, serif',
-                                        fontSize: '0.7rem'
+                                        fontSize: '0.7rem',
                                     }}
                                 >
                                     {item.label}

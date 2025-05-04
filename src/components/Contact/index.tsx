@@ -1,13 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
     GithubLogo,
     Mailbox,
     LinkedinLogo,
     ArrowUpRight,
 } from '@phosphor-icons/react';
-import './Contact.css';
 
 interface ContactProps {
     isDarkTheme: boolean;
@@ -23,93 +22,111 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
     if (!mounted) return null;
 
     return (
-        <div className="contact-container">
-            {/* Hero Section with Background Text Effect */}
-            <section className="contact-hero theme-transition">
-                <div className="contact-background-text theme-transition">
-                    Contact
-                </div>
-                <div className="contact-background-text contact-second-text theme-transition">
-                    Connect
-                </div>
-                <div className="contact-background-text contact-third-text theme-transition">
-                    Collaborate
+        <div className="w-full min-h-screen overflow-hidden relative">
+            <section className="relative h-screen w-full flex justify-center items-center px-4">
+                <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden pointer-events-none">
+                    <div className="text-[20vw] md:text-[18vw] lg:text-[15vw] font-serif font-extrabold opacity-[0.07] text-center leading-none transition-colors">
+                        Contact
+                    </div>
+                    <div className="text-[18vw] md:text-[16vw] lg:text-[13vw] font-serif font-extrabold opacity-[0.05] text-center leading-none mt-[1.8vw] transition-colors">
+                        Connect
+                    </div>
+                    <div className="text-[16vw] md:text-[14vw] lg:text-[11vw] font-serif font-extrabold opacity-[0.03] text-center leading-none mt-[2.2vw] transition-colors">
+                        Collaborate
+                    </div>
                 </div>
 
-                <div className="contact-overlay-content animate-fadeIn">
-                    <h1 className="contact-title">Get in Touch</h1>
-                    <p className="contact-subtitle">
+                <div className="relative z-10 w-full max-w-3xl mx-auto bg-gradient-to-br from-white/10 to-white/30 dark:from-black/10 dark:to-black/30 backdrop-blur-md rounded-xl shadow-lg border border-white/10 dark:border-black/10 p-6 md:p-8 lg:p-10 animate-fadeIn">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-center mb-6 relative inline-block mx-auto">
+                        Get in Touch
+                        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-0.5 bg-current opacity-30 mt-2"></span>
+                    </h1>
+
+                    <p className="text-base md:text-lg text-center opacity-80 max-w-2xl mx-auto mb-8 font-serif leading-relaxed">
                         Let's build something amazing together. I'm always open
                         to new opportunities and exciting projects.
                     </p>
 
-                    {/* Contact Cards Container */}
-                    <div className="contact-cards-container">
-                        {/* LinkedIn Card */}
+                    <div className="flex flex-col md:flex-row justify-center gap-5 mb-8 w-full">
                         <a
                             href="https://linkedin.com/in/imdhruv99"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="contact-card linkedin-card"
+                            className="flex items-center p-5 bg-white/25 dark:bg-black/25 backdrop-blur-lg rounded-lg border border-white/10 dark:border-white/5 transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg hover:border-white/20 dark:hover:border-white/15 overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group"
                         >
-                            <div className="contact-card-icon">
+                            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
+
+                            <div className="flex-shrink-0 mr-4 flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 dark:bg-white/5 transition-all duration-300 group-hover:bg-white/15 dark:group-hover:bg-white/10 group-hover:scale-105">
                                 <LinkedinLogo weight="bold" size={24} />
                             </div>
-                            <div className="contact-card-content">
-                                <h3 className="contact-card-title">LinkedIn</h3>
-                                <p className="contact-card-description">
+
+                            <div className="flex-grow text-left">
+                                <h3 className="font-semibold text-lg font-serif mb-1">
+                                    LinkedIn
+                                </h3>
+                                <p className="text-sm opacity-70">
                                     Let's connect professionally
                                 </p>
                             </div>
-                            <div className="contact-card-arrow">
+
+                            <div className="flex-shrink-0 opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
                                 <ArrowUpRight weight="bold" size={20} />
                             </div>
                         </a>
 
-                        {/* Email Card */}
                         <a
                             href="mailto:dhruvprajapati.work@gmail.com"
-                            className="contact-card email-card"
+                            className="flex items-center p-5 bg-white/25 dark:bg-black/25 backdrop-blur-lg rounded-lg border border-white/10 dark:border-white/5 transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg hover:border-white/20 dark:hover:border-white/15 overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group"
                         >
-                            <div className="contact-card-icon">
+                            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
+
+                            <div className="flex-shrink-0 mr-4 flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 dark:bg-white/5 transition-all duration-300 group-hover:bg-white/15 dark:group-hover:bg-white/10 group-hover:scale-105">
                                 <Mailbox weight="bold" size={24} />
                             </div>
-                            <div className="contact-card-content">
-                                <h3 className="contact-card-title">Email</h3>
-                                <p className="contact-card-description">
+
+                            <div className="flex-grow text-left">
+                                <h3 className="font-semibold text-lg font-serif mb-1">
+                                    Email
+                                </h3>
+                                <p className="text-sm opacity-70">
                                     Send me a message directly
                                 </p>
                             </div>
-                            <div className="contact-card-arrow">
+
+                            <div className="flex-shrink-0 opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
                                 <ArrowUpRight weight="bold" size={20} />
                             </div>
                         </a>
 
-                        {/* GitHub Card */}
                         <a
                             href="https://github.com/imdhruv99"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="contact-card github-card"
+                            className="flex items-center p-5 bg-white/25 dark:bg-black/25 backdrop-blur-lg rounded-lg border border-white/10 dark:border-white/5 transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg hover:border-white/20 dark:hover:border-white/15 overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group"
                         >
-                            <div className="contact-card-icon">
+                            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
+
+                            <div className="flex-shrink-0 mr-4 flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 dark:bg-white/5 transition-all duration-300 group-hover:bg-white/15 dark:group-hover:bg-white/10 group-hover:scale-105">
                                 <GithubLogo weight="bold" size={24} />
                             </div>
-                            <div className="contact-card-content">
-                                <h3 className="contact-card-title">GitHub</h3>
-                                <p className="contact-card-description">
+
+                            <div className="flex-grow text-left">
+                                <h3 className="font-semibold text-lg font-serif mb-1">
+                                    GitHub
+                                </h3>
+                                <p className="text-sm opacity-70">
                                     Explore my code repositories
                                 </p>
                             </div>
-                            <div className="contact-card-arrow">
+
+                            <div className="flex-shrink-0 opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
                                 <ArrowUpRight weight="bold" size={20} />
                             </div>
                         </a>
                     </div>
 
-                    {/* Message Section */}
-                    <div className="contact-message">
-                        <p>
+                    <div className="mt-8 max-w-2xl mx-auto leading-relaxed text-base opacity-85 pt-4 border-t border-white/10 dark:border-white/5">
+                        <p className="text-center px-2 sm:px-4">
                             Whether you're looking to collaborate on a project,
                             have a question about my work, or just want to say
                             hello, I'd love to hear from you. I typically
