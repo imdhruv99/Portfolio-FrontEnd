@@ -1,6 +1,7 @@
 'use client';
 
 import './Contact.css';
+import PixelShader from '../PixelShader';
 
 interface ContactProps {
     isDarkTheme: boolean;
@@ -15,7 +16,7 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
                     Contact
                 </div>
             </section>
-            {/* { Timeline Section } */}
+            <PixelShader isDarkTheme={isDarkTheme} />
         </div>
     );
 };
