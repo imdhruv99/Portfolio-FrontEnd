@@ -11,7 +11,7 @@ const contactData: ContactData[] = [
     {
         id: 1,
         platform: 'Email',
-        url: 'mailto:yourname@example.com',
+        url: 'mailto:dpdhruvprajapati@gmail.com',
         icon: 'mail',
         color: '#EA4335',
     },
