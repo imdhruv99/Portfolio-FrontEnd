@@ -18,9 +18,5 @@ export default function ContactPage() {
         return null;
     }
 
-    return (
-        <div className="min-h-screen pt-8 pb-20 theme-transition">
-            <Contact isDarkTheme={isDarkTheme} />
-        </div>
-    );
+    return <Contact isDarkTheme={isDarkTheme} />;
 }

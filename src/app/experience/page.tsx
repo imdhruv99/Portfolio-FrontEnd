@@ -18,9 +18,5 @@ export default function ExperiencePage() {
         return null;
     }
 
-    return (
-        <div className="min-h-screen pt-8 pb-20 theme-transition">
-            <Experience isDarkTheme={isDarkTheme} />
-        </div>
-    );
+    return <Experience isDarkTheme={isDarkTheme} />;
 }

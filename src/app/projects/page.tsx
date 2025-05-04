@@ -18,9 +18,5 @@ export default function ProjectsPage() {
         return null;
     }
 
-    return (
-        <div className="min-h-screen pt-8 pb-20 theme-transition">
-            <Projects isDarkTheme={isDarkTheme} />
-        </div>
-    );
+    return <Projects isDarkTheme={isDarkTheme} />;
 }

@@ -18,9 +18,5 @@ export default function EducationPage() {
         return null;
     }
 
-    return (
-        <div className="min-h-screen pt-8 pb-20 theme-transition">
-            <Education isDarkTheme={isDarkTheme} />
-        </div>
-    );
+    return <Education isDarkTheme={isDarkTheme} />;
 }
