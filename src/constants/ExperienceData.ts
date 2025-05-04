@@ -1,7 +1,7 @@
 type ExperienceData = {
     id: number;
     company: string;
-    role: string;
+    designation: string;
     period: string;
     description: string[];
     technologies: string[];
@@ -12,7 +12,7 @@ const experienceData: ExperienceData[] = [
     {
         id: 1,
         company: 'Juniper Networks',
-        role: 'DevOps Engineer 4',
+        designation: 'DevOps Engineer 4',
         period: 'Dec 2023 - Present',
         description: [
             'Led the implementation of cloud-native DevOps solutions integrating Kubernetes, Prometheus, and Airflow.',
@@ -44,7 +44,7 @@ const experienceData: ExperienceData[] = [
     {
         id: 2,
         company: 'IBM',
-        role: 'Senior DevOps Engineer',
+        designation: 'Senior DevOps Engineer',
         period: 'Aug 2023 - Dec 2023',
         description: [
             'Upgraded production Kubernetes clusters and aligned dev environments for consistency.',
@@ -65,7 +65,7 @@ const experienceData: ExperienceData[] = [
     {
         id: 3,
         company: 'Crest Data Systems',
-        role: 'Senior DevOps Engineer - Tesco Splunk Automation',
+        designation: 'Senior DevOps Engineer - Tesco Splunk Automation',
         period: 'Sep 2022 - Jul 2023',
         description: [
             'Built scalable infrastructure using Azure, Kubernetes, and Terraform.',
@@ -89,7 +89,7 @@ const experienceData: ExperienceData[] = [
     {
         id: 4,
         company: 'Crest Data Systems',
-        role: 'DevSecOps Engineer - LinkedIn Cloud Security',
+        designation: 'DevSecOps Engineer - LinkedIn Cloud Security',
         period: 'Jun 2021 - Aug 2022',
         description: [
             'Managed security-as-code for cloud infrastructure using Azure, PowerShell, and Python.',
@@ -111,7 +111,7 @@ const experienceData: ExperienceData[] = [
     {
         id: 5,
         company: 'Crest Data Systems',
-        role: 'Site Reliability Engineer - Splunk',
+        designation: 'Site Reliability Engineer - Splunk',
         period: 'Jun 2020 - Jun 2021',
         description: [
             'Automated CI/CD pipelines for Splunk apps across distributed architectures.',
@@ -132,7 +132,7 @@ const experienceData: ExperienceData[] = [
     {
         id: 6,
         company: 'Softvan Pvt Ltd',
-        role: 'Software Engineer-Intern',
+        designation: 'Software Engineer-Intern',
         period: 'Dec 2019 - Jun 2020',
         description: [
             'Developed JWT/OAuth2 authentication systems using Flask and Python.',
@@ -154,7 +154,7 @@ const experienceData: ExperienceData[] = [
     {
         id: 7,
         company: 'Softvan Pvt Ltd',
-        role: 'Software Engineer-Trainee',
+        designation: 'Software Engineer-Trainee',
         period: 'Jul 2019 - Dec 2019',
         description: [
             'Created RESTful APIs for multi-database data collection in Python and Java.',
