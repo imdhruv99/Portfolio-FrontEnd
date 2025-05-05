@@ -1,12 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
     GithubLogo,
     Mailbox,
     LinkedinLogo,
-    ArrowUpRight,
+    InstagramLogo,
+    FacebookLogo,
+    TwitterLogo,
+    DribbbleLogo,
+    BehanceLogo,
+    YoutubeLogo,
+    RedditLogo,
+    SnapchatLogo,
+    WhatsappLogo,
+    MediumLogo,
+    DiscordLogo
 } from '@phosphor-icons/react';
+import gsap from 'gsap';
 
 interface ContactProps {
     isDarkTheme: boolean;
@@ -14,182 +25,270 @@ interface ContactProps {
 
 const Contact = ({ isDarkTheme }: ContactProps) => {
     const [mounted, setMounted] = useState(false);
+    const sectionRef = useRef<HTMLDivElement | null>(null);
+    const headingRef = useRef<HTMLHeadingElement | null>(null);
+    const paraRef = useRef<HTMLParagraphElement | null>(null);
+    const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+    const bgRef = useRef<HTMLDivElement | null>(null);
+    const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
+    // Animation setup
+    useLayoutEffect(() => {
+        if (!mounted) return;
+
+        const validButtons = buttonRefs.current.filter(Boolean);
+        const validIcons = iconRefs.current.filter(Boolean);
+
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        // Content animations
+        if (headingRef.current && paraRef.current) {
+            tl.fromTo(
+                headingRef.current,
+                { y: 40, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1 }
+            )
+                .fromTo(
+                    paraRef.current,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8 },
+                    '-=0.5'
+                )
+                .fromTo(
+                    validButtons,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6, stagger: 0.15 },
+                    '-=0.4'
+                );
+        }
+
+        // Animate floating icons - improved implementation
+        if (validIcons.length > 0) {
+            validIcons.forEach((icon) => {
+                if (!icon) return;
+
+                // Set initial random position
+                gsap.set(icon, {
+                    x: gsap.utils.random(-20, 20),
+                    y: gsap.utils.random(-20, 20),
+                    rotation: gsap.utils.random(-10, 10)
+                });
+
+                // Create floating animation with randomized parameters
+                gsap.to(icon, {
+                    y: gsap.utils.random(-100, 100),
+                    x: gsap.utils.random(-100, 100),
+                    rotation: gsap.utils.random(-20, 20),
+                    duration: gsap.utils.random(15, 30),
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'sine.inOut',
+                    delay: gsap.utils.random(0, 8)
+                });
+            });
+        }
+
+        return () => {
+            // Cleanup animations when component unmounts
+            gsap.killTweensOf(validIcons);
+        };
+    }, [mounted]);
+
     if (!mounted) return null;
 
+    const lightTheme = {
+        background:
+            'bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#eaeaea]',
+        text: 'text-gray-900',
+        subtext: 'text-gray-600',
+        border: 'border-gray-200',
+        button: 'bg-white hover:bg-gray-100 text-gray-900',
+        iconColor: 'text-gray-400',
+    };
+
+    const darkTheme = {
+        background:
+            'bg-gradient-to-br from-[#0e0e0e] via-[#1a1a1a] to-[#121212]',
+        text: 'text-white',
+        subtext: 'text-gray-400',
+        border: 'border-white/10',
+        button: 'bg-white/5 hover:bg-white/10 text-white',
+        iconColor: 'text-white/20',
+    };
+
+    const theme = isDarkTheme ? darkTheme : lightTheme;
+
+    const contacts = [
+        {
+            label: 'LinkedIn',
+            link: 'https://linkedin.com/in/imdhruv99',
+            icon: <LinkedinLogo size={22} />,
+        },
+        {
+            label: 'Email',
+            link: 'mailto:dhruvprajapati.work@gmail.com',
+            icon: <Mailbox size={22} />,
+        },
+        {
+            label: 'GitHub',
+            link: 'https://github.com/imdhruv99',
+            icon: <GithubLogo size={22} />,
+        },
+    ];
+
+    const generateFloatingIcons = () => {
+        const icons = [];
+        const iconTypes = [
+            LinkedinLogo,
+            GithubLogo,
+            InstagramLogo,
+            FacebookLogo,
+            TwitterLogo,
+            DribbbleLogo,
+            BehanceLogo,
+            YoutubeLogo,
+            RedditLogo,
+            SnapchatLogo,
+            WhatsappLogo,
+            MediumLogo,
+            DiscordLogo
+        ];
+        const sizes = [16, 20, 24, 28];
+
+        // Create a map to track which icon types have been used with which sizes
+        const usedCombinations = new Map();
+
+        // Maintain at least 150px distance between icons to prevent clustering
+        const positionedIcons = [];
+        const minDistance = 150;
+
+        for (let i = 0; i < 30; i++) {
+            let iconIndex, sizeIndex, combination;
+            let x, y;
+            let validPosition = false;
+            let attempts = 0;
+
+            // First, get a unique icon-size combination
+            do {
+                iconIndex = Math.floor(Math.random() * iconTypes.length);
+                sizeIndex = Math.floor(Math.random() * sizes.length);
+                combination = `${iconIndex}-${sizeIndex}`;
+                attempts++;
+            } while (usedCombinations.has(combination) && attempts < 50);
+
+            usedCombinations.set(combination, true);
+
+            attempts = 0;
+            do {
+                // Generate viewport percentage coordinates
+                x = Math.random() * 90 + 5; // 5-95%
+                y = Math.random() * 90 + 5; // 5-95%
+
+                // Check distance from all existing positioned icons
+                validPosition = true;
+                for (const pos of positionedIcons) {
+                    const dx = Math.abs(pos.x - x);
+                    const dy = Math.abs(pos.y - y);
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    // If too close to any existing icon, try again
+                    if (distance < minDistance / 10) { // Convert pixel distance to rough percentage
+                        validPosition = false;
+                        break;
+                    }
+                }
+
+                attempts++;
+            } while (!validPosition && attempts < 30);
+
+            // Add this position to our tracked positions
+            positionedIcons.push({ x, y });
+
+            const IconComponent = iconTypes[iconIndex];
+            const size = sizes[sizeIndex];
+            icons.push({
+                component: <IconComponent key={`icon-${i}`} size={size} weight="light" />,
+                x: x,
+                y: y
+            });
+        }
+
+        return icons;
+    };
+
+    const floatingIcons = generateFloatingIcons();
+
     return (
-        <div className="relative w-full min-h-screen overflow-x-hidden overflow-y-auto py-6">
-            {/* Centered Background Text - Adjusted for iPhone SE */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-0 gap-[1.5vw] sm:gap-[2.2vw]">
-                <div className={`text-[16vw] sm:text-[18vw] md:text-[18vw] lg:text-[15vw] font-serif font-extrabold ${isDarkTheme ? 'opacity-[0.1]' : 'opacity-[0.05]'} text-center leading-none transition-colors`}>
-                    Contact
-                </div>
-                <div className={`text-[14vw] sm:text-[16vw] md:text-[16vw] lg:text-[13vw] font-serif font-extrabold ${isDarkTheme ? 'opacity-[0.08]' : 'opacity-[0.04]'} text-center leading-none transition-colors`}>
-                    Connect
-                </div>
-                <div className={`text-[12vw] sm:text-[14vw] md:text-[14vw] lg:text-[11vw] font-serif font-extrabold ${isDarkTheme ? 'opacity-[0.06]' : 'opacity-[0.03]'} text-center leading-none transition-colors`}>
-                    Collaborate
-                </div>
-            </div>
-
-            {/* Content Card - Centered with Flex */}
-            <div className="relative flex items-center justify-center z-10 min-h-[calc(100vh-3rem)]">
-                <div className="w-full max-w-3xl mx-auto px-3 sm:px-4">
-                    <div className={`${isDarkTheme ? 'dark:bg-black/10' : 'bg-white/70'} backdrop-blur-sm rounded-xl shadow-lg ${isDarkTheme ? 'border border-white/10 dark:border-black/10' : 'border border-gray-100'} p-4 sm:p-6 md:p-8 lg:p-10`}>
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-center mb-4 sm:mb-6 relative">
-                            <span className="block w-fit mx-auto">
-                                Get in Touch
-                                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-0.5 bg-current opacity-30 mt-2"></span>
-                            </span>
-                        </h1>
-                        <p className="text-sm sm:text-base md:text-lg text-center opacity-80 max-w-2xl mx-auto mb-6 sm:mb-8 font-serif leading-relaxed">
-                            Let&apos;s build something amazing together.
-                            I&apos;m always open to new opportunities and
-                            exciting projects.
-                        </p>
-
-                        <div className="flex flex-col sm:flex-col md:flex-row justify-center gap-3 sm:gap-4 md:gap-5 mb-6 sm:mb-8 w-full">
-                            {/* LinkedIn */}
-                            <a
-                                href="https://linkedin.com/in/imdhruv99"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`flex items-center p-3 sm:p-4 md:p-5 ${isDarkTheme ? 'bg-white/70 dark:bg-black/25' : 'bg-white/90 shadow-sm'} backdrop-blur-lg rounded-lg ${isDarkTheme ? 'border border-white/30 dark:border-white/5' : 'border border-gray-100'} transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg ${isDarkTheme ? 'hover:border-white/40 dark:hover:border-white/15' : 'hover:border-gray-200'} overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group`}
-                            >
-                                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
-                                <div className={`flex-shrink-0 mr-3 sm:mr-4 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-xl ${isDarkTheme ? 'bg-white/30 dark:bg-white/5' : 'bg-gray-50'} transition-all duration-300 ${isDarkTheme ? 'group-hover:bg-white/15 dark:group-hover:bg-white/10' : 'group-hover:bg-gray-100'} group-hover:scale-105`}>
-                                    <LinkedinLogo
-                                        weight="bold"
-                                        size={20}
-                                        className="sm:hidden"
-                                    />
-                                    <LinkedinLogo
-                                        weight="bold"
-                                        size={24}
-                                        className="hidden sm:block"
-                                    />
-                                </div>
-                                <div className="flex-grow text-left">
-                                    <h3 className="font-semibold text-base sm:text-lg font-serif mb-0 sm:mb-1">
-                                        LinkedIn
-                                    </h3>
-                                    <p className="text-xs sm:text-sm opacity-70">
-                                        Let&apos;s connect professionally
-                                    </p>
-                                </div>
-                                <div className="flex-shrink-0 opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
-                                    <ArrowUpRight
-                                        weight="bold"
-                                        size={18}
-                                        className="sm:hidden"
-                                    />
-                                    <ArrowUpRight
-                                        weight="bold"
-                                        size={20}
-                                        className="hidden sm:block"
-                                    />
-                                </div>
-                            </a>
-
-                            {/* Email */}
-                            <a
-                                href="mailto:dhruvprajapati.work@gmail.com"
-                                className={`flex items-center p-3 sm:p-4 md:p-5 ${isDarkTheme ? 'bg-white/70 dark:bg-black/25' : 'bg-white/90 shadow-sm'} backdrop-blur-lg rounded-lg ${isDarkTheme ? 'border border-white/30 dark:border-white/5' : 'border border-gray-100'} transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg ${isDarkTheme ? 'hover:border-white/40 dark:hover:border-white/15' : 'hover:border-gray-200'} overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group`}
-                            >
-                                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
-                                <div className={`flex-shrink-0 mr-3 sm:mr-4 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-xl ${isDarkTheme ? 'bg-white/30 dark:bg-white/5' : 'bg-gray-50'} transition-all duration-300 ${isDarkTheme ? 'group-hover:bg-white/15 dark:group-hover:bg-white/10' : 'group-hover:bg-gray-100'} group-hover:scale-105`}>
-                                    <Mailbox
-                                        weight="bold"
-                                        size={20}
-                                        className="sm:hidden"
-                                    />
-                                    <Mailbox
-                                        weight="bold"
-                                        size={24}
-                                        className="hidden sm:block"
-                                    />
-                                </div>
-                                <div className="flex-grow text-left">
-                                    <h3 className="font-semibold text-base sm:text-lg font-serif mb-0 sm:mb-1">
-                                        Email
-                                    </h3>
-                                    <p className="text-xs sm:text-sm opacity-70">
-                                        Send me a message directly
-                                    </p>
-                                </div>
-                                <div className="flex-shrink-0 opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
-                                    <ArrowUpRight
-                                        weight="bold"
-                                        size={18}
-                                        className="sm:hidden"
-                                    />
-                                    <ArrowUpRight
-                                        weight="bold"
-                                        size={20}
-                                        className="hidden sm:block"
-                                    />
-                                </div>
-                            </a>
-
-                            {/* GitHub */}
-                            <a
-                                href="https://github.com/imdhruv99"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`flex items-center p-3 sm:p-4 md:p-5 ${isDarkTheme ? 'bg-white/70 dark:bg-black/25' : 'bg-white/90 shadow-sm'} backdrop-blur-lg rounded-lg ${isDarkTheme ? 'border border-white/30 dark:border-white/5' : 'border border-gray-100'} transition-all duration-300 hover:translate-y-[-3px] hover:shadow-lg ${isDarkTheme ? 'hover:border-white/40 dark:hover:border-white/15' : 'hover:border-gray-200'} overflow-hidden relative w-full md:max-w-[280px] text-current no-underline group`}
-                            >
-                                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
-                                <div className={`flex-shrink-0 mr-3 sm:mr-4 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-xl ${isDarkTheme ? 'bg-white/30 dark:bg-white/5' : 'bg-gray-50'} transition-all duration-300 ${isDarkTheme ? 'group-hover:bg-white/15 dark:group-hover:bg-white/10' : 'group-hover:bg-gray-100'} group-hover:scale-105`}>
-                                    <GithubLogo
-                                        weight="bold"
-                                        size={20}
-                                        className="sm:hidden"
-                                    />
-                                    <GithubLogo
-                                        weight="bold"
-                                        size={24}
-                                        className="hidden sm:block"
-                                    />
-                                </div>
-                                <div className="flex-grow text-left">
-                                    <h3 className="font-semibold text-base sm:text-lg font-serif mb-0 sm:mb-1">
-                                        GitHub
-                                    </h3>
-                                    <p className="text-xs sm:text-sm opacity-70">
-                                        Explore my code repositories
-                                    </p>
-                                </div>
-                                <div className="flex-shrink-0 opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
-                                    <ArrowUpRight
-                                        weight="bold"
-                                        size={18}
-                                        className="sm:hidden"
-                                    />
-                                    <ArrowUpRight
-                                        weight="bold"
-                                        size={20}
-                                        className="hidden sm:block"
-                                    />
-                                </div>
-                            </a>
-                        </div>
-
-                        <div className={`mt-6 sm:mt-8 max-w-2xl mx-auto leading-relaxed text-xs sm:text-sm md:text-base opacity-85 pt-3 sm:pt-4 ${isDarkTheme ? 'border-t border-white/10 dark:border-white/5' : 'border-t border-gray-100'}`}>
-                            <p className="text-center px-1 sm:px-2 md:px-4">
-                                Whether you&apos;re looking to collaborate on a
-                                project, have a question about my work, or just
-                                want to say hello, I&apos;d love to hear from
-                                you. I typically respond within 24-48 hours.
-                            </p>
-                        </div>
+        <section
+            ref={sectionRef}
+            className={`relative w-full min-h-screen ${theme.background} transition-colors duration-500 flex items-center justify-center px-6 overflow-hidden`}
+        >
+            {/* Floating Social Icons Background */}
+            <div ref={bgRef} className="fixed inset-0 overflow-hidden pointer-events-none">
+                {floatingIcons.map((icon, index) => (
+                    <div
+                        key={index}
+                        ref={(el) => { iconRefs.current[index] = el }}
+                        className={`absolute ${theme.iconColor} transition-colors duration-500`}
+                        style={{
+                            top: `${icon.y}%`,
+                            left: `${icon.x}%`,
+                            opacity: Math.random() * 0.25 + 0.15,
+                            transform: `rotate(${Math.random() * 30 - 15}deg)`,
+                            zIndex: -1,
+                        }}
+                    >
+                        {icon.component}
                     </div>
+                ))}
+            </div>
+
+            {/* Content */}
+            <div className="max-w-5xl w-full flex flex-col md:flex-row items-center justify-between gap-16 py-24 z-10">
+                {/* Left */}
+                <div className="md:w-1/2 text-center md:text-left">
+                    <h1
+                        ref={headingRef}
+                        className={`text-4xl sm:text-5xl font-serif font-bold mb-6 leading-tight ${theme.text}`}
+                    >
+                        Let&apos;s Have a Conversation
+                    </h1>
+                    <p
+                        ref={paraRef}
+                        className={`text-lg sm:text-xl font-light ${theme.subtext}`}
+                    >
+                        I value genuine connections and creative discussions. Whether it&apos;s collaboration, mentorship, or curiosity — feel free to reach out.
+                    </p>
+                </div>
+
+                {/* Right */}
+                <div className="md:w-1/2 w-full flex flex-col gap-5 items-center md:items-start">
+                    {contacts.map((contact, index) => (
+                        <a
+                            key={index}
+                            href={contact.link}
+                            ref={(el) => {
+                                buttonRefs.current[index] = el;
+                            }}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`group flex items-center justify-center gap-3 w-64 px-6 py-4 rounded-full transition-all duration-300 ${theme.button} border ${theme.border} shadow-sm hover:scale-105`}
+                        >
+                            {contact.icon}
+                            <span className="font-medium text-sm tracking-wide">{contact.label}</span>
+                        </a>
+                    ))}
+
+                    <p className={`mt-10 text-sm text-center md:text-left ${theme.subtext}`}>
+                        Typically responds within 24–48 hours. Let&apos;s create something meaningful.
+                    </p>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 
