@@ -5,7 +5,6 @@ import {
     GithubLogo,
     Mailbox,
     LinkedinLogo,
-    ArrowUpRight,
 } from '@phosphor-icons/react';
 
 interface ContactProps {
