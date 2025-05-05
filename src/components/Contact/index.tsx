@@ -67,11 +67,6 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
                                     {item.title}
                                 </h3>
                                 <p className="text-xs opacity-60">{item.text}</p>
-                                <ArrowUpRight
-                                    size={18}
-                                    weight="bold"
-                                    className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                                />
                             </a>
                         ))}
                     </div>
