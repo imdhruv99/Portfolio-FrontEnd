@@ -1,11 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import {
-    GithubLogo,
-    Mailbox,
-    LinkedinLogo,
-} from '@phosphor-icons/react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { GithubLogo, Mailbox, LinkedinLogo } from '@phosphor-icons/react';
+import gsap from 'gsap';
 
 interface ContactProps {
     isDarkTheme: boolean;
@@ -13,69 +10,126 @@ interface ContactProps {
 
 const Contact = ({ isDarkTheme }: ContactProps) => {
     const [mounted, setMounted] = useState(false);
+    const sectionRef = useRef<HTMLDivElement | null>(null);
+    const headingRef = useRef<HTMLHeadingElement | null>(null);
+    const paraRef = useRef<HTMLParagraphElement | null>(null);
+    const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
+    useLayoutEffect(() => {
+        if (!mounted) return;
+
+        const validButtons = buttonRefs.current.filter(Boolean);
+
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        if (headingRef.current && paraRef.current) {
+            tl.fromTo(
+                headingRef.current,
+                { y: 40, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1 }
+            )
+                .fromTo(
+                    paraRef.current,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8 },
+                    '-=0.5'
+                )
+                .fromTo(
+                    validButtons,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6, stagger: 0.15 },
+                    '-=0.4'
+                );
+        }
+    }, [mounted]);
+
     if (!mounted) return null;
 
+    const lightTheme = {
+        background: 'bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#ffffff] via-[#f6f6f6] to-[#ececec]',
+        text: 'text-gray-800',
+        subtext: 'text-gray-500',
+        border: 'border-gray-200',
+        button: 'bg-white hover:bg-gray-100 text-gray-900',
+    };
+
+    const darkTheme = {
+        background: 'bg-gradient-to-br from-[#0e0e0e] via-[#1a1a1a] to-[#121212]',
+        text: 'text-white',
+        subtext: 'text-gray-400',
+        border: 'border-white/10',
+        button: 'bg-white/5 hover:bg-white/10 text-white',
+    };
+
+    const theme = isDarkTheme ? darkTheme : lightTheme;
+
+    const contacts = [
+        {
+            label: 'LinkedIn',
+            link: 'https://linkedin.com/in/imdhruv99',
+            icon: <LinkedinLogo size={22} />,
+        },
+        {
+            label: 'Email',
+            link: 'mailto:dhruvprajapati.work@gmail.com',
+            icon: <Mailbox size={22} />,
+        },
+        {
+            label: 'GitHub',
+            link: 'https://github.com/imdhruv99',
+            icon: <GithubLogo size={22} />,
+        },
+    ];
+
     return (
-        <div className="relative w-full min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-transparent">
-            <div className="flex flex-col items-center justify-center min-h-[80vh] max-w-3xl mx-auto text-center z-10">
-                <div className={`backdrop-blur-md rounded-2xl shadow-xl px-6 sm:px-10 py-10 w-full border ${isDarkTheme ? 'bg-white/5 border-white/10' : 'bg-white/60 border-gray-200'} transition-colors`}>
-                    <h1 className="text-3xl sm:text-4xl font-serif font-bold mb-4">
-                        Let&apos;s Connect
+        <section
+            ref={sectionRef}
+            className={`w-full min-h-screen ${theme.background} transition-colors duration-500 flex items-center justify-center px-6`}
+        >
+            <div className="max-w-5xl w-full flex flex-col md:flex-row items-center justify-between gap-16 py-24">
+                {/* Left Side */}
+                <div className="md:w-1/2 text-center md:text-left">
+                    <h1
+                        ref={headingRef}
+                        className={`text-4xl sm:text-5xl font-serif font-bold mb-6 leading-tight ${theme.text}`}
+                    >
+                        Let’s Have a Conversation
                     </h1>
-                    <p className="text-sm sm:text-base opacity-70 mb-8 leading-relaxed font-serif">
-                        Whether you&apos;re looking to collaborate, have a question, or just want to say hello — I&apos;m always open to meaningful conversations and new opportunities.
+                    <p
+                        ref={paraRef}
+                        className={`text-lg sm:text-xl font-light ${theme.subtext}`}
+                    >
+                        I value genuine connections and creative discussions. Whether it&apos;s collaboration, mentorship, or curiosity — feel free to reach out.
                     </p>
+                </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {[
-                            {
-                                title: 'LinkedIn',
-                                text: 'Connect professionally',
-                                icon: <LinkedinLogo size={24} weight="fill" />,
-                                link: 'https://linkedin.com/in/imdhruv99',
-                            },
-                            {
-                                title: 'Email',
-                                text: 'Send me a message',
-                                icon: <Mailbox size={24} weight="fill" />,
-                                link: 'mailto:dhruvprajapati.work@gmail.com',
-                            },
-                            {
-                                title: 'GitHub',
-                                text: 'View my code',
-                                icon: <GithubLogo size={24} weight="fill" />,
-                                link: 'https://github.com/imdhruv99',
-                            },
-                        ].map((item, idx) => (
-                            <a
-                                key={idx}
-                                href={item.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`group flex flex-col items-center text-center p-5 rounded-xl transition-transform duration-300 hover:-translate-y-1 ${isDarkTheme ? 'bg-white/10 border border-white/10' : 'bg-white/80 border border-gray-200'} backdrop-blur-lg`}
-                            >
-                                <div className="mb-3 text-primary">
-                                    {item.icon}
-                                </div>
-                                <h3 className="text-lg font-semibold font-serif">
-                                    {item.title}
-                                </h3>
-                                <p className="text-xs opacity-60">{item.text}</p>
-                            </a>
-                        ))}
-                    </div>
+                {/* Right Side */}
+                <div className="md:w-1/2 w-full flex flex-col gap-5 items-center md:items-start">
+                    {contacts.map((contact, index) => (
+                        <a
+                            key={index}
+                            href={contact.link}
+                            ref={(el) => {
+                                buttonRefs.current[index] = el;
+                            }}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`group flex items-center justify-center gap-3 w-64 px-6 py-4 rounded-full transition-all duration-300 ${theme.button} border ${theme.border} shadow-sm`}
+                        >
+                            {contact.icon}
+                            <span className="font-medium text-sm tracking-wide">{contact.label}</span>
+                        </a>
+                    ))}
 
-                    <p className="text-xs sm:text-sm opacity-60 mt-8 pt-6 border-t border-white/10 font-serif">
-                        Typically responds within 24–48 hours. Looking forward to hearing from you.
+                    <p className={`mt-10 text-sm text-center md:text-left ${theme.subtext}`}>
+                        Typically responds within 24–48 hours. Let’s create something meaningful.
                     </p>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 
