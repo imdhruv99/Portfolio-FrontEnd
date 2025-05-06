@@ -1,5 +1,7 @@
 'use client';
 
+import './Navbar.css'
+
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
@@ -112,20 +114,20 @@ const Navbar = () => {
     // Filter out some items for mobile to prevent overcrowding
     const displayNavItems = mobileView
         ? navItems.filter((item) =>
-              [
-                  'home',
-                  'experience',
-                  'projects',
-                  'education',
-                  'contact',
-                  'separator-1',
-                  'github',
-                  'linkedin',
-                  'instagram',
-                  'separator-2',
-                  'theme',
-              ].includes(item.id),
-          )
+            [
+                'home',
+                'experience',
+                'projects',
+                'education',
+                'contact',
+                'separator-1',
+                'github',
+                'linkedin',
+                'instagram',
+                'separator-2',
+                'theme',
+            ].includes(item.id),
+        )
         : navItems;
 
     const resetIcons = (index: number) => {
@@ -207,19 +209,17 @@ const Navbar = () => {
         <div className="fixed bottom-2 sm:bottom-3 lg:bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-[95%]">
             <nav
                 ref={navRef}
-                className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-1.5 lg:gap-2'} p-1 sm:p-1.5 lg:p-3 rounded-full theme-transition ${
-                    isDarkTheme
-                        ? 'bg-neutral-900 shadow-md shadow-neutral-900/40'
-                        : 'bg-white shadow-md shadow-neutral-300'
-                }`}
+                className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-1.5 lg:gap-2'} p-1 sm:p-1.5 lg:p-3 rounded-full theme-transition ${isDarkTheme
+                    ? 'bg-neutral-800 shadow-md shadow-neutral-900/40'
+                    : 'bg-white shadow-md shadow-neutral-300'
+                    }`}
             >
                 {displayNavItems.map((item, index) =>
                     item.type === 'separator' ? (
                         <div
                             key={item.id}
-                            className={`w-px h-4 sm:h-5 lg:h-6 bg-gray-400 dark:bg-gray-600 my-auto mx-0.5 sm:mx-0.5 opacity-40 theme-transition ${
-                                mobileView ? 'mx-0' : ''
-                            }`}
+                            className={`w-px h-4 sm:h-5 lg:h-6 bg-gray-400 dark:bg-gray-600 my-auto mx-0.5 sm:mx-0.5 opacity-40 theme-transition ${mobileView ? 'mx-0' : ''
+                                }`}
                         />
                     ) : (
                         <div
@@ -227,11 +227,10 @@ const Navbar = () => {
                             ref={(el) => {
                                 itemsRef.current[index] = el;
                             }}
-                            className={`relative flex items-center justify-center rounded-full cursor-pointer origin-bottom transition-transform duration-200 ${
-                                mobileView
-                                    ? 'w-8 h-8'
-                                    : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10'
-                            }`}
+                            className={`relative flex items-center justify-center rounded-full cursor-pointer origin-bottom transition-transform duration-200 ${mobileView
+                                ? 'w-8 h-8'
+                                : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10'
+                                }`}
                             onMouseEnter={() => {
                                 setShowTooltip(item.id);
                                 focusIcon(index);
@@ -255,23 +254,20 @@ const Navbar = () => {
                                     className="flex items-center justify-center w-full h-full"
                                 >
                                     <div
-                                        className={`flex items-center justify-center rounded-full theme-transition ${
-                                            mobileView
-                                                ? 'w-7 h-7'
-                                                : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
-                                        } ${
-                                            isDarkTheme
+                                        className={`flex items-center justify-center rounded-full theme-transition ${mobileView
+                                            ? 'w-7 h-7'
+                                            : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
+                                            } ${isDarkTheme
                                                 ? 'bg-neutral-700 hover:bg-neutral-700'
                                                 : 'bg-gray-100 hover:bg-gray-200'
-                                        }`}
+                                            }`}
                                     >
                                         {item.icon && (
                                             <item.icon
-                                                className={`theme-transition ${
-                                                    isDarkTheme
-                                                        ? 'text-white-200'
-                                                        : 'text-gray-700'
-                                                }`}
+                                                className={`theme-transition ${isDarkTheme
+                                                    ? 'text-white-200'
+                                                    : 'text-gray-700'
+                                                    }`}
                                                 size={mobileView ? 18 : 20}
                                             />
                                         )}
@@ -279,15 +275,13 @@ const Navbar = () => {
                                 </Link>
                             ) : (
                                 <div
-                                    className={`flex items-center justify-center rounded-full theme-transition ${
-                                        mobileView
-                                            ? 'w-7 h-7'
-                                            : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
-                                    } ${
-                                        isDarkTheme
+                                    className={`flex items-center justify-center rounded-full theme-transition ${mobileView
+                                        ? 'w-7 h-7'
+                                        : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
+                                        } ${isDarkTheme
                                             ? 'bg-neutral-700 hover:bg-neutral-700'
                                             : 'bg-gray-100 hover:bg-gray-200'
-                                    }`}
+                                        }`}
                                 >
                                     {item.id === 'theme' ? (
                                         <div
@@ -311,11 +305,10 @@ const Navbar = () => {
                                         </div>
                                     ) : item.icon ? (
                                         <item.icon
-                                            className={`theme-transition ${
-                                                isDarkTheme
-                                                    ? 'text-gray-200'
-                                                    : 'text-gray-700'
-                                            }`}
+                                            className={`theme-transition ${isDarkTheme
+                                                ? 'text-gray-200'
+                                                : 'text-gray-700'
+                                                }`}
                                             size={mobileView ? 18 : 20}
                                         />
                                     ) : null}
@@ -323,11 +316,10 @@ const Navbar = () => {
                             )}
                             {showTooltip === item.id && !mobileView && (
                                 <div
-                                    className={`absolute top-[-1.5rem] sm:top-[-1.5rem] lg:top-[-1.75rem] left-1/2 transform -translate-x-1/2 theme-transition ${
-                                        isDarkTheme
-                                            ? 'bg-neutral-600 hover:bg-neutral-700'
-                                            : 'bg-gray-100 text-gray-800'
-                                    } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none
+                                    className={`absolute top-[-1.5rem] sm:top-[-1.5rem] lg:top-[-1.75rem] left-1/2 transform -translate-x-1/2 theme-transition ${isDarkTheme
+                                        ? 'bg-neutral-600 hover:bg-neutral-700'
+                                        : 'bg-gray-100 text-gray-800'
+                                        } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none
                                     font-serif animate-fadeIn z-50`}
                                     style={{
                                         animation:
