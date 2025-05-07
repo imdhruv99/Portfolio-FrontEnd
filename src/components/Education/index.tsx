@@ -225,7 +225,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
                     ref={quoteRef}
                     className="mb-24 max-w-3xl mx-auto text-center"
                 >
-                    <p className={`text-xl sm:text-2xl italic ${theme.text} mb-3`}>"{randomQuote.text}"</p>
+                    <p className={`text-xl sm:text-2xl ${theme.text} mb-3`}>&quot;{randomQuote.text}&quot;</p>
                     <p className={`text-sm ${theme.subtext}`}>— {randomQuote.author}</p>
                 </div>
 
