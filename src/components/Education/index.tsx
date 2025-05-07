@@ -191,23 +191,23 @@ const Education = ({ isDarkTheme }: EducationProps) => {
     // Inspirational quotes about education
     const quotes = [
         {
-            text: "Education is not the filling of a pail, but the lighting of a fire.",
-            author: "William Butler Yeats"
+            text: "Education is the best friend. An educated person is respected everywhere. Education beats the beauty and the youth.",
+            author: "Chanakya"
         },
         {
-            text: "The beautiful thing about learning is that no one can take it away from you.",
-            author: "B.B. King"
+            text: "The main aim of education should be to develop character, mental strength, and a spirit of philanthropy.",
+            author: "Swami Vivekananda"
         },
         {
-            text: "Education is the passport to the future, for tomorrow belongs to those who prepare for it today.",
-            author: "Malcolm X"
+            text: "Let your life lightly dance on the edges of time like dew on the tip of a leaf.",
+            author: "Rabindranath Tagore"
         }
     ];
 
     // Select a random quote
     const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-    const formatPeriod = (period: string) => period.replace(' - ', ' – ');
+    const formatPeriod = (period: string) => period.replace(' - ', ' - ');
 
     return (
         <section
