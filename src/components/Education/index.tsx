@@ -170,7 +170,8 @@ const Education = ({ isDarkTheme }: EducationProps) => {
         border: 'border-gray-200',
         card: 'bg-white',
         timeline: 'bg-gray-200',
-        timelineNode: 'bg-gray-400 border-gray-600',
+        timelineNode: 'bg-gray-200',
+        badgeBg: 'bg-white',
     };
 
     const darkTheme = {
@@ -182,6 +183,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
         card: 'bg-white/5',
         timeline: 'bg-white/10',
         timelineNode: 'bg-neutral-500 border-neutral-700',
+        badgeBg: 'bg-white',
     };
 
     const theme = isDarkTheme ? darkTheme : lightTheme;
@@ -234,7 +236,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
                 <div className="mb-32">
                     <div
                         ref={educationHeaderRef}
-                        className={`border-b ${theme.border} pb-3 mb-16`}
+                        className={`${theme.border} pb-3 mb-16 text-center`}
                     >
                         <h2 className={`text-3xl md:text-4xl font-serif font-bold ${theme.text}`}>
                             Academic Journey
@@ -277,7 +279,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
                 <div className="pt-10">
                     <div
                         ref={certificationHeaderRef}
-                        className={`border-b ${theme.border} pb-3 mb-16`}
+                        className={`${theme.border} pb-3 mb-16 text-center`}
                     >
                         <h2 className={`text-3xl md:text-4xl font-serif font-bold ${theme.text}`}>
                             Professional Certifications
@@ -294,16 +296,56 @@ const Education = ({ isDarkTheme }: EducationProps) => {
                                 ref={(el) => {
                                     certificateRefs.current[index] = el;
                                 }}
-                                className={`${theme.card} border ${theme.border} rounded-lg p-6 shadow-md hover:shadow-xl transition-all duration-300 transform perspective-1000 flex flex-col min-h-[250px]`}
+                                className={`${theme.card} border ${theme.border} rounded-lg p-6 shadow-md hover:shadow-xl transition-all duration-300 transform perspective-1000 flex flex-col`}
                                 style={{ transformStyle: 'preserve-3d' }}
                             >
-                                {/* Certificate logo/image */}
-                                <div className="flex items-center mb-4">
+                                {/* Certificate image and title in a row */}
+                                <div className="flex items-center mb-6">
+                                    {/* Square certificate image with white background */}
+                                    <div className={`w-16 h-16 flex-shrink-0 mr-4 rounded-lg overflow-hidden ${theme.badgeBg} shadow-sm`}>
+                                        {cert.image ? (
+                                            <div className="w-full h-full relative bg-white">
+                                                <Image
+                                                    src={cert.image}
+                                                    alt={`${cert.title} certificate`}
+                                                    layout="fill"
+                                                    objectFit="contain"
+                                                    className="p-1"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className={`w-full h-full flex items-center justify-center ${theme.badgeBg}`}>
+                                                <span className={`text-xs font-medium ${theme.subtext}`}>No Image</span>
+                                            </div>
+                                        )}
+                                    </div>
+
                                     <div>
-                                        <h3 className={`text-lg font-semibold ${theme.text}`}>{cert.title}</h3>
+                                        <h3 className={`text-lg font-semibold ${theme.text} line-clamp-2`}>{cert.title}</h3>
                                         <p className={`text-sm ${theme.subtext} mt-1`}>{cert.issuer}</p>
                                     </div>
                                 </div>
+
+                                {/* Skills badges - if available */}
+                                {cert.skills && cert.skills.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mb-4">
+                                        {cert.skills.slice(0, 3).map((skill, i) => (
+                                            <span
+                                                key={i}
+                                                className={`text-xs px-2 py-1 rounded-full ${isDarkTheme ? 'bg-white/10 text-gray-300' : 'bg-gray-100 text-gray-600'}`}
+                                            >
+                                                {skill}
+                                            </span>
+                                        ))}
+                                        {cert.skills.length > 3 && (
+                                            <span
+                                                className={`text-xs px-2 py-1 rounded-full ${isDarkTheme ? 'bg-white/10 text-gray-300' : 'bg-gray-100 text-gray-600'}`}
+                                            >
+                                                +{cert.skills.length - 3} more
+                                            </span>
+                                        )}
+                                    </div>
+                                )}
 
                                 {/* Push the bottom content to the bottom with flex-grow */}
                                 <div className="flex-grow"></div>
@@ -318,7 +360,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
                                             href={cert.credentialUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className={`text-xs ${theme.subtext} hover:underline transition-colors duration-300`}
+                                            className={`text-xs ${isDarkTheme ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'} hover:underline transition-colors duration-300`}
                                         >
                                             Verify →
                                         </a>
