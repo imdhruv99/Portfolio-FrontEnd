@@ -6,7 +6,6 @@ type CertificateData = {
     credentialId?: string;
     credentialUrl?: string;
     skills: string[];
-    logo?: string;
 };
 
 const sortedCertificateData: CertificateData[] = [
