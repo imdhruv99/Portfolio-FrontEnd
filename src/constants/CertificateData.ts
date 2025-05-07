@@ -7,7 +7,6 @@ type CertificateData = {
     credentialUrl?: string;
     skills: string[];
     logo?: string;
-    color: string;
 };
 
 const sortedCertificateData: CertificateData[] = [
@@ -20,7 +19,6 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/1302d89e-c584-40d6-ad91-5d3e4a881d11',
         skills: ['Kubernetes'],
-        color: '#0F766E',
     },
     {
         id: 2,
@@ -31,7 +29,6 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/a684b7ee-4ee5-4d02-8bd5-fc5280ceeea8',
         skills: ['Kubernetes'],
-        color: '#3B82F6',
     },
     {
         id: 3,
@@ -40,7 +37,6 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Apr 2023',
         credentialId: '2D0AF9104276-2D16C13CE9E5-2D0AED7FE7A8',
         skills: ['System Administration', 'Linux'],
-        color: '#8B5CF6',
     },
     {
         id: 4,
@@ -50,7 +46,6 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/42395e8d-97e8-413c-8c1e-0f173af35a4f',
         skills: [],
-        color: '#F43F5E',
     },
     {
         id: 5,
@@ -60,7 +55,6 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/3854b0e2-420a-48a9-a1e9-b3d7e249d37a',
         skills: [],
-        color: '#F43F5E',
     },
     {
         id: 6,
@@ -70,7 +64,6 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/fd637fac-0dc8-47a2-be5f-6d52e97e0630',
         skills: [],
-        color: '#F43F5E',
     },
     {
         id: 7,
@@ -80,7 +73,6 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/183db7e3-c39f-4492-9d9a-ee6357fa5fd8',
         skills: [],
-        color: '#F43F5E',
     },
     {
         id: 8,
@@ -90,7 +82,6 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/436fe513-437b-48dc-a416-ae366e8ba0f4',
         skills: [],
-        color: '#F43F5E',
     },
     {
         id: 9,
@@ -103,7 +94,6 @@ const sortedCertificateData: CertificateData[] = [
             'Deep Learning',
             'Artificial Intelligence (AI)',
         ],
-        color: '#EC4899',
     },
     {
         id: 10,
@@ -112,7 +102,6 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Nov 2022',
         credentialUrl: 'https://www.hackerrank.com/certificates/bc82139c5c59',
         skills: [],
-        color: '#10B981',
     },
     {
         id: 11,
@@ -121,7 +110,6 @@ const sortedCertificateData: CertificateData[] = [
         credentialId: '009e79ac16e1',
         skills: ['Python'],
         issueDate: '—',
-        color: '#0EA5E9',
     },
     {
         id: 12,
@@ -130,7 +118,6 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Feb 2021',
         credentialId: 'UC-14c017d6-a101-49ac-bd35-a8331366c5f4',
         skills: [],
-        color: '#6366F1',
     },
     {
         id: 13,
@@ -138,7 +125,6 @@ const sortedCertificateData: CertificateData[] = [
         issuer: 'Google',
         issueDate: 'Jun 2021',
         skills: [],
-        color: '#F59E0B',
     },
 ];
 
