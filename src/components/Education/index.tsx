@@ -220,7 +220,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
                     ref={headingRef}
                     className={`text-4xl sm:text-5xl font-serif font-bold text-center tracking-tight leading-tight mb-16 ${theme.text}`}
                 >
-                    Education & Credentials
+                    Scholarly Achievements
                 </h1>
 
                 {/* Quote Section */}
