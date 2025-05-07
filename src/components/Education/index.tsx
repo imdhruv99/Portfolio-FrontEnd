@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import educationData from '../../constants/EducationData';
 import sortedCertificateData from '../../constants/CertificateData';
+import Image from 'next/image';
 
 if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
@@ -163,13 +164,13 @@ const Education = ({ isDarkTheme }: EducationProps) => {
 
     const lightTheme = {
         background: 'bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#eaeaea]',
-        text: 'text-gray-900',
+        text: 'text-gray-800',
         subtext: 'text-gray-600',
         accent: 'text-gray-400',
         border: 'border-gray-200',
         card: 'bg-white',
         timeline: 'bg-gray-200',
-        timelineNode: 'bg-gray-400 border-white',
+        timelineNode: 'bg-gray-400 border-gray-600',
     };
 
     const darkTheme = {
@@ -180,7 +181,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
         border: 'border-white/10',
         card: 'bg-white/5',
         timeline: 'bg-white/10',
-        timelineNode: 'bg-white/30 border-[#121212]',
+        timelineNode: 'bg-neutral-500 border-neutral-700',
     };
 
     const theme = isDarkTheme ? darkTheme : lightTheme;
@@ -293,11 +294,22 @@ const Education = ({ isDarkTheme }: EducationProps) => {
                                 ref={(el) => {
                                     certificateRefs.current[index] = el;
                                 }}
-                                className={`${theme.card} border ${theme.border} rounded-lg p-8 shadow-md hover:shadow-xl transition-all duration-300 transform perspective-1000`}
+                                className={`${theme.card} border ${theme.border} rounded-lg p-6 shadow-md hover:shadow-xl transition-all duration-300 transform perspective-1000 flex flex-col min-h-[250px]`}
                                 style={{ transformStyle: 'preserve-3d' }}
                             >
-                                <h3 className={`text-lg font-semibold mb-4 ${theme.text}`}>{cert.title}</h3>
-                                <div className={`flex justify-between items-center mt-auto pt-4 border-t ${theme.border}`}>
+                                {/* Certificate logo/image */}
+                                <div className="flex items-center mb-4">
+                                    <div>
+                                        <h3 className={`text-lg font-semibold ${theme.text}`}>{cert.title}</h3>
+                                        <p className={`text-sm ${theme.subtext} mt-1`}>{cert.issuer}</p>
+                                    </div>
+                                </div>
+
+                                {/* Push the bottom content to the bottom with flex-grow */}
+                                <div className="flex-grow"></div>
+
+                                {/* Horizontal line and date/verification - positioned at bottom */}
+                                <div className={`border-t ${theme.border} mt-auto pt-4 flex justify-between items-center`}>
                                     <p className={`text-xs ${theme.accent}`}>
                                         {cert.issueDate !== '—' ? cert.issueDate : 'No date'}
                                     </p>
