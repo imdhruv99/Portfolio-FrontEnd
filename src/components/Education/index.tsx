@@ -288,7 +288,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
 
                     <div
                         ref={certificatesRef}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pb-32"
                     >
                         {sortedCertificateData.map((cert, index) => (
                             <div
