@@ -6,8 +6,7 @@ type CertificateData = {
     credentialId?: string;
     credentialUrl?: string;
     skills: string[];
-    logo?: string;
-    color: string;
+    image?: string;
 };
 
 const sortedCertificateData: CertificateData[] = [
@@ -19,8 +18,8 @@ const sortedCertificateData: CertificateData[] = [
         credentialId: 'LF-perx0w14k6',
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/1302d89e-c584-40d6-ad91-5d3e4a881d11',
-        skills: ['Kubernetes'],
-        color: '#0F766E',
+        skills: ['Kubernetes', 'Security'],
+        image: '/logos/cks.png'
     },
     {
         id: 2,
@@ -31,7 +30,7 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/a684b7ee-4ee5-4d02-8bd5-fc5280ceeea8',
         skills: ['Kubernetes'],
-        color: '#3B82F6',
+        image: '/logos/cka.png'
     },
     {
         id: 3,
@@ -39,8 +38,9 @@ const sortedCertificateData: CertificateData[] = [
         issuer: 'KodeKloud',
         issueDate: 'Apr 2023',
         credentialId: '2D0AF9104276-2D16C13CE9E5-2D0AED7FE7A8',
+        credentialUrl: 'https://learn.kodekloud.com/certificate/2D0AF9104276-2D16C13CE9E5-2D0AED7FE7A8',
         skills: ['System Administration', 'Linux'],
-        color: '#8B5CF6',
+        image: '/logos/csa.png'
     },
     {
         id: 4,
@@ -49,8 +49,8 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Jan 2021',
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/42395e8d-97e8-413c-8c1e-0f173af35a4f',
-        skills: [],
-        color: '#F43F5E',
+        skills: ['Python', 'Machine Learning'],
+        image: '/logos/adsp.png'
     },
     {
         id: 5,
@@ -59,8 +59,8 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Jan 2021',
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/3854b0e2-420a-48a9-a1e9-b3d7e249d37a',
-        skills: [],
-        color: '#F43F5E',
+        skills: ['Python', 'EDA'],
+        image: '/logos/dap.png'
     },
     {
         id: 6,
@@ -69,8 +69,8 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Jan 2021',
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/fd637fac-0dc8-47a2-be5f-6d52e97e0630',
-        skills: [],
-        color: '#F43F5E',
+        skills: ['Python', 'Matplotlib', 'Seaboarn'],
+        image: '/logos/dvp.png'
     },
     {
         id: 7,
@@ -79,8 +79,11 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Jan 2021',
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/183db7e3-c39f-4492-9d9a-ee6357fa5fd8',
-        skills: [],
-        color: '#F43F5E',
+        skills: [
+            'Machine Learning',
+            'Python'
+        ],
+        image: '/logos/mlp.png'
     },
     {
         id: 8,
@@ -89,8 +92,8 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Jan 2021',
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/436fe513-437b-48dc-a416-ae366e8ba0f4',
-        skills: [],
-        color: '#F43F5E',
+        skills: ['Python'],
+        image: '/logos/pds.png'
     },
     {
         id: 9,
@@ -98,48 +101,60 @@ const sortedCertificateData: CertificateData[] = [
         issuer: 'Coursera',
         issueDate: 'Aug 2021',
         credentialId: '34dd40805163575090878aae3887db56',
+        credentialUrl: 'https://coursera.org/share/34dd40805163575090878aae3887db56',
         skills: [
             'Machine Learning',
             'Deep Learning',
             'Artificial Intelligence (AI)',
         ],
-        color: '#EC4899',
+        image: '/logos/su.png'
     },
     {
         id: 10,
+        title: 'Google AI ML Explore',
+        issuer: 'Google',
+        issueDate: 'Jun 2021',
+        credentialUrl: 'https://drive.google.com/file/d/1Pk74LZJif8hNPTRXHxQ1B5S6fBrsJG1R/view',
+        skills: [
+            'Machine Learning',
+            'Deep Learning',
+            'Artificial Intelligence (AI)',
+        ],
+        image: '/logos/google.png'
+    },
+    {
+        id: 11,
         title: 'Problem Solving',
         issuer: 'HackerRank',
         issueDate: 'Nov 2022',
         credentialUrl: 'https://www.hackerrank.com/certificates/bc82139c5c59',
-        skills: [],
-        color: '#10B981',
-    },
-    {
-        id: 11,
-        title: 'Python Basic',
-        issuer: 'HackerRank',
-        credentialId: '009e79ac16e1',
-        skills: ['Python'],
-        issueDate: '—',
-        color: '#0EA5E9',
+        skills: ['Critical Thinking', 'Problem Solving'],
+        image: '/logos/hr.png'
     },
     {
         id: 12,
+        title: 'Python Basic',
+        issuer: 'HackerRank',
+        credentialId: '009e79ac16e1',
+        credentialUrl: 'https://www.hackerrank.com/certificates/009e79ac16e1',
+        skills: ['Python'],
+        issueDate: 'July 2021',
+        image: '/logos/hr.png'
+    },
+    {
+        id: 13,
         title: 'Machine Learning & Deep Learning with Python & R',
         issuer: 'Udemy',
         issueDate: 'Feb 2021',
         credentialId: 'UC-14c017d6-a101-49ac-bd35-a8331366c5f4',
-        skills: [],
-        color: '#6366F1',
-    },
-    {
-        id: 13,
-        title: 'Google AI ML Explore',
-        issuer: 'Google',
-        issueDate: 'Jun 2021',
-        skills: [],
-        color: '#F59E0B',
-    },
+        credentialUrl: 'https://www.udemy.com/certificate/UC-14c017d6-a101-49ac-bd35-a8331366c5f4/',
+        skills: [
+            'Machine Learning',
+            'Deep Learning',
+            'Artificial Intelligence (AI)',
+        ],
+        image: '/logos/udemy.png'
+    }
 ];
 
 export type { CertificateData };

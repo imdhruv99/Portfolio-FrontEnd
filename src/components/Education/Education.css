@@ -5,7 +5,7 @@
 
 .education-hero {
     position: relative;
-    height: 80vh;
+    height: 30vh;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -15,7 +15,7 @@
 
 .education-background-text {
     position: absolute;
-    font-size: 25vw;
+    font-size: 10vw;
     font-weight: 900;
     font-family: 'Cormorant Garamond', serif;
     opacity: 0.07;
