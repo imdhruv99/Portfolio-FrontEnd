@@ -111,39 +111,6 @@ const sortedCertificateData: CertificateData[] = [
     },
     {
         id: 10,
-        title: 'Problem Solving',
-        issuer: 'HackerRank',
-        issueDate: 'Nov 2022',
-        credentialUrl: 'https://www.hackerrank.com/certificates/bc82139c5c59',
-        skills: ['Critical Thinking', 'Problem Solving'],
-        image: '/images/hr.png'
-    },
-    {
-        id: 11,
-        title: 'Python Basic',
-        issuer: 'HackerRank',
-        credentialId: '009e79ac16e1',
-        credentialUrl: 'https://www.hackerrank.com/certificates/009e79ac16e1',
-        skills: ['Python'],
-        issueDate: 'July 2021',
-        image: '/images/hr.png'
-    },
-    {
-        id: 12,
-        title: 'Machine Learning & Deep Learning with Python & R',
-        issuer: 'Udemy',
-        issueDate: 'Feb 2021',
-        credentialId: 'UC-14c017d6-a101-49ac-bd35-a8331366c5f4',
-        credentialUrl: 'https://www.udemy.com/certificate/UC-14c017d6-a101-49ac-bd35-a8331366c5f4/',
-        skills: [
-            'Machine Learning',
-            'Deep Learning',
-            'Artificial Intelligence (AI)',
-        ],
-        image: '/images/udemy.png'
-    },
-    {
-        id: 13,
         title: 'Google AI ML Explore',
         issuer: 'Google',
         issueDate: 'Jun 2021',
@@ -155,6 +122,39 @@ const sortedCertificateData: CertificateData[] = [
         ],
         image: '/images/google.png'
     },
+    {
+        id: 11,
+        title: 'Problem Solving',
+        issuer: 'HackerRank',
+        issueDate: 'Nov 2022',
+        credentialUrl: 'https://www.hackerrank.com/certificates/bc82139c5c59',
+        skills: ['Critical Thinking', 'Problem Solving'],
+        image: '/images/hr.png'
+    },
+    {
+        id: 12,
+        title: 'Python Basic',
+        issuer: 'HackerRank',
+        credentialId: '009e79ac16e1',
+        credentialUrl: 'https://www.hackerrank.com/certificates/009e79ac16e1',
+        skills: ['Python'],
+        issueDate: 'July 2021',
+        image: '/images/hr.png'
+    },
+    {
+        id: 13,
+        title: 'Machine Learning & Deep Learning with Python & R',
+        issuer: 'Udemy',
+        issueDate: 'Feb 2021',
+        credentialId: 'UC-14c017d6-a101-49ac-bd35-a8331366c5f4',
+        credentialUrl: 'https://www.udemy.com/certificate/UC-14c017d6-a101-49ac-bd35-a8331366c5f4/',
+        skills: [
+            'Machine Learning',
+            'Deep Learning',
+            'Artificial Intelligence (AI)',
+        ],
+        image: '/images/udemy.png'
+    }
 ];
 
 export type { CertificateData };
