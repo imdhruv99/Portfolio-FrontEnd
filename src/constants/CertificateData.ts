@@ -19,7 +19,7 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/1302d89e-c584-40d6-ad91-5d3e4a881d11',
         skills: ['Kubernetes', 'Security'],
-        image: '/images/cks.png'
+        image: '/logos/cks.png'
     },
     {
         id: 2,
@@ -30,7 +30,7 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/a684b7ee-4ee5-4d02-8bd5-fc5280ceeea8',
         skills: ['Kubernetes'],
-        image: '/images/cka.png'
+        image: '/logos/cka.png'
     },
     {
         id: 3,
@@ -40,7 +40,7 @@ const sortedCertificateData: CertificateData[] = [
         credentialId: '2D0AF9104276-2D16C13CE9E5-2D0AED7FE7A8',
         credentialUrl: 'https://learn.kodekloud.com/certificate/2D0AF9104276-2D16C13CE9E5-2D0AED7FE7A8',
         skills: ['System Administration', 'Linux'],
-        image: '/images/csa.png'
+        image: '/logos/csa.png'
     },
     {
         id: 4,
@@ -50,7 +50,7 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/42395e8d-97e8-413c-8c1e-0f173af35a4f',
         skills: ['Python', 'Machine Learning'],
-        image: '/images/adsp.png'
+        image: '/logos/adsp.png'
     },
     {
         id: 5,
@@ -60,7 +60,7 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/3854b0e2-420a-48a9-a1e9-b3d7e249d37a',
         skills: ['Python', 'EDA'],
-        image: '/images/dap.png'
+        image: '/logos/dap.png'
     },
     {
         id: 6,
@@ -70,7 +70,7 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/fd637fac-0dc8-47a2-be5f-6d52e97e0630',
         skills: ['Python', 'Matplotlib', 'Seaboarn'],
-        image: '/images/dvp.png'
+        image: '/logos/dvp.png'
     },
     {
         id: 7,
@@ -83,7 +83,7 @@ const sortedCertificateData: CertificateData[] = [
             'Machine Learning',
             'Python'
         ],
-        image: '/images/mlp.png'
+        image: '/logos/mlp.png'
     },
     {
         id: 8,
@@ -93,7 +93,7 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl:
             'https://www.credly.com/earner/earned/badge/436fe513-437b-48dc-a416-ae366e8ba0f4',
         skills: ['Python'],
-        image: '/images/pds.png'
+        image: '/logos/pds.png'
     },
     {
         id: 9,
@@ -107,7 +107,7 @@ const sortedCertificateData: CertificateData[] = [
             'Deep Learning',
             'Artificial Intelligence (AI)',
         ],
-        image: '/images/su.png'
+        image: '/logos/su.png'
     },
     {
         id: 10,
@@ -120,7 +120,7 @@ const sortedCertificateData: CertificateData[] = [
             'Deep Learning',
             'Artificial Intelligence (AI)',
         ],
-        image: '/images/google.png'
+        image: '/logos/google.png'
     },
     {
         id: 11,
@@ -129,7 +129,7 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Nov 2022',
         credentialUrl: 'https://www.hackerrank.com/certificates/bc82139c5c59',
         skills: ['Critical Thinking', 'Problem Solving'],
-        image: '/images/hr.png'
+        image: '/logos/hr.png'
     },
     {
         id: 12,
@@ -139,7 +139,7 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl: 'https://www.hackerrank.com/certificates/009e79ac16e1',
         skills: ['Python'],
         issueDate: 'July 2021',
-        image: '/images/hr.png'
+        image: '/logos/hr.png'
     },
     {
         id: 13,
@@ -153,7 +153,7 @@ const sortedCertificateData: CertificateData[] = [
             'Deep Learning',
             'Artificial Intelligence (AI)',
         ],
-        image: '/images/udemy.png'
+        image: '/logos/udemy.png'
     }
 ];
 
