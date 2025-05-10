@@ -4,7 +4,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import educationData from '../../constants/EducationData';
-import sortedCertificateData from '../../constants/CertificateData';
+import certificateData from '../../constants/CertificateData';
+import quotesData from '../../constants/quotesData';
 import Image from 'next/image';
 
 if (typeof window !== 'undefined') {
@@ -30,7 +31,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
 
     useEffect(() => {
         educationRefs.current = Array(educationData.length).fill(null);
-        certificateRefs.current = Array(sortedCertificateData.length).fill(null);
+        certificateRefs.current = Array(certificateData.length).fill(null);
         setMounted(true);
     }, []);
 
@@ -188,26 +189,22 @@ const Education = ({ isDarkTheme }: EducationProps) => {
 
     const theme = isDarkTheme ? darkTheme : lightTheme;
 
-    // Inspirational quotes about education
-    const quotes = [
-        {
-            text: "Education is the best friend. An educated person is respected everywhere. Education beats the beauty and the youth.",
-            author: "Chanakya"
-        },
-        {
-            text: "The main aim of education should be to develop character, mental strength, and a spirit of philanthropy.",
-            author: "Swami Vivekananda"
-        },
-        {
-            text: "Let your life lightly dance on the edges of time like dew on the tip of a leaf.",
-            author: "Rabindranath Tagore"
-        }
-    ];
-
     // Select a random quote
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    const randomQuote = quotesData[Math.floor(Math.random() * quotesData.length)];
 
     const formatPeriod = (period: string) => period.replace(' - ', ' - ');
+
+    // sorting certificate data based on priority
+    const proficiencyLevelOrder = {
+        'Specialist': 0,
+        'Advanced': 1,
+        'Intermediate': 2,
+        'Beginner': 3
+    };
+
+    const certificateDataByPriority = [...certificateData].sort((a, b) => {
+        return proficiencyLevelOrder[a.proficiencyLevel] - proficiencyLevelOrder[b.proficiencyLevel];
+    });
 
     return (
         <section
@@ -228,7 +225,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
                     ref={quoteRef}
                     className="mb-24 max-w-3xl mx-auto text-center"
                 >
-                    <p className={`text-sm sm:text-base ${theme.text} mb-2`}>&quot;{randomQuote.text}&quot;</p>
+                    <p className={`text-sm sm:text-base ${theme.text} mb-2`}>&quot;{randomQuote.slogan}&quot;</p>
                     <p className={`text-xs ${theme.subtext}`}>— {randomQuote.author}</p>
                 </div>
 
@@ -290,7 +287,7 @@ const Education = ({ isDarkTheme }: EducationProps) => {
                         ref={certificatesRef}
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pb-32"
                     >
-                        {sortedCertificateData.map((cert, index) => (
+                        {certificateDataByPriority.map((cert, index) => (
                             <div
                                 key={cert.id}
                                 ref={(el) => {
