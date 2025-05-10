@@ -7,19 +7,20 @@ type CertificateData = {
     credentialUrl?: string;
     skills: string[];
     image?: string;
+    proficiencyLevel: 'Specialist' | 'Advanced' | 'Intermediate' | 'Beginner';
 };
 
-const sortedCertificateData: CertificateData[] = [
+const certificateData: CertificateData[] = [
     {
         id: 1,
         title: 'Certified Kubernetes Security Specialist',
         issuer: 'The Linux Foundation',
         issueDate: 'Jun 2024',
         credentialId: 'LF-perx0w14k6',
-        credentialUrl:
-            'https://www.credly.com/earner/earned/badge/1302d89e-c584-40d6-ad91-5d3e4a881d11',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/1302d89e-c584-40d6-ad91-5d3e4a881d11',
         skills: ['Kubernetes', 'Security'],
-        image: '/logos/cks.png'
+        image: '/logos/cks.png',
+        proficiencyLevel: 'Specialist',
     },
     {
         id: 2,
@@ -27,10 +28,10 @@ const sortedCertificateData: CertificateData[] = [
         issuer: 'The Linux Foundation',
         issueDate: 'Feb 2024',
         credentialId: 'LF-iphu8udve2',
-        credentialUrl:
-            'https://www.credly.com/earner/earned/badge/a684b7ee-4ee5-4d02-8bd5-fc5280ceeea8',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/a684b7ee-4ee5-4d02-8bd5-fc5280ceeea8',
         skills: ['Kubernetes'],
-        image: '/logos/cka.png'
+        image: '/logos/cka.png',
+        proficiencyLevel: 'Advanced',
     },
     {
         id: 3,
@@ -40,60 +41,58 @@ const sortedCertificateData: CertificateData[] = [
         credentialId: '2D0AF9104276-2D16C13CE9E5-2D0AED7FE7A8',
         credentialUrl: 'https://learn.kodekloud.com/certificate/2D0AF9104276-2D16C13CE9E5-2D0AED7FE7A8',
         skills: ['System Administration', 'Linux'],
-        image: '/logos/csa.png'
+        image: '/logos/csa.png',
+        proficiencyLevel: 'Advanced',
     },
     {
         id: 4,
         title: 'Applied Data Science with Python - Level 2',
         issuer: 'IBM',
         issueDate: 'Jan 2021',
-        credentialUrl:
-            'https://www.credly.com/earner/earned/badge/42395e8d-97e8-413c-8c1e-0f173af35a4f',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/42395e8d-97e8-413c-8c1e-0f173af35a4f',
         skills: ['Python', 'Machine Learning'],
-        image: '/logos/adsp.png'
+        image: '/logos/adsp.png',
+        proficiencyLevel: 'Advanced',
     },
     {
         id: 5,
         title: 'Data Analysis Using Python',
         issuer: 'IBM',
         issueDate: 'Jan 2021',
-        credentialUrl:
-            'https://www.credly.com/earner/earned/badge/3854b0e2-420a-48a9-a1e9-b3d7e249d37a',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/3854b0e2-420a-48a9-a1e9-b3d7e249d37a',
         skills: ['Python', 'EDA'],
-        image: '/logos/dap.png'
+        image: '/logos/dap.png',
+        proficiencyLevel: 'Intermediate',
     },
     {
         id: 6,
         title: 'Data Visualization Using Python',
         issuer: 'IBM',
         issueDate: 'Jan 2021',
-        credentialUrl:
-            'https://www.credly.com/earner/earned/badge/fd637fac-0dc8-47a2-be5f-6d52e97e0630',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/fd637fac-0dc8-47a2-be5f-6d52e97e0630',
         skills: ['Python', 'Matplotlib', 'Seaboarn'],
-        image: '/logos/dvp.png'
+        image: '/logos/dvp.png',
+        proficiencyLevel: 'Intermediate',
     },
     {
         id: 7,
         title: 'Machine Learning with Python - Level 1',
         issuer: 'IBM',
         issueDate: 'Jan 2021',
-        credentialUrl:
-            'https://www.credly.com/earner/earned/badge/183db7e3-c39f-4492-9d9a-ee6357fa5fd8',
-        skills: [
-            'Machine Learning',
-            'Python'
-        ],
-        image: '/logos/mlp.png'
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/183db7e3-c39f-4492-9d9a-ee6357fa5fd8',
+        skills: ['Machine Learning', 'Python'],
+        image: '/logos/mlp.png',
+        proficiencyLevel: 'Intermediate',
     },
     {
         id: 8,
         title: 'Python for Data Science',
         issuer: 'IBM',
         issueDate: 'Jan 2021',
-        credentialUrl:
-            'https://www.credly.com/earner/earned/badge/436fe513-437b-48dc-a416-ae366e8ba0f4',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/436fe513-437b-48dc-a416-ae366e8ba0f4',
         skills: ['Python'],
-        image: '/logos/pds.png'
+        image: '/logos/pds.png',
+        proficiencyLevel: 'Beginner',
     },
     {
         id: 9,
@@ -102,12 +101,9 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Aug 2021',
         credentialId: '34dd40805163575090878aae3887db56',
         credentialUrl: 'https://coursera.org/share/34dd40805163575090878aae3887db56',
-        skills: [
-            'Machine Learning',
-            'Deep Learning',
-            'Artificial Intelligence (AI)',
-        ],
-        image: '/logos/su.png'
+        skills: ['Machine Learning', 'Deep Learning', 'Artificial Intelligence (AI)'],
+        image: '/logos/su.png',
+        proficiencyLevel: 'Advanced',
     },
     {
         id: 10,
@@ -115,12 +111,9 @@ const sortedCertificateData: CertificateData[] = [
         issuer: 'Google',
         issueDate: 'Jun 2021',
         credentialUrl: 'https://drive.google.com/file/d/1Pk74LZJif8hNPTRXHxQ1B5S6fBrsJG1R/view',
-        skills: [
-            'Machine Learning',
-            'Deep Learning',
-            'Artificial Intelligence (AI)',
-        ],
-        image: '/logos/google.png'
+        skills: ['Machine Learning', 'Deep Learning', 'Artificial Intelligence (AI)'],
+        image: '/logos/google.png',
+        proficiencyLevel: 'Intermediate',
     },
     {
         id: 11,
@@ -129,7 +122,8 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Nov 2022',
         credentialUrl: 'https://www.hackerrank.com/certificates/bc82139c5c59',
         skills: ['Critical Thinking', 'Problem Solving'],
-        image: '/logos/hr.png'
+        image: '/logos/hr.png',
+        proficiencyLevel: 'Beginner',
     },
     {
         id: 12,
@@ -139,7 +133,8 @@ const sortedCertificateData: CertificateData[] = [
         credentialUrl: 'https://www.hackerrank.com/certificates/009e79ac16e1',
         skills: ['Python'],
         issueDate: 'July 2021',
-        image: '/logos/hr.png'
+        image: '/logos/hr.png',
+        proficiencyLevel: 'Beginner',
     },
     {
         id: 13,
@@ -148,14 +143,11 @@ const sortedCertificateData: CertificateData[] = [
         issueDate: 'Feb 2021',
         credentialId: 'UC-14c017d6-a101-49ac-bd35-a8331366c5f4',
         credentialUrl: 'https://www.udemy.com/certificate/UC-14c017d6-a101-49ac-bd35-a8331366c5f4/',
-        skills: [
-            'Machine Learning',
-            'Deep Learning',
-            'Artificial Intelligence (AI)',
-        ],
-        image: '/logos/udemy.png'
-    }
+        skills: ['Machine Learning', 'Deep Learning', 'Artificial Intelligence (AI)'],
+        image: '/logos/udemy.png',
+        proficiencyLevel: 'Intermediate',
+    },
 ];
 
 export type { CertificateData };
-export default sortedCertificateData;
+export default certificateData;
