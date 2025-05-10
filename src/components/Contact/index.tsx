@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
     GithubLogo,
     Mailbox,
@@ -18,7 +17,7 @@ import {
     DiscordLogo
 } from '@phosphor-icons/react';
 import gsap from 'gsap';
-
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 interface ContactProps {
     isDarkTheme: boolean;
 }

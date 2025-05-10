@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import Image from 'next/image';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+
 import educationData from '../../constants/EducationData';
 import certificateData from '../../constants/CertificateData';
 import quotesData from '../../constants/quotesData';
-import Image from 'next/image';
+
 
 if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
