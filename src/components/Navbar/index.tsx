@@ -1,85 +1,31 @@
 'use client';
 
-import './Navbar.css'
+import './Navbar.css';
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
-
-import {
-    HouseSimple,
-    Briefcase,
-    GraduationCap,
-    LightbulbFilament,
-    UserCircle,
-    GithubLogo,
-    InstagramLogo,
-    LinkedinLogo,
-    Sun,
-    Moon,
-} from '@phosphor-icons/react';
+import { Icon } from '@iconify/react';
 
 type NavItem = {
     id: string;
     label: string;
-    icon: React.ElementType | null;
+    icon: string | null; // Iconify uses string icon names
     path: string | null;
     type?: string;
 };
 
 const navItems: NavItem[] = [
-    { id: 'home', label: 'Home', icon: HouseSimple, path: '/' },
-    {
-        id: 'experience',
-        label: 'Experience',
-        icon: Briefcase,
-        path: '/experience',
-    },
-    {
-        id: 'education',
-        label: 'Education',
-        icon: GraduationCap,
-        path: '/education',
-    },
-    {
-        id: 'projects',
-        label: 'Projects',
-        icon: LightbulbFilament,
-        path: '/projects',
-    },
-    { id: 'contact', label: 'Contact', icon: UserCircle, path: '/contact' },
-    {
-        id: 'separator-1',
-        label: 'separator-1',
-        type: 'separator',
-        icon: null,
-        path: null,
-    },
-    {
-        id: 'github',
-        label: 'Github',
-        icon: GithubLogo,
-        path: 'https://github.com/imdhruv99',
-    },
-    {
-        id: 'instagram',
-        label: 'Instagram',
-        icon: InstagramLogo,
-        path: 'https://www.instagram.com/_imdhruv99_/',
-    },
-    {
-        id: 'linkedin',
-        label: 'LinkedIn',
-        icon: LinkedinLogo,
-        path: 'https://www.linkedin.com/in/imdhruv99/',
-    },
-    {
-        id: 'separator-2',
-        label: 'separator-2',
-        type: 'separator',
-        icon: null,
-        path: null,
-    },
+    { id: 'home', label: 'Home', icon: 'mdi:home-outline', path: '/' },
+    { id: 'experience', label: 'Experience', icon: 'mdi:briefcase-outline', path: '/experience' },
+    { id: 'education', label: 'Education', icon: 'mdi:school-outline', path: '/education' },
+    { id: 'projects', label: 'Projects', icon: 'mdi:lightbulb-outline', path: '/projects' },
+    { id: 'contact', label: 'Contact', icon: 'mdi:account-circle-outline', path: '/contact' },
+    { id: 'separator-1', label: 'separator-1', type: 'separator', icon: null, path: null },
+    { id: 'github', label: 'Github', icon: 'mdi:github', path: 'https://github.com/imdhruv99' },
+    { id: 'instagram', label: 'Instagram', icon: 'mdi:instagram', path: 'https://www.instagram.com/_imdhruv99_/' },
+    { id: 'linkedin', label: 'LinkedIn', icon: 'mdi:linkedin', path: 'https://www.linkedin.com/in/imdhruv99/' },
+    { id: 'separator-2', label: 'separator-2', type: 'separator', icon: null, path: null },
     { id: 'theme', label: 'Theme', icon: null, path: null },
 ];
 
@@ -97,21 +43,16 @@ const Navbar = () => {
 
     useEffect(() => {
         setIsMounted(true);
-
-        // Check if the screen is mobile sized
         const checkMobileView = () => {
             setMobileView(window.innerWidth < 640);
         };
-
         checkMobileView();
         window.addEventListener('resize', checkMobileView);
-
         return () => {
             window.removeEventListener('resize', checkMobileView);
         };
     }, []);
 
-    // Filter out some items for mobile to prevent overcrowding
     const displayNavItems = mobileView
         ? navItems.filter((item) =>
             [
@@ -131,31 +72,18 @@ const Navbar = () => {
         : navItems;
 
     const resetIcons = (index: number) => {
-        if (mobileView) return; // Skip animation on mobile
-
-        const transformations = [
-            { offset: -2 },
-            { offset: -1 },
-            { offset: 0 },
-            { offset: 1 },
-            { offset: 2 },
-        ];
-
-        transformations.forEach(({ offset }) => {
+        if (mobileView) return;
+        const transformations = [-2, -1, 0, 1, 2];
+        transformations.forEach((offset) => {
             const itemIndex = index + offset;
             const item = itemsRef.current[itemIndex];
-            if (item) {
-                item.style.transform = 'scale(1) translateY(0)';
-            }
+            if (item) item.style.transform = 'scale(1) translateY(0)';
         });
     };
 
     const focusIcon = (index: number) => {
-        if (mobileView) return; // Skip animation on mobile
-
-        if (focusedIndex !== null) {
-            resetIcons(focusedIndex);
-        }
+        if (mobileView) return;
+        if (focusedIndex !== null) resetIcons(focusedIndex);
         setFocusedIndex(index);
 
         const transformations = [
@@ -176,34 +104,21 @@ const Navbar = () => {
     };
 
     const handleNavigation = (path: string | null) => {
-        if (path) {
-            if (path.startsWith('http')) {
-                window.open(path, '_blank');
-            }
+        if (path && path.startsWith('http')) {
+            window.open(path, '_blank');
         }
     };
 
     const toggleTheme = () => {
-        // Prevent multiple clicks during animation
         if (isAnimating) return;
-
         setIsAnimating(true);
-
-        // Toggle theme - explicitly set to light or dark, avoiding system theme
-        const newTheme = isDarkTheme ? 'light' : 'dark';
-        console.log(`Changing theme from ${theme} to ${newTheme}`);
-        setTheme(newTheme);
-
-        // Reset animation state after animation completes
+        setTheme(isDarkTheme ? 'light' : 'dark');
         setTimeout(() => {
             setIsAnimating(false);
-        }, 500); // Match the animation duration
+        }, 500);
     };
 
-    // Don't render anything during SSR
-    if (!isMounted) {
-        return null;
-    }
+    if (!isMounted) return null;
 
     return (
         <div className="fixed bottom-2 sm:bottom-3 lg:bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-[95%]">
@@ -218,8 +133,7 @@ const Navbar = () => {
                     item.type === 'separator' ? (
                         <div
                             key={item.id}
-                            className={`w-px h-4 sm:h-5 lg:h-6 bg-gray-400 dark:bg-gray-600 my-auto mx-0.5 sm:mx-0.5 opacity-40 theme-transition ${mobileView ? 'mx-0' : ''
-                                }`}
+                            className={`w-px h-4 sm:h-5 lg:h-6 bg-gray-400 dark:bg-gray-600 my-auto mx-0.5 opacity-40 theme-transition`}
                         />
                     ) : (
                         <div
@@ -263,12 +177,11 @@ const Navbar = () => {
                                             }`}
                                     >
                                         {item.icon && (
-                                            <item.icon
-                                                className={`theme-transition ${isDarkTheme
-                                                    ? 'text-white-200'
-                                                    : 'text-gray-700'
-                                                    }`}
-                                                size={mobileView ? 18 : 20}
+                                            <Icon
+                                                icon={item.icon}
+                                                className="theme-transition"
+                                                color={isDarkTheme ? '#e5e5e5' : '#4b5563'}
+                                                width={mobileView ? 18 : 20}
                                             />
                                         )}
                                     </div>
@@ -291,25 +204,22 @@ const Navbar = () => {
                                                     : ''
                                             }
                                         >
-                                            {isDarkTheme ? (
-                                                <Sun
-                                                    className="text-gray-200 theme-transition"
-                                                    size={mobileView ? 18 : 20}
-                                                />
-                                            ) : (
-                                                <Moon
-                                                    className="text-gray-700 theme-transition"
-                                                    size={mobileView ? 18 : 20}
-                                                />
-                                            )}
+                                            <Icon
+                                                icon={
+                                                    isDarkTheme
+                                                        ? 'mdi:weather-sunny'
+                                                        : 'mdi:weather-night'
+                                                }
+                                                color={isDarkTheme ? '#e5e5e5' : '#4b5563'}
+                                                width={mobileView ? 18 : 20}
+                                            />
                                         </div>
                                     ) : item.icon ? (
-                                        <item.icon
-                                            className={`theme-transition ${isDarkTheme
-                                                ? 'text-gray-200'
-                                                : 'text-gray-700'
-                                                }`}
-                                            size={mobileView ? 18 : 20}
+                                        <Icon
+                                            icon={item.icon}
+                                            className="theme-transition"
+                                            color={isDarkTheme ? '#e5e5e5' : '#4b5563'}
+                                            width={mobileView ? 18 : 20}
                                         />
                                     ) : null}
                                 </div>
@@ -319,8 +229,7 @@ const Navbar = () => {
                                     className={`absolute top-[-1.5rem] sm:top-[-1.5rem] lg:top-[-1.75rem] left-1/2 transform -translate-x-1/2 theme-transition ${isDarkTheme
                                         ? 'bg-neutral-600 hover:bg-neutral-700'
                                         : 'bg-gray-100 text-gray-800'
-                                        } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none
-                                    font-serif animate-fadeIn z-50`}
+                                        } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none font-serif animate-fadeIn z-50`}
                                     style={{
                                         animation:
                                             'fadeIn 0.2s ease-in-out forwards',
