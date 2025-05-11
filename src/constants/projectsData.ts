@@ -44,7 +44,7 @@ const projectData: ProjectData[] = [
         id: 4,
         title: "Neural Network from Scratch - OCR",
         description: "An OCR system implementing a neural network from scratch using Python and NumPy, with visualizations via Matplotlib.",
-        technicalStack: ['Python', 'Numpy', 'Matplotlib', 'HTML', 'CSS', 'JS', 'Jupyter Notebook'],
+        technicalStack: ['Python', 'Numpy', 'Matplotlib', 'HTML', 'CSS', 'JavaScript', 'Jupyter Notebook'],
         link: ['https://github.com/imdhruv99/My-Own-Neural-Network'],
         category: 'Machine Learning',
         tags: ['Neural Network', 'OCR', 'Deep Learning', 'Computer Vision'],
@@ -122,12 +122,12 @@ const projectData: ProjectData[] = [
     },
     {
         id: 12,
-        title: "Golang WebSocket Chat Application with Docker",
-        description: "A real-time chat application built with Golang, Gorilla WebSocket, and Docker for easy deployment.",
-        technicalStack: ['Golang', 'Gorilla WebSocket', 'Docker'],
+        title: "Go WebSocket Chat Application with Docker",
+        description: "A real-time chat application built with Go, Gorilla WebSocket, and Docker for easy deployment.",
+        technicalStack: ['Go', 'Gorilla WebSocket', 'Docker'],
         link: ['https://github.com/imdhruv99/Golang-Gorilla-WebSocket-ChatApp-Docker'],
         category: 'Backend Development',
-        tags: ['Golang', 'WebSocket', 'Real-time', 'Chat Application', 'Docker'],
+        tags: ['Go', 'WebSocket', 'Real-time', 'Chat Application', 'Docker'],
         difficulty: 'Intermediate',
     }
 ];
