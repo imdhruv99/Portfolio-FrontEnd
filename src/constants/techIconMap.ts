@@ -24,7 +24,7 @@ const techIconMap: Record<string, { light: string; dark: string }> = {
     Numpy: { light: 'logos:numpy', dark: 'logos:numpy' },
     OAuth2: { light: 'devicon-plain:oauth', dark: 'devicon-plain:oauth' },
     Pandas: { light: 'logos:pandas', dark: 'devicon-plain:pandas-wordmark' },
-    PHP: { light: 'logos:php', dark: 'logos:php' },
+    PHP: { light: 'skill-icons:php-dark', dark: 'skill-icons:php-light' },
     Postgres: { light: 'logos:postgresql', dark: 'logos:postgresql' },
     Python: { light: 'logos:python', dark: 'logos:python' },
     Redis: { light: 'logos:redis', dark: 'logos:redis' },

@@ -10,7 +10,7 @@ import { Icon } from '@iconify/react';
 type NavItem = {
     id: string;
     label: string;
-    icon: string | null; // Iconify uses string icon names
+    icon: string | null;
     path: string | null;
     type?: string;
 };

@@ -65,7 +65,7 @@ const Projects = ({ isDarkTheme }: ProjectsProps) => {
                     Projects
                 </h1>
                 <p className={`text-lg sm:text-xl font-light max-w-2xl mx-auto ${theme.subtext}`}>
-                    A diverse portfolio of real-world projects spanning web development, machine learning, DevOps, and backend systems—demonstrating hands-on expertise with modern tech stacks, scalable architectures, and AI-driven solutions.
+                    A diverse portfolio of real-world projects spanning web development, machine learning, DevOps, and backend systems-demonstrating hands-on expertise with modern tech stacks, scalable architectures, and AI-driven solutions.
                 </p>
             </div>
 
