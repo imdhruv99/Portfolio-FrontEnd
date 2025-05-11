@@ -3,45 +3,10 @@
 import gsap from 'gsap';
 import { Tooltip } from 'react-tooltip';
 import { Icon } from '@iconify/react';
-import { GithubLogo } from '@phosphor-icons/react';
 import { useEffect, useRef, useState, useLayoutEffect } from 'react';
 
 import projectData from '@/constants/projectsData';
-
-const techIconMap: Record<string, { light: string; dark: string }> = {
-    Ansible: { light: 'logos:ansible', dark: 'logos:ansible' },
-    AWS: { light: 'skill-icons:aws-dark', dark: 'skill-icons:aws-light' },
-    CSS: { light: 'logos:css-3', dark: 'logos:css-3' },
-    CV2: { light: 'simple-icons:opencv', dark: 'simple-icons:opencv' },
-    Django: { light: 'skill-icons:django', dark: 'simple-icons:django' },
-    Docker: { light: 'logos:docker-icon', dark: 'logos:docker-icon' },
-    ELKStack: { light: 'simple-icons:elasticstack', dark: 'simple-icons:elasticstack' },
-    ExpressJs: { light: 'simple-icons:express', dark: 'simple-icons:express' },
-    Flask: { light: 'logos:flask', dark: 'bxl:flask' },
-    Gin: { light: 'simple-icons:gin', dark: 'simple-icons:gin' },
-    Go: { light: 'logos:go', dark: 'logos:go' },
-    Helm: { light: 'logos:helm', dark: 'catppuccin:helm' },
-    HTML: { light: 'logos:html-5', dark: 'logos:html-5' },
-    JavaScript: { light: 'logos:javascript', dark: 'logos:javascript' },
-    Jenkins: { light: 'logos:jenkins', dark: 'logos:jenkins' },
-    JupyterNotebook: { light: 'logos:jupyter', dark: 'logos:jupyter' },
-    Keras: { light: 'devicon:keras', dark: 'devicon:keras' },
-    Kubernetes: { light: 'logos:kubernetes', dark: 'logos:kubernetes' },
-    Matplotlib: { light: 'devicon:matplotlib', dark: 'devicon:matplotlib' },
-    MongoDB: { light: 'logos:mongodb-icon', dark: 'logos:mongodb-icon' },
-    NodeJs: { light: 'logos:nodejs-icon', dark: 'logos:nodejs-icon' },
-    Numpy: { light: 'logos:numpy', dark: 'logos:numpy' },
-    OAuth2: { light: 'devicon-plain:oauth', dark: 'devicon-plain:oauth' },
-    Pandas: { light: 'logos:pandas', dark: 'devicon-plain:pandas-wordmark' },
-    PHP: { light: 'logos:php', dark: 'logos:php' },
-    Postgres: { light: 'logos:postgresql', dark: 'logos:postgresql' },
-    Python: { light: 'logos:python', dark: 'logos:python' },
-    Redis: { light: 'logos:redis', dark: 'logos:redis' },
-    Sklearn: { light: 'skill-icons:scikitlearn-dark', dark: 'skill-icons:scikitlearn-light' },
-    Tensorflow: { light: 'logos:tensorflow', dark: 'logos:tensorflow' },
-    Terraform: { light: 'logos:terraform-icon', dark: 'logos:terraform-icon' },
-    XGBoost: { light: 'simple-icons:xgboost', dark: 'simple-icons:xgboost' },
-};
+import techIconMap from '@/constants/techIconMap';
 
 interface ProjectsProps {
     isDarkTheme: boolean;
@@ -158,9 +123,10 @@ const Projects = ({ isDarkTheme }: ProjectsProps) => {
                                         data-tooltip-content={repoName}
                                         className="group"
                                     >
-                                        <GithubLogo
-                                            size={22}
-                                            weight="duotone"
+                                        <Icon
+                                            icon={techIconMap.Github[isDarkTheme ? 'dark' : 'light']}
+                                            width="22"
+                                            height="22"
                                             className={`transition-transform group-hover:scale-110 ${theme.iconColor}`}
                                         />
                                         <Tooltip
