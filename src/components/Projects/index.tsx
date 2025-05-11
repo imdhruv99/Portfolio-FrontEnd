@@ -74,7 +74,7 @@ const Projects = ({ isDarkTheme }: ProjectsProps) => {
                 {projectData.map((project) => (
                     <div
                         key={project.id}
-                        className={`project-card ${theme.card} flex flex-col justify-between p-6 rounded-xl transition-all duration-300 h-[10rem] relative`}
+                        className={`project-card ${theme.card} flex flex-col justify-between p-6 rounded-xl transition-all duration-300 h-[11rem] relative`}
                     >
                         {/* Top Section */}
                         <div>
