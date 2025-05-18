@@ -129,9 +129,10 @@ const Projects = () => {
 
                 {/* Main card */}
                 <div ref={cardRef} className="relative w-full max-w-5xl">
+
                     {/* Technology tags */}
-                    <div ref={techRef} className="absolute -top-16 right-0 flex flex-wrap gap-2 z-20 max-w-xl justify-end">
-                        {project.technicalStack.slice(0, 5).map((tech, index) => {
+                    <div ref={techRef} className="absolute -top-16 right-0 flex flex-wrap gap-2 z-20 max-w-5xl justify-end">
+                        {project.technicalStack.map((tech, index) => {
                             const iconKey = tech.replace(/\s+/g, '').replace(/\./g, '').replace(/-/g, '').replace(/js/i, 'Js');
                             const icon = techIconMap[iconKey]?.[isDark ? 'dark' : 'light'] || `logos:${iconKey.toLowerCase()}`;
 
@@ -150,6 +151,7 @@ const Projects = () => {
                             );
                         })}
                     </div>
+
 
                     {/* Card container */}
                     <div className={`relative aspect-video rounded-3xl overflow-hidden backdrop-blur-sm border shadow-2xl transition-all duration-300 ${isDark
