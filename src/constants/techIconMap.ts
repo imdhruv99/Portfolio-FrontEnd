@@ -31,7 +31,7 @@ const techIconMap: Record<string, { light: string; dark: string }> = {
     Sklearn: { light: 'skill-icons:scikitlearn-dark', dark: 'skill-icons:scikitlearn-light' },
     Tensorflow: { light: 'logos:tensorflow', dark: 'logos:tensorflow' },
     Terraform: { light: 'logos:terraform-icon', dark: 'logos:terraform-icon' },
-    XGBoost: { light: 'simple-icons:xgboost', dark: 'simple-icons:xgboost' },
+    ReactJs: { light:'skill-icons:react-dark', dark:'skill-icons:react-light' },
 };
 
 export default techIconMap;
