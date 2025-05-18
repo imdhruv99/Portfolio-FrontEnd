@@ -135,9 +135,9 @@ const projectData: ProjectData[] = [
         title: "IdeaBeacon",
         description: "Idea Posting site for community where user can come together and brainstorm with each other.",
         technicalStack: ['NodeJs', 'ExpressJs', 'ReactJS', 'Docker', 'MongoDB'],
-        link: ['https://github.com/imdhruv99/Golang-Gorilla-WebSocket-ChatApp-Docker'],
-        category: 'Backend Development',
-        tags: ['Go', 'WebSocket', 'Real-time', 'Chat Application', 'Docker'],
+        link: ['https://github.com/imdhruv99/IdeaBeacon-FrontEnd/', 'https://github.com/imdhruv99/IdeaBeacon-BackEnd'],
+        category: 'Full Stack Development',
+        tags: ['NodeJs', 'ExpressJs', 'ReactJS', 'Docker', 'MongoDB'],
         difficulty: 'Intermediate',
     }
 ];
