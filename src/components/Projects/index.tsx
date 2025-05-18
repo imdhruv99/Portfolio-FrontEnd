@@ -31,8 +31,8 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             text: 'text-white',
             subtext: 'text-white/60',
             border: 'border-white/10',
-            card: 'bg-[#1e1e1e]/80',
-            gradientOverlay: 'bg-gradient-to-t from-black/70 via-transparent to-black/30',
+            card: 'bg-[#2c2c2c]/80', // Lighter dark card (reduced harshness)
+            gradientOverlay: 'bg-gradient-to-t from-black/50 via-transparent to-black/20', // Softer gradient
             button: 'bg-white/10 hover:bg-white/20 text-white',
             techBadge: 'text-white/70 bg-white/5 border-white/10 hover:bg-white/10',
             iconColor: 'text-white/30',
@@ -45,7 +45,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             text: 'text-gray-900',
             subtext: 'text-gray-600',
             border: 'border-gray-300',
-            card: 'bg-white/90',
+            card: 'bg-gradient-to-br from-[#f4f4f4] to-[#ffffff] shadow-lg', // Gradient card with subtle shadow
             gradientOverlay: 'bg-gradient-to-t from-white/70 via-transparent to-white/30',
             button: 'bg-gray-100 hover:bg-white text-gray-900',
             techBadge: 'text-gray-700 bg-white border-gray-200 hover:bg-gray-100',
