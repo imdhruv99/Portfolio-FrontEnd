@@ -209,19 +209,34 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                     </div>
 
                     <div ref={linksRef} className="mt-4 sm:mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                        <div className={`text-xs sm:text-sm tracking-wider ${theme.subtext}`}>
-                            <span className="block font-medium">{project.category.toUpperCase()}</span>
-                            <span className="block capitalize">{project.difficulty}</span>
-                        </div>
 
-                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
-                            {project.link?.map((url, idx) => (
-                                <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-2 text-xs sm:text-sm tracking-wider backdrop-blur-sm border px-3 sm:px-4 py-2 rounded-full ${theme.button} ${theme.border}`}>
-                                    <Icon icon={techIconMap.Github[isDarkTheme ? 'dark' : 'light']} width="14" height="14" className="sm:w-4 sm:h-4" />
-                                </a>
-                            ))}
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 w-full">
+
+                            <div className="flex items-center justify-between w-full sm:block">
+                                <div className={`text-xs sm:text-sm tracking-wider ${theme.subtext}`}>
+                                    <span className="block font-medium">{project.category.toUpperCase()}</span>
+                                    <span className="block capitalize">{project.difficulty}</span>
+                                </div>
+
+                                <div className="flex sm:hidden">
+                                    {project.link?.map((url, idx) => (
+                                        <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className={`ml-2 flex items-center gap-2 text-xs tracking-wider backdrop-blur-sm border px-3 py-2 rounded-full ${theme.button} ${theme.border}`}>
+                                            <Icon icon={techIconMap.Github[isDarkTheme ? 'dark' : 'light']} width="14" height="14" />
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="hidden sm:flex flex-row gap-4">
+                                {project.link?.map((url, idx) => (
+                                    <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-2 text-sm tracking-wider backdrop-blur-sm border px-4 py-2 rounded-full ${theme.button} ${theme.border}`}>
+                                        <Icon icon={techIconMap.Github[isDarkTheme ? 'dark' : 'light']} width="16" height="16" />
+                                    </a>
+                                ))}
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
