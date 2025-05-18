@@ -1,13 +1,15 @@
+// tailwind.config.mjs
+import scrollbar from 'tailwind-scrollbar';
+
 /** @type {import('tailwindcss').Config} */
 const config = {
-    darkMode: ['class'],
+    darkMode: ['class', '[data-theme="dark"]'],
     content: [
         './pages/**/*.{ts,tsx}',
         './components/**/*.{ts,tsx}',
         './app/**/*.{ts,tsx}',
         './src/**/*.{ts,tsx}',
     ],
-    darkMode: ['class', '[data-theme="dark"]'],
     theme: {
         extend: {
             fontFamily: {
@@ -23,12 +25,13 @@ const config = {
             },
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                'gradient-conic':
-                    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+                'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
             },
         },
     },
-    plugins: [],
+    plugins: [
+        scrollbar({ nocompatible: true })
+    ],
 };
 
 export default config;

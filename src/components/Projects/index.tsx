@@ -1,189 +1,252 @@
-'use client';
-
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-import { Tooltip } from 'react-tooltip';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { gsap } from 'gsap';
 import { Icon } from '@iconify/react';
-import { useEffect, useRef, useState, useLayoutEffect } from 'react';
 
 import projectData from '@/constants/projectsData';
 import techIconMap from '@/constants/techIconMap';
+import NavigationDots from '../NavigationDots';
 
-gsap.registerPlugin(ScrollTrigger);
+// Main component
+const Projects = () => {
+    const [currentProject, setCurrentProject] = useState(0);
+    const [isDark, setIsDark] = useState(true);
+    const cardRef = useRef<HTMLDivElement>(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
+    const indexRef = useRef<HTMLDivElement>(null);
+    const techRef = useRef<HTMLDivElement>(null);
+    const linksRef = useRef<HTMLDivElement>(null);
+    const descRef = useRef<HTMLParagraphElement>(null);
 
-interface ProjectsProps {
-    isDarkTheme: boolean;
-}
-
-const Projects = ({ isDarkTheme }: ProjectsProps) => {
-    const [mounted, setMounted] = useState(false);
-    const sectionRef = useRef<HTMLDivElement | null>(null);
+    const project = projectData[currentProject];
 
     useEffect(() => {
-        setMounted(true);
+        const tl = gsap.timeline();
+
+        // Initial animations
+        tl.fromTo(indexRef.current,
+            { opacity: 0, x: -50 },
+            { opacity: 1, x: 0, duration: 1, ease: "power3.out" }
+        )
+            .fromTo(cardRef.current,
+                { opacity: 0, y: 100, scale: 0.9 },
+                { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out" },
+                "-=0.5"
+            )
+            .fromTo(titleRef.current,
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+                "-=0.8"
+            )
+            .fromTo(descRef.current,
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+                "-=0.6"
+            )
+            .fromTo(techRef.current,
+                { opacity: 0, y: -20 },
+                { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+                "-=0.6"
+            )
+            .fromTo(linksRef.current,
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+                "-=0.4"
+            );
     }, []);
 
-    useLayoutEffect(() => {
-        if (!sectionRef.current) return;
-
-        const ctx = gsap.context(() => {
-            gsap.utils.toArray('.project-card').forEach((card, index) => {
-                gsap.from(card, {
-                    scrollTrigger: {
-                        trigger: card,
-                        start: 'top 85%',
-                    },
-                    opacity: 0,
-                    y: 40,
-                    duration: 0.8,
-                    ease: 'power2.out',
-                    delay: index * 0.05,
-                });
+    useEffect(() => {
+        // Animate on project change
+        const tl = gsap.timeline();
+        tl.to([titleRef.current, descRef.current, techRef.current], {
+            opacity: 0,
+            y: 20,
+            duration: 0.3,
+            ease: "power2.in"
+        })
+            .to([titleRef.current, descRef.current, techRef.current], {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: "power2.out"
             });
-        }, sectionRef);
+    }, [currentProject]);
 
-        return () => ctx.revert();
+    const navigateProject = (direction: 'next' | 'prev') => {
+        if (direction === 'next') {
+            setCurrentProject((prev) => (prev + 1) % projectData.length);
+        } else {
+            setCurrentProject((prev) => (prev - 1 + projectData.length) % projectData.length);
+        }
+    };
+
+    const scrollLocked = useRef(false);
+    const handleScroll = useCallback((e: WheelEvent) => {
+        if (scrollLocked.current) return;
+
+        // Small deltas from sensitive devices shouldn't trigger a change
+        if (Math.abs(e.deltaY) < 40) return;
+
+        scrollLocked.current = true;
+
+        if (e.deltaY > 0) {
+            navigateProject('next');
+        } else if (e.deltaY < 0) {
+            navigateProject('prev');
+        }
+
+        // Lock scroll for a set time
+        setTimeout(() => {
+            scrollLocked.current = false;
+        }, 1000); // delay adjusted to match animation duration
     }, []);
 
-    if (!mounted) return null;
 
-    const theme = isDarkTheme
-        ? {
-              background:
-                  'bg-gradient-to-br from-[#0f0f0f] via-[#1c1c1c] to-[#0d0d0d]',
-              text: 'text-white',
-              subtext: 'text-gray-400',
-              card: 'bg-white/5 backdrop-blur-sm border border-white/10 shadow-md',
-              iconColor: 'text-white/80',
-          }
-        : {
-              background:
-                  'bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#ececec]',
-              text: 'text-gray-900',
-              subtext: 'text-gray-600',
-              card: 'bg-white border border-gray-200 shadow-sm',
-              iconColor: 'text-gray-800',
-          };
+    useEffect(() => {
+        window.addEventListener('wheel', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('wheel', handleScroll);
+        };
+    }, [handleScroll]);
+
 
     return (
-        <section
-            ref={sectionRef}
-            className={`relative min-h-screen flex flex-col items-center transition-colors duration-500 px-6 py-20 ${theme.background}`}
-        >
-            {/* Section Heading */}
-            <div className="max-w-4xl w-full text-center z-10 mb-16">
-                <h1
-                    className={`text-4xl sm:text-6xl font-bold font-serif mb-6 ${theme.text}`}
-                >
-                    Projects
-                </h1>
-                <p
-                    className={`text-lg sm:text-xl font-light max-w-2xl mx-auto ${theme.subtext}`}
-                >
-                    A diverse portfolio of real-world projects spanning Full
-                    Stack development, machine learning, DevOps, and backend
-                    systems demonstrating hands-on expertise with modern tech
-                    stacks, scalable architectures, and AI-driven solutions.
-                </p>
-            </div>
+        <div className={`min-h-screen overflow-hidden relative transition-colors duration-500 ${isDark
+            ? 'bg-gradient-to-br from-gray-900 via-black to-gray-900'
+            : 'bg-gradient-to-br from-gray-100 via-white to-gray-100'
+            }`}>
 
-            {/* Project Grid */}
-            <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 auto-rows-fr pb-32">
-                {projectData.map((project) => (
-                    <div
-                        key={project.id}
-                        className={`project-card ${theme.card} flex flex-col justify-between p-6 rounded-2xl transition-all duration-500 hover:shadow-xl hover:scale-[1.02] relative group h-full`}
-                    >
-                        {/* Top Section */}
-                        <div>
-                            <h2
-                                className={`text-xl font-semibold tracking-tight ${theme.text}`}
-                            >
-                                {project.title}
-                            </h2>
-                            <p className={`text-sm mt-1 mb-3 ${theme.subtext}`}>
-                                {project.category}
+            {/* Main content */}
+            <div className="relative z-10 flex items-center justify-center min-h-screen px-8">
+                {/* Index number */}
+                <div ref={indexRef} className="absolute left-8 top-1/2 transform -translate-y-1/2">
+                    <div className={`text-sm font-light tracking-wider mb-2 ${isDark ? 'text-white/30' : 'text-gray-400'
+                        }`}>
+                        {String(currentProject + 1).padStart(4, '0')}
+                    </div>
+                    <div className={`w-12 h-px ${isDark ? 'bg-white/30' : 'bg-gray-400'}`} />
+                </div>
+
+                {/* Main card */}
+                <div ref={cardRef} className="relative w-full max-w-5xl">
+                    {/* Technology tags */}
+                    <div ref={techRef} className="absolute -top-16 right-0 flex flex-wrap gap-2 z-20 max-w-xl justify-end">
+                        {project.technicalStack.slice(0, 5).map((tech, index) => {
+                            const iconKey = tech.replace(/\s+/g, '').replace(/\./g, '').replace(/-/g, '').replace(/js/i, 'Js');
+                            const icon = techIconMap[iconKey]?.[isDark ? 'dark' : 'light'] || `logos:${iconKey.toLowerCase()}`;
+
+                            return (
+                                <div
+                                    key={tech}
+                                    className={`flex items-center gap-2 text-xs tracking-wider backdrop-blur-sm border px-3 py-2 rounded-full transition-all duration-300 ${isDark
+                                        ? 'text-white/70 bg-white/5 border-white/10 hover:bg-white/10'
+                                        : 'text-gray-600 bg-white/50 border-gray-200 hover:bg-white/80'
+                                        }`}
+                                    style={{ animationDelay: `${index * 0.1}s` }}
+                                >
+                                    <Icon icon={icon} width="16" height="16" />
+                                    <span>{tech}</span>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Card container */}
+                    <div className={`relative aspect-video rounded-3xl overflow-hidden backdrop-blur-sm border shadow-2xl transition-all duration-300 ${isDark
+                        ? 'bg-gray-900/30 border-white/10'
+                        : 'bg-white/40 border-gray-200/50'
+                        }`}>
+
+                        {/* Content overlay */}
+                        <div className={`absolute inset-0 ${isDark
+                            ? 'bg-gradient-to-t from-black/60 via-transparent to-black/20'
+                            : 'bg-gradient-to-t from-white/60 via-transparent to-white/20'
+                            }`} />
+
+                        {/* Project title and description */}
+                        <div className="absolute bottom-0 left-0 p-8 max-w-2xl">
+                            <h1 ref={titleRef} className={`text-5xl md:text-7xl font-light tracking-tight mb-4 ${isDark ? 'text-white' : 'text-gray-900'
+                                }`}>
+                                {project.title.toUpperCase()}
+                            </h1>
+                            <p ref={descRef} className={`text-sm md:text-base leading-relaxed ${isDark ? 'text-white/70' : 'text-gray-700'
+                                }`}>
+                                {project.description}
                             </p>
-
-                            {/* Tech Stack Icons */}
-                            <div className="flex flex-wrap gap-2 mt-2 mb-8">
-                                {project.technicalStack.map((tech, idx) => {
-                                    const iconKey = tech
-                                        .replace(/\s+/g, '')
-                                        .replace(/\./g, '')
-                                        .replace(/-/g, '')
-                                        .replace(/js/i, 'Js');
-                                    const icon =
-                                        techIconMap[iconKey]?.[
-                                            isDarkTheme ? 'dark' : 'light'
-                                        ] || `logos:${iconKey.toLowerCase()}`;
-                                    return (
-                                        <div
-                                            key={idx}
-                                            className="w-8 h-8 flex items-center justify-center bg-white/10 dark:bg-gray-900/10 rounded-md"
-                                            data-tooltip-id={`tooltip-${project.id}-${idx}`}
-                                            data-tooltip-content={tech}
-                                        >
-                                            <Icon
-                                                icon={icon}
-                                                width="20"
-                                                height="20"
-                                                className="opacity-90 hover:opacity-100 transition-transform hover:scale-110"
-                                            />
-                                            <Tooltip
-                                                id={`tooltip-${project.id}-${idx}`}
-                                                place="top"
-                                                className="z-50 rounded bg-gray-800 text-white px-2 py-1 text-sm shadow-lg"
-                                            />
-                                        </div>
-                                    );
-                                })}
-                            </div>
                         </div>
 
-                        {/* GitHub Links */}
-                        <div className="absolute bottom-4 right-4 flex gap-3 mt-4">
+                        {/* Decorative elements */}
+                        <div className="absolute top-6 left-6 flex gap-3">
+                            <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                            <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+                            <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+                        </div>
+                    </div>
+
+                    {/* Project details */}
+                    <div ref={linksRef} className="mt-8 flex items-center justify-between">
+                        <div className={`text-sm tracking-wider ${isDark ? 'text-white/60' : 'text-gray-600'}`}>
+                            <span className="block font-medium">{project.category.toUpperCase()}</span>
+                            <span className="block capitalize">{project.difficulty}</span>
+                        </div>
+
+                        {/* GitHub links */}
+                        <div className="flex gap-4">
                             {project.link?.map((url, idx) => {
-                                const repoName = url.split('/').pop();
+                                const repoName = url.split('/').pop() || 'Repository';
                                 return (
                                     <a
                                         key={idx}
                                         href={url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        data-tooltip-id={`link-tooltip-${project.id}-${idx}`}
-                                        data-tooltip-content={repoName}
-                                        className="group"
+                                        className={`flex items-center gap-2 text-sm tracking-wider backdrop-blur-sm border px-4 py-2 rounded-full transition-all duration-300 ${isDark
+                                            ? 'text-white/70 bg-white/5 border-white/10 hover:bg-white/10 hover:text-white'
+                                            : 'text-gray-600 bg-white/50 border-gray-200 hover:bg-white/80 hover:text-gray-900'
+                                            }`}
                                     >
-                                        <div className="w-8 h-8 flex items-center justify-center rounded-md bg-white/10 dark:bg-gray-900/10 hover:bg-white/20 transition-colors">
-                                            <Icon
-                                                icon={
-                                                    techIconMap.Github[
-                                                        isDarkTheme
-                                                            ? 'dark'
-                                                            : 'light'
-                                                    ]
-                                                }
-                                                width="20"
-                                                height="20"
-                                                className={`transition-transform group-hover:scale-110 ${theme.iconColor}`}
-                                            />
-                                        </div>
-                                        <Tooltip
-                                            id={`tooltip-${project.id}-${idx}`}
-                                            place="top"
-                                            className="z-50 rounded bg-gray-800 text-white px-2 py-1 text-sm shadow-lg"
+                                        <Icon
+                                            icon={techIconMap.Github[isDark ? 'dark' : 'light']}
+                                            width="16"
+                                            height="16"
                                         />
+                                        <span>{repoName}</span>
                                     </a>
                                 );
                             })}
                         </div>
                     </div>
+                </div>
+            </div>
+
+            {/* Navigation dots */}
+            <NavigationDots
+                currentIndex={currentProject}
+                total={projectData.length}
+                isDark={isDark}
+                setCurrentProject={setCurrentProject}
+            />
+
+            {/* Ambient particles */}
+            <div className="absolute inset-0 pointer-events-none">
+                {Array.from({ length: 30 }).map((_, i) => (
+                    <div
+                        key={i}
+                        className={`absolute w-1 h-1 rounded-full animate-pulse ${isDark ? 'bg-white/10' : 'bg-gray-400/20'
+                            }`}
+                        style={{
+                            left: `${Math.random() * 100}%`,
+                            top: `${Math.random() * 100}%`,
+                            animationDelay: `${Math.random() * 3}s`,
+                            animationDuration: `${2 + Math.random() * 3}s`
+                        }}
+                    />
                 ))}
             </div>
-        </section>
+        </div>
     );
+
+
 };
 
 export default Projects;
