@@ -81,19 +81,19 @@ const Projects = ({ isDarkTheme }: ProjectsProps) => {
                 <p
                     className={`text-lg sm:text-xl font-light max-w-2xl mx-auto ${theme.subtext}`}
                 >
-                    A diverse portfolio of real-world projects spanning web
-                    development, machine learning, DevOps, and backend
-                    systems-demonstrating hands-on expertise with modern tech
+                    A diverse portfolio of real-world projects spanning Full
+                    Stack development, machine learning, DevOps, and backend
+                    systems demonstrating hands-on expertise with modern tech
                     stacks, scalable architectures, and AI-driven solutions.
                 </p>
             </div>
 
             {/* Project Grid */}
-            <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pb-32">
+            <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 auto-rows-fr pb-32">
                 {projectData.map((project) => (
                     <div
                         key={project.id}
-                        className={`project-card ${theme.card} flex flex-col justify-between p-6 rounded-2xl transition-all duration-500 hover:shadow-xl hover:scale-[1.02] relative group`}
+                        className={`project-card ${theme.card} flex flex-col justify-between p-6 rounded-2xl transition-all duration-500 hover:shadow-xl hover:scale-[1.02] relative group h-full`}
                     >
                         {/* Top Section */}
                         <div>
@@ -107,7 +107,7 @@ const Projects = ({ isDarkTheme }: ProjectsProps) => {
                             </p>
 
                             {/* Tech Stack Icons */}
-                            <div className="flex flex-wrap gap-2 mt-2">
+                            <div className="flex flex-wrap gap-2 mt-2 mb-8">
                                 {project.technicalStack.map((tech, idx) => {
                                     const iconKey = tech
                                         .replace(/\s+/g, '')
@@ -143,7 +143,7 @@ const Projects = ({ isDarkTheme }: ProjectsProps) => {
                         </div>
 
                         {/* GitHub Links */}
-                        <div className="absolute bottom-4 right-4 flex gap-3">
+                        <div className="absolute bottom-4 right-4 flex gap-3 mt-4">
                             {project.link?.map((url, idx) => {
                                 const repoName = url.split('/').pop();
                                 return (
