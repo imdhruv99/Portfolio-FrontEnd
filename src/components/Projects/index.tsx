@@ -31,8 +31,8 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             text: 'text-white',
             subtext: 'text-white/60',
             border: 'border-white/10',
-            card: 'bg-[#2c2c2c]/80', // Lighter dark card (reduced harshness)
-            gradientOverlay: 'bg-gradient-to-t from-black/50 via-transparent to-black/20', // Softer gradient
+            card: 'bg-[#2c2c2c]/80',
+            gradientOverlay: 'bg-gradient-to-t from-black/50 via-transparent to-black/20',
             button: 'bg-white/10 hover:bg-white/20 text-white',
             techBadge: 'text-white/70 bg-white/5 border-white/10 hover:bg-white/10',
             iconColor: 'text-white/30',
@@ -45,7 +45,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             text: 'text-gray-900',
             subtext: 'text-gray-600',
             border: 'border-gray-300',
-            card: 'bg-gradient-to-br from-[#f4f4f4] to-[#ffffff] shadow-lg', // Gradient card with subtle shadow
+            card: 'bg-gradient-to-br from-[#f4f4f4] to-[#ffffff] shadow-lg',
             gradientOverlay: 'bg-gradient-to-t from-white/70 via-transparent to-white/30',
             button: 'bg-gray-100 hover:bg-white text-gray-900',
             techBadge: 'text-gray-700 bg-white border-gray-200 hover:bg-gray-100',
@@ -64,29 +64,34 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    // Initial Load Animation
     useEffect(() => {
-        const tl = gsap.timeline();
-        tl.fromTo(indexRef.current, { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1, ease: "power3.out" })
-            .fromTo(cardRef.current, { opacity: 0, y: 100, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out" }, "-=0.5")
-            .fromTo(titleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.8")
-            .fromTo(descRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
-            .fromTo(techRef.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
-            .fromTo(linksRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.4");
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+            tl.from(indexRef.current, { autoAlpha: 0, x: -40, duration: 0.6 })
+                .from(cardRef.current, { autoAlpha: 0, y: 80, scale: 0.95, duration: 0.8 }, '-=0.4')
+                .from([titleRef.current, descRef.current], { autoAlpha: 0, y: 30, stagger: 0.2, duration: 0.6 }, '-=0.6')
+                .from([techRef.current, linksRef.current], { autoAlpha: 0, y: 20, stagger: 0.2, duration: 0.5 }, '-=0.6');
+        });
+
+        return () => ctx.revert();
     }, []);
 
+    // On Project Change
     useEffect(() => {
-        const tl = gsap.timeline();
-        tl.to([titleRef.current, descRef.current, techRef.current], {
-            opacity: 0,
+        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+        tl.to([titleRef.current, descRef.current, techRef.current, linksRef.current], {
+            autoAlpha: 0,
             y: 20,
-            duration: 0.3,
-            ease: "power2.in"
-        }).to([titleRef.current, descRef.current, techRef.current], {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            ease: "power2.out"
-        });
+            duration: 0.2,
+        })
+            .set([titleRef.current, descRef.current, techRef.current, linksRef.current], { y: -10 })
+            .to([titleRef.current, descRef.current, techRef.current, linksRef.current], {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.4,
+                stagger: 0.1,
+            });
     }, [currentProject]);
 
     const navigateProject = (direction: 'next' | 'prev') => {
@@ -114,18 +119,22 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         if (Math.abs(swipeDistance) > 50) {
             scrollLocked.current = true;
             navigateProject(swipeDistance > 0 ? 'next' : 'prev');
-            setTimeout(() => (scrollLocked.current = false), 1000);
+            setTimeout(() => (scrollLocked.current = false), 700);
         }
     };
 
-    const handleScroll = useCallback((e: WheelEvent) => {
-        if (scrollLocked.current || isMobile) return;
-        if (Math.abs(e.deltaY) < 40) return;
+    const handleScroll = useCallback(
+        (e: WheelEvent) => {
+            if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 40) return;
 
-        scrollLocked.current = true;
-        navigateProject(e.deltaY > 0 ? 'next' : 'prev');
-        setTimeout(() => (scrollLocked.current = false), 1000);
-    }, [isMobile]);
+            scrollLocked.current = true;
+            requestAnimationFrame(() => {
+                navigateProject(e.deltaY > 0 ? 'next' : 'prev');
+            });
+            setTimeout(() => (scrollLocked.current = false), 800);
+        },
+        [isMobile]
+    );
 
     useEffect(() => {
         if (!isMobile) {
@@ -153,11 +162,11 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                     <div ref={techRef} className="absolute -top-12 sm:-top-16 right-0 left-0 sm:left-auto">
                         <div className="block sm:hidden">
                             <div className="flex gap-2 overflow-x-auto pb-2 px-4 scrollbar-hide">
-                                {project.technicalStack.map((tech, index) => {
+                                {project.technicalStack.map((tech) => {
                                     const key = tech.replace(/\s+|\.|-/g, '').replace(/js/i, 'Js');
                                     const icon = techIconMap[key]?.[isDarkTheme ? 'dark' : 'light'] || `logos:${key.toLowerCase()}`;
                                     return (
-                                        <div key={tech} className={`flex items-center gap-2 text-xs tracking-wider backdrop-blur-sm border px-3 py-1.5 rounded-full transition-all duration-300 whitespace-nowrap ${theme.techBadge}`}>
+                                        <div key={tech} className={`flex items-center gap-2 text-xs tracking-wider backdrop-blur-sm border px-3 py-1.5 rounded-full whitespace-nowrap ${theme.techBadge}`}>
                                             <Icon icon={icon} width="14" height="14" />
                                             <span>{tech}</span>
                                         </div>
@@ -167,11 +176,11 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                         </div>
 
                         <div className="hidden sm:flex flex-wrap gap-2 justify-end max-w-5xl">
-                            {project.technicalStack.map((tech, index) => {
+                            {project.technicalStack.map((tech) => {
                                 const key = tech.replace(/\s+|\.|-/g, '').replace(/js/i, 'Js');
                                 const icon = techIconMap[key]?.[isDarkTheme ? 'dark' : 'light'] || `logos:${key.toLowerCase()}`;
                                 return (
-                                    <div key={tech} className={`flex items-center gap-2 text-xs tracking-wider backdrop-blur-sm border px-3 py-2 rounded-full transition-all duration-300 ${theme.techBadge}`}>
+                                    <div key={tech} className={`flex items-center gap-2 text-xs tracking-wider backdrop-blur-sm border px-3 py-2 rounded-full ${theme.techBadge}`}>
                                         <Icon icon={icon} width="16" height="16" />
                                         <span>{tech}</span>
                                     </div>
@@ -206,15 +215,11 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
-                            {project.link?.map((url, idx) => {
-                                const repoName = url.split('/').pop() || 'Repository';
-                                return (
-                                    <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-2 text-xs sm:text-sm tracking-wider backdrop-blur-sm border px-3 sm:px-4 py-2 rounded-full transition-all duration-300 ${theme.button} ${theme.border}`}>
-                                        <Icon icon={techIconMap.Github[isDarkTheme ? 'dark' : 'light']} width="14" height="14" className="sm:w-4 sm:h-4" />
-                                        <span className="truncate">{repoName}</span>
-                                    </a>
-                                );
-                            })}
+                            {project.link?.map((url, idx) => (
+                                <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-2 text-xs sm:text-sm tracking-wider backdrop-blur-sm border px-3 sm:px-4 py-2 rounded-full ${theme.button} ${theme.border}`}>
+                                    <Icon icon={techIconMap.Github[isDarkTheme ? 'dark' : 'light']} width="14" height="14" className="sm:w-4 sm:h-4" />
+                                </a>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -242,16 +247,6 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                     />
                 ))}
             </div>
-
-            {isMobile && (
-                <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center">
-                    <div className={`text-xs ${theme.subtext} flex items-center gap-2`}>
-                        <Icon icon="material-symbols:swipe-left" width="16" height="16" />
-                        <span>Swipe to navigate</span>
-                        <Icon icon="material-symbols:swipe-right" width="16" height="16" />
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
