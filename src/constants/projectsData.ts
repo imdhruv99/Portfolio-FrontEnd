@@ -122,7 +122,7 @@ const projectData: ProjectData[] = [
     },
     {
         id: 12,
-        title: "GoChatApp",
+        title: "Go Chat App",
         description: "A real-time chat application built with Go, Gorilla WebSocket, and Docker for easy deployment.",
         technicalStack: ['Go', 'Docker'],
         link: ['https://github.com/imdhruv99/Golang-Gorilla-WebSocket-ChatApp-Docker'],
