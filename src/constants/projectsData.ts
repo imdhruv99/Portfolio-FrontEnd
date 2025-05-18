@@ -42,7 +42,7 @@ const projectData: ProjectData[] = [
     },
     {
         id: 4,
-        title: "Neural Network from Scratch - OCR",
+        title: "OCR Neural Net",
         description: "An OCR system implementing a neural network from scratch using Python and NumPy, with visualizations via Matplotlib.",
         technicalStack: ['Python', 'Numpy', 'Matplotlib', 'HTML', 'CSS', 'JavaScript'],
         link: ['https://github.com/imdhruv99/My-Own-Neural-Network'],
@@ -52,7 +52,7 @@ const projectData: ProjectData[] = [
     },
     {
         id: 5,
-        title: "Object Detection - ResNet50",
+        title: "Object Detection",
         description: "A Django-based web app for object detection using a ResNet50 model, with support for image processing and visualization through NumPy and Matplotlib.",
         technicalStack: ['Python', 'Django', 'Numpy', 'Matplotlib', 'Tensorflow', 'Keras', 'HTML'],
         link: ['https://github.com/imdhruv99/ObjectDetection-Resnet50-Django'],
@@ -62,7 +62,7 @@ const projectData: ProjectData[] = [
     },
     {
         id: 6,
-        title: "Predicting Employee Retention",
+        title: "Employee Retention",
         description: "A machine learning web app built with Flask and XGBoost to predict employee retention, featuring data visualization, Docker deployment, and ELK Stack integration.",
         technicalStack: ['Python', 'Flask', 'Numpy', 'Pandas', 'Matplotlib', 'Sklearn', 'HTML', 'Docker', 'ELK Stack'],
         link: ['https://github.com/imdhruv99/Employee-Retention-Prediction'],
@@ -72,7 +72,7 @@ const projectData: ProjectData[] = [
     },
     {
         id: 7,
-        title: "Prevention of Forest Fire",
+        title: "Forest Fire Prediction",
         description: "A web-based logistic regression model using Flask to predict and help prevent forest fires with data-driven insights and visualization.",
         technicalStack: ['Python', 'HTML', 'CSS', 'JavaScript', 'Sklearn'],
         link: ['https://github.com/imdhruv99/LogisticRegression-Flask-ForestFirePreventation'],
@@ -82,7 +82,7 @@ const projectData: ProjectData[] = [
     },
     {
         id: 8,
-        title: "Maruti Import-Export Website",
+        title: "Maruti Website",
         description: "A dynamic website developed and deployed using PHP, HTML, CSS, and JavaScript for a local Maruti import-export business.",
         technicalStack: ['HTML', 'CSS', 'JavaScript', 'PHP'],
         link: ['https://github.com/imdhruv99/Maruti-Import-Export'],
@@ -92,7 +92,7 @@ const projectData: ProjectData[] = [
     },
     {
         id: 9,
-        title: "SkilTal Website",
+        title: "SkilTal",
         description: "A responsive website built with HTML, CSS, and JavaScript for a local teaching classes business, designed and deployed to enhance online presence.",
         technicalStack: ['HTML', 'CSS', 'JavaScript'],
         link: ['https://github.com/imdhruv99/SkilTal-Website'],
@@ -102,7 +102,7 @@ const projectData: ProjectData[] = [
     },
     {
         id: 10,
-        title: "Dynamic REST API Generator - Node.js",
+        title: "DynRestAPI",
         description: "A minimal Node.js setup for creating RESTful APIs dynamically.",
         technicalStack: ['NodeJs'],
         link: ['https://github.com/imdhruv99/Dynamic-Rest-Api-Nodejs-Example'],
@@ -112,7 +112,7 @@ const projectData: ProjectData[] = [
     },
     {
         id: 11,
-        title: "OAuth2-Based Blog API with Node.js and MongoDB",
+        title: "Blog-OAuth2.0",
         description: "A RESTful blog backend using Node.js, Express, Passport, and OAuth2 with MongoDB authentication.",
         technicalStack: ['NodeJs', 'ExpressJs', 'Passport', 'OAuth2', 'MongoDB'],
         link: ['https://github.com/imdhruv99/Blog-OAuth2-Nodejs'],
@@ -122,7 +122,7 @@ const projectData: ProjectData[] = [
     },
     {
         id: 12,
-        title: "Go WebSocket Chat Application with Docker",
+        title: "GoChatApp",
         description: "A real-time chat application built with Go, Gorilla WebSocket, and Docker for easy deployment.",
         technicalStack: ['Go', 'Docker'],
         link: ['https://github.com/imdhruv99/Golang-Gorilla-WebSocket-ChatApp-Docker'],

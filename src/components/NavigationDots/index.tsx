@@ -113,14 +113,6 @@ const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobi
     // Desktop vertical layout
     return (
         <div className="fixed right-8 top-1/2 transform -translate-y-1/2 flex flex-col items-center gap-2 z-20">
-            {/* Up arrow */}
-            <button
-                onClick={() => scrollDots('up')}
-                className={`p-1 rounded-full transition-colors hover:scale-110 ${isDark ? 'text-white' : 'text-gray-800'}`}
-                aria-label="Scroll up"
-            >
-                <Icon icon="mdi:chevron-up" width="20" height="20" />
-            </button>
 
             {/* Dots container */}
             <div
@@ -142,15 +134,6 @@ const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobi
                     );
                 })}
             </div>
-
-            {/* Down arrow */}
-            <button
-                onClick={() => scrollDots('down')}
-                className={`p-1 rounded-full transition-colors hover:scale-110 ${isDark ? 'text-white' : 'text-gray-800'}`}
-                aria-label="Scroll down"
-            >
-                <Icon icon="mdi:chevron-down" width="20" height="20" />
-            </button>
         </div>
     );
 };
