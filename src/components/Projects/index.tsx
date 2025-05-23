@@ -158,6 +158,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                     <div className={`w-8 sm:w-12 h-px ${theme.indexLine}`} />
                 </div>
 
+                {/* Tech Icon */}
                 <div ref={cardRef} className="relative w-full max-w-5xl">
                     <div ref={techRef} className="absolute -top-12 sm:-top-16 right-0 left-0 sm:left-auto">
                         <div className="block sm:hidden">
@@ -189,19 +190,21 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                         </div>
                     </div>
 
+                    {/* Main Card Component */}
                     <div className={`relative aspect-[4/3] sm:aspect-video rounded-2xl sm:rounded-3xl overflow-hidden backdrop-blur-sm border shadow-2xl transition-all duration-300 ${theme.card} ${theme.border}`}>
                         <div className={`absolute inset-0 ${theme.gradientOverlay}`} />
 
                         <div className="absolute bottom-0 left-0 p-4 sm:p-8 max-w-full sm:max-w-2xl">
-                            <span className="inline-block text-xs font-medium px-2.5 py-1 rounded-md mb-2">{project.yearOfDevelopment}</span>
-                            <h1 ref={titleRef} className={`text-3xl sm:text-5xl md:text-5xl font-light tracking-tight mb-2 sm:mb-4 ${theme.text} break-words`}>
+                            <span className={`inline-block text-xs font-medium px-2.5 py-1 rounded-md mb-3 ${theme.subtext} bg-white/10 backdrop-blur-sm`}>{project.yearOfDevelopment}</span>
+                            <h1 ref={titleRef} className={`text-3xl sm:text-5xl md:text-5xl font-light tracking-tight mb-2 sm:mb-4 ${theme.text} break-words leading-tight`}>
                                 {project.title.toUpperCase()}
                             </h1>
-                            <p ref={descRef} className={`text-xs sm:text-sm md:text-base leading-relaxed ${theme.subtext}`}>
+                            <p ref={descRef} className={`text-xs sm:text-sm md:text-base leading-relaxed ${theme.subtext} max-w-2xl`}>
                                 {project.description}
                             </p>
                         </div>
 
+                        {/* Status Dots */}
                         <div className="absolute top-4 sm:top-6 left-4 sm:left-6 flex gap-2 sm:gap-3">
                             <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full animate-pulse" />
                             <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
@@ -248,6 +251,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                 isMobile={isMobile}
             />
 
+            {/* Background Dots */}
             <div className="absolute inset-0 pointer-events-none">
                 {Array.from({ length: isMobile ? 15 : 30 }).map((_, i) => (
                     <div
