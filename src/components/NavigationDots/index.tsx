@@ -49,7 +49,14 @@ const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobi
     // Scroll handlers for navigation buttons
     const scrollDots = (direction: 'up' | 'down' | 'left' | 'right') => {
         if (!dotsWrapperRef.current) return;
-        const amount = 40; // px to scroll
+
+        const amount = 100; // px to scroll
+        const newIndex =
+            direction === 'left' || direction === 'up'
+                ? Math.max(0, currentIndex - 1)
+                : Math.min(total - 1, currentIndex + 1);
+
+        setCurrentProject(newIndex);
 
         if (isMobile) {
             dotsWrapperRef.current.scrollBy({
@@ -67,7 +74,7 @@ const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobi
     if (isMobile) {
         // Mobile horizontal layout
         return (
-            <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-20 bg-black/20 backdrop-blur-md rounded-full px-4 py-2">
+            <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-20 px-4 py-2">
                 {/* Left arrow */}
                 <button
                     onClick={() => scrollDots('left')}
@@ -80,7 +87,7 @@ const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobi
                 {/* Dots container */}
                 <div
                     ref={dotsWrapperRef}
-                    className="flex gap-3 overflow-x-auto max-w-48 scrollbar-hide"
+                    className="flex gap-4 overflow-x-auto max-w-[70vw] scrollbar-hide px-2"
                 >
                     {Array.from({ length: total }).map((_, index) => {
                         const isActive = index === currentIndex;
@@ -88,11 +95,13 @@ const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobi
                             <div
                                 key={index}
                                 ref={isActive ? activeDotRef : null}
+                                aria-label={`Go to project ${index + 1}`}
                                 onClick={() => setCurrentProject(index)}
-                                className={`cursor-pointer w-2 h-2 rounded-full transition-all duration-300 flex-shrink-0 ${isActive
-                                    ? `${isDark ? 'bg-white' : 'bg-gray-800'} scale-125`
-                                    : `${isDark ? 'bg-white/30' : 'bg-gray-400/50'}`
+                                className={`cursor-pointer w-3 h-3 rounded-full transition-all duration-300 flex-shrink-0 border-2 ${isActive
+                                    ? `${isDark ? 'bg-white border-white' : 'bg-gray-800 border-gray-800'} scale-125`
+                                    : `${isDark ? 'bg-white/20 border-white/30' : 'bg-gray-400/30 border-gray-300'}`
                                     }`}
+                                title={`Project ${index + 1}`}
                             />
                         );
                     })}
@@ -117,7 +126,7 @@ const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobi
             {/* Dots container */}
             <div
                 ref={dotsWrapperRef}
-                className="flex flex-col gap-3 overflow-y-auto max-h-48 px-1 scrollbar-thin scrollbar-thumb-gray-400/50 scrollbar-track-transparent"
+                className="flex flex-col gap-3 overflow-y-auto max-h-48 px-1 pr-2 items-end scrollbar-thin scrollbar-thumb-gray-400/50 scrollbar-track-transparent min-w-[1.5rem]"
             >
                 {Array.from({ length: total }).map((_, index) => {
                     const isActive = index === currentIndex;
@@ -126,11 +135,12 @@ const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobi
                             key={index}
                             ref={isActive ? activeDotRef : null}
                             onClick={() => setCurrentProject(index)}
-                            className={`cursor-pointer w-2 h-2 rounded-full transition-all duration-300 ${isActive
-                                ? `${isDark ? 'bg-white' : 'bg-gray-800'} scale-125`
-                                : `${isDark ? 'bg-white/30' : 'bg-gray-400/50'}`
+                            className={`cursor-pointer transition-all duration-300 ${isActive
+                                ? `w-6 h-2 rounded-full ${isDark ? 'bg-white' : 'bg-gray-800'} self-end`
+                                : `w-2 h-2 rounded-full ${isDark ? 'bg-white/30' : 'bg-gray-400/50'}`
                                 }`}
                         />
+
                     );
                 })}
             </div>
