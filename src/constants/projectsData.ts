@@ -14,7 +14,7 @@ const projectData: ProjectData[] = [
     {
         id: 1,
         title: "Task Manager",
-        description: "A containerized task management system built with Python, Flask, and Redis, leveraging Postgres, Docker, Kubernetes, and Helm for scalable deployment.",
+        description: "Containerized task management system using Flask and Kubernetes.",
         technicalStack: ['Python', 'Flask', 'Redis', 'Postgres', 'Docker', 'Kubernetes', 'Helm'],
         link: ['https://github.com/imdhruv99/Task-Manager'],
         category: 'Web Development',
@@ -25,7 +25,7 @@ const projectData: ProjectData[] = [
     {
         id: 2,
         title: "IdeaBeacon",
-        description: "Idea Posting site for community where user can come together and brainstorm with each other.",
+        description: "Community site for idea posting and brainstorming.",
         technicalStack: ['NodeJs', 'ExpressJs', 'ReactJS', 'Docker', 'MongoDB'],
         link: ['https://github.com/imdhruv99/IdeaBeacon-FrontEnd/', 'https://github.com/imdhruv99/IdeaBeacon-BackEnd'],
         category: 'Full Stack Development',
@@ -36,7 +36,7 @@ const projectData: ProjectData[] = [
     {
         id: 3,
         title: "Face Mask Detection",
-        description: "A deep learning-based system for real-time face mask detection using Python, OpenCV, and Keras.",
+        description: "Real-time face mask detection using deep learning.",
         technicalStack: ['Python', 'Numpy', 'Keras', 'Pandas', 'CV2'],
         link: ['https://github.com/imdhruv99/FaceMask-Detection'],
         category: 'Machine Learning',
@@ -47,7 +47,7 @@ const projectData: ProjectData[] = [
     {
         id: 4,
         title: "Employee Retention",
-        description: "A machine learning web app built with Flask and XGBoost to predict employee retention, featuring data visualization, Docker deployment, and ELK Stack integration.",
+        description: "ML web app for predicting employee retention.",
         technicalStack: ['Python', 'Flask', 'Numpy', 'Pandas', 'Matplotlib', 'Sklearn', 'HTML', 'Docker', 'ELK Stack'],
         link: ['https://github.com/imdhruv99/Employee-Retention-Prediction'],
         category: 'Machine Learning',
@@ -58,7 +58,7 @@ const projectData: ProjectData[] = [
     {
         id: 5,
         title: "OCR Neural Net",
-        description: "An OCR system implementing a neural network from scratch using Python and NumPy, with visualizations via Matplotlib.",
+        description: "Neural network from scratch for basic OCR tasks.",
         technicalStack: ['Python', 'Numpy', 'Matplotlib', 'HTML', 'CSS', 'JavaScript'],
         link: ['https://github.com/imdhruv99/My-Own-Neural-Network'],
         category: 'Machine Learning',
@@ -69,7 +69,7 @@ const projectData: ProjectData[] = [
     {
         id: 6,
         title: "Object Detection",
-        description: "A Django-based web app for object detection using a ResNet50 model, with support for image processing and visualization through NumPy and Matplotlib.",
+        description: "Django app with ResNet50 for detecting objects.",
         technicalStack: ['Python', 'Django', 'Numpy', 'Matplotlib', 'Tensorflow', 'Keras', 'HTML'],
         link: ['https://github.com/imdhruv99/ObjectDetection-Resnet50-Django'],
         category: 'Web Development',
@@ -80,7 +80,7 @@ const projectData: ProjectData[] = [
     {
         id: 7,
         title: "DevOps Workflows",
-        description: "An automation project built with Go and Gin, integrating Jenkins, Docker, Terraform, Ansible, and AWS for learning DevOps workflows.",
+        description: "Automated DevOps setup using Jenkins, Docker, and AWS.",
         technicalStack: ['Go', 'Gin', 'Jenkins', 'Docker', 'Terraform', 'Ansible', 'AWS'],
         link: ['https://github.com/imdhruv99/DevOps-Automation'],
         category: 'DevOps',
@@ -91,7 +91,7 @@ const projectData: ProjectData[] = [
     {
         id: 8,
         title: "Forest Fire Prediction",
-        description: "A web-based logistic regression model using Flask to predict and help prevent forest fires with data-driven insights and visualization.",
+        description: "Predict forest fires using logistic regression model.",
         technicalStack: ['Python', 'HTML', 'CSS', 'JavaScript', 'Sklearn'],
         link: ['https://github.com/imdhruv99/LogisticRegression-Flask-ForestFirePreventation'],
         category: 'Machine Learning',
@@ -102,7 +102,7 @@ const projectData: ProjectData[] = [
     {
         id: 9,
         title: "Blog-OAuth2.0",
-        description: "A RESTful blog backend using Node.js, Express, Passport, and OAuth2 with MongoDB authentication.",
+        description: "RESTful blog API using Node, Express, OAuth2.",
         technicalStack: ['NodeJs', 'ExpressJs', 'Passport', 'OAuth2', 'MongoDB'],
         link: ['https://github.com/imdhruv99/Blog-OAuth2-Nodejs'],
         category: 'Backend Development',
@@ -113,7 +113,7 @@ const projectData: ProjectData[] = [
     {
         id: 10,
         title: "Go Chat App",
-        description: "A real-time chat application built with Go, Gorilla WebSocket, and Docker for easy deployment.",
+        description: "Real-time Go chat app using Gorilla WebSocket.",
         technicalStack: ['Go', 'Docker'],
         link: ['https://github.com/imdhruv99/Golang-Gorilla-WebSocket-ChatApp-Docker'],
         category: 'Backend Development',
@@ -124,7 +124,7 @@ const projectData: ProjectData[] = [
     {
         id: 11,
         title: "DynRestAPI",
-        description: "A minimal Node.js setup for creating RESTful APIs dynamically.",
+        description: "Minimal Node.js setup for dynamic RESTful APIs.",
         technicalStack: ['NodeJs'],
         link: ['https://github.com/imdhruv99/Dynamic-Rest-Api-Nodejs-Example'],
         category: 'Backend Development',
@@ -135,7 +135,7 @@ const projectData: ProjectData[] = [
     {
         id: 12,
         title: "Maruti Website",
-        description: "A dynamic website developed and deployed using PHP, HTML, CSS, and JavaScript for a local Maruti import-export business.",
+        description: "PHP-based business website for Maruti import-export.",
         technicalStack: ['HTML', 'CSS', 'JavaScript', 'PHP'],
         link: ['https://github.com/imdhruv99/Maruti-Import-Export'],
         category: 'Web Development',
@@ -146,7 +146,7 @@ const projectData: ProjectData[] = [
     {
         id: 13,
         title: "SkilTal",
-        description: "A responsive website built with HTML, CSS, and JavaScript for a local teaching classes business, designed and deployed to enhance online presence.",
+        description: "Responsive site for local teaching business.",
         technicalStack: ['HTML', 'CSS', 'JavaScript'],
         link: ['https://github.com/imdhruv99/SkilTal-Website'],
         category: 'Web Development',
@@ -154,7 +154,6 @@ const projectData: ProjectData[] = [
         difficulty: 'Beginner',
         yearOfDevelopment: "Sept 2021 - Oct 2021",
     },
-
 ];
 
 export type { ProjectData };
