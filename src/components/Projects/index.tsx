@@ -62,24 +62,25 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
 
     // Animate on project change
     const animateProjectChange = (direction: 'next' | 'prev') => {
-        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+        const tl = gsap.timeline({ defaults: { ease: 'power2.out', overwrite: 'auto', force3D: true } });
 
         tl.to([titleRef.current, descRef.current, techRef.current, linksRef.current], {
             opacity: 0,
-            y: 10,
-            duration: 0.3,
-            stagger: 0.05,
+            y: 5,
+            duration: 0.35,
+            stagger: 0.08,
         }).add(() => {
             setCurrentProject((prev) =>
                 direction === 'next'
                     ? (prev + 1) % projectData.length
                     : (prev - 1 + projectData.length) % projectData.length
             );
-        }).fromTo(
-            [titleRef.current, descRef.current, techRef.current, linksRef.current],
-            { opacity: 0, y: 10 },
-            { opacity: 1, y: 0, duration: 0.4, stagger: 0.05 }
-        );
+        })
+            .fromTo(
+                [titleRef.current, descRef.current, techRef.current, linksRef.current],
+                { opacity: 0, y: 5 },
+                { opacity: 1, y: 0, duration: 0.35, stagger: 0.1 }
+            );
     };
 
     const handleTouchStart = (e: React.TouchEvent) => {
@@ -126,11 +127,11 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
     // Initial load animation with useLayoutEffect to run before paint
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-            tl.from(indexRef.current, { opacity: 0, x: -40, duration: 0.5 })
-                .from(cardRef.current, { opacity: 0, y: 40, scale: 0.95, duration: 0.7 }, '-=0.3')
-                .from([titleRef.current, descRef.current], { opacity: 0, y: 20, stagger: 0.15, duration: 0.5 }, '-=0.4')
-                .from([techRef.current, linksRef.current], { opacity: 0, y: 10, stagger: 0.1, duration: 0.4 }, '-=0.3');
+            const tl = gsap.timeline({ defaults: { ease: 'power2.out', force3D: true } });
+            tl.from(indexRef.current, { opacity: 0, x: -30, duration: 0.5 })
+                .from(cardRef.current, { opacity: 0, y: 30, scale: 0.97, duration: 0.6 }, '-=0.3')
+                .from([titleRef.current, descRef.current], { opacity: 0, y: 10, stagger: 0.1, duration: 0.4 }, '-=0.3')
+                .from([techRef.current, linksRef.current], { opacity: 0, y: 5, stagger: 0.07, duration: 0.35 }, '-=0.3');
         });
 
         return () => ctx.revert();
