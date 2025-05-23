@@ -22,6 +22,9 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
     const techRef = useRef<HTMLDivElement>(null);
     const linksRef = useRef<HTMLDivElement>(null);
     const descRef = useRef<HTMLParagraphElement>(null);
+    const scrollLocked = useRef(false);
+    const touchStartX = useRef(0);
+    const touchEndX = useRef(0);
 
     const project = projectData[currentProject];
 
@@ -55,6 +58,60 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             pulseDot: 'bg-gray-400/20',
         };
 
+    // On Project Change
+    const animateProjectChange = (direction: 'next' | 'prev') => {
+        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+        tl.to([titleRef.current, descRef.current, techRef.current, linksRef.current], {
+            opacity: 0,
+            y: 10,
+            duration: 0.3,
+            stagger: 0.05,
+        }).add(() => {
+            setCurrentProject((prev) =>
+                direction === 'next'
+                    ? (prev + 1) % projectData.length
+                    : (prev - 1 + projectData.length) % projectData.length
+            );
+        }).fromTo(
+            [titleRef.current, descRef.current, techRef.current, linksRef.current],
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.4, stagger: 0.05 }
+        );
+    };
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.targetTouches[0].clientX;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        touchEndX.current = e.targetTouches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        if (scrollLocked.current) return;
+
+        const swipeDistance = touchStartX.current - touchEndX.current;
+        if (Math.abs(swipeDistance) > 50) {
+            scrollLocked.current = true;
+            animateProjectChange(swipeDistance > 0 ? 'next' : 'prev');
+            setTimeout(() => (scrollLocked.current = false), 700);
+        }
+    };
+
+    const handleScroll = useCallback(
+        (e: WheelEvent) => {
+            if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 60) return;
+
+            scrollLocked.current = true;
+            requestAnimationFrame(() => {
+                animateProjectChange(e.deltaY > 0 ? 'next' : 'prev');
+            });
+            setTimeout(() => (scrollLocked.current = false), 1000);
+        },
+        [isMobile]
+    );
+
     useEffect(() => {
         const checkMobile = () => {
             setIsMobile(window.innerWidth < 768);
@@ -77,65 +134,6 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         return () => ctx.revert();
     }, []);
 
-    // On Project Change
-    useEffect(() => {
-        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-        tl.to([titleRef.current, descRef.current, techRef.current, linksRef.current], {
-            autoAlpha: 0,
-            y: 20,
-            duration: 0.2,
-        })
-            .set([titleRef.current, descRef.current, techRef.current, linksRef.current], { y: -10 })
-            .to([titleRef.current, descRef.current, techRef.current, linksRef.current], {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.4,
-                stagger: 0.1,
-            });
-    }, [currentProject]);
-
-    const navigateProject = (direction: 'next' | 'prev') => {
-        setCurrentProject((prev) =>
-            direction === 'next' ? (prev + 1) % projectData.length : (prev - 1 + projectData.length) % projectData.length
-        );
-    };
-
-    const scrollLocked = useRef(false);
-    const touchStartX = useRef(0);
-    const touchEndX = useRef(0);
-
-    const handleTouchStart = (e: React.TouchEvent) => {
-        touchStartX.current = e.targetTouches[0].clientX;
-    };
-
-    const handleTouchMove = (e: React.TouchEvent) => {
-        touchEndX.current = e.targetTouches[0].clientX;
-    };
-
-    const handleTouchEnd = () => {
-        if (scrollLocked.current) return;
-
-        const swipeDistance = touchStartX.current - touchEndX.current;
-        if (Math.abs(swipeDistance) > 50) {
-            scrollLocked.current = true;
-            navigateProject(swipeDistance > 0 ? 'next' : 'prev');
-            setTimeout(() => (scrollLocked.current = false), 700);
-        }
-    };
-
-    const handleScroll = useCallback(
-        (e: WheelEvent) => {
-            if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 40) return;
-
-            scrollLocked.current = true;
-            requestAnimationFrame(() => {
-                navigateProject(e.deltaY > 0 ? 'next' : 'prev');
-            });
-            setTimeout(() => (scrollLocked.current = false), 800);
-        },
-        [isMobile]
-    );
-
     useEffect(() => {
         if (!isMobile) {
             window.addEventListener('wheel', handleScroll, { passive: true });
@@ -151,12 +149,15 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             onTouchEnd={handleTouchEnd}
         >
             <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-8">
+
+                {/* Index */}
                 <div ref={indexRef} className="absolute left-4 sm:left-8 top-4 sm:top-1/2 sm:transform sm:-translate-y-1/2">
-                    <div className={`text-xs sm:text-sm font-light tracking-wider mb-2 ${theme.indexText}`}>
+                    <div className={`text-lg sm:text-2xl font-light tracking-widest mb-3 transition-transform duration-500 ${theme.indexText}`}>
                         {String(currentProject + 1).padStart(4, '0')}
                     </div>
-                    <div className={`w-8 sm:w-12 h-px ${theme.indexLine}`} />
+                    <div className={`w-10 sm:w-14 h-px ${theme.indexLine}`} />
                 </div>
+
 
                 {/* Tech Icon */}
                 <div ref={cardRef} className="relative w-full max-w-5xl">
