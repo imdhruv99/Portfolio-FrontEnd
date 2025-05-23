@@ -216,7 +216,6 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                             <div className="flex items-center justify-between w-full sm:block">
                                 <div className={`text-xs sm:text-sm tracking-wider ${theme.subtext}`}>
                                     <span className="block font-medium">{project.category.toUpperCase()}</span>
-                                    <span className="block capitalize">{project.difficulty}</span>
                                 </div>
 
                                 <div className="flex sm:hidden">
