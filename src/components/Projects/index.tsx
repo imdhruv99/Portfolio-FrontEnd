@@ -193,6 +193,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                         <div className={`absolute inset-0 ${theme.gradientOverlay}`} />
 
                         <div className="absolute bottom-0 left-0 p-4 sm:p-8 max-w-full sm:max-w-2xl">
+                            <span className="inline-block text-xs font-medium px-2.5 py-1 rounded-md mb-2">{project.yearOfDevelopment}</span>
                             <h1 ref={titleRef} className={`text-3xl sm:text-5xl md:text-7xl font-light tracking-tight mb-2 sm:mb-4 ${theme.text} break-words`}>
                                 {project.title.toUpperCase()}
                             </h1>
