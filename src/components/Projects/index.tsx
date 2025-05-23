@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import './Projects.css';
+
+import React, { useEffect, useRef, useState, useCallback, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { Icon } from '@iconify/react';
 
@@ -58,7 +60,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             pulseDot: 'bg-gray-400/20',
         };
 
-    // On Project Change
+    // Animate on project change
     const animateProjectChange = (direction: 'next' | 'prev') => {
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
@@ -121,14 +123,14 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // Initial Load Animation
-    useEffect(() => {
+    // Initial load animation with useLayoutEffect to run before paint
+    useLayoutEffect(() => {
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-            tl.from(indexRef.current, { autoAlpha: 0, x: -40, duration: 0.6 })
-                .from(cardRef.current, { autoAlpha: 0, y: 80, scale: 0.95, duration: 0.8 }, '-=0.4')
-                .from([titleRef.current, descRef.current], { autoAlpha: 0, y: 30, stagger: 0.2, duration: 0.6 }, '-=0.6')
-                .from([techRef.current, linksRef.current], { autoAlpha: 0, y: 20, stagger: 0.2, duration: 0.5 }, '-=0.6');
+            tl.from(indexRef.current, { opacity: 0, x: -40, duration: 0.5 })
+                .from(cardRef.current, { opacity: 0, y: 40, scale: 0.95, duration: 0.7 }, '-=0.3')
+                .from([titleRef.current, descRef.current], { opacity: 0, y: 20, stagger: 0.15, duration: 0.5 }, '-=0.4')
+                .from([techRef.current, linksRef.current], { opacity: 0, y: 10, stagger: 0.1, duration: 0.4 }, '-=0.3');
         });
 
         return () => ctx.revert();
@@ -151,16 +153,18 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-8">
 
                 {/* Index */}
-                <div ref={indexRef} className="absolute left-4 sm:left-8 top-4 sm:top-1/2 sm:transform sm:-translate-y-1/2">
+                <div
+                    ref={indexRef}
+                    className={`absolute left-4 sm:left-8 top-4 sm:top-1/2 sm:transform sm:-translate-y-1/2`}
+                >
                     <div className={`text-lg sm:text-2xl font-light tracking-widest mb-3 transition-transform duration-500 ${theme.indexText}`}>
                         {String(currentProject + 1).padStart(4, '0')}
                     </div>
                     <div className={`w-10 sm:w-14 h-px ${theme.indexLine}`} />
                 </div>
 
-
                 {/* Tech Icon */}
-                <div ref={cardRef} className="relative w-full max-w-5xl">
+                <div ref={cardRef} className={`relative w-full max-w-5xl`}>
                     <div ref={techRef} className="absolute -top-12 sm:-top-16 right-0 left-0 sm:left-auto">
                         <div className="block sm:hidden">
                             <div className="flex gap-2 overflow-x-auto pb-2 px-4 scrollbar-hide">
@@ -197,7 +201,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
 
                         <div className="absolute bottom-0 left-0 p-4 sm:p-8 max-w-full sm:max-w-2xl">
                             <span className={`inline-block text-xs font-medium px-2.5 py-1 rounded-md mb-3 ${theme.subtext} bg-white/10 backdrop-blur-sm`}>{project.yearOfDevelopment}</span>
-                            <h1 ref={titleRef} className={`text-3xl sm:text-5xl md:text-5xl font-light tracking-tight mb-2 sm:mb-4 ${theme.text} break-words leading-tight`}>
+                            <h1 ref={titleRef} className={`will-change-transform text-3xl sm:text-5xl md:text-5xl font-light tracking-tight mb-2 sm:mb-4 ${theme.text} break-words leading-tight`}>
                                 {project.title.toUpperCase()}
                             </h1>
                             <p ref={descRef} className={`text-xs sm:text-sm md:text-base leading-relaxed ${theme.subtext} max-w-2xl`}>
@@ -257,12 +261,12 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                 {Array.from({ length: isMobile ? 15 : 30 }).map((_, i) => (
                     <div
                         key={i}
-                        className={`absolute w-1 h-1 rounded-full animate-pulse ${theme.pulseDot}`}
+                        className={`absolute rounded-full w-1 h-1 opacity-20 ${theme.pulseDot}`}
                         style={{
-                            left: `${Math.random() * 100}%`,
                             top: `${Math.random() * 100}%`,
-                            animationDelay: `${Math.random() * 3}s`,
-                            animationDuration: `${2 + Math.random() * 3}s`
+                            left: `${Math.random() * 100}%`,
+                            animationDelay: `${i * 0.5}s`,
+                            animationDuration: `${3 + Math.random() * 2}s`,
                         }}
                     />
                 ))}
