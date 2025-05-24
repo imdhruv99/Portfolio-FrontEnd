@@ -181,7 +181,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             rotationTimeline.current.kill();
         }
 
-        rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power1.out', duration: 0.5 } })
+        rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.6 } }) // Increased duration for smoother ease
             .to(cardRef.current, {
                 rotateX: rotationTargetX.current,
                 rotateY: rotationTargetY.current,
@@ -197,7 +197,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         if (rotationTimeline.current) {
             rotationTimeline.current.kill();
         }
-        rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power1.out', duration: 0.7 } })
+        rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.8 } }) // Increased duration for smoother ease
             .to(cardRef.current, {
                 rotateX: 0,
                 rotateY: 0,
@@ -205,33 +205,43 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             });
     }, [isMobile]);
 
+    // Use a ref to store the requestAnimationFrame ID
+    const rAFId = useRef<number | null>(null);
+
     const handleDeviceOrientation = useCallback((e: DeviceOrientationEvent) => {
         if (!cardRef.current || !isMobile || !deviceMotionPermissionGranted) return;
 
-        const beta = e.beta || 0;  // front-back tilt
-        const gamma = e.gamma || 0; // left-right tilt
-
-        const maxTilt = 30;
-        const maxRotation = 3;
-
-        const rotateX = gsap.utils.mapRange(-maxTilt, maxTilt, maxRotation, -maxRotation, gamma); // Gamma maps to rotateX, inverted
-        const rotateY = gsap.utils.mapRange(-maxTilt, maxTilt, -maxRotation, maxRotation, beta); // Beta maps to rotateY
-
-        rotationTargetX.current = rotateX;
-        rotationTargetY.current = rotateY;
-
-        if (rotationTimeline.current) {
-            rotationTimeline.current.kill();
+        // Clear any previous animation frame request
+        if (rAFId.current !== null) {
+            cancelAnimationFrame(rAFId.current);
         }
 
-        rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power1.out', duration: 0.5 } })
-            .to(cardRef.current, {
-                rotateX: rotationTargetX.current,
-                rotateY: rotationTargetY.current,
-                transformPerspective: 1000,
-                transformOrigin: "center center",
-            });
+        rAFId.current = requestAnimationFrame(() => {
+            const beta = e.beta || 0;  // front-back tilt
+            const gamma = e.gamma || 0; // left-right tilt
 
+            const maxTilt = 30;
+            const maxRotation = 3;
+
+            const rotateX = gsap.utils.mapRange(-maxTilt, maxTilt, maxRotation, -maxRotation, gamma); // Gamma maps to rotateX, inverted
+            const rotateY = gsap.utils.mapRange(-maxTilt, maxTilt, -maxRotation, maxRotation, beta); // Beta maps to rotateY
+
+            rotationTargetX.current = rotateX;
+            rotationTargetY.current = rotateY;
+
+            if (rotationTimeline.current) {
+                rotationTimeline.current.kill();
+            }
+
+            rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.6 } }) // Use Power4.out and slightly increased duration
+                .to(cardRef.current, {
+                    rotateX: rotationTargetX.current,
+                    rotateY: rotationTargetY.current,
+                    transformPerspective: 1000,
+                    transformOrigin: "center center",
+                });
+            rAFId.current = null; // Reset the ID after execution
+        });
     }, [isMobile, deviceMotionPermissionGranted]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
@@ -287,7 +297,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         if (isMobile) {
             // Check if DeviceMotionEvent is available and permission is needed (iOS 13+)
             if (typeof DeviceMotionEvent !== 'undefined' && typeof (DeviceMotionEvent as any).requestPermission === 'function') {
-
+                // Permission handled by the button click
             } else {
                 setDeviceMotionPermissionGranted(true);
                 window.addEventListener('deviceorientation', handleDeviceOrientation);
@@ -295,10 +305,19 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         } else {
             // On desktop, remove mobile listener if it was added
             window.removeEventListener('deviceorientation', handleDeviceOrientation);
+            // Also, ensure any pending rAF is cancelled
+            if (rAFId.current !== null) {
+                cancelAnimationFrame(rAFId.current);
+                rAFId.current = null;
+            }
         }
 
         return () => {
             window.removeEventListener('deviceorientation', handleDeviceOrientation);
+            if (rAFId.current !== null) {
+                cancelAnimationFrame(rAFId.current);
+                rAFId.current = null;
+            }
         };
     }, [isMobile, handleDeviceOrientation]); // Re-run when isMobile changes
 
@@ -375,7 +394,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                 </div>
 
                 {/* Main Card Component */}
-                <div ref={cardRef} className={`relative w-full max-w-5xl`}>
+                <div ref={cardRef} className={`relative w-full max-w-5xl will-change-transform`}>
                     <div ref={techRef} className="absolute -top-12 sm:-top-16 right-0 left-0 sm:left-auto">
                         <div className="block sm:hidden">
                             <div className="flex gap-2 overflow-x-auto pb-2 px-4 scrollbar-hide">
