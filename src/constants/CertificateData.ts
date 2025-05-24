@@ -147,6 +147,17 @@ const certificateData: CertificateData[] = [
         image: '/logos/udemy.png',
         proficiencyLevel: 'Intermediate',
     },
+    {
+        id: 14,
+        title: 'AWS Certified Machine Learning – Specialty',
+        issuer: 'Amazon Web Services',
+        issueDate: 'May 2025',
+        credentialId: 'ae549a42aaed4a4fa9475fc4e9ed58b8',
+        credentialUrl: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/ae549a42aaed4a4fa9475fc4e9ed58b8',
+        skills: ['Machine Learning', 'Deep Learning', 'Artificial Intelligence (AI)', 'AWS'],
+        image: '/logos/mls.png',
+        proficiencyLevel: 'Specialist',
+    },
 ];
 
 export type { CertificateData };
