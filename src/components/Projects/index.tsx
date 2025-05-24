@@ -99,10 +99,8 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             },
         });
 
-        // Elements inside the card that should animate out and in
         const elementsToAnimate = [titleRef.current, descRef.current, techRef.current, linksRef.current];
 
-        // Animate elements out
         mainContentTl.to(elementsToAnimate, {
             opacity: 0,
             y: direction === 'next' ? -20 : 20,
@@ -112,7 +110,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                 from: 'start'
             },
             onComplete: () => {
-                setCurrentProject(newIndex); // Update project data when elements are out
+                setCurrentProject(newIndex);
             }
         })
             .to(cardRef.current, {
@@ -120,10 +118,9 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                 scale: 0.98,
                 duration: 0.4,
                 ease: 'power2.in',
-            }, '<') // Start simultaneously with elementsToAnimate fading out
-            .set(elementsToAnimate, { y: direction === 'next' ? 20 : -20 }) // Reset position before animating in
+            }, '<')
+            .set(elementsToAnimate, { y: direction === 'next' ? 20 : -20 })
 
-            // Animate card and elements in
             .to(cardRef.current, {
                 opacity: 1,
                 scale: 1,
@@ -139,9 +136,8 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                     from: 'end'
                 },
                 ease: 'power2.out',
-            }, '<0.1'); // Start animating elements in slightly after card starts to scale in
+            }, '<0.1');
 
-        // Index animation - separate timeline for independence
         const indexTl = gsap.timeline({ defaults: { ease: 'power2.out', force3D: true } });
 
         // Animate index out
@@ -150,13 +146,13 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             x: direction === 'next' ? -10 : 10,
             duration: 0.3,
         })
-            // Animate index in (after setting the new project, which happens in mainContentTl's onComplete)
+
             .to(indexRef.current, {
                 opacity: 1,
                 x: 0,
                 duration: 0.4,
-                delay: 0.4 // Delay to sync with when new content is ready to appear
-            }, '<'); // Start 0.4s after the index fades out
+                delay: 0.4
+            }, '<');
 
 
         // Reset card rotation on project change for a clean slate
