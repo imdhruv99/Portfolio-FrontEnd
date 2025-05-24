@@ -61,27 +61,65 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         };
 
     // Animate on project change
-    const animateProjectChange = (direction: 'next' | 'prev') => {
-        const tl = gsap.timeline({ defaults: { ease: 'power2.out', overwrite: 'auto', force3D: true } });
+    const animateProjectChange = useCallback((direction: 'next' | 'prev', newIndex: number) => {
+        if (scrollLocked.current) return;
+        scrollLocked.current = true;
 
-        tl.to([titleRef.current, descRef.current, techRef.current, linksRef.current], {
+        const tl = gsap.timeline({
+            defaults: { ease: 'power2.inOut', overwrite: 'auto', force3D: true },
+            onComplete: () => {
+                scrollLocked.current = false;
+            },
+        });
+
+        const elementsToAnimate = [titleRef.current, descRef.current, techRef.current, linksRef.current];
+
+        // Animate elements out
+        tl.to(elementsToAnimate, {
             opacity: 0,
-            y: 5,
-            duration: 0.35,
-            stagger: 0.08,
-        }).add(() => {
-            setCurrentProject((prev) =>
-                direction === 'next'
-                    ? (prev + 1) % projectData.length
-                    : (prev - 1 + projectData.length) % projectData.length
-            );
+            y: direction === 'next' ? -20 : 20,
+            duration: 0.4,
+            stagger: {
+                each: 0.07,
+                from: 'start'
+            },
+            onComplete: () => {
+                setCurrentProject(newIndex);
+            }
         })
-            .fromTo(
-                [titleRef.current, descRef.current, techRef.current, linksRef.current],
-                { opacity: 0, y: 5 },
-                { opacity: 1, y: 0, duration: 0.35, stagger: 0.1 }
-            );
-    };
+            .to(cardRef.current, {
+                opacity: 0.8,
+                scale: 0.98,
+                duration: 0.4,
+                ease: 'power2.in',
+            }, '<')
+            .set(elementsToAnimate, { y: direction === 'next' ? 20 : -20 })
+
+            // Animate card and elements in
+            .to(cardRef.current, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.6,
+                ease: 'power2.out',
+            })
+            .to(elementsToAnimate, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: {
+                    each: 0.08,
+                    from: 'end'
+                },
+                ease: 'power2.out',
+            }, '<0.1');
+
+        // Index animation
+        gsap.fromTo(indexRef.current,
+            { opacity: 0, x: direction === 'next' ? -10 : 10 },
+            { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out', delay: 0.1 }
+        );
+    }, []);
+
 
     const handleTouchStart = (e: React.TouchEvent) => {
         touchStartX.current = e.targetTouches[0].clientX;
@@ -95,24 +133,31 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         if (scrollLocked.current) return;
 
         const swipeDistance = touchStartX.current - touchEndX.current;
-        if (Math.abs(swipeDistance) > 50) {
-            scrollLocked.current = true;
-            animateProjectChange(swipeDistance > 0 ? 'next' : 'prev');
-            setTimeout(() => (scrollLocked.current = false), 700);
+        const minSwipeDistance = 50;
+
+        if (Math.abs(swipeDistance) > minSwipeDistance) {
+            const direction = swipeDistance > 0 ? 'next' : 'prev';
+            const newIndex = direction === 'next'
+                ? (currentProject + 1) % projectData.length
+                : (currentProject - 1 + projectData.length) % projectData.length;
+
+            animateProjectChange(direction, newIndex);
         }
     };
 
     const handleScroll = useCallback(
         (e: WheelEvent) => {
-            if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 60) return;
+            // Check if user is scrolling significantly and not just minor jitters
+            if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 30) return;
 
-            scrollLocked.current = true;
-            requestAnimationFrame(() => {
-                animateProjectChange(e.deltaY > 0 ? 'next' : 'prev');
-            });
-            setTimeout(() => (scrollLocked.current = false), 1000);
+            const direction = e.deltaY > 0 ? 'next' : 'prev';
+            const newIndex = direction === 'next'
+                ? (currentProject + 1) % projectData.length
+                : (currentProject - 1 + projectData.length) % projectData.length;
+
+            animateProjectChange(direction, newIndex);
         },
-        [isMobile]
+        [isMobile, currentProject, animateProjectChange]
     );
 
     useEffect(() => {
@@ -138,6 +183,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
     }, []);
 
     useEffect(() => {
+        // Ensure scroll event listener is only active when not on mobile
         if (!isMobile) {
             window.addEventListener('wheel', handleScroll, { passive: true });
             return () => window.removeEventListener('wheel', handleScroll);
@@ -164,6 +210,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                     <div className={`w-10 sm:w-14 h-px ${theme.indexLine}`} />
                 </div>
 
+                {/* Main Card Component */}
                 {/* Tech Icon */}
                 <div ref={cardRef} className={`relative w-full max-w-5xl`}>
                     <div ref={techRef} className="absolute -top-12 sm:-top-16 right-0 left-0 sm:left-auto">
@@ -195,8 +242,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                             })}
                         </div>
                     </div>
-
-                    {/* Main Card Component */}
+                    {/* Card Details */}
                     <div className={`relative aspect-[4/3] sm:aspect-video rounded-2xl sm:rounded-3xl overflow-hidden backdrop-blur-sm border shadow-2xl transition-all duration-300 ${theme.card} ${theme.border}`}>
                         <div className={`absolute inset-0 ${theme.gradientOverlay}`} />
 
