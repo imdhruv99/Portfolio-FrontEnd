@@ -14,9 +14,31 @@ interface ProjectProps {
     isDarkTheme: boolean;
 }
 
+// Function to request device motion permission for iOS 13+
+const requestDeviceMotionPermission = async () => {
+    if (typeof DeviceMotionEvent !== 'undefined' && typeof (DeviceMotionEvent as any).requestPermission === 'function') {
+        try {
+            const permissionState = await (DeviceMotionEvent as any).requestPermission();
+            if (permissionState === 'granted') {
+                return true;
+            } else {
+                console.warn('Permission to access device motion denied.');
+                return false;
+            }
+        } catch (error) {
+            console.error('Error requesting device motion permission:', error);
+            return false;
+        }
+    }
+    // For non-iOS 13+ or other browsers, permission is usually not required or granted by default
+    return true;
+};
+
+
 const Projects = ({ isDarkTheme }: ProjectProps) => {
     const [currentProject, setCurrentProject] = useState(0);
     const [isMobile, setIsMobile] = useState(false);
+    const [deviceMotionPermissionGranted, setDeviceMotionPermissionGranted] = useState(false); // NEW: State for permission
 
     const cardRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
@@ -27,6 +49,11 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
     const scrollLocked = useRef(false);
     const touchStartX = useRef(0);
     const touchEndX = useRef(0);
+    const dotsRef = useRef<HTMLDivElement>(null);
+
+    const rotationTargetX = useRef(0);
+    const rotationTargetY = useRef(0);
+    const rotationTimeline = useRef<gsap.core.Timeline | null>(null);
 
     const project = projectData[currentProject];
 
@@ -61,27 +88,161 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         };
 
     // Animate on project change
-    const animateProjectChange = (direction: 'next' | 'prev') => {
-        const tl = gsap.timeline({ defaults: { ease: 'power2.out', overwrite: 'auto', force3D: true } });
+    const animateProjectChange = useCallback((direction: 'next' | 'prev', newIndex: number) => {
+        if (scrollLocked.current) return;
+        scrollLocked.current = true;
 
-        tl.to([titleRef.current, descRef.current, techRef.current, linksRef.current], {
+        const mainContentTl = gsap.timeline({
+            defaults: { ease: 'power2.inOut', overwrite: 'auto', force3D: true },
+            onComplete: () => {
+                scrollLocked.current = false;
+            },
+        });
+
+        const elementsToAnimate = [titleRef.current, descRef.current, techRef.current, linksRef.current];
+
+        mainContentTl.to(elementsToAnimate, {
             opacity: 0,
-            y: 5,
-            duration: 0.35,
-            stagger: 0.08,
-        }).add(() => {
-            setCurrentProject((prev) =>
-                direction === 'next'
-                    ? (prev + 1) % projectData.length
-                    : (prev - 1 + projectData.length) % projectData.length
-            );
+            y: direction === 'next' ? -20 : 20,
+            duration: 0.4,
+            stagger: {
+                each: 0.07,
+                from: 'start'
+            },
+            onComplete: () => {
+                setCurrentProject(newIndex);
+            }
         })
-            .fromTo(
-                [titleRef.current, descRef.current, techRef.current, linksRef.current],
-                { opacity: 0, y: 5 },
-                { opacity: 1, y: 0, duration: 0.35, stagger: 0.1 }
-            );
-    };
+            .to(cardRef.current, {
+                opacity: 0.8,
+                scale: 0.98,
+                duration: 0.4,
+                ease: 'power2.in',
+            }, '<')
+            .set(elementsToAnimate, { y: direction === 'next' ? 20 : -20 })
+
+            .to(cardRef.current, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.6,
+                ease: 'power2.out',
+            })
+            .to(elementsToAnimate, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: {
+                    each: 0.08,
+                    from: 'end'
+                },
+                ease: 'power2.out',
+            }, '<0.1');
+
+        const indexTl = gsap.timeline({ defaults: { ease: 'power2.out', force3D: true } });
+
+        // Animate index out
+        indexTl.to(indexRef.current, {
+            opacity: 0,
+            x: direction === 'next' ? -10 : 10,
+            duration: 0.3,
+        })
+
+            .to(indexRef.current, {
+                opacity: 1,
+                x: 0,
+                duration: 0.4,
+                delay: 0.4
+            }, '<');
+
+
+        // Reset card rotation on project change for a clean slate
+        gsap.to(cardRef.current, { rotateX: 0, rotateY: 0, duration: 0.4, ease: 'power2.out' });
+    }, []);
+
+
+    // Handle mouse move for 3D rotation for Desktop
+    const handleMouseMove = useCallback((e: React.MouseEvent) => {
+        if (isMobile || !cardRef.current) return; // Ensure it only runs on desktop
+
+        const { left, top, width, height } = cardRef.current.getBoundingClientRect();
+        const centerX = left + width / 2;
+        const centerY = top + height / 2;
+
+        const mouseX = e.clientX - centerX;
+        const mouseY = e.clientY - centerY;
+
+        const rotateY = (mouseX / (width / 2)) * 3;
+        const rotateX = (mouseY / (height / 2)) * -3;
+
+        rotationTargetX.current = rotateX;
+        rotationTargetY.current = rotateY;
+
+        if (rotationTimeline.current) {
+            rotationTimeline.current.kill();
+        }
+
+        rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.6 } }) // Increased duration for smoother ease
+            .to(cardRef.current, {
+                rotateX: rotationTargetX.current,
+                rotateY: rotationTargetY.current,
+                transformPerspective: 1000,
+                transformOrigin: "center center",
+            });
+
+    }, [isMobile]);
+
+    const handleMouseLeave = useCallback(() => {
+        if (isMobile || !cardRef.current) return; // Ensure it only runs on desktop
+
+        if (rotationTimeline.current) {
+            rotationTimeline.current.kill();
+        }
+        rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.8 } }) // Increased duration for smoother ease
+            .to(cardRef.current, {
+                rotateX: 0,
+                rotateY: 0,
+                transformPerspective: 1000,
+            });
+    }, [isMobile]);
+
+    // Use a ref to store the requestAnimationFrame ID
+    const rAFId = useRef<number | null>(null);
+
+    const handleDeviceOrientation = useCallback((e: DeviceOrientationEvent) => {
+        if (!cardRef.current || !isMobile || !deviceMotionPermissionGranted) return;
+
+        // Clear any previous animation frame request
+        if (rAFId.current !== null) {
+            cancelAnimationFrame(rAFId.current);
+        }
+
+        rAFId.current = requestAnimationFrame(() => {
+            const beta = e.beta || 0;  // front-back tilt
+            const gamma = e.gamma || 0; // left-right tilt
+
+            const maxTilt = 30;
+            const maxRotation = 3;
+
+            const rotateX = gsap.utils.mapRange(-maxTilt, maxTilt, maxRotation, -maxRotation, gamma); // Gamma maps to rotateX, inverted
+            const rotateY = gsap.utils.mapRange(-maxTilt, maxTilt, -maxRotation, maxRotation, beta); // Beta maps to rotateY
+
+            rotationTargetX.current = rotateX;
+            rotationTargetY.current = rotateY;
+
+            if (rotationTimeline.current) {
+                rotationTimeline.current.kill();
+            }
+
+            rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.6 } }) // Use Power4.out and slightly increased duration
+                .to(cardRef.current, {
+                    rotateX: rotationTargetX.current,
+                    rotateY: rotationTargetY.current,
+                    transformPerspective: 1000,
+                    transformOrigin: "center center",
+                });
+            rAFId.current = null; // Reset the ID after execution
+        });
+    }, [isMobile, deviceMotionPermissionGranted]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
         touchStartX.current = e.targetTouches[0].clientX;
@@ -95,24 +256,31 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         if (scrollLocked.current) return;
 
         const swipeDistance = touchStartX.current - touchEndX.current;
-        if (Math.abs(swipeDistance) > 50) {
-            scrollLocked.current = true;
-            animateProjectChange(swipeDistance > 0 ? 'next' : 'prev');
-            setTimeout(() => (scrollLocked.current = false), 700);
+        const minSwipeDistance = 50;
+
+        if (Math.abs(swipeDistance) > minSwipeDistance) {
+            const direction = swipeDistance > 0 ? 'next' : 'prev';
+            const newIndex = direction === 'next'
+                ? (currentProject + 1) % projectData.length
+                : (currentProject - 1 + projectData.length) % projectData.length;
+
+            animateProjectChange(direction, newIndex);
         }
     };
 
     const handleScroll = useCallback(
         (e: WheelEvent) => {
-            if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 60) return;
+            // Check if user is scrolling significantly and not just minor jitters
+            if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 30) return;
 
-            scrollLocked.current = true;
-            requestAnimationFrame(() => {
-                animateProjectChange(e.deltaY > 0 ? 'next' : 'prev');
-            });
-            setTimeout(() => (scrollLocked.current = false), 1000);
+            const direction = e.deltaY > 0 ? 'next' : 'prev';
+            const newIndex = direction === 'next'
+                ? (currentProject + 1) % projectData.length
+                : (currentProject - 1 + projectData.length) % projectData.length;
+
+            animateProjectChange(direction, newIndex);
         },
-        [isMobile]
+        [isMobile, currentProject, animateProjectChange]
     );
 
     useEffect(() => {
@@ -124,6 +292,35 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    // Effect for handling device orientation listener for mobile
+    useEffect(() => {
+        if (isMobile) {
+            // Check if DeviceMotionEvent is available and permission is needed (iOS 13+)
+            if (typeof DeviceMotionEvent !== 'undefined' && typeof (DeviceMotionEvent as any).requestPermission === 'function') {
+                // Permission handled by the button click
+            } else {
+                setDeviceMotionPermissionGranted(true);
+                window.addEventListener('deviceorientation', handleDeviceOrientation);
+            }
+        } else {
+            // On desktop, remove mobile listener if it was added
+            window.removeEventListener('deviceorientation', handleDeviceOrientation);
+            // Also, ensure any pending rAF is cancelled
+            if (rAFId.current !== null) {
+                cancelAnimationFrame(rAFId.current);
+                rAFId.current = null;
+            }
+        }
+
+        return () => {
+            window.removeEventListener('deviceorientation', handleDeviceOrientation);
+            if (rAFId.current !== null) {
+                cancelAnimationFrame(rAFId.current);
+                rAFId.current = null;
+            }
+        };
+    }, [isMobile, handleDeviceOrientation]); // Re-run when isMobile changes
+
     // Initial load animation with useLayoutEffect to run before paint
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -131,18 +328,29 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             tl.from(indexRef.current, { opacity: 0, x: -30, duration: 0.5 })
                 .from(cardRef.current, { opacity: 0, y: 30, scale: 0.97, duration: 0.6 }, '-=0.3')
                 .from([titleRef.current, descRef.current], { opacity: 0, y: 10, stagger: 0.1, duration: 0.4 }, '-=0.3')
-                .from([techRef.current, linksRef.current], { opacity: 0, y: 5, stagger: 0.07, duration: 0.35 }, '-=0.3');
+                .from([techRef.current, linksRef.current], { opacity: 0, y: 5, stagger: 0.07, duration: 0.35 }, '-=0.3')
+                .from(dotsRef.current, { x: -50, opacity: 0, duration: 0.8, ease: 'power2.out' }, '<0.1');
         });
 
         return () => ctx.revert();
     }, []);
 
     useEffect(() => {
+        // Only attach wheel listener on desktop
         if (!isMobile) {
             window.addEventListener('wheel', handleScroll, { passive: true });
             return () => window.removeEventListener('wheel', handleScroll);
         }
     }, [handleScroll, isMobile]);
+
+    // Handle permission request for iOS 13+
+    const handleRequestPermission = async () => {
+        const granted = await requestDeviceMotionPermission();
+        setDeviceMotionPermissionGranted(granted);
+        if (granted) {
+            window.addEventListener('deviceorientation', handleDeviceOrientation);
+        }
+    };
 
     return (
         <div
@@ -151,7 +359,28 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
         >
-            <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-8">
+            <div
+                className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-8"
+                // Only attach mouse listeners on desktop
+                onMouseMove={!isMobile ? handleMouseMove : undefined}
+                onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+            >
+
+                {/* iOS 13+ Permission Prompt for Device Motion */}
+                {isMobile && !deviceMotionPermissionGranted &&
+                    typeof DeviceMotionEvent !== 'undefined' && typeof (DeviceMotionEvent as any).requestPermission === 'function' && (
+                        <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center z-50 p-4">
+                            <p className="text-white text-center mb-4">
+                                To enable the interactive card experience, please allow access to device motion sensors.
+                            </p>
+                            <button
+                                onClick={handleRequestPermission}
+                                className={`px-6 py-3 rounded-full text-sm font-medium ${theme.button}`}
+                            >
+                                Enable Motion
+                            </button>
+                        </div>
+                    )}
 
                 {/* Index */}
                 <div
@@ -164,8 +393,8 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                     <div className={`w-10 sm:w-14 h-px ${theme.indexLine}`} />
                 </div>
 
-                {/* Tech Icon */}
-                <div ref={cardRef} className={`relative w-full max-w-5xl`}>
+                {/* Main Card Component */}
+                <div ref={cardRef} className={`relative w-full max-w-5xl will-change-transform`}>
                     <div ref={techRef} className="absolute -top-12 sm:-top-16 right-0 left-0 sm:left-auto">
                         <div className="block sm:hidden">
                             <div className="flex gap-2 overflow-x-auto pb-2 px-4 scrollbar-hide">
@@ -195,8 +424,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
                             })}
                         </div>
                     </div>
-
-                    {/* Main Card Component */}
+                    {/* Card Details */}
                     <div className={`relative aspect-[4/3] sm:aspect-video rounded-2xl sm:rounded-3xl overflow-hidden backdrop-blur-sm border shadow-2xl transition-all duration-300 ${theme.card} ${theme.border}`}>
                         <div className={`absolute inset-0 ${theme.gradientOverlay}`} />
 
@@ -258,7 +486,7 @@ const Projects = ({ isDarkTheme }: ProjectProps) => {
             />
 
             {/* Background Dots */}
-            <div className="absolute inset-0 pointer-events-none">
+            <div ref={dotsRef} className="absolute inset-0 pointer-events-none">
                 {Array.from({ length: isMobile ? 15 : 30 }).map((_, i) => (
                     <div
                         key={i}
