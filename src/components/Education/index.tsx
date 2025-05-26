@@ -240,7 +240,7 @@ const Education = () => {
                                     <div className={`relative sm:w-1/2 ${index % 2 === 0 ? 'ml-16 sm:ml-0' : 'ml-16 sm:ml-auto sm:mr-0'} ${index % 2 === 0 ? 'sm:pr-12' : 'sm:pl-12'}`}>
                                         <div className={`${theme.card} border ${theme.border} rounded-lg p-8 shadow-md hover:shadow-lg transition-all duration-300 transform perspective-1000 hover:scale-[1.02]`}>
                                             <h3 className={`text-xl font-bold ${theme.text}`}>{edu.degree}</h3>
-                                            <p className={`text-sm mt-2 ${theme.accent}`}>{edu.institution}</p>
+                                            <p className={`text-sm mt-2 ${theme.subtext}`}>{edu.institution}</p>
                                             <div className={`flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4 pt-4 border-t ${theme.border}`}>
                                                 <p className={`text-sm ${theme.subtext}`}>{formatPeriod(edu.period)}</p>
                                                 <p className={`text-sm font-medium ${theme.text} mt-2 sm:mt-0`}>
@@ -332,7 +332,7 @@ const Education = () => {
 
                                 {/* Horizontal line and date/verification - positioned at bottom */}
                                 <div className={`border-t ${theme.border} mt-auto pt-4 flex justify-between items-center`}>
-                                    <p className={`text-xs ${theme.accent}`}>
+                                    <p className={`text-xs ${theme.subtext}`}>
                                         {cert.issueDate !== '—' ? cert.issueDate : 'No date'}
                                     </p>
                                     {cert.credentialUrl && (
