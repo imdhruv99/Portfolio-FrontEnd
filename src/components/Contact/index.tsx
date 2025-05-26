@@ -3,12 +3,10 @@
 import gsap from 'gsap';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
-interface ContactProps {
-    isDarkTheme: boolean;
-}
-
-const Contact = ({ isDarkTheme }: ContactProps) => {
+const Contact = () => {
+    const { colors: theme, isDarkTheme, isLoading } = useThemeColors();
     const [mounted, setMounted] = useState(false);
     const sectionRef = useRef<HTMLDivElement | null>(null);
     const headingRef = useRef<HTMLHeadingElement | null>(null);
@@ -30,23 +28,9 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
         if (headingRef.current && paraRef.current) {
-            tl.fromTo(
-                headingRef.current,
-                { y: 40, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1 }
-            )
-                .fromTo(
-                    paraRef.current,
-                    { y: 20, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.8 },
-                    '-=0.5'
-                )
-                .fromTo(
-                    validButtons,
-                    { y: 30, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.6, stagger: 0.15 },
-                    '-=0.4'
-                );
+            tl.fromTo(headingRef.current, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1 })
+                .fromTo(paraRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.5')
+                .fromTo(validButtons, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15 }, '-=0.4');
         }
 
         if (validIcons.length > 0) {
@@ -77,25 +61,7 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
         };
     }, [mounted]);
 
-    if (!mounted) return null;
-
-    const theme = isDarkTheme
-        ? {
-            background: 'bg-gradient-to-br from-[#0e0e0e] via-[#1a1a1a] to-[#121212]',
-            text: 'text-white',
-            subtext: 'text-gray-400',
-            border: 'border-white/10',
-            button: 'bg-white/5 hover:bg-white/10 text-white',
-            iconColor: 'text-white/20',
-        }
-        : {
-            background: 'bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#eaeaea]',
-            text: 'text-gray-900',
-            subtext: 'text-gray-600',
-            border: 'border-gray-200',
-            button: 'bg-white hover:bg-gray-100 text-gray-900',
-            iconColor: 'text-gray-400',
-        };
+    if (!mounted || isLoading) return null;
 
     const contacts = [
         {
@@ -177,10 +143,10 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
             icons.push({
                 component: (
                     <Icon
-                        key={`icon-${i}`}
                         icon={iconNames[iconIndex]}
                         width={sizes[sizeIndex]}
                         height={sizes[sizeIndex]}
+                        className={isDarkTheme ? 'brightness-125' : 'brightness-90'}
                     />
                 ),
                 x,
@@ -192,6 +158,14 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
     };
 
     const floatingIcons = generateFloatingIcons();
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+            </div>
+        );
+    }
 
     return (
         <section
@@ -248,7 +222,7 @@ const Contact = ({ isDarkTheme }: ContactProps) => {
                             className={`group flex justify-center items-center w-64 px-6 py-4 rounded-full transition-all duration-300 ${theme.button} border ${theme.border} shadow-sm hover:scale-105`}
                         >
                             <div className="flex items-center gap-3">
-                                <Icon icon={contact.icon} width={22} height={22} className="align-middle relative top-px" />
+                                <Icon icon={contact.icon} width={22} height={22} />
                                 <span className="font-medium text-sm tracking-wide">{contact.label}</span>
                             </div>
                         </a>
