@@ -1,4 +1,3 @@
-// tailwind.config.mjs
 import scrollbar from 'tailwind-scrollbar';
 
 /** @type {import('tailwindcss').Config} */
@@ -26,6 +25,17 @@ const config = {
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+            },
+            // Optional: Add custom theme colors for CSS custom properties approach
+            colors: {
+                theme: {
+                    background: 'var(--theme-background)',
+                    text: 'var(--theme-text)',
+                    subtext: 'var(--theme-subtext)',
+                    border: 'var(--theme-border)',
+                    card: 'var(--theme-card)',
+                    button: 'var(--theme-button)',
+                },
             },
         },
     },
