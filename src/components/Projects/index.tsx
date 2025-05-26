@@ -9,6 +9,7 @@ import { Icon } from '@iconify/react';
 import projectData from '@/constants/projectsData';
 import techIconMap from '@/constants/techIconMap';
 import NavigationDots from '../NavigationDots';
+
 import { useThemeColors } from '@/hooks/useThemeColors';
 
 // Function to request device motion permission for iOS 13+

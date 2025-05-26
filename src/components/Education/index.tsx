@@ -9,16 +9,15 @@ import educationData from '../../constants/EducationData';
 import certificateData from '../../constants/CertificateData';
 import quotesData from '../../constants/quotesData';
 
+import { useThemeColors } from '@/hooks/useThemeColors';
+
 
 if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 }
 
-interface EducationProps {
-    isDarkTheme: boolean;
-}
-
-const Education = ({ isDarkTheme }: EducationProps) => {
+const Education = () => {
+    const { colors: theme, isDarkTheme, isLoading } = useThemeColors();
     const [mounted, setMounted] = useState(false);
     const sectionRef = useRef<HTMLDivElement | null>(null);
     const headingRef = useRef<HTMLHeadingElement | null>(null);
@@ -165,32 +164,6 @@ const Education = ({ isDarkTheme }: EducationProps) => {
 
     if (!mounted) return null;
 
-    const lightTheme = {
-        background: 'bg-gradient-to-r from-[#ffffff] via-[#f5f5f5] to-[#eaeaea]',
-        text: 'text-gray-800',
-        subtext: 'text-gray-600',
-        accent: 'text-gray-400',
-        border: 'border-gray-200',
-        card: 'bg-white',
-        timeline: 'bg-gray-200',
-        timelineNode: 'bg-gray-200',
-        badgeBg: 'bg-white',
-    };
-
-    const darkTheme = {
-        background: 'bg-gradient-to-br from-[#0e0e0e] via-[#1a1a1a] to-[#121212]',
-        text: 'text-white',
-        subtext: 'text-gray-400',
-        accent: 'text-white/20',
-        border: 'border-white/10',
-        card: 'bg-white/5',
-        timeline: 'bg-white/10',
-        timelineNode: 'bg-neutral-500 border-neutral-700',
-        badgeBg: 'bg-white',
-    };
-
-    const theme = isDarkTheme ? darkTheme : lightTheme;
-
     // Select a random quote
     const randomQuote = quotesData[Math.floor(Math.random() * quotesData.length)];
 
@@ -207,6 +180,14 @@ const Education = ({ isDarkTheme }: EducationProps) => {
     const certificateDataByPriority = [...certificateData].sort((a, b) => {
         return proficiencyLevelOrder[a.proficiencyLevel] - proficiencyLevelOrder[b.proficiencyLevel];
     });
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+            </div>
+        );
+    }
 
     return (
         <section

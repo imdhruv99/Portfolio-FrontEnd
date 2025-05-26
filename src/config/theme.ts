@@ -11,6 +11,10 @@ export interface ThemeColors {
     indexLine: string;
     indexText: string;
     pulseDot: string;
+    accent: string;
+    timeline: string;
+    timelineNode: string;
+    badgeBg: string;
 }
 
 export interface Theme {
@@ -34,6 +38,10 @@ export const themes: Record<string, Theme> = {
             indexLine: 'bg-gray-400',
             indexText: 'text-gray-400',
             pulseDot: 'bg-gray-400/20',
+            accent: 'text-gray-400',
+            timeline: 'bg-gray-200',
+            timelineNode: 'bg-gray-200',
+            badgeBg: 'bg-white',
         },
     },
     dark: {
@@ -51,6 +59,10 @@ export const themes: Record<string, Theme> = {
             indexLine: 'bg-white/30',
             indexText: 'text-white/30',
             pulseDot: 'bg-white/10',
+            accent: 'text-white/20',
+            timeline: 'bg-white/10',
+            timelineNode: 'bg-neutral-500 border-neutral-700',
+            badgeBg: 'bg-white',
         },
     },
 };
