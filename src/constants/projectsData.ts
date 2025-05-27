@@ -8,6 +8,7 @@ type ProjectData = {
     tags: string[];
     difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
     yearOfDevelopment: string;
+    image?: string;
 };
 
 const projectData: ProjectData[] = [

@@ -14,6 +14,7 @@ export interface ThemeColors {
     timeline: string;
     timelineNode: string;
     badgeBg: string;
+    patternBackground: string;
 }
 
 export interface Theme {
@@ -40,6 +41,7 @@ export const themes: Record<string, Theme> = {
             timeline: 'bg-gray-200',
             timelineNode: 'bg-gray-200',
             badgeBg: 'bg-white',
+            patternBackground: 'pattern-background-light',
         },
     },
     dark: {
@@ -60,6 +62,7 @@ export const themes: Record<string, Theme> = {
             timeline: 'bg-white/10',
             timelineNode: 'bg-neutral-500 border-neutral-700',
             badgeBg: 'bg-white',
+            patternBackground: 'pattern-background-dark',
         },
     },
 };
