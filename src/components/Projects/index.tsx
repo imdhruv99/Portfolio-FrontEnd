@@ -356,7 +356,7 @@ const Projects = () => {
                     </div>
 
                     {/* Card Details */}
-                    <div className={`relative aspect-[4/3] sm:aspect-video rounded-2xl sm:rounded-3xl overflow-hidden backdrop-blur-sm border shadow-2xl transition-all duration-300 ${theme.card} ${theme.border}`}>
+                    <div className={`relative aspect-[4/3] sm:aspect-[19/10] rounded-2xl sm:rounded-3xl overflow-hidden backdrop-blur-sm border shadow-2xl transition-all duration-300 ${theme.card} ${theme.border}`}>
                         {/* Background Image or Pattern */}
                         {projectToDisplay.image ? (
                             <Image
