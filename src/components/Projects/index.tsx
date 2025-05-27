@@ -90,6 +90,7 @@ const Projects = () => {
 
         tl.add(() => {
             setDisplayProject(projectData[newIndex]);
+            setTimeout(() => setCurrentProject(newIndex), 50);
             gsap.set(cardElement, {
                 y: direction === 'next' ? '100%' : '-100%',
                 opacity: 0,
