@@ -2,18 +2,16 @@
 
 import './Projects.css';
 
-import React, { useEffect, useRef, useState, useCallback, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { Icon } from '@iconify/react';
-import Image from 'next/image'; // Import Next.js Image component
+import Image from 'next/image';
+import React, { useEffect, useRef, useState, useCallback, useLayoutEffect } from 'react';
 
 import projectData from '@/constants/projectsData';
 import techIconMap from '@/constants/techIconMap';
 import NavigationDots from '../NavigationDots';
-
 import { useThemeColors } from '@/hooks/useThemeColors';
 
-// Function to request device motion permission for iOS 13+
 const requestDeviceMotionPermission = async (): Promise<boolean> => {
     if (
         typeof DeviceMotionEvent !== 'undefined' &&
@@ -22,30 +20,23 @@ const requestDeviceMotionPermission = async (): Promise<boolean> => {
     ) {
         try {
             const permissionState = await DeviceMotionEvent.requestPermission();
-            if (permissionState === 'granted') {
-                return true;
-            } else {
-                console.warn('Permission to access device motion denied.');
-                return false;
-            }
-        } catch (error) {
-            console.error('Error requesting device motion permission:', error);
+            return permissionState === 'granted';
+        } catch {
             return false;
         }
     }
-
-    // For other platforms/browsers that don’t need explicit permission
     return true;
 };
 
 const Projects = () => {
     const { colors: theme, isDarkTheme, isLoading } = useThemeColors();
     const [currentProject, setCurrentProject] = useState(0);
+    const [displayProject, setDisplayProject] = useState(projectData[0]);
     const [isMobile, setIsMobile] = useState(false);
     const [deviceMotionPermissionGranted, setDeviceMotionPermissionGranted] = useState(false);
 
-    const cardRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
+    const cardRef = useRef<HTMLDivElement>(null);
     const indexRef = useRef<HTMLDivElement>(null);
     const techRef = useRef<HTMLDivElement>(null);
     const linksRef = useRef<HTMLDivElement>(null);
@@ -54,26 +45,15 @@ const Projects = () => {
     const touchStartX = useRef(0);
     const touchEndX = useRef(0);
     const dotsRef = useRef<HTMLDivElement>(null);
-
     const rotationTargetX = useRef(0);
     const rotationTargetY = useRef(0);
     const rotationTimeline = useRef<gsap.core.Timeline | null>(null);
+    const rAFId = useRef<number | null>(null);
 
-    // This state is crucial for managing the content for the "next" card
-    const [displayProject, setDisplayProject] = useState(projectData[0]);
-
-
-    // This effect ensures that `displayProject` updates when `currentProject` changes,
-    // and then triggers the animation.
     useEffect(() => {
-        if (!scrollLocked.current) {
-            // This is for initial load or direct navigation (e.g., from dots)
-            setDisplayProject(projectData[currentProject]);
-        }
+        setDisplayProject(projectData[currentProject]);
     }, [currentProject]);
 
-
-    // Animate on project change
     const animateProjectChange = useCallback((direction: 'next' | 'prev', newIndex: number) => {
         if (scrollLocked.current) return;
         scrollLocked.current = true;
@@ -86,67 +66,51 @@ const Projects = () => {
 
         const tl = gsap.timeline({
             defaults: { ease: 'power2.inOut', force3D: true },
-            onStart: () => {
-                // Instantly set the content of the *new* project before animation starts
-                // This means the old content will "push out" the new content
-                setDisplayProject(projectData[newIndex]);
-            },
             onComplete: () => {
-                // Ensure the currentProject state is updated after animation
                 setCurrentProject(newIndex);
                 scrollLocked.current = false;
             },
         });
 
-        const currentYOffset = cardElement.getBoundingClientRect().top; // Get current visual position
-
         if (direction === 'next') {
-            // Current card moves up and out (opacity fades out quickly)
-            // New card comes from bottom and moves to center
             tl.to(cardElement, {
-                y: '-=100%', // Move up by its own height
+                y: '-=100%',
                 opacity: 0,
                 duration: 0.5,
                 ease: 'power2.in',
-            })
-                .set(cardElement, { y: '100%', opacity: 0 }) // Instantly move to bottom and keep hidden
-                .to(cardElement, {
-                    y: '0%', // Animate to center
-                    opacity: 1,
-                    duration: 0.6,
-                    ease: 'power2.out',
-                }, '<0.1'); // Start animating in slightly before previous one finishes
-        } else { // direction === 'prev'
-            // Current card moves down and out (opacity fades out quickly)
-            // New card comes from top and moves to center
+            });
+        } else {
             tl.to(cardElement, {
-                y: '+=100%', // Move down by its own height
+                y: '+=100%',
                 opacity: 0,
                 duration: 0.5,
                 ease: 'power2.in',
-            })
-                .set(cardElement, { y: '-100%', opacity: 0 }) // Instantly move to top and keep hidden
-                .to(cardElement, {
-                    y: '0%', // Animate to center
-                    opacity: 1,
-                    duration: 0.6,
-                    ease: 'power2.out',
-                }, '<0.1'); // Start animating in slightly before previous one finishes
+            });
         }
 
+        tl.add(() => {
+            setDisplayProject(projectData[newIndex]);
+            gsap.set(cardElement, {
+                y: direction === 'next' ? '100%' : '-100%',
+                opacity: 0,
+            });
+        });
 
-        // Reset card rotation on project change for a clean slate
-        gsap.to(cardElement, { rotateX: 0, rotateY: 0, duration: 0.4, ease: 'power2.out' });
+        tl.to(cardElement, {
+            y: '0%',
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power2.out',
+        });
+
+        tl.to(cardElement, { rotateX: 0, rotateY: 0, duration: 0.4, ease: 'power2.out' }, "<0.3");
     }, []);
 
-    // Handle mouse move for 3D rotation for Desktop
     const handleMouseMove = useCallback((e: React.MouseEvent) => {
         if (isMobile || !cardRef.current) return;
-
         const { left, top, width, height } = cardRef.current.getBoundingClientRect();
         const centerX = left + width / 2;
         const centerY = top + height / 2;
-
         const mouseX = e.clientX - centerX;
         const mouseY = e.clientY - centerY;
 
@@ -156,9 +120,7 @@ const Projects = () => {
         rotationTargetX.current = rotateX;
         rotationTargetY.current = rotateY;
 
-        if (rotationTimeline.current) {
-            rotationTimeline.current.kill();
-        }
+        if (rotationTimeline.current) rotationTimeline.current.kill();
 
         rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.6 } })
             .to(cardRef.current, {
@@ -171,10 +133,8 @@ const Projects = () => {
 
     const handleMouseLeave = useCallback(() => {
         if (isMobile || !cardRef.current) return;
+        if (rotationTimeline.current) rotationTimeline.current.kill();
 
-        if (rotationTimeline.current) {
-            rotationTimeline.current.kill();
-        }
         rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.8 } })
             .to(cardRef.current, {
                 rotateX: 0,
@@ -183,33 +143,21 @@ const Projects = () => {
             });
     }, [isMobile]);
 
-    // Use a ref to store the requestAnimationFrame ID
-    const rAFId = useRef<number | null>(null);
-
     const handleDeviceOrientation = useCallback((e: DeviceOrientationEvent) => {
         if (!cardRef.current || !isMobile || !deviceMotionPermissionGranted) return;
-
-        // Clear any previous animation frame request
-        if (rAFId.current !== null) {
-            cancelAnimationFrame(rAFId.current);
-        }
+        if (rAFId.current !== null) cancelAnimationFrame(rAFId.current);
 
         rAFId.current = requestAnimationFrame(() => {
             const beta = e.beta || 0;
             const gamma = e.gamma || 0;
 
-            const maxTilt = 30;
-            const maxRotation = 3;
-
-            const rotateX = gsap.utils.mapRange(-maxTilt, maxTilt, maxRotation, -maxRotation, gamma);
-            const rotateY = gsap.utils.mapRange(-maxTilt, maxTilt, -maxRotation, maxRotation, beta);
+            const rotateX = gsap.utils.mapRange(-30, 30, 3, -3, gamma);
+            const rotateY = gsap.utils.mapRange(-30, 30, -3, 3, beta);
 
             rotationTargetX.current = rotateX;
             rotationTargetY.current = rotateY;
 
-            if (rotationTimeline.current) {
-                rotationTimeline.current.kill();
-            }
+            if (rotationTimeline.current) rotationTimeline.current.kill();
 
             rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.6 } })
                 .to(cardRef.current, {
@@ -218,6 +166,7 @@ const Projects = () => {
                     transformPerspective: 1000,
                     transformOrigin: "center center",
                 });
+
             rAFId.current = null;
         });
     }, [isMobile, deviceMotionPermissionGranted]);
@@ -232,11 +181,8 @@ const Projects = () => {
 
     const handleTouchEnd = () => {
         if (scrollLocked.current) return;
-
         const swipeDistance = touchStartX.current - touchEndX.current;
-        const minSwipeDistance = 50;
-
-        if (Math.abs(swipeDistance) > minSwipeDistance) {
+        if (Math.abs(swipeDistance) > 50) {
             const direction = swipeDistance > 0 ? 'next' : 'prev';
             const newIndex = direction === 'next'
                 ? (currentProject + 1) % projectData.length
@@ -246,30 +192,23 @@ const Projects = () => {
         }
     };
 
-    const handleScroll = useCallback(
-        (e: WheelEvent) => {
-            if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 30) return;
+    const handleScroll = useCallback((e: WheelEvent) => {
+        if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 30) return;
+        const direction = e.deltaY > 0 ? 'next' : 'prev';
+        const newIndex = direction === 'next'
+            ? (currentProject + 1) % projectData.length
+            : (currentProject - 1 + projectData.length) % projectData.length;
 
-            const direction = e.deltaY > 0 ? 'next' : 'prev';
-            const newIndex = direction === 'next'
-                ? (currentProject + 1) % projectData.length
-                : (currentProject - 1 + projectData.length) % projectData.length;
-
-            animateProjectChange(direction, newIndex);
-        },
-        [isMobile, currentProject, animateProjectChange]
-    );
+        animateProjectChange(direction, newIndex);
+    }, [isMobile, currentProject, animateProjectChange]);
 
     useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth < 768);
-        };
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
         checkMobile();
         window.addEventListener('resize', checkMobile);
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // Effect for handling device orientation listener for mobile
     useEffect(() => {
         if (isMobile) {
             if (
@@ -277,7 +216,6 @@ const Projects = () => {
                 'requestPermission' in DeviceMotionEvent &&
                 typeof DeviceMotionEvent.requestPermission === 'function'
             ) {
-                // Permission handled by the button click
             } else {
                 setDeviceMotionPermissionGranted(true);
                 window.addEventListener('deviceorientation', handleDeviceOrientation);
@@ -289,7 +227,6 @@ const Projects = () => {
                 rAFId.current = null;
             }
         }
-
         return () => {
             window.removeEventListener('deviceorientation', handleDeviceOrientation);
             if (rAFId.current !== null) {
@@ -299,33 +236,20 @@ const Projects = () => {
         };
     }, [isMobile, handleDeviceOrientation]);
 
-    // Initial load animation with useLayoutEffect to run before paint
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({ defaults: { ease: 'power2.out', force3D: true } });
-
-            if (
-                indexRef.current &&
-                cardRef.current &&
-                dotsRef.current
-            ) {
-                // Animate index number in (only opacity/x for initial load)
+            if (indexRef.current && cardRef.current && dotsRef.current) {
                 tl.from(indexRef.current, { opacity: 0, x: -30, duration: 0.5 });
-
-                // Animate card content in (grouped for cleaner animation)
                 tl.from(cardRef.current, {
                     opacity: 0,
-                    y: 30, // Slight initial lift
+                    y: 30,
                     scale: 0.97,
-                    duration: 0.7, // Longer duration for initial smooth fade-in
-                    ease: 'power2.out',
-                }, '-=0.3'); // Start animating card content slightly before index finishes
-
-                // Animate background dots in
-                tl.from(dotsRef.current, { x: -50, opacity: 0, duration: 0.8, ease: 'power2.out' }, '<0.1');
+                    duration: 0.7,
+                }, '-=0.3');
+                tl.from(dotsRef.current, { x: -50, opacity: 0, duration: 0.8 }, '<0.1');
             }
         });
-
         return () => ctx.revert();
     }, []);
 
@@ -336,7 +260,6 @@ const Projects = () => {
         }
     }, [handleScroll, isMobile]);
 
-    // Handle permission request for iOS 13+
     const handleRequestPermission = async () => {
         const granted = await requestDeviceMotionPermission();
         setDeviceMotionPermissionGranted(granted);
@@ -353,9 +276,9 @@ const Projects = () => {
         );
     }
 
-    // Use displayProject for rendering, which is updated by animateProjectChange
     const projectToDisplay = displayProject;
 
+    // Render JSX here (same as you had it; you can keep the visual part unchanged)
 
     return (
         <div
