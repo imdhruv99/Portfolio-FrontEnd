@@ -22,7 +22,7 @@ const projectData: ProjectData[] = [
         tags: ['Containerization', 'Task Management', 'Docker', 'Kubernetes', 'Scalability'],
         difficulty: 'Intermediate',
         yearOfDevelopment: "Apr 2025 - May 2025",
-        image: '/images/task_manager.png',
+        // image: '/images/task_manager.png',
     },
     {
         id: 2,
@@ -34,7 +34,7 @@ const projectData: ProjectData[] = [
         tags: ['NodeJs', 'ExpressJs', 'ReactJS', 'Docker', 'MongoDB'],
         difficulty: 'Intermediate',
         yearOfDevelopment: "Jul 2024 - Sept 2024",
-        image: '/images/idea_beacon.png',
+        // image: '/images/idea_beacon.png',
     },
     {
         id: 3,
