@@ -14,7 +14,6 @@ const Experience = () => {
         const interval = setInterval(() => {
             setActiveIndex((prev) => (prev + 1) % experienceData.length);
         }, 12000);
-
         return () => clearInterval(interval);
     }, []);
 
@@ -29,18 +28,18 @@ const Experience = () => {
 
             <div className="relative z-10 px-4 sm:px-8 lg:px-16 xl:px-24 py-16 lg:py-24">
                 <div className="max-w-8xl mx-auto">
-                    <header className="text-center mb-20 lg:mb-32">
-                        <h1 className={`text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-thin tracking-tight ${colors.heroText} mb-8`}>
+                    <header className="text-center mb-16 lg:mb-28">
+                        <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-thin tracking-tight ${colors.heroText} mb-6`}>
                             Experience
                         </h1>
-                        <p className={`text-xl sm:text-2xl lg:text-3xl ${colors.subtext} font-light max-w-4xl mx-auto`}>
-                            Building the future through innovative technology solutions
+                        <p className={`text-base sm:text-lg lg:text-xl ${colors.subtext} font-light max-w-3xl mx-auto`}>
+                            A journey of building impactful solutions through code and creativity
                         </p>
                     </header>
 
-                    <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 xl:gap-32">
+                    <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 xl:gap-28">
                         <nav className="lg:w-1/3 xl:w-1/4">
-                            <div className="space-y-6">
+                            <div className="space-y-4">
                                 {experienceData.map((exp, index) => (
                                     <button
                                         key={exp.id}
@@ -50,17 +49,16 @@ const Experience = () => {
                                             ${index === activeIndex ? 'opacity-100' : 'opacity-40 hover:opacity-70'}
                                         `}
                                     >
-                                        <div className="flex items-center gap-4 py-4">
+                                        <div className="flex items-center gap-3 py-3">
                                             <div
-                                                className={`w-1 h-12 transition-all duration-500 ${index === activeIndex ? '' : 'scale-y-50'
-                                                    }`}
-                                                style={{ backgroundColor: exp.color }}
+                                                className={`w-1 h-10 transition-all duration-500 ${index === activeIndex ? '' : 'scale-y-50'}`}
+                                                style={{ backgroundColor: colors.indexLine }}
                                             />
                                             <div className="flex-1">
-                                                <h3 className={`text-lg sm:text-xl font-medium ${colors.text} mb-1`}>
+                                                <h3 className={`text-base sm:text-lg font-medium ${colors.text} mb-1`}>
                                                     {exp.company}
                                                 </h3>
-                                                <p className={`text-sm ${colors.subtext}`}>
+                                                <p className={`text-xs sm:text-sm ${colors.subtext}`}>
                                                     {exp.period}
                                                 </p>
                                             </div>
@@ -71,49 +69,52 @@ const Experience = () => {
                         </nav>
 
                         <main className="lg:w-2/3 xl:w-3/4">
-                            <div className="space-y-12">
-                                <header className="border-b pb-8" style={{ borderColor: `${currentExperience.color}20` }}>
-                                    <div className="flex items-center gap-6 mb-6">
+                            <div className="space-y-10">
+                                <header
+                                    className={`border-l-4 pl-5 pb-6 ${colors.border}`}
+                                    style={{ borderColor: currentExperience.color }}
+                                >
+                                    <div className="flex items-center gap-5 mb-4">
                                         <div
-                                            className="w-20 h-20 rounded-full flex items-center justify-center"
-                                            style={{ backgroundColor: `${currentExperience.color}15` }}
+                                            className="w-16 h-16 rounded-full flex items-center justify-center"
+                                            style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
                                         >
                                             <Icon
                                                 icon="ph:building-office"
-                                                className="w-10 h-10"
-                                                style={{ color: currentExperience.color }}
+                                                className="w-8 h-8"
+                                                style={{ color: colors.iconColor }}
                                             />
                                         </div>
                                         <div>
-                                            <h2 className={`text-4xl sm:text-5xl lg:text-6xl font-light ${colors.text} mb-2`}>
+                                            <h2 className={`text-2xl sm:text-3xl font-light ${colors.text} mb-1`}>
                                                 {currentExperience.company}
                                             </h2>
-                                            <p className={`text-xl sm:text-2xl ${colors.subtext} font-light`}>
+                                            <p className={`text-base sm:text-lg ${colors.subtext} font-light`}>
                                                 {currentExperience.designation}
                                             </p>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-3">
-                                        <Icon icon="ph:calendar" className={`w-5 h-5 ${colors.metaText}`} />
-                                        <span className={`text-lg ${colors.metaText} font-light`}>
+                                    <div className="flex items-center gap-2">
+                                        <Icon icon="ph:calendar" className={`w-4 h-4 ${colors.metaText}`} />
+                                        <span className={`text-sm ${colors.metaText} font-light`}>
                                             {currentExperience.period}
                                         </span>
                                     </div>
                                 </header>
 
                                 <section>
-                                    <h3 className={`text-2xl sm:text-3xl font-light ${colors.text} mb-8`}>
+                                    <h3 className={`text-xl sm:text-2xl font-light ${colors.text} mb-6`}>
                                         Key Contributions
                                     </h3>
-                                    <div className="space-y-6">
+                                    <div className="space-y-4">
                                         {currentExperience.description.map((desc, index) => (
-                                            <div key={index} className="flex gap-6">
+                                            <div key={index} className="flex gap-4">
                                                 <div
-                                                    className="w-2 h-2 rounded-full mt-3 flex-shrink-0"
+                                                    className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
                                                     style={{ backgroundColor: currentExperience.color }}
                                                 />
-                                                <p className={`text-lg sm:text-xl ${colors.descriptionText} leading-relaxed font-light`}>
+                                                <p className={`text-sm sm:text-base ${colors.descriptionText} leading-relaxed font-light`}>
                                                     {desc}
                                                 </p>
                                             </div>
@@ -122,24 +123,21 @@ const Experience = () => {
                                 </section>
 
                                 <section>
-                                    <h3 className={`text-2xl sm:text-3xl font-light ${colors.text} mb-8 flex items-center gap-4`}>
-                                        <Icon icon="ph:code" className="w-7 h-7" style={{ color: currentExperience.color }} />
+                                    <h3 className={`text-xl sm:text-2xl font-light ${colors.text} mb-6 flex items-center gap-3`}>
+                                        <Icon icon="ph:code" className="w-5 h-5" style={{ color: colors.iconColor }} />
                                         Technology Stack
                                     </h3>
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                                    <div className="flex flex-wrap gap-2">
                                         {currentExperience.technologies.map((tech, index) => (
-                                            <div
+                                            <span
                                                 key={index}
                                                 className={`
-                                                    px-4 py-3 text-center transition-all duration-300
-                                                    hover:scale-105 cursor-default border rounded-lg
+                                                    inline-block px-3 py-1 rounded-full text-xs sm:text-sm font-medium
                                                     ${colors.techBadge}
                                                 `}
                                             >
-                                                <span className="text-sm font-medium">
-                                                    {tech}
-                                                </span>
-                                            </div>
+                                                {tech}
+                                            </span>
                                         ))}
                                     </div>
                                 </section>
@@ -147,9 +145,9 @@ const Experience = () => {
                         </main>
                     </div>
 
-                    <footer className="mt-24 text-center">
+                    <footer className="mt-20 text-center">
                         <div className="flex justify-center gap-2">
-                            {experienceData.map((_, index) => (
+                            {experienceData.map((exp, index) => (
                                 <button
                                     key={index}
                                     onClick={() => setActiveIndex(index)}
@@ -157,7 +155,7 @@ const Experience = () => {
                                         w-2 h-2 rounded-full transition-all duration-300
                                         ${index === activeIndex ? 'scale-125' : 'opacity-40 hover:opacity-70'}
                                     `}
-                                    style={{ backgroundColor: experienceData[index].color }}
+                                    style={{ backgroundColor: exp.color }}
                                 />
                             ))}
                         </div>
