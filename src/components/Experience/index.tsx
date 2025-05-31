@@ -4,9 +4,14 @@ import { Icon } from '@iconify/react';
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { useThemeColors } from '@/hooks/useThemeColors';
 import experienceData from '@/constants/ExperienceData';
+
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ExperienceItem {
     id: number;
@@ -18,73 +23,37 @@ interface ExperienceItem {
     color: string;
 }
 
-interface ImmersiveViewProps {
+interface ExperienceCardProps {
     experience: ExperienceItem;
     colors: ReturnType<typeof useThemeColors>['colors'];
-    activeIndex: number;
-    totalExperiences: number;
-    onNext: () => void;
-    onPrev: () => void;
+    index: number;
 }
 
-const ImmersiveView = ({
-    experience,
-    colors,
-    activeIndex,
-    totalExperiences,
-    onNext,
-    onPrev
-}: ImmersiveViewProps) => {
+const ExperienceCard = ({ experience, colors, index }: ExperienceCardProps) => {
     return (
         <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 flex items-center justify-center p-4"
+            className="flex-shrink-0 w-screen h-screen flex items-center justify-center p-8"
+            initial={{ opacity: 0, x: 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: index * 0.1 }}
+            viewport={{ once: true, margin: "-100px" }}
         >
-            {/* Background Gradient*/}
-            {/* <motion.div
-                className="absolute inset-0"
-                style={{
-                    background: `radial-gradient(circle at center, ${experience.color}15 0%, transparent 70%)`
-                }}
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 8, repeat: Infinity }}
-            /> */}
-
-            {/* Navigation */}
-            <button
-                onClick={onPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center magnetic z-50"
-            >
-                <Icon icon="ph:arrow-left" className="w-6 h-6 text-white" />
-            </button>
-
-            <button
-                onClick={onNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center magnetic z-50"
-            >
-                <Icon icon="ph:arrow-right" className="w-6 h-6 text-white" />
-            </button>
-
-            {/* Main Content */}
-            <motion.div
-                key={activeIndex}
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="max-w-5xl mx-auto text-center"
-            >
+            <div className="max-w-4xl mx-auto text-center">
+                {/* Company Icon */}
                 <motion.div
                     className="w-24 h-24 mx-auto mb-8 rounded-3xl flex items-center justify-center"
                     style={{ backgroundColor: `${experience.color}20` }}
                     animate={{ rotate: [0, 5, -5, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
                 >
-                    <Icon icon="ph:building-office" className="w-12 h-12" style={{ color: experience.color }} />
+                    <Icon
+                        icon="ph:building-office"
+                        className="w-12 h-12"
+                        style={{ color: experience.color }}
+                    />
                 </motion.div>
 
+                {/* Designation */}
                 <motion.h1
                     className={`text-4xl sm:text-6xl lg:text-7xl font-extralight ${colors.heroText} mb-4`}
                     animate={{ y: [0, -10, 0] }}
@@ -93,6 +62,7 @@ const ImmersiveView = ({
                     {experience.designation}
                 </motion.h1>
 
+                {/* Company & Period */}
                 <motion.div className="mb-12">
                     <p className={`text-xl sm:text-2xl ${colors.subtext} mb-2`}>
                         {experience.company}
@@ -102,20 +72,21 @@ const ImmersiveView = ({
                     </p>
                 </motion.div>
 
+                {/* Description */}
                 <motion.div
-                    className="max-w-3xl mx-auto mb-12"
+                    className="max-w-4xl mx-auto mb-12"
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
                 >
-                    <div className="space-y-4">
-                        {experience.description.slice(0, 2).map((desc, index) => (
+                    <div className="space-y-2">
+                        {experience.description.slice(0, 7).map((desc, descIndex) => (
                             <motion.p
-                                key={index}
+                                key={descIndex}
                                 className={`text-lg ${colors.descriptionText} leading-relaxed`}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.5 + index * 0.2 }}
+                                transition={{ delay: 0.5 + descIndex * 0.2 }}
                             >
                                 {desc}
                             </motion.p>
@@ -123,6 +94,7 @@ const ImmersiveView = ({
                     </div>
                 </motion.div>
 
+                {/* Technologies */}
                 <motion.div
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -130,13 +102,13 @@ const ImmersiveView = ({
                     className="mb-8"
                 >
                     <div className="flex flex-wrap justify-center gap-3">
-                        {experience.technologies.map((tech, index) => (
+                        {experience.technologies.map((tech, techIndex) => (
                             <motion.span
-                                key={index}
+                                key={techIndex}
                                 className={`px-4 py-2 rounded-full text-sm font-medium ${colors.techBadge} backdrop-blur-sm border border-white/20`}
                                 initial={{ scale: 0, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
-                                transition={{ delay: 0.9 + index * 0.05 }}
+                                transition={{ delay: 0.9 + techIndex * 0.05 }}
                                 whileHover={{ scale: 1.1 }}
                             >
                                 {tech}
@@ -144,18 +116,7 @@ const ImmersiveView = ({
                         ))}
                     </div>
                 </motion.div>
-
-                <div className="flex justify-center gap-2">
-                    {[...Array(totalExperiences)].map((_, index) => (
-                        <motion.div
-                            key={index}
-                            className={`w-2 h-2 rounded-full ${index === activeIndex ? 'bg-white' : 'bg-white/30'}`}
-                            animate={index === activeIndex ? { scale: [1, 1.5, 1] } : {}}
-                            transition={{ duration: 1, repeat: Infinity }}
-                        />
-                    ))}
-                </div>
-            </motion.div>
+            </div>
         </motion.div>
     );
 };
@@ -164,63 +125,110 @@ const Experience = () => {
     const { colors } = useThemeColors();
     const [activeIndex, setActiveIndex] = useState(0);
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const horizontalRef = useRef<HTMLDivElement | null>(null);
 
-    // GSAP Magnetic Effect for Interactive Elements
+    // Horizontal Scroll Effect
     useEffect(() => {
-        const magneticElements = containerRef.current?.querySelectorAll('.magnetic');
+        if (!horizontalRef.current || !containerRef.current) return;
 
-        magneticElements?.forEach(element => {
-            const handleMouseMove = (e: MouseEvent) => {
-                const rect = element.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
+        const horizontalElement = horizontalRef.current;
+        const containerElement = containerRef.current;
 
-                gsap.to(element, {
-                    x: x * 0.3,
-                    y: y * 0.3,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-            };
+        // Calculate total width needed for horizontal scroll
+        const totalWidth = experienceData.length * window.innerWidth;
 
-            const handleMouseLeave = () => {
-                gsap.to(element, {
-                    x: 0,
-                    y: 0,
-                    duration: 0.5,
-                    ease: "elastic.out(1, 0.3)"
-                });
-            };
+        // Slower Scroll
+        gsap.set(containerElement, {
+            height: totalWidth * 1.5
+        });
 
+        // Create horizontal scroll animation with slower scrub
+        const scrollTween = gsap.to(horizontalElement, {
+            x: -(totalWidth - window.innerWidth),
+            ease: "none",
+            scrollTrigger: {
+                trigger: containerElement,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 2,
+                pin: horizontalElement,
+                invalidateOnRefresh: true,
+                anticipatePin: 1,
+                onUpdate: (self) => {
+                    const newIndex = Math.round(self.progress * (experienceData.length - 1));
+                    setActiveIndex(newIndex);
+                }
+            }
+        });
+
+        // Handle resize
+        const handleResize = () => {
+            scrollTween.scrollTrigger?.refresh();
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            scrollTween.scrollTrigger?.kill();
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    // Magnetic Effect for Interactive Elements
+    useEffect(() => {
+        const magneticElements = document.querySelectorAll('.magnetic');
+
+        const handleMouseMove = (e: MouseEvent) => {
+            const target = e.currentTarget as HTMLElement;
+            const rect = target.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            gsap.to(target, {
+                x: x * 0.3,
+                y: y * 0.3,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        };
+
+        const handleMouseLeave = (e: MouseEvent) => {
+            const target = e.currentTarget as HTMLElement;
+            gsap.to(target, {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: "elastic.out(1, 0.3)"
+            });
+        };
+
+        magneticElements.forEach(element => {
             (element as HTMLElement).addEventListener('mousemove', handleMouseMove);
             (element as HTMLElement).addEventListener('mouseleave', handleMouseLeave);
+        });
 
-            return () => {
+        return () => {
+            magneticElements.forEach(element => {
                 (element as HTMLElement).removeEventListener('mousemove', handleMouseMove);
                 (element as HTMLElement).removeEventListener('mouseleave', handleMouseLeave);
-            };
-        });
+            });
+        };
     }, []);
 
-    // Auto-advance
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex((prev) => (prev + 1) % experienceData.length);
-        }, 12000);
-        return () => clearInterval(interval);
-    }, []);
 
     return (
-        <div ref={containerRef} className={`min-h-screen ${colors.background} relative overflow-hidden`}>
+        <div ref={containerRef} className="relative">
+            {/* Fixed Background */}
             <motion.div
-                className="fixed inset-0 transition-all duration-1000"
+                className="fixed inset-0 transition-all duration-1000 pointer-events-none"
                 style={{
-                    background: `radial-gradient(circle at 30% 20%, ${experienceData[activeIndex]?.color}08 0%, transparent 50%), radial-gradient(circle at 70% 80%, ${experienceData[activeIndex]?.color}05 0%, transparent 50%)`
+                    background: `${colors.background}, radial-gradient(circle at 30% 20%, ${experienceData[activeIndex]?.color}08 0%, transparent 50%), radial-gradient(circle at 70% 80%, ${experienceData[activeIndex]?.color}05 0%, transparent 50%)`
                 }}
             />
 
+            {/* Animated Particles */}
             <div className="fixed inset-0 pointer-events-none">
-                {[...Array(20)].map((_, i) => (
+                {[...Array(15)].map((_, i) => (
                     <motion.div
                         key={i}
                         className="absolute w-1 h-1 rounded-full opacity-20"
@@ -230,32 +238,69 @@ const Experience = () => {
                             top: `${Math.random() * 100}%`,
                         }}
                         animate={{
-                            y: [0, -100, 0],
+                            y: [0, -150, 0],
                             opacity: [0.2, 0.8, 0.2],
-                            scale: [1, 1.5, 1]
+                            scale: [1, 1.8, 1]
                         }}
                         transition={{
-                            duration: 3 + Math.random() * 2,
+                            duration: 4 + Math.random() * 3,
                             repeat: Infinity,
-                            delay: Math.random() * 2
+                            delay: Math.random() * 3
                         }}
                     />
                 ))}
             </div>
 
-            <div className="pt-24 pb-16">
+            {/* Horizontal Scroll Container */}
+            <div
+                ref={horizontalRef}
+                className="flex w-fit h-screen"
+                style={{
+                    width: `${experienceData.length * 100}vw`,
+                }}
+            >
                 <AnimatePresence mode="wait">
-                    <ImmersiveView
-                        key="immersive"
-                        experience={experienceData[activeIndex]}
-                        colors={colors}
-                        activeIndex={activeIndex}
-                        totalExperiences={experienceData.length}
-                        onNext={() => setActiveIndex((prev) => (prev + 1) % experienceData.length)}
-                        onPrev={() => setActiveIndex((prev) => (prev - 1 + experienceData.length) % experienceData.length)}
-                    />
+                    {experienceData.map((experience, index) => (
+                        <ExperienceCard
+                            key={experience.id}
+                            experience={experience}
+                            colors={colors}
+                            index={index}
+                        />
+                    ))}
                 </AnimatePresence>
             </div>
+
+            {/* Progress Indicator */}
+            <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+                <div className="flex items-center gap-4 px-6 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20">
+                    <div className="flex gap-2">
+                        {experienceData.map((_, index) => (
+                            <motion.div
+                                key={index}
+                                className={`w-2 h-2 rounded-full transition-all duration-300 ${index === activeIndex ? 'bg-white scale-125' : 'bg-white/30'
+                                    }`}
+                            />
+                        ))}
+                    </div>
+                    <div className={`text-sm ${colors.metaText} ml-2`}>
+                        {activeIndex + 1} / {experienceData.length}
+                    </div>
+                </div>
+            </div>
+
+            {/* Scroll Hint */}
+            <motion.div
+                className="fixed bottom-8 right-8 z-50"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: [1, 0.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+            >
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20">
+                    <Icon icon="ph:mouse" className="w-4 h-4 text-white/70" />
+                    <span className="text-sm text-white/70">Scroll to explore</span>
+                </div>
+            </motion.div>
         </div>
     );
 };
