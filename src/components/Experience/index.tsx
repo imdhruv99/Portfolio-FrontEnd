@@ -42,15 +42,15 @@ const ImmersiveView = ({
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 flex items-center justify-center p-4"
         >
-            {/* Background */}
-            <motion.div
+            {/* Background Gradient*/}
+            {/* <motion.div
                 className="absolute inset-0"
                 style={{
                     background: `radial-gradient(circle at center, ${experience.color}15 0%, transparent 70%)`
                 }}
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 8, repeat: Infinity }}
-            />
+            /> */}
 
             {/* Navigation */}
             <button
