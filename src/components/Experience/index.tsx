@@ -2,7 +2,7 @@
 
 import { Icon } from '@iconify/react';
 import { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence, useScroll } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from 'gsap';
 
 import { useThemeColors } from '@/hooks/useThemeColors';
@@ -90,12 +90,12 @@ const ImmersiveView = ({
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 3, repeat: Infinity }}
                 >
-                    {experience.company}
+                    {experience.designation}
                 </motion.h1>
 
                 <motion.div className="mb-12">
                     <p className={`text-xl sm:text-2xl ${colors.subtext} mb-2`}>
-                        {experience.designation}
+                        {experience.company}
                     </p>
                     <p className={`text-lg ${colors.metaText}`}>
                         {experience.period}
@@ -206,7 +206,7 @@ const Experience = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveIndex((prev) => (prev + 1) % experienceData.length);
-        }, 8000);
+        }, 12000);
         return () => clearInterval(interval);
     }, []);
 

@@ -12,7 +12,7 @@ const experienceData: ExperienceData[] = [
     {
         id: 1,
         company: 'Juniper Networks',
-        designation: 'DevOps Engineer 4',
+        designation: 'Software Engineer 4',
         period: 'Dec 2023 - Present',
         description: [
             'Led the implementation of cloud-native DevOps solutions integrating Kubernetes, Prometheus, and Airflow.',
@@ -31,20 +31,17 @@ const experienceData: ExperienceData[] = [
             'Grafana',
             'Docker',
             'Go',
-            'Apache Airflow',
-            'Apache Spark',
             'Apache Kafka',
             'Apache ZooKeeper',
             'Cassandra',
             'Machine Learning',
-            'LLM',
         ],
         color: '#0F766E',
     },
     {
         id: 2,
         company: 'IBM',
-        designation: 'Senior DevOps Engineer',
+        designation: 'Senior Software Engineer',
         period: 'Aug 2023 - Dec 2023',
         description: [
             'Upgraded production Kubernetes clusters and aligned dev environments for consistency.',
@@ -53,7 +50,6 @@ const experienceData: ExperienceData[] = [
             'Optimized CI/CD processes and system reliability through Jenkins enhancements.',
         ],
         technologies: [
-            'Systems Design',
             'Prometheus',
             'Kubernetes',
             'Ansible',
@@ -64,8 +60,8 @@ const experienceData: ExperienceData[] = [
     },
     {
         id: 3,
-        company: 'Crest Data Systems',
-        designation: 'Senior DevOps Engineer - Tesco Splunk Automation',
+        company: 'Tesco / Crest Data Systems',
+        designation: 'Senior Software Engineer',
         period: 'Sep 2022 - Jul 2023',
         description: [
             'Built scalable infrastructure using Azure, Kubernetes, and Terraform.',
@@ -88,8 +84,8 @@ const experienceData: ExperienceData[] = [
     },
     {
         id: 4,
-        company: 'Crest Data Systems',
-        designation: 'DevSecOps Engineer - LinkedIn Cloud Security',
+        company: 'LinkedIn / Crest Data Systems',
+        designation: 'Software Engineer',
         period: 'Jun 2021 - Aug 2022',
         description: [
             'Managed security-as-code for cloud infrastructure using Azure, PowerShell, and Python.',
@@ -110,8 +106,8 @@ const experienceData: ExperienceData[] = [
     },
     {
         id: 5,
-        company: 'Crest Data Systems',
-        designation: 'Site Reliability Engineer - Splunk',
+        company: 'Splunk / Crest Data Systems',
+        designation: 'Software Engineer',
         period: 'Jun 2020 - Jun 2021',
         description: [
             'Automated CI/CD pipelines for Splunk apps across distributed architectures.',
