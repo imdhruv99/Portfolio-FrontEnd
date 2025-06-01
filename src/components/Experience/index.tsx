@@ -271,24 +271,6 @@ const Experience = () => {
                 </AnimatePresence>
             </div>
 
-            {/* Progress Indicator */}
-            <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-                <div className="flex items-center gap-4 px-6 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20">
-                    <div className="flex gap-2">
-                        {experienceData.map((_, index) => (
-                            <motion.div
-                                key={index}
-                                className={`w-2 h-2 rounded-full transition-all duration-300 ${index === activeIndex ? 'bg-white scale-125' : 'bg-white/30'
-                                    }`}
-                            />
-                        ))}
-                    </div>
-                    <div className={`text-sm ${colors.metaText} ml-2`}>
-                        {activeIndex + 1} / {experienceData.length}
-                    </div>
-                </div>
-            </div>
-
             {/* Scroll Hint */}
             <motion.div
                 className="fixed bottom-8 right-8 z-50"
