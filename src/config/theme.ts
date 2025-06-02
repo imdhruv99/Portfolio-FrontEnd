@@ -23,9 +23,6 @@ export interface ThemeColors {
     yearBadge: string;
     linkButton: string;
     cardPattern: string;
-    statusDot1: string;
-    statusDot2: string;
-    statusDot3: string;
     floatingElement: string;
 }
 
@@ -62,9 +59,6 @@ export const themes: Record<string, Theme> = {
             yearBadge: 'bg-white/90 text-gray-800 border border-gray-200/50',
             linkButton: 'bg-white/80 hover:bg-white text-gray-700 border border-gray-200/50',
             cardPattern: 'geometric-pattern-light',
-            statusDot1: 'bg-emerald-400',
-            statusDot2: 'bg-amber-400',
-            statusDot3: 'bg-rose-400',
             floatingElement: 'bg-gray-400',
         },
     },
@@ -95,9 +89,6 @@ export const themes: Record<string, Theme> = {
             yearBadge: 'bg-white/[0.08] text-white/90 border border-white/10',
             linkButton: 'bg-white/[0.08] hover:bg-white/[0.15] text-white/80 border border-white/10',
             cardPattern: 'geometric-pattern-dark',
-            statusDot1: 'bg-emerald-400',
-            statusDot2: 'bg-amber-400',
-            statusDot3: 'bg-rose-400',
             floatingElement: 'bg-white',
         },
     },

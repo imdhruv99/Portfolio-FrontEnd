@@ -395,13 +395,6 @@ const Projects = () => {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Decorative Elements */}
-                        <div className="absolute top-4 sm:top-6 left-4 sm:left-6 flex gap-2 z-30">
-                            <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${theme.statusDot1} animate-pulse`} />
-                            <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${theme.statusDot2} animate-pulse`} style={{ animationDelay: '0.5s' }} />
-                            <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${theme.statusDot3} animate-pulse`} style={{ animationDelay: '1s' }} />
-                        </div>
                     </div>
 
                     {/* Links Section */}
