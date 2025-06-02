@@ -105,11 +105,11 @@ const ExperienceCard = ({ experience, colors, index }: ExperienceCardProps) => {
                         {experience.technologies.map((tech, techIndex) => (
                             <motion.span
                                 key={techIndex}
-                                className={`px-4 py-2 rounded-full text-sm font-medium ${colors.techBadge} backdrop-blur-sm border border-white/20`}
+                                className={`px-2 py-1 rounded-full text-xs font-normal ${colors.techBadge} backdrop-blur-sm border border-white/20`}
                                 initial={{ scale: 0, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 transition={{ delay: 0.9 + techIndex * 0.05 }}
-                                whileHover={{ scale: 1.1 }}
+                                whileHover={{ scale: 1.05 }}
                             >
                                 {tech}
                             </motion.span>
