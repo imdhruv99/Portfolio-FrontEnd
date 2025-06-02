@@ -74,7 +74,7 @@ const ExperienceCard = ({ experience, colors, index }: ExperienceCardProps) => {
 
                 {/* Description */}
                 <motion.div
-                    className="max-w-4xl mx-auto mb-12"
+                    className="max-w-3xl mx-auto mb-12"
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
@@ -83,7 +83,7 @@ const ExperienceCard = ({ experience, colors, index }: ExperienceCardProps) => {
                         {experience.description.slice(0, 7).map((desc, descIndex) => (
                             <motion.p
                                 key={descIndex}
-                                className={`text-lg ${colors.descriptionText} leading-relaxed`}
+                                className={`text-md ${colors.descriptionText} leading-relaxed text-justify`}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.5 + descIndex * 0.2 }}
