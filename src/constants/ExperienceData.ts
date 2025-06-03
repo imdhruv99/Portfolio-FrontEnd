@@ -5,7 +5,6 @@ type ExperienceData = {
     period: string;
     description: string[];
     technologies: string[];
-    color: string;
     image: string;
 };
 
@@ -35,7 +34,6 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'CI/CD',
                 'Linux',
             ],
-            color: '#0F766E',
             image: isDarkTheme ? '/images/jnpr_dark.png' : '/images/jnpr_light.png',
         },
         {
@@ -60,7 +58,6 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'Trivy',
                 'MongoDB',
             ],
-            color: '#3B82F6',
             image: isDarkTheme ? '/images/jnpr_dark.png' : '/images/jnpr_light.png',
         },
         {
@@ -86,8 +83,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'Flask',
                 'REST APIs',
             ],
-            color: '#8B5CF6',
-            image: isDarkTheme ? '/images/jnpr_dark.png' : '/images/jnpr_light.png',
+            image: isDarkTheme ? '/images/cds_dark.png' : '/images/cds_light.png',
         },
         {
             id: 4,
@@ -110,8 +106,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'ReactJS',
                 'Docker',
             ],
-            color: '#EC4899',
-            image: isDarkTheme ? '/images/jnpr_dark.png' : '/images/jnpr_light.png',
+            image: isDarkTheme ? '/images/cds_dark.png' : '/images/cds_light.png',
         },
         {
             id: 5,
@@ -134,8 +129,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'Terraform',
                 'Jira',
             ],
-            color: '#F59E0B',
-            image: isDarkTheme ? '/images/jnpr_dark.png' : '/images/jnpr_light.png',
+            image: isDarkTheme ? '/images/cds_dark.png' : '/images/cds_light.png',
         },
         {
             id: 6,
@@ -159,7 +153,6 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'Prometheus',
                 'ELK Stack',
             ],
-            color: '#6366F1',
             image: isDarkTheme ? '/images/jnpr_dark.png' : '/images/jnpr_light.png',
         },
         {
@@ -186,7 +179,6 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'REST APIs',
                 'MySQL',
             ],
-            color: '#10B981',
             image: isDarkTheme ? '/images/jnpr_dark.png' : '/images/jnpr_light.png',
         },
     ];

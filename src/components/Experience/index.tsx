@@ -15,7 +15,6 @@ interface ExperienceItem {
     period: string;
     description: string[];
     technologies: string[];
-    color: string;
     image: string;
 }
 
@@ -24,15 +23,16 @@ interface BentoCardProps {
     className?: string;
     delay?: number;
     style?: React.CSSProperties;
+    isDarkTheme: boolean
 }
 
-const BentoCard = ({ children, className = '', delay = 0, style }: BentoCardProps) => (
+const BentoCard = ({ children, className = '', delay = 0, style, isDarkTheme }: BentoCardProps) => (
     <motion.div
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.6, delay }}
         viewport={{ once: true, margin: "-50px" }}
-        className={`backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition-all duration-300 ${className}`}
+        className={`backdrop-blur-xl bg-white/5 border ${isDarkTheme ? 'border-white/10' : 'border-gray-200'} rounded-3xl p-6 hover:bg-white/10 transition-all duration-300 ${className}`}
         style={style}
         whileHover={{ scale: 1.02, y: -5 }}
     >
@@ -46,22 +46,23 @@ interface ExperienceGridProps {
 }
 
 const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
+    const { colors, isDarkTheme } = useThemeColors();
     const baseDelay = index * 0.1;
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-8">
             <div className="w-full max-w-7xl mx-auto">
-                {/* Grid Container */}
                 <div className="grid grid-cols-12 grid-rows-12 gap-4 h-[90vh] min-h-[600px]">
 
-                    {/* Stats/Metrics - Top Right */}
+                    {/* Logo */}
                     <BentoCard
-                        className="col-span-6 sm:col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
+                        className="col-span-6 sm:col-span-3 row-span-3 flex justify-center items-center"
                         delay={baseDelay + 0.1}
+                        isDarkTheme={isDarkTheme}
                     >
                         <div>
                             <Image
-                                src={experience?.image}
+                                src={experience.image}
                                 alt="Company Logo"
                                 layout="fill"
                                 objectFit="contain"
@@ -70,42 +71,44 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         </div>
                     </BentoCard>
 
-                    {/* Company Name - Top Left */}
+                    {/* Company Name */}
                     <BentoCard
                         className="col-span-6 sm:col-span-4 row-span-3 flex flex-col justify-center"
                         delay={baseDelay}
-                        style={{ background: `linear-gradient(135deg, ${experience.color}20, ${experience.color}10)` }}
+                        style={{ background: `${colors.card}` }}
+                        isDarkTheme={isDarkTheme}
                     >
-                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+                        <h3 className={`text-lg sm:text-xl font-semibold ${colors.text} mb-2`}>
                             {experience.company}
                         </h3>
-                        <p className="text-sm text-gray-400">{experience.period}</p>
+                        <p className={`text-sm ${colors.subtext}`}>{experience.period}</p>
                     </BentoCard>
 
-                    {/* Timeline Indicator - Far Right */}
+                    {/* Timeline Placeholder */}
                     <BentoCard
-                        className="hidden sm:block col-span-5 row-span-6 relative overflow-hidden"
+                        className="hidden sm:block col-span-5 row-span-4"
                         delay={baseDelay + 0.2}
+                        isDarkTheme={isDarkTheme}
                     >
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            cloud will come here
+                        <div className="flex items-center justify-center h-full">
+                            <span className={`${colors.subtext}`}>Timeline Visualization</span>
                         </div>
                     </BentoCard>
 
-                    {/* Central Designation - Main Focus */}
+                    {/* Designation with pattern */}
                     <BentoCard
-                        className="col-span-12 sm:col-span-7 row-span-3 flex items-center justify-center text-center relative overflow-hidden"
+                        className="col-span-12 sm:col-span-7 row-span-3 flex items-center justify-center relative overflow-hidden"
                         delay={baseDelay + 0.3}
-                        style={{ background: `linear-gradient(135deg, ${experience.color}15, transparent)` }}
+                        style={{ background: `${colors.card}` }}
+                        isDarkTheme={isDarkTheme}
                     >
-                        {/* Background Pattern */}
-                        <div className="absolute inset-0 opacity-5">
+                        <div className="absolute inset-0 opacity-10">
                             {[...Array(20)].map((_, i) => (
                                 <motion.div
                                     key={i}
                                     className="absolute w-2 h-2 rounded-full"
                                     style={{
-                                        backgroundColor: experience.color,
+                                        backgroundColor: colors.iconColor,
                                         left: `${Math.random() * 100}%`,
                                         top: `${Math.random() * 100}%`,
                                     }}
@@ -122,32 +125,29 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             ))}
                         </div>
 
-                        <div className="relative z-10">
+                        <div className="relative z-10 text-center">
                             <motion.h1
-                                className="text-2xl sm:text-4xl lg:text-5xl font-light text-white mb-4 leading-tight"
+                                className={`text-2xl sm:text-4xl lg:text-5xl font-light ${colors.text}`}
                                 animate={{ y: [0, -5, 0] }}
                                 transition={{ duration: 4, repeat: Infinity }}
                             >
                                 {experience.designation}
                             </motion.h1>
                             <motion.div
-                                className="w-24 h-1 mx-auto rounded-full"
-                                style={{ backgroundColor: experience.color }}
+                                className="w-24 h-1 mx-auto rounded-full mt-2"
+                                style={{ backgroundColor: colors.iconColor }}
                                 animate={{ width: [60, 100, 60] }}
                                 transition={{ duration: 3, repeat: Infinity }}
                             />
                         </div>
                     </BentoCard>
 
-                    {/* Description - Large Bottom Left */}
+                    {/* Description */}
                     <BentoCard
                         className="col-span-12 sm:col-span-8 row-span-5 overflow-y-auto custom-scrollbar"
                         delay={baseDelay + 0.4}
+                        isDarkTheme={isDarkTheme}
                     >
-                        <div className="flex items-center mb-4">
-                            <Icon icon="ph:article" className="w-5 h-5 text-gray-400 mr-2" />
-                            <h4 className="text-lg font-medium text-white">Key Achievements</h4>
-                        </div>
                         <div className="space-y-4">
                             {experience.description.map((desc, descIndex) => (
                                 <motion.div
@@ -159,24 +159,26 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                                 >
                                     <div
                                         className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                                        style={{ backgroundColor: experience.color }}
                                     />
-                                    <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-                                        {desc}
-                                    </p>
+                                    <ul className="list-disc">
+                                        <li className={`text-sm sm:text-base ${colors.descriptionText} text-justify`}>
+                                            {desc}
+                                        </li>
+                                    </ul>
                                 </motion.div>
                             ))}
                         </div>
                     </BentoCard>
 
-                    {/* Technologies - Bottom Right */}
+                    {/* Tech Stack */}
                     <BentoCard
                         className="col-span-12 sm:col-span-4 row-span-5"
                         delay={baseDelay + 0.5}
+                        isDarkTheme={isDarkTheme}
                     >
                         <div className="flex items-center mb-4">
-                            <Icon icon="ph:code" className="w-5 h-5 text-gray-400 mr-2" />
-                            <h4 className="text-lg font-medium text-white">Tech Stack</h4>
+                            <Icon icon="ph:code" className={`w-5 h-5 mr-2 ${colors.iconColor}`} />
+                            <h4 className={`text-lg font-medium ${colors.text}`}>Tech Stack</h4>
                         </div>
                         <div className="flex flex-wrap gap-2">
                             {experience.technologies.map((tech, techIndex) => (
@@ -190,10 +192,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                                         stiffness: 300
                                     }}
                                     whileHover={{ scale: 1.1, y: -2 }}
-                                    className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-white/90 border border-white/20 backdrop-blur-sm"
-                                    style={{
-                                        boxShadow: `0 0 20px ${experience.color}20`,
-                                    }}
+                                    className={`px-3 py-1.5 rounded-full text-xs font-medium border backdrop-blur-sm ${colors.techBadge}`}
                                 >
                                     {tech}
                                 </motion.span>
@@ -239,39 +238,37 @@ const Experience = () => {
 
     return (
         <div ref={containerRef} className="relative">
-            {/* Dynamic Background */}
+            {/* Floating Particles */}
             <div
                 className="fixed inset-0 transition-all duration-1000 pointer-events-none"
                 style={{
-                    background: `${colors.background}, radial-gradient(circle at 30% 20%, ${experienceData[activeIndex]?.color}08 0%, transparent 50%), radial-gradient(circle at 70% 80%, ${experienceData[activeIndex]?.color}05 0%, transparent 50%)`
+                    background: `${colors.background}, radial-gradient(circle at 30% 20%, ${colors.pulseDot} 0%, transparent 50%), radial-gradient(circle at 70% 80%, ${colors.pulseDot} 0%, transparent 50%)`
                 }}
             />
 
-            {/* Floating Particles */}
-            <div className="fixed inset-0 pointer-events-none overflow-hidden">
-                {[...Array(12)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 rounded-full opacity-30"
-                        style={{
-                            backgroundColor: experienceData[activeIndex]?.color || '#ffffff',
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
-                        }}
-                        animate={{
-                            y: [0, -100, 0],
-                            x: [0, Math.random() * 50 - 25, 0],
-                            opacity: [0.3, 0.8, 0.3],
-                            scale: [1, 1.5, 1]
-                        }}
-                        transition={{
-                            duration: 4 + Math.random() * 3,
-                            repeat: Infinity,
-                            delay: Math.random() * 3
-                        }}
-                    />
-                ))}
-            </div>
+            {[...Array(12)].map((_, i) => (
+                <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 rounded-full opacity-30"
+                    style={{
+                        backgroundColor: colors.floatingElement,
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                    }}
+                    animate={{
+                        y: [0, -100, 0],
+                        x: [0, Math.random() * 50 - 25, 0],
+                        opacity: [0.3, 0.8, 0.3],
+                        scale: [1, 1.5, 1]
+                    }}
+                    transition={{
+                        duration: 4 + Math.random() * 3,
+                        repeat: Infinity,
+                        delay: Math.random() * 3
+                    }}
+                />
+            ))}
+
 
             {/* Progress Indicator */}
             <div className="fixed left-8 top-1/2 transform -translate-y-1/2 z-50 hidden lg:block">
@@ -284,8 +281,8 @@ const Experience = () => {
                                 : 'scale-100 opacity-50'
                                 }`}
                             style={{
-                                backgroundColor: activeIndex === index ? experienceData[activeIndex].color : 'transparent',
-                                borderColor: experienceData[index].color
+                                backgroundColor: activeIndex === index ? colors.iconColor : 'transparent',
+                                borderColor: colors.iconColor
                             }}
                             whileHover={{ scale: 1.3 }}
                             onClick={() => {
