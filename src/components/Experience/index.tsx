@@ -3,7 +3,6 @@
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { getExperienceData } from '@/constants/ExperienceData';
 
@@ -26,18 +25,13 @@ interface BentoCardProps {
     isDarkTheme: boolean
 }
 
-const BentoCard = ({ children, className = '', delay = 0, style, isDarkTheme }: BentoCardProps) => (
-    <motion.div
-        initial={{ opacity: 0, y: 50, scale: 0.9 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6, delay }}
-        viewport={{ once: true, margin: "-50px" }}
+const BentoCard = ({ children, className = '', style, isDarkTheme }: BentoCardProps) => (
+    <div
         className={`backdrop-blur-xl bg-white/5 border ${isDarkTheme ? 'border-white/10' : 'border-gray-200'} rounded-3xl p-6 hover:bg-white/10 transition-all duration-300 ${className}`}
         style={style}
-        whileHover={{ scale: 1.02, y: -5 }}
     >
         {children}
-    </motion.div>
+    </div>
 );
 
 interface ExperienceGridProps {
@@ -52,7 +46,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
     return (
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-8">
             <div className="w-full max-w-7xl mx-auto">
-                <div className="grid grid-cols-14 grid-rows-14 gap-4 h-[90vh] min-h-[600px]">
+                <div className="grid grid-cols-14 grid-rows-10 gap-4 h-[90vh] min-h-[600px]">
 
                     {/* First Row */}
 
@@ -145,11 +139,8 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                     >
                         <div className="space-y-4">
                             {experience.description.map((desc, descIndex) => (
-                                <motion.div
+                                <div
                                     key={descIndex}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: baseDelay + 0.5 + descIndex * 0.1 }}
                                     className="flex items-start space-x-3"
                                 >
                                     <div
@@ -160,7 +151,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                                             {desc}
                                         </li>
                                     </ul>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </BentoCard>
@@ -224,24 +215,13 @@ const Experience = () => {
             />
 
             {[...Array(12)].map((_, i) => (
-                <motion.div
+                <div
                     key={i}
                     className="absolute w-1 h-1 rounded-full opacity-30"
                     style={{
                         backgroundColor: colors.floatingElement,
                         left: `${Math.random() * 100}%`,
                         top: `${Math.random() * 100}%`,
-                    }}
-                    animate={{
-                        y: [0, -100, 0],
-                        x: [0, Math.random() * 50 - 25, 0],
-                        opacity: [0.3, 0.8, 0.3],
-                        scale: [1, 1.5, 1]
-                    }}
-                    transition={{
-                        duration: 4 + Math.random() * 3,
-                        repeat: Infinity,
-                        delay: Math.random() * 3
                     }}
                 />
             ))}
@@ -251,7 +231,7 @@ const Experience = () => {
             <div className="fixed left-8 top-1/2 transform -translate-y-1/2 z-50 hidden lg:block">
                 <div className="flex flex-col space-y-4">
                     {experienceData.map((_, index) => (
-                        <motion.div
+                        <div
                             key={index}
                             className={`w-3 h-3 rounded-full border-2 cursor-pointer transition-all duration-300 ${activeIndex === index
                                 ? 'scale-125'
@@ -261,7 +241,6 @@ const Experience = () => {
                                 backgroundColor: activeIndex === index ? colors.iconColor : 'transparent',
                                 borderColor: colors.iconColor
                             }}
-                            whileHover={{ scale: 1.3 }}
                             onClick={() => {
                                 document.querySelector(`[data-index="${index}"]`)?.scrollIntoView({
                                     behavior: 'smooth'
@@ -274,34 +253,29 @@ const Experience = () => {
 
             {/* Experience Sections */}
             <div className="relative z-10">
-                <AnimatePresence mode="wait">
-                    {experienceData.map((experience, index) => (
-                        <div
-                            key={experience.id}
-                            className="experience-section"
-                            data-index={index}
-                        >
-                            <ExperienceGrid
-                                experience={experience}
-                                index={index}
-                            />
-                        </div>
-                    ))}
-                </AnimatePresence>
+                {experienceData.map((experience, index) => (
+                    <div
+                        key={experience.id}
+                        className="experience-section"
+                        data-index={index}
+                    >
+                        <ExperienceGrid
+                            experience={experience}
+                            index={index}
+                        />
+                    </div>
+                ))}
             </div>
 
             {/* Scroll Hint */}
-            <motion.div
+            <div
                 className="fixed bottom-8 right-8 z-50"
-                initial={{ opacity: 1 }}
-                animate={{ opacity: [1, 0.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
             >
                 <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20">
                     <Icon icon="ph:arrow-down" className="w-4 h-4 text-white/70" />
                     <span className="text-sm text-white/70">Scroll to explore</span>
                 </div>
-            </motion.div>
+            </div>
 
             <style jsx>{`
                 .custom-scrollbar::-webkit-scrollbar {
