@@ -46,7 +46,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
     return (
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-8">
             <div className="w-full max-w-7xl mx-auto">
-                <div className="grid grid-cols-14 grid-rows-10 gap-4 h-[90vh] min-h-[600px]">
+                <div className="grid grid-cols-14 grid-rows-10 gap-5 h-[80vh] min-h-[600px]">
 
                     {/* First Row */}
 
