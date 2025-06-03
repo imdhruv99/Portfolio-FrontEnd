@@ -52,11 +52,13 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
     return (
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-8">
             <div className="w-full max-w-7xl mx-auto">
-                <div className="grid grid-cols-12 grid-rows-12 gap-4 h-[90vh] min-h-[600px]">
+                <div className="grid grid-cols-14 grid-rows-14 gap-4 h-[90vh] min-h-[600px]">
 
-                    {/* Logo */}
+                    {/* First Row */}
+
+                    {/* Company Logo Image */}
                     <BentoCard
-                        className="col-span-6 sm:col-span-3 row-span-3 flex justify-center items-center"
+                        className="col-span-6 sm:col-span-4 row-span-3 flex justify-center items-center"
                         delay={baseDelay + 0.1}
                         isDarkTheme={isDarkTheme}
                     >
@@ -71,9 +73,19 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         </div>
                     </BentoCard>
 
-                    {/* Company Name */}
+                    {/* I will add some design here */}
                     <BentoCard
-                        className="col-span-6 sm:col-span-4 row-span-3 flex flex-col justify-center"
+                        className="col-span-6 sm:col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
+                        delay={baseDelay}
+                        style={{ background: `${colors.card}` }}
+                        isDarkTheme={isDarkTheme}
+                    >
+                        <div>Just Design</div>
+                    </BentoCard>
+
+                    {/* Company Name and Period */}
+                    <BentoCard
+                        className="col-span-6 sm:col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
                         delay={baseDelay}
                         style={{ background: `${colors.card}` }}
                         isDarkTheme={isDarkTheme}
@@ -84,67 +96,50 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         <p className={`text-sm ${colors.subtext}`}>{experience.period}</p>
                     </BentoCard>
 
-                    {/* Timeline Placeholder */}
+                    {/* Icon Cloud */}
                     <BentoCard
-                        className="hidden sm:block col-span-5 row-span-4"
-                        delay={baseDelay + 0.2}
+                        className="col-span-6 sm:col-span-4 row-span-6 flex flex-col justify-center items-center text-center"
+                        delay={baseDelay}
+                        style={{ background: `${colors.card}` }}
                         isDarkTheme={isDarkTheme}
                     >
-                        <div className="flex items-center justify-center h-full">
-                            <span className={`${colors.subtext}`}>Timeline Visualization</span>
+                        <div> Tech Icon Cloud will come here</div>
+                    </BentoCard>
+
+                    {/* Second Row */}
+
+                    {/* Some Design again will be here */}
+                    <BentoCard
+                        className="col-span-6 sm:col-span-4 row-span-3 flex justify-center items-center"
+                        delay={baseDelay + 0.1}
+                        isDarkTheme={isDarkTheme}
+                    >
+                        <div>
+                            I will add some design here again
                         </div>
                     </BentoCard>
 
-                    {/* Designation with pattern */}
+                    {/* Designation */}
                     <BentoCard
-                        className="col-span-12 sm:col-span-7 row-span-3 flex items-center justify-center relative overflow-hidden"
+                        className="col-span-12 sm:col-span-6 row-span-3 flex items-center justify-center relative overflow-hidden"
                         delay={baseDelay + 0.3}
                         style={{ background: `${colors.card}` }}
                         isDarkTheme={isDarkTheme}
                     >
-                        <div className="absolute inset-0 opacity-10">
-                            {[...Array(20)].map((_, i) => (
-                                <motion.div
-                                    key={i}
-                                    className="absolute w-2 h-2 rounded-full"
-                                    style={{
-                                        backgroundColor: colors.iconColor,
-                                        left: `${Math.random() * 100}%`,
-                                        top: `${Math.random() * 100}%`,
-                                    }}
-                                    animate={{
-                                        scale: [1, 1.5, 1],
-                                        opacity: [0.3, 0.8, 0.3],
-                                    }}
-                                    transition={{
-                                        duration: 3 + Math.random() * 2,
-                                        repeat: Infinity,
-                                        delay: Math.random() * 2,
-                                    }}
-                                />
-                            ))}
-                        </div>
-
                         <div className="relative z-10 text-center">
-                            <motion.h1
+                            <h1
                                 className={`text-2xl sm:text-4xl lg:text-5xl font-light ${colors.text}`}
-                                animate={{ y: [0, -5, 0] }}
-                                transition={{ duration: 4, repeat: Infinity }}
                             >
                                 {experience.designation}
-                            </motion.h1>
-                            <motion.div
-                                className="w-24 h-1 mx-auto rounded-full mt-2"
-                                style={{ backgroundColor: colors.iconColor }}
-                                animate={{ width: [60, 100, 60] }}
-                                transition={{ duration: 3, repeat: Infinity }}
-                            />
+                            </h1>
                         </div>
                     </BentoCard>
 
+                    {/* Third Row */}
+
                     {/* Description */}
                     <BentoCard
-                        className="col-span-12 sm:col-span-8 row-span-5 overflow-y-auto custom-scrollbar"
+                        className="col-span-12 sm:col-span-10 row-span-4 overflow-y-auto custom-scrollbar"
                         delay={baseDelay + 0.4}
                         isDarkTheme={isDarkTheme}
                     >
@@ -170,35 +165,17 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         </div>
                     </BentoCard>
 
-                    {/* Tech Stack */}
+                    {/* Some element again will be here */}
                     <BentoCard
-                        className="col-span-12 sm:col-span-4 row-span-5"
-                        delay={baseDelay + 0.5}
+                        className="col-span-6 sm:col-span-4 row-span-4 flex justify-center items-center"
+                        delay={baseDelay + 0.1}
                         isDarkTheme={isDarkTheme}
                     >
-                        <div className="flex items-center mb-4">
-                            <Icon icon="ph:code" className={`w-5 h-5 mr-2 ${colors.iconColor}`} />
-                            <h4 className={`text-lg font-medium ${colors.text}`}>Tech Stack</h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                            {experience.technologies.map((tech, techIndex) => (
-                                <motion.span
-                                    key={techIndex}
-                                    initial={{ scale: 0, opacity: 0 }}
-                                    whileInView={{ scale: 1, opacity: 1 }}
-                                    transition={{
-                                        delay: baseDelay + 0.6 + techIndex * 0.05,
-                                        type: "spring",
-                                        stiffness: 300
-                                    }}
-                                    whileHover={{ scale: 1.1, y: -2 }}
-                                    className={`px-3 py-1.5 rounded-full text-xs font-medium border backdrop-blur-sm ${colors.techBadge}`}
-                                >
-                                    {tech}
-                                </motion.span>
-                            ))}
+                        <div>
+                            I will add some design here again
                         </div>
                     </BentoCard>
+
                 </div>
             </div>
         </div>
