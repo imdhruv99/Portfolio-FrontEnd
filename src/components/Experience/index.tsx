@@ -62,7 +62,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                                 alt="Company Logo"
                                 layout="fill"
                                 objectFit="contain"
-                                className="p-1"
+                                className="p-10"
                             />
                         </div>
                     </BentoCard>
@@ -122,7 +122,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                     >
                         <div className="relative z-10 text-center">
                             <h1
-                                className={`text-2xl sm:text-4xl lg:text-5xl font-light ${colors.text}`}
+                                className={`text-2xl sm:text-4xl lg:text-4xl font-light ${colors.text}`}
                             >
                                 {experience.designation}
                             </h1>

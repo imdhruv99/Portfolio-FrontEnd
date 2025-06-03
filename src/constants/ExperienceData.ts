@@ -58,7 +58,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'Trivy',
                 'MongoDB',
             ],
-            image: isDarkTheme ? '/images/jnpr_dark.png' : '/images/jnpr_light.png',
+            image: isDarkTheme ? '/images/ibm.png' : '/images/ibm.png',
         },
         {
             id: 3,
@@ -153,7 +153,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'Prometheus',
                 'ELK Stack',
             ],
-            image: isDarkTheme ? '/images/jnpr_dark.png' : '/images/jnpr_light.png',
+            image: isDarkTheme ? '/images/softvan.png' : '/images/softvan.png',
         },
         {
             id: 7,
@@ -179,7 +179,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'REST APIs',
                 'MySQL',
             ],
-            image: isDarkTheme ? '/images/jnpr_dark.png' : '/images/jnpr_light.png',
+            image: isDarkTheme ? '/images/softvan.png' : '/images/softvan.png',
         },
     ];
 };
