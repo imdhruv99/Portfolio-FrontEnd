@@ -67,16 +67,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         </div>
                     </BentoCard>
 
-                    {/* I will add some design here */}
-                    <BentoCard
-                        className="col-span-6 sm:col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
-                        delay={baseDelay}
-                        style={{ background: `${colors.card}` }}
-                        isDarkTheme={isDarkTheme}
-                    >
-                        <div>Just Design</div>
-                    </BentoCard>
-
                     {/* Company Name and Period */}
                     <BentoCard
                         className="col-span-6 sm:col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
@@ -88,6 +78,16 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             {experience.company}
                         </h3>
                         <p className={`text-sm ${colors.subtext}`}>{experience.period}</p>
+                    </BentoCard>
+
+                    {/* I will add some design here */}
+                    <BentoCard
+                        className="col-span-6 sm:col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
+                        delay={baseDelay}
+                        style={{ background: `${colors.card}` }}
+                        isDarkTheme={isDarkTheme}
+                    >
+                        <div>Just Design</div>
                     </BentoCard>
 
                     {/* Icon Cloud */}
