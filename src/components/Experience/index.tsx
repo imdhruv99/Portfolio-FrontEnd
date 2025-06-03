@@ -1,10 +1,10 @@
 'use client';
 
-import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { getExperienceData } from '@/constants/ExperienceData';
+import { TechIconCloud } from '../TechIconCloud';
 
 
 interface ExperienceItem {
@@ -97,7 +97,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         style={{ background: `${colors.card}` }}
                         isDarkTheme={isDarkTheme}
                     >
-                        <div> Tech Icon Cloud will come here</div>
+                        <TechIconCloud technologies={experience.technologies} />
                     </BentoCard>
 
                     {/* Second Row */}
@@ -265,16 +265,6 @@ const Experience = () => {
                         />
                     </div>
                 ))}
-            </div>
-
-            {/* Scroll Hint */}
-            <div
-                className="fixed bottom-8 right-8 z-50"
-            >
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20">
-                    <Icon icon="ph:arrow-down" className="w-4 h-4 text-white/70" />
-                    <span className="text-sm text-white/70">Scroll to explore</span>
-                </div>
             </div>
 
             <style jsx>{`
