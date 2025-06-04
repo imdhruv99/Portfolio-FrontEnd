@@ -273,6 +273,7 @@ const Experience = () => {
     const [isMobile, setIsMobile] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
+    const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -281,16 +282,49 @@ const Experience = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+            let current = activeIndex;
+
+            for (let i = 0; i < sectionRefs.current.length; i++) {
+                const section = sectionRefs.current[i];
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = window.scrollY + rect.top;
+                    const sectionBottom = sectionTop + rect.height;
+
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        current = i;
+                        break;
+                    }
+                }
+            }
+
+            if (current !== activeIndex) {
+                setActiveIndex(current);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [activeIndex]);
+
+    useEffect(() => {
+        const section = sectionRefs.current[activeIndex];
+        if (section) {
+            window.scrollTo({
+                top: section.offsetTop,
+                behavior: 'smooth',
+            });
+        }
+    }, [activeIndex]);
+
     return (
         <div ref={containerRef} className="relative">
-            {/* Floating Particles */}
-            <div
-                className="fixed inset-0 transition-all duration-1000 pointer-events-none"
-                style={{
-                    background: `${colors.background}, radial-gradient(circle at 30% 20%, ${colors.pulseDot} 0%, transparent 50%), radial-gradient(circle at 70% 80%, ${colors.pulseDot} 0%, transparent 50%)`
-                }}
-            />
-
             {[...Array(12)].map((_, i) => (
                 <div
                     key={i}
@@ -308,13 +342,14 @@ const Experience = () => {
                 {experienceData.map((experience, index) => (
                     <div
                         key={experience.id}
-                        className="experience-section"
+                        ref={(el) => {
+                            sectionRefs.current[index] = el;
+                        }}
+                        className={`experience-section transition-opacity duration-300 ${index === activeIndex ? 'opacity-100' : 'opacity-30 pointer-events-none'
+                            }`}
                         data-index={index}
                     >
-                        <ExperienceGrid
-                            experience={experience}
-                            index={index}
-                        />
+                        <ExperienceGrid experience={experience} index={index} />
                     </div>
                 ))}
             </div>
