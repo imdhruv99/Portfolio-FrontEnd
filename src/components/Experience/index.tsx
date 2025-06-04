@@ -154,25 +154,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             ))}
                         </div>
                     </BentoCard>
-
-                    {/* Design placeholders - smaller on mobile */}
-                    <div className="grid grid-cols-2 gap-4 h-24">
-                        <BentoCard
-                            className="flex justify-center items-center"
-                            delay={baseDelay + 0.5}
-                            isDarkTheme={isDarkTheme}
-                        >
-                            <div className="text-xs text-center opacity-50">Design Element</div>
-                        </BentoCard>
-
-                        <BentoCard
-                            className="flex justify-center items-center"
-                            delay={baseDelay + 0.6}
-                            isDarkTheme={isDarkTheme}
-                        >
-                            <div className="text-xs text-center opacity-50">Design Element</div>
-                        </BentoCard>
-                    </div>
                 </div>
 
                 {/* Desktop Layout */}
