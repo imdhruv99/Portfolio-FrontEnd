@@ -1,11 +1,13 @@
 'use client';
 
 import Image from 'next/image';
+import { Icon } from '@iconify/react';
 import { useEffect, useState, useRef } from 'react';
+
+import techIconMap from '@/constants/techIconMap';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { getExperienceData } from '@/constants/ExperienceData';
-import { TechIconCloud } from '../TechIconCloud';
-
+import NavigationDots from '../NavigationDots';
 interface ExperienceItem {
     id: number;
     company: string;
@@ -97,7 +99,15 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         style={{ background: `${colors.card}` }}
                         isDarkTheme={isDarkTheme}
                     >
-                        <TechIconCloud technologies={experience.technologies} />
+                        <div></div>
+                        <div className="flex flex-wrap justify-center items-center gap-4">
+                            {experience.technologies.map((tech, techIndex) => {
+                                const iconName = isDarkTheme ? techIconMap[tech]?.dark : techIconMap[tech]?.light;
+                                return iconName ? (
+                                    <Icon key={techIndex} icon={iconName} className="w-8 h-8 md:w-10 md:h-10" />
+                                ) : null;
+                            })}
+                        </div>
                     </BentoCard>
 
                     {/* Description */}
@@ -138,7 +148,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                     </div>
                 </div>
 
-                {/* Desktop Layout - Original Grid */}
+                {/* Desktop Layout */}
                 <div className="hidden lg:block">
                     <div className="grid grid-cols-14 grid-rows-10 gap-5 h-[80vh] min-h-[600px]">
                         {/* Company Logo Image */}
@@ -188,7 +198,14 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             style={{ background: `${colors.card}` }}
                             isDarkTheme={isDarkTheme}
                         >
-                            <TechIconCloud technologies={experience.technologies} />
+                            <div className="flex flex-wrap justify-center items-center gap-4">
+                                {experience.technologies.map((tech, techIndex) => {
+                                    const iconName = isDarkTheme ? techIconMap[tech]?.dark : techIconMap[tech]?.light;
+                                    return iconName ? (
+                                        <Icon key={techIndex} icon={iconName} className="w-10 h-10 md:w-12 md:h-12" />
+                                    ) : null;
+                                })}
+                            </div>
                         </BentoCard>
 
                         {/* Design Element 2 */}
@@ -253,31 +270,15 @@ const Experience = () => {
     const { colors, isDarkTheme } = useThemeColors();
     const experienceData = getExperienceData(isDarkTheme);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
+
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // Intersection Observer for tracking active section
     useEffect(() => {
-        const observerOptions = {
-            root: null,
-            rootMargin: '-50% 0px -50% 0px',
-            threshold: 0
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const index = parseInt(entry.target.getAttribute('data-index') || '0');
-                    setActiveIndex(index);
-                }
-            });
-        }, observerOptions);
-
-        const sections = document.querySelectorAll('.experience-section');
-        sections.forEach((section) => observer.observe(section));
-
-        return () => {
-            sections.forEach((section) => observer.unobserve(section));
-        };
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
     return (
@@ -317,6 +318,14 @@ const Experience = () => {
                     </div>
                 ))}
             </div>
+
+            <NavigationDots
+                currentIndex={activeIndex}
+                total={experienceData.length}
+                isDark={isDarkTheme}
+                setCurrentProject={setActiveIndex}
+                isMobile={isMobile}
+            />
 
             <style jsx>{`
                 .custom-scrollbar::-webkit-scrollbar {
