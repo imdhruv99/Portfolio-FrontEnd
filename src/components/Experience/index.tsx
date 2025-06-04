@@ -26,14 +26,41 @@ interface BentoCardProps {
     isDarkTheme: boolean;
 }
 
-const BentoCard = ({ children, className = '', style, isDarkTheme }: BentoCardProps) => (
-    <div
-        className={`backdrop-blur-xl bg-white/5 border ${isDarkTheme ? 'border-white/10' : 'border-gray-200'} rounded-3xl p-4 sm:p-6 hover:bg-white/10 transition-all duration-300 ${className}`}
-        style={style}
-    >
-        {children}
-    </div>
-);
+const BentoCard = ({ children, className = '', style, isDarkTheme }: BentoCardProps) => {
+    const baseBackground = isDarkTheme
+        ? 'bg-[#1c1c1e]/70'
+        : 'bg-white/60';
+
+    const borderColor = isDarkTheme
+        ? 'border border-[#2c2c2e]'
+        : 'border border-[#e5e7eb]';
+
+    const hoverStyle = isDarkTheme
+        ? 'hover:bg-[#2a2a2c]/80 hover:border-[#3a3a3c]'
+        : 'hover:bg-white/80 hover:border-[#d1d5db]';
+
+    const shadowStyle = isDarkTheme
+        ? 'shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
+        : 'shadow-[0_4px_12px_rgba(0,0,0,0.08)]';
+
+    return (
+        <div
+            className={`
+                ${baseBackground}
+                ${borderColor}
+                ${hoverStyle}
+                ${shadowStyle}
+                backdrop-blur-md rounded-2xl
+                transition-all duration-300
+                ${className}
+            `}
+            style={style}
+        >
+            {children}
+        </div>
+    );
+};
+
 
 interface ExperienceGridProps {
     experience: ExperienceItem;
