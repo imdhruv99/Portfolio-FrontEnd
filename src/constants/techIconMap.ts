@@ -13,6 +13,7 @@ const techIconMap: Record<string, { light: string; dark: string }> = {
     Go: { light: 'logos:go', dark: 'logos:go' },
     Helm: { light: 'logos:helm', dark: 'catppuccin:helm' },
     HTML: { light: 'logos:html-5', dark: 'logos:html-5' },
+    Java: { light: 'logos:java', dark: 'logos:java' },
     JavaScript: { light: 'logos:javascript', dark: 'logos:javascript' },
     Jenkins: { light: 'logos:jenkins', dark: 'logos:jenkins' },
     JupyterNotebook: { light: 'logos:jupyter', dark: 'logos:jupyter' },
@@ -31,7 +32,7 @@ const techIconMap: Record<string, { light: string; dark: string }> = {
     Sklearn: { light: 'skill-icons:scikitlearn-dark', dark: 'skill-icons:scikitlearn-light' },
     Tensorflow: { light: 'logos:tensorflow', dark: 'logos:tensorflow' },
     Terraform: { light: 'logos:terraform-icon', dark: 'logos:terraform-icon' },
-    ReactJs: { light:'skill-icons:react-dark', dark:'skill-icons:react-dark' },
+    ReactJs: { light: 'skill-icons:react-dark', dark: 'skill-icons:react-dark' },
 };
 
 export default techIconMap;

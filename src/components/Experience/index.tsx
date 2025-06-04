@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 import techIconMap from '@/constants/techIconMap';
 import { useThemeColors } from '@/hooks/useThemeColors';
@@ -272,6 +272,8 @@ const Experience = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isMobile, setIsMobile] = useState(false);
 
+    const isProgrammaticScroll = useRef(false);
+
     const containerRef = useRef<HTMLDivElement>(null);
     const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -283,45 +285,53 @@ const Experience = () => {
     }, []);
 
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-            let current = activeIndex;
-
-            for (let i = 0; i < sectionRefs.current.length; i++) {
-                const section = sectionRefs.current[i];
-                if (section) {
-                    const rect = section.getBoundingClientRect();
-                    const sectionTop = window.scrollY + rect.top;
-                    const sectionBottom = sectionTop + rect.height;
-
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                        current = i;
-                        break;
-                    }
-                }
-            }
-
-            if (current !== activeIndex) {
-                setActiveIndex(current);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll();
-
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [activeIndex]);
-
-    useEffect(() => {
         const section = sectionRefs.current[activeIndex];
         if (section) {
+            isProgrammaticScroll.current = true;
             window.scrollTo({
                 top: section.offsetTop,
                 behavior: 'smooth',
             });
+            const timer = setTimeout(() => {
+                isProgrammaticScroll.current = false;
+            }, 700);
+            return () => clearTimeout(timer);
         }
     }, [activeIndex]);
+
+    const handleScroll = useCallback(() => {
+        if (isProgrammaticScroll.current) {
+            return; // Ignore scroll events if we just programmatically scrolled
+        }
+
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
+        let newActiveIndex = activeIndex;
+
+        for (let i = 0; i < sectionRefs.current.length; i++) {
+            const section = sectionRefs.current[i];
+            if (section) {
+                const rect = section.getBoundingClientRect();
+                const sectionTop = window.scrollY + rect.top;
+                const sectionBottom = sectionTop + rect.height;
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    newActiveIndex = i;
+                    break;
+                }
+            }
+        }
+
+        if (newActiveIndex !== activeIndex) {
+            setActiveIndex(newActiveIndex);
+        }
+    }, [activeIndex]);
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [handleScroll]);
 
     return (
         <div ref={containerRef} className="relative">

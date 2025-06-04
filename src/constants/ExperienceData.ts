@@ -24,7 +24,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'Maintained Helm charts for 75+ microservices, accelerating deployments and streamlining CI/CD workflows.',
             ],
             technologies: [
-                'java',
+                'Java',
                 'Go',
                 'Python',
                 'Prometheus',
