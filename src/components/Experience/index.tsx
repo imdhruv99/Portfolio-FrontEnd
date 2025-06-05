@@ -139,17 +139,22 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
 
                     {/* Description */}
                     <BentoCard
-                        className="min-h-[200px] overflow-y-auto custom-scrollbar"
+                        className="min-h-[200px] overflow-y-auto custom-scrollbar p-6"
                         delay={baseDelay + 0.4}
                         isDarkTheme={isDarkTheme}
                     >
-                        <div className="space-y-3">
+                        <div className="space-y-6">
                             {experience.description.map((desc, descIndex) => (
-                                <div key={descIndex} className="flex items-start space-x-2">
-                                    <div className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 bg-current opacity-50" />
-                                    <p className={`text-sm ${colors.descriptionText} text-justify leading-relaxed`}>
-                                        {desc}
+                                <div key={descIndex} className="relative group">
+                                    <p className={`text-sm md:text-base ${colors.descriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}>
+                                        <span className="mr-2 text-primary">✦</span>{desc}
                                     </p>
+                                    <div
+                                        className={`mt-3 h-px w-full transition-all duration-300 ${isDarkTheme
+                                            ? 'bg-gradient-to-r from-[#3a3a3c] via-[#555] to-[#3a3a3c]'
+                                            : 'bg-gradient-to-r from-[#d1d5db] via-[#bbb] to-[#d1d5db]'
+                                            }`}
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -241,19 +246,25 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
 
                         {/* Description */}
                         <BentoCard
-                            className="col-span-10 row-span-4 overflow-y-auto custom-scrollbar"
+                            className="col-span-10 row-span-4 overflow-y-auto custom-scrollbar p-6"
                             delay={baseDelay + 0.4}
                             isDarkTheme={isDarkTheme}
                         >
-                            <div className="space-y-4">
+                            <div className="space-y-6">
                                 {experience.description.map((desc, descIndex) => (
-                                    <div key={descIndex} className="flex items-start space-x-3">
-                                        <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" />
-                                        <ul className="list-disc">
-                                            <li className={`text-base ${colors.descriptionText} text-justify`}>
-                                                {desc}
-                                            </li>
-                                        </ul>
+                                    <div key={descIndex} className="relative group">
+                                        <p
+                                            className={`text-base ${colors.descriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}
+                                        >
+                                            <span className="mr-2 text-primary">✦</span>
+                                            {desc}
+                                        </p>
+                                        <div
+                                            className={`mt-3 h-px w-full transition-all duration-300 ${isDarkTheme
+                                                ? 'bg-gradient-to-r from-[#3a3a3c] via-[#555] to-[#3a3a3c]'
+                                                : 'bg-gradient-to-r from-[#d1d5db] via-[#bbb] to-[#d1d5db]'
+                                                }`}
+                                        />
                                     </div>
                                 ))}
                             </div>
