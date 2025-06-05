@@ -39,7 +39,7 @@ export default function RootLayout({
                     attribute="data-theme"
                     defaultTheme="system"
                     enableSystem
-                    disableTransitionOnChange={false} // We'll handle transitions manually
+                    disableTransitionOnChange={false}
                     themes={['light', 'dark', 'system']}
                 >
                     {children}
