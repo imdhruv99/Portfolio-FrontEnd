@@ -8,6 +8,7 @@ import techIconMap from '@/constants/techIconMap';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { getExperienceData } from '@/constants/ExperienceData';
 import NavigationDots from '../NavigationDots';
+
 interface ExperienceItem {
     id: number;
     company: string;
@@ -23,33 +24,18 @@ interface BentoCardProps {
     className?: string;
     delay?: number;
     style?: React.CSSProperties;
-    isDarkTheme: boolean;
 }
 
-const BentoCard = ({ children, className = '', style, isDarkTheme }: BentoCardProps) => {
-    const baseBackground = isDarkTheme
-        ? 'bg-[#1c1c1e]/70'
-        : 'bg-white/60';
-
-    const borderColor = isDarkTheme
-        ? 'border border-[#2c2c2e]'
-        : 'border border-[#e5e7eb]';
-
-    const hoverStyle = isDarkTheme
-        ? 'hover:bg-[#2a2a2c]/80 hover:border-[#3a3a3c]'
-        : 'hover:bg-white/80 hover:border-[#d1d5db]';
-
-    const shadowStyle = isDarkTheme
-        ? 'shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
-        : 'shadow-[0_4px_12px_rgba(0,0,0,0.08)]';
+const BentoCard = ({ children, className = '', style }: BentoCardProps) => {
+    const { colors } = useThemeColors();
 
     return (
         <div
             className={`
-                ${baseBackground}
-                ${borderColor}
-                ${hoverStyle}
-                ${shadowStyle}
+                ${colors.experienceBentoCard}
+                ${colors.experienceBentoBorder}
+                ${colors.experienceBentoHover}
+                ${colors.experienceBentoShadow}
                 backdrop-blur-md rounded-2xl
                 transition-all duration-300
                 ${className}
@@ -60,7 +46,6 @@ const BentoCard = ({ children, className = '', style, isDarkTheme }: BentoCardPr
         </div>
     );
 };
-
 
 interface ExperienceGridProps {
     experience: ExperienceItem;
@@ -81,7 +66,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         <BentoCard
                             className="flex justify-center items-center relative"
                             delay={baseDelay}
-                            isDarkTheme={isDarkTheme}
                         >
                             <div className="relative w-full h-full">
                                 <Image
@@ -98,7 +82,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             className="flex flex-col justify-center items-center text-center"
                             delay={baseDelay + 0.1}
                             style={{ background: `${colors.card}` }}
-                            isDarkTheme={isDarkTheme}
                         >
                             <h3 className={`text-sm font-semibold ${colors.text} mb-1`}>
                                 {experience.company}
@@ -112,7 +95,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         className="h-20 flex items-center justify-center"
                         delay={baseDelay + 0.2}
                         style={{ background: `${colors.card}` }}
-                        isDarkTheme={isDarkTheme}
                     >
                         <h1 className={`text-xl font-light ${colors.text} text-center`}>
                             {experience.designation}
@@ -124,7 +106,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         className="h-48 flex flex-col justify-center items-center"
                         delay={baseDelay + 0.3}
                         style={{ background: `${colors.card}` }}
-                        isDarkTheme={isDarkTheme}
                     >
                         <div></div>
                         <div className="flex flex-wrap justify-center items-center gap-4">
@@ -141,7 +122,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                     <BentoCard
                         className="min-h-[200px] overflow-y-auto custom-scrollbar p-6"
                         delay={baseDelay + 0.4}
-                        isDarkTheme={isDarkTheme}
                     >
                         <div className="space-y-6">
                             {experience.description.map((desc, descIndex) => (
@@ -150,10 +130,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                                         <span className="mr-2 text-primary">✦</span>{desc}
                                     </p>
                                     <div
-                                        className={`mt-3 h-px w-full transition-all duration-300 ${isDarkTheme
-                                            ? 'bg-gradient-to-r from-[#3a3a3c] via-[#555] to-[#3a3a3c]'
-                                            : 'bg-gradient-to-r from-[#d1d5db] via-[#bbb] to-[#d1d5db]'
-                                            }`}
+                                        className={`mt-3 h-px w-full transition-all duration-300 ${colors.experienceDescriptionDivider}`}
                                     />
                                 </div>
                             ))}
@@ -168,7 +145,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         <BentoCard
                             className="col-span-4 row-span-3 flex justify-center items-center"
                             delay={baseDelay + 0.1}
-                            isDarkTheme={isDarkTheme}
                         >
                             <div className="relative w-full h-full">
                                 <Image
@@ -186,7 +162,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             className="col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
                             delay={baseDelay}
                             style={{ background: `${colors.card}` }}
-                            isDarkTheme={isDarkTheme}
                         >
                             <h3 className={`text-xl font-semibold ${colors.text} mb-2`}>
                                 {experience.company}
@@ -199,7 +174,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             className="col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
                             delay={baseDelay}
                             style={{ background: `${colors.card}` }}
-                            isDarkTheme={isDarkTheme}
                         >
                             <div>Just Design</div>
                         </BentoCard>
@@ -209,7 +183,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             className="col-span-4 row-span-6 flex flex-col justify-center items-center text-center"
                             delay={baseDelay}
                             style={{ background: `${colors.card}` }}
-                            isDarkTheme={isDarkTheme}
                         >
                             <div className="flex flex-wrap justify-center items-center gap-4">
                                 {experience.technologies.map((tech, techIndex) => {
@@ -225,7 +198,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         <BentoCard
                             className="col-span-4 row-span-3 flex justify-center items-center"
                             delay={baseDelay + 0.1}
-                            isDarkTheme={isDarkTheme}
                         >
                             <div>I will add some design here again</div>
                         </BentoCard>
@@ -235,7 +207,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             className="col-span-6 row-span-3 flex items-center justify-center relative overflow-hidden"
                             delay={baseDelay + 0.3}
                             style={{ background: `${colors.card}` }}
-                            isDarkTheme={isDarkTheme}
                         >
                             <div className="relative z-10 text-center">
                                 <h1 className={`text-4xl font-light ${colors.text}`}>
@@ -248,7 +219,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         <BentoCard
                             className="col-span-10 row-span-4 overflow-y-auto custom-scrollbar p-6"
                             delay={baseDelay + 0.4}
-                            isDarkTheme={isDarkTheme}
                         >
                             <div className="space-y-6">
                                 {experience.description.map((desc, descIndex) => (
@@ -260,10 +230,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                                             {desc}
                                         </p>
                                         <div
-                                            className={`mt-3 h-px w-full transition-all duration-300 ${isDarkTheme
-                                                ? 'bg-gradient-to-r from-[#3a3a3c] via-[#555] to-[#3a3a3c]'
-                                                : 'bg-gradient-to-r from-[#d1d5db] via-[#bbb] to-[#d1d5db]'
-                                                }`}
+                                            className={`mt-3 h-px w-full transition-all duration-300 ${colors.experienceDescriptionDivider}`}
                                         />
                                     </div>
                                 ))}
@@ -274,7 +241,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         <BentoCard
                             className="col-span-4 row-span-4 flex justify-center items-center"
                             delay={baseDelay + 0.1}
-                            isDarkTheme={isDarkTheme}
                         >
                             <div>I will add some design here again</div>
                         </BentoCard>
@@ -396,15 +362,15 @@ const Experience = () => {
                     width: 4px;
                 }
                 .custom-scrollbar::-webkit-scrollbar-track {
-                    background: rgba(255, 255, 255, 0.1);
+                    background: ${colors.experienceScrollbarTrack};
                     border-radius: 2px;
                 }
                 .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: rgba(255, 255, 255, 0.3);
+                    background: ${colors.experienceScrollbarThumb};
                     border-radius: 2px;
                 }
                 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: rgba(255, 255, 255, 0.5);
+                    background: ${colors.experienceScrollbarThumbHover};
                 }
             `}</style>
         </div>
