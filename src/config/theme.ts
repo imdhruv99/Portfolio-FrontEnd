@@ -23,10 +23,16 @@ export interface ThemeColors {
     yearBadge: string;
     linkButton: string;
     cardPattern: string;
-    statusDot1: string;
-    statusDot2: string;
-    statusDot3: string;
     floatingElement: string;
+    // Experience-specific styles
+    experienceBentoCard: string;
+    experienceBentoBorder: string;
+    experienceBentoHover: string;
+    experienceBentoShadow: string;
+    experienceDescriptionDivider: string;
+    experienceScrollbarTrack: string;
+    experienceScrollbarThumb: string;
+    experienceScrollbarThumbHover: string;
 }
 
 export interface Theme {
@@ -45,7 +51,7 @@ export const themes: Record<string, Theme> = {
             card: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
             gradientOverlay: 'bg-gradient-to-t from-white/20 via-transparent to-white/10',
             button: 'bg-white/80 hover:bg-white text-gray-900 border border-gray-200',
-            techBadge: 'text-gray-700 bg-white/80 border-gray-200/50 hover:bg-white/90',
+            techBadge: 'text-gray-800 bg-gray-100 border border-gray-300 hover:bg-gray-200',
             iconColor: 'text-gray-400',
             indexLine: 'bg-gray-300',
             indexText: 'text-gray-500',
@@ -62,10 +68,16 @@ export const themes: Record<string, Theme> = {
             yearBadge: 'bg-white/90 text-gray-800 border border-gray-200/50',
             linkButton: 'bg-white/80 hover:bg-white text-gray-700 border border-gray-200/50',
             cardPattern: 'geometric-pattern-light',
-            statusDot1: 'bg-emerald-400',
-            statusDot2: 'bg-amber-400',
-            statusDot3: 'bg-rose-400',
             floatingElement: 'bg-gray-400',
+            // Experience-specific styles
+            experienceBentoCard: 'bg-white/60',
+            experienceBentoBorder: 'border border-[#e5e7eb]',
+            experienceBentoHover: 'hover:bg-white/80 hover:border-[#d1d5db]',
+            experienceBentoShadow: 'shadow-[0_4px_12px_rgba(0,0,0,0.08)]',
+            experienceDescriptionDivider: 'bg-gradient-to-r from-[#d1d5db] via-[#bbb] to-[#d1d5db]',
+            experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
+            experienceScrollbarThumb: 'rgba(0, 0, 0, 0.2)',
+            experienceScrollbarThumbHover: 'rgba(0, 0, 0, 0.3)',
         },
     },
     dark: {
@@ -78,7 +90,7 @@ export const themes: Record<string, Theme> = {
             card: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
             gradientOverlay: 'bg-gradient-to-t from-black/30 via-transparent to-black/10',
             button: 'bg-white/10 hover:bg-white/20 text-white border border-white/10',
-            techBadge: 'text-white/80 bg-white/[0.08] border-white/10 hover:bg-white/[0.12]',
+            techBadge: 'text-white/80 bg-white/10 border border-white/10 hover:bg-white/20',
             iconColor: 'text-white/30',
             indexLine: 'bg-white/20',
             indexText: 'text-white/50',
@@ -95,10 +107,16 @@ export const themes: Record<string, Theme> = {
             yearBadge: 'bg-white/[0.08] text-white/90 border border-white/10',
             linkButton: 'bg-white/[0.08] hover:bg-white/[0.15] text-white/80 border border-white/10',
             cardPattern: 'geometric-pattern-dark',
-            statusDot1: 'bg-emerald-400',
-            statusDot2: 'bg-amber-400',
-            statusDot3: 'bg-rose-400',
             floatingElement: 'bg-white',
+            // Experience-specific styles
+            experienceBentoCard: 'bg-[#1c1c1e]/70',
+            experienceBentoBorder: 'border border-[#2c2c2e]',
+            experienceBentoHover: 'hover:bg-[#2a2a2c]/80 hover:border-[#3a3a3c]',
+            experienceBentoShadow: 'shadow-[0_4px_12px_rgba(0,0,0,0.3)]',
+            experienceDescriptionDivider: 'bg-gradient-to-r from-[#3a3a3c] via-[#555] to-[#3a3a3c]',
+            experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
+            experienceScrollbarThumb: 'rgba(255, 255, 255, 0.3)',
+            experienceScrollbarThumbHover: 'rgba(255, 255, 255, 0.5)',
         },
     },
 };

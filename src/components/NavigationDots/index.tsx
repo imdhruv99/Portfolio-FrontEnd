@@ -8,9 +8,10 @@ type NavigationDotsProps = {
     isDark: boolean;
     setCurrentProject: (index: number) => void;
     isMobile?: boolean;
+    className?: string;
 };
 
-const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobile = false }: NavigationDotsProps) => {
+const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobile = false, className }: NavigationDotsProps) => {
     const dotsWrapperRef = useRef<HTMLDivElement>(null);
     const activeDotRef = useRef<HTMLDivElement>(null);
 
@@ -74,7 +75,7 @@ const NavigationDots = ({ currentIndex, total, isDark, setCurrentProject, isMobi
     if (isMobile) {
         // Mobile horizontal layout
         return (
-            <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-20 px-4 py-2">
+            <div className={`fixed bottom-16 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-20 px-4 py-2 ${className}`}>
                 {/* Left arrow */}
                 <button
                     onClick={() => scrollDots('left')}
