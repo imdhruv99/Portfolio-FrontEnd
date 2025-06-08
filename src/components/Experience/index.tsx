@@ -90,7 +90,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         </BentoCard>
                     </div>
 
-                    {/* Design Elements */}
+                    {/* Coffee Mug */}
                     <div className="grid grid-cols-3 gap-4">
                         <BentoCard className="aspect-[4/3] flex justify-center items-center" delay={baseDelay + 0.5}>
                             <div className="relative w-full h-full">
@@ -103,6 +103,8 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                                 />
                             </div>
                         </BentoCard>
+
+                        {/* User with Laptop */}
                         <BentoCard className="aspect-[4/3] flex justify-center items-center" delay={baseDelay + 0.6}>
                             <div className="relative w-full h-full">
                                 <Image
@@ -114,6 +116,8 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                                 />
                             </div>
                         </BentoCard>
+
+                        {/* Mac Setup */}
                         <BentoCard className="aspect-[4/3] flex justify-center items-center" delay={baseDelay + 0.7}>
                             <div className="relative w-full h-full">
                                 <Image
@@ -206,7 +210,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             <p className={`text-sm ${colors.subtext}`}>{experience.period}</p>
                         </BentoCard>
 
-                        {/* Design Element 1 */}
+                        {/* Mac Setup */}
                         <BentoCard
                             className="col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
                             delay={baseDelay}
@@ -225,7 +229,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
 
                         {/* Icon */}
                         <BentoCard
-                            className="col-span-4 row-span-6 flex flex-col justify-center items-center text-center"
+                            className="col-span-4 row-span-4 flex flex-col justify-center items-center text-center"
                             delay={baseDelay}
                             style={{ background: `${colors.card}` }}
                         >
@@ -239,7 +243,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             </div>
                         </BentoCard>
 
-                        {/* Design Element 2 */}
+                        {/* Coffee Mug */}
                         <BentoCard
                             className="col-span-4 row-span-3 flex justify-center items-center"
                             delay={baseDelay + 0.1}
@@ -268,6 +272,22 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             </div>
                         </BentoCard>
 
+                        {/* User with Laptop */}
+                        <BentoCard
+                            className="col-span-4 row-span-6 flex justify-center items-center"
+                            delay={baseDelay + 0.1}
+                        >
+                            <div className="relative w-full h-full">
+                                <Image
+                                    src='/props/02.png'
+                                    alt="Design Element"
+                                    layout="fill"
+                                    objectFit="contain"
+                                    className="p-5"
+                                />
+                            </div>
+                        </BentoCard>
+
                         {/* Description */}
                         <BentoCard
                             className="col-span-10 row-span-4 overflow-y-auto custom-scrollbar p-6"
@@ -287,22 +307,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                                         />
                                     </div>
                                 ))}
-                            </div>
-                        </BentoCard>
-
-                        {/* Design Element 3 */}
-                        <BentoCard
-                            className="col-span-4 row-span-4 flex justify-center items-center"
-                            delay={baseDelay + 0.1}
-                        >
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src='/props/02.png'
-                                    alt="Design Element"
-                                    layout="fill"
-                                    objectFit="contain"
-                                    className="p-5"
-                                />
                             </div>
                         </BentoCard>
                     </div>
