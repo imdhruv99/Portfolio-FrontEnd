@@ -149,7 +149,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             <div className="relative w-full h-full">
                                 <Image
                                     src={experience.image}
-                                    alt="Company Logo"
+                                    alt="Design Element"
                                     layout="fill"
                                     objectFit="contain"
                                     className="p-10"
@@ -175,10 +175,18 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             delay={baseDelay}
                             style={{ background: `${colors.card}` }}
                         >
-                            <div>Just Design</div>
+                            <div className="relative w-full h-full">
+                                <Image
+                                    src='/props/01.png'
+                                    alt="Company Logo"
+                                    layout="fill"
+                                    objectFit="contain"
+                                    className="p-5"
+                                />
+                            </div>
                         </BentoCard>
 
-                        {/* Icon Cloud */}
+                        {/* Icon */}
                         <BentoCard
                             className="col-span-4 row-span-6 flex flex-col justify-center items-center text-center"
                             delay={baseDelay}
@@ -199,7 +207,15 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             className="col-span-4 row-span-3 flex justify-center items-center"
                             delay={baseDelay + 0.1}
                         >
-                            <div>I will add some design here again</div>
+                            <div className="relative w-full h-full">
+                                <Image
+                                    src='/props/03.png'
+                                    alt="Design Element"
+                                    layout="fill"
+                                    objectFit="contain"
+                                    className="p-2"
+                                />
+                            </div>
                         </BentoCard>
 
                         {/* Designation */}
@@ -242,7 +258,15 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                             className="col-span-4 row-span-4 flex justify-center items-center"
                             delay={baseDelay + 0.1}
                         >
-                            <div>I will add some design here again</div>
+                            <div className="relative w-full h-full">
+                                <Image
+                                    src='/props/02.png'
+                                    alt="Design Element"
+                                    layout="fill"
+                                    objectFit="contain"
+                                    className="p-5"
+                                />
+                            </div>
                         </BentoCard>
                     </div>
                 </div>
