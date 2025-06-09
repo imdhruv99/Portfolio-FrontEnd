@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import { gsap } from 'gsap';
 
 import techIconMap from '@/constants/techIconMap';
 import { useThemeColors } from '@/hooks/useThemeColors';
@@ -293,15 +294,29 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
 
 const Experience = () => {
     const { colors, isDarkTheme, isLoading } = useThemeColors();
-    const experienceData = getExperienceData(isDarkTheme);
+
+    // Memoize experience data to prevent recalculation on every render
+    const experienceData = useMemo(() => getExperienceData(isDarkTheme), [isDarkTheme]);
+
     const [activeIndex, setActiveIndex] = useState(0);
     const [isMobile, setIsMobile] = useState(false);
     const [isContentVisible, setIsContentVisible] = useState(false);
 
-    const isProgrammaticScroll = useRef(false);
+    // Fluid scrolling refs and state
+    const scrollLocked = useRef(false);
     const containerRef = useRef<HTMLDivElement>(null);
-    const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const experienceRef = useRef<HTMLDivElement>(null);
+    const touchStartX = useRef(0);
+    const touchEndX = useRef(0);
+    const touchStartY = useRef(0);
+    const touchEndY = useRef(0);
 
+    // Memoize current experience to prevent unnecessary re-renders
+    const displayExperience = useMemo(() => {
+        return experienceData[activeIndex] || experienceData[0];
+    }, [experienceData, activeIndex]);
+
+    // Check mobile only once on mount and on resize
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
         checkMobile();
@@ -309,10 +324,9 @@ const Experience = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // Effect to control content visibility
+    // Handle content visibility
     useEffect(() => {
         if (!isLoading) {
-            // Reveal content after theme is loaded
             const timer = setTimeout(() => {
                 setIsContentVisible(true);
             }, 50);
@@ -322,86 +336,155 @@ const Experience = () => {
         }
     }, [isLoading]);
 
-    useEffect(() => {
-        if (!isContentVisible) return; // Only perform scroll logic if content is visible and stable
+    // Memoized animation function to prevent recreation on every render
+    const animateExperienceChange = useCallback((direction: 'next' | 'prev', newIndex: number) => {
+        if (scrollLocked.current || newIndex === activeIndex) return;
+        scrollLocked.current = true;
 
-        const section = sectionRefs.current[activeIndex];
-        if (section) {
-            isProgrammaticScroll.current = true;
-            window.scrollTo({
-                top: section.offsetTop,
-                behavior: 'smooth',
-            });
-            const timer = setTimeout(() => {
-                isProgrammaticScroll.current = false;
-            }, 700);
-            return () => clearTimeout(timer);
-        }
-    }, [activeIndex, isContentVisible]);
-
-
-    const handleScroll = useCallback(() => {
-        if (!isContentVisible || isProgrammaticScroll.current) { // Only scroll if content is visible
+        const experienceElement = experienceRef.current;
+        if (!experienceElement) {
+            scrollLocked.current = false;
             return;
         }
 
-        const scrollPosition = window.scrollY + window.innerHeight / 2;
-        let newActiveIndex = activeIndex;
+        const tl = gsap.timeline({
+            defaults: { ease: 'power2.inOut', force3D: true },
+            onComplete: () => {
+                scrollLocked.current = false;
+            },
+        });
 
-        for (let i = 0; i < sectionRefs.current.length; i++) {
-            const section = sectionRefs.current[i];
-            if (section) {
-                const rect = section.getBoundingClientRect();
-                const sectionTop = window.scrollY + rect.top;
-                const sectionBottom = sectionTop + rect.height;
+        if (direction === 'next') {
+            tl.to(experienceElement, {
+                y: '-=100%',
+                opacity: 0,
+                duration: 0.5,
+                ease: 'power2.in',
+            });
+        } else {
+            tl.to(experienceElement, {
+                y: '+=100%',
+                opacity: 0,
+                duration: 0.5,
+                ease: 'power2.in',
+            });
+        }
 
-                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                    newActiveIndex = i;
-                    break;
-                }
+        tl.add(() => {
+            setActiveIndex(newIndex);
+            gsap.set(experienceElement, {
+                y: direction === 'next' ? '100%' : '-100%',
+                opacity: 0,
+            });
+        });
+
+        tl.to(experienceElement, {
+            y: '0%',
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power2.out',
+        });
+    }, [activeIndex]);
+
+    // Memoized scroll handler for desktop
+    const handleScroll = useCallback((e: WheelEvent) => {
+        if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 30) return;
+
+        e.preventDefault();
+
+        const direction = e.deltaY > 0 ? 'next' : 'prev';
+        const newIndex = direction === 'next'
+            ? (activeIndex + 1) % experienceData.length
+            : (activeIndex - 1 + experienceData.length) % experienceData.length;
+
+        animateExperienceChange(direction, newIndex);
+    }, [isMobile, activeIndex, animateExperienceChange, experienceData.length]);
+
+    // Mobile scroll handler for vertical scrolling
+    const handleMobileScroll = useCallback((e: WheelEvent) => {
+        if (scrollLocked.current || !isMobile || Math.abs(e.deltaY) < 50) return;
+
+        e.preventDefault();
+
+        const direction = e.deltaY > 0 ? 'next' : 'prev';
+        const newIndex = direction === 'next'
+            ? (activeIndex + 1) % experienceData.length
+            : (activeIndex - 1 + experienceData.length) % experienceData.length;
+
+        animateExperienceChange(direction, newIndex);
+    }, [isMobile, activeIndex, animateExperienceChange, experienceData.length]);
+
+    // Memoized touch handlers - support both horizontal and vertical swipes
+    const handleTouchStart = useCallback((e: React.TouchEvent) => {
+        touchStartX.current = e.targetTouches[0].clientX;
+        touchStartY.current = e.targetTouches[0].clientY;
+    }, []);
+
+    const handleTouchMove = useCallback((e: React.TouchEvent) => {
+        touchEndX.current = e.targetTouches[0].clientX;
+        touchEndY.current = e.targetTouches[0].clientY;
+    }, []);
+
+    const handleTouchEnd = useCallback(() => {
+        if (scrollLocked.current) return;
+
+        const swipeDistanceX = touchStartX.current - touchEndX.current;
+        const swipeDistanceY = touchStartY.current - touchEndY.current;
+
+        // Check if it's a significant swipe
+        const isHorizontalSwipe = Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY) && Math.abs(swipeDistanceX) > 50;
+        const isVerticalSwipe = Math.abs(swipeDistanceY) > Math.abs(swipeDistanceX) && Math.abs(swipeDistanceY) > 50;
+
+        if (isHorizontalSwipe || isVerticalSwipe) {
+            let direction: 'next' | 'prev';
+
+            if (isHorizontalSwipe) {
+                // Horizontal swipe: left = next, right = prev
+                direction = swipeDistanceX > 0 ? 'next' : 'prev';
+            } else {
+                // Vertical swipe: down = next, up = prev
+                direction = swipeDistanceY > 0 ? 'next' : 'prev';
             }
+
+            const newIndex = direction === 'next'
+                ? (activeIndex + 1) % experienceData.length
+                : (activeIndex - 1 + experienceData.length) % experienceData.length;
+
+            animateExperienceChange(direction, newIndex);
         }
+    }, [activeIndex, animateExperienceChange, experienceData.length]);
 
-        if (newActiveIndex !== activeIndex) {
-            setActiveIndex(newActiveIndex);
-        }
-    }, [activeIndex, isContentVisible]);
-
-
+    // Add wheel event listeners for both desktop and mobile
     useEffect(() => {
         if (isContentVisible) {
-            window.addEventListener('scroll', handleScroll, { passive: true });
-            handleScroll();
-
-            return () => window.removeEventListener('scroll', handleScroll);
+            if (isMobile) {
+                // Mobile
+                window.addEventListener('wheel', handleMobileScroll, { passive: false });
+                return () => window.removeEventListener('wheel', handleMobileScroll);
+            } else {
+                // Desktop
+                window.addEventListener('wheel', handleScroll, { passive: false });
+                return () => window.removeEventListener('wheel', handleScroll);
+            }
         }
-    }, [isContentVisible, handleScroll]);
-
-    if (isLoading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-            </div>
-        );
-    }
+    }, [handleScroll, handleMobileScroll, isMobile, isContentVisible]);
 
     return (
-        <div ref={containerRef} className="relative">
+        <div
+            ref={containerRef}
+            className="relative overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+        >
             {/* Main content container with controlled visibility */}
             <div className={`relative z-10 ${isContentVisible ? 'opacity-100 transition-opacity duration-300' : 'opacity-0'}`}>
-                {experienceData.map((experience, index) => (
-                    <div
-                        key={experience.id}
-                        ref={(el) => {
-                            sectionRefs.current[index] = el;
-                        }}
-                        className={`experience-section transition-opacity duration-300 ${index === activeIndex ? 'opacity-100' : 'opacity-30 pointer-events-none'
-                            }`}
-                        data-index={index}
-                    >
-                        <ExperienceGrid experience={experience} index={index} />
-                    </div>
-                ))}
+                <div
+                    ref={experienceRef}
+                    className="experience-section transition-opacity duration-300"
+                >
+                    <ExperienceGrid experience={displayExperience} index={activeIndex} />
+                </div>
             </div>
 
             <NavigationDots
