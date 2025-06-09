@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
 
 import techIconMap from '@/constants/techIconMap';
@@ -294,9 +294,11 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
 
 const Experience = () => {
     const { colors, isDarkTheme, isLoading } = useThemeColors();
-    const experienceData = getExperienceData(isDarkTheme);
+
+    // Memoize experience data to prevent recalculation on every render
+    const experienceData = useMemo(() => getExperienceData(isDarkTheme), [isDarkTheme]);
+
     const [activeIndex, setActiveIndex] = useState(0);
-    const [displayExperience, setDisplayExperience] = useState(experienceData[0]);
     const [isMobile, setIsMobile] = useState(false);
     const [isContentVisible, setIsContentVisible] = useState(false);
 
@@ -306,7 +308,15 @@ const Experience = () => {
     const experienceRef = useRef<HTMLDivElement>(null);
     const touchStartX = useRef(0);
     const touchEndX = useRef(0);
+    const touchStartY = useRef(0);
+    const touchEndY = useRef(0);
 
+    // Memoize current experience to prevent unnecessary re-renders
+    const displayExperience = useMemo(() => {
+        return experienceData[activeIndex] || experienceData[0];
+    }, [experienceData, activeIndex]);
+
+    // Check mobile only once on mount and on resize
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
         checkMobile();
@@ -314,12 +324,7 @@ const Experience = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // Update display experience when activeIndex changes
-    useEffect(() => {
-        setDisplayExperience(experienceData[activeIndex]);
-    }, [activeIndex, experienceData]);
-
-    // Effect to control content visibility
+    // Handle content visibility
     useEffect(() => {
         if (!isLoading) {
             const timer = setTimeout(() => {
@@ -331,9 +336,9 @@ const Experience = () => {
         }
     }, [isLoading]);
 
-    // Fluid scroll animation function (similar to Projects)
+    // Memoized animation function to prevent recreation on every render
     const animateExperienceChange = useCallback((direction: 'next' | 'prev', newIndex: number) => {
-        if (scrollLocked.current) return;
+        if (scrollLocked.current || newIndex === activeIndex) return;
         scrollLocked.current = true;
 
         const experienceElement = experienceRef.current;
@@ -345,7 +350,6 @@ const Experience = () => {
         const tl = gsap.timeline({
             defaults: { ease: 'power2.inOut', force3D: true },
             onComplete: () => {
-                setActiveIndex(newIndex);
                 scrollLocked.current = false;
             },
         });
@@ -367,8 +371,7 @@ const Experience = () => {
         }
 
         tl.add(() => {
-            setDisplayExperience(experienceData[newIndex]);
-            setTimeout(() => setActiveIndex(newIndex), 50);
+            setActiveIndex(newIndex);
             gsap.set(experienceElement, {
                 y: direction === 'next' ? '100%' : '-100%',
                 opacity: 0,
@@ -381,13 +384,13 @@ const Experience = () => {
             duration: 0.6,
             ease: 'power2.out',
         });
-    }, [experienceData]);
+    }, [activeIndex]);
 
-    // Wheel scroll handler (similar to Projects)
+    // Memoized scroll handler for desktop
     const handleScroll = useCallback((e: WheelEvent) => {
         if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 30) return;
 
-        e.preventDefault(); // Prevent default scroll behavior
+        e.preventDefault();
 
         const direction = e.deltaY > 0 ? 'next' : 'prev';
         const newIndex = direction === 'next'
@@ -397,43 +400,74 @@ const Experience = () => {
         animateExperienceChange(direction, newIndex);
     }, [isMobile, activeIndex, animateExperienceChange, experienceData.length]);
 
-    // Touch handlers for mobile (similar to Projects)
-    const handleTouchStart = (e: React.TouchEvent) => {
+    // Mobile scroll handler for vertical scrolling
+    const handleMobileScroll = useCallback((e: WheelEvent) => {
+        if (scrollLocked.current || !isMobile || Math.abs(e.deltaY) < 50) return;
+
+        e.preventDefault();
+
+        const direction = e.deltaY > 0 ? 'next' : 'prev';
+        const newIndex = direction === 'next'
+            ? (activeIndex + 1) % experienceData.length
+            : (activeIndex - 1 + experienceData.length) % experienceData.length;
+
+        animateExperienceChange(direction, newIndex);
+    }, [isMobile, activeIndex, animateExperienceChange, experienceData.length]);
+
+    // Memoized touch handlers - support both horizontal and vertical swipes
+    const handleTouchStart = useCallback((e: React.TouchEvent) => {
         touchStartX.current = e.targetTouches[0].clientX;
-    };
+        touchStartY.current = e.targetTouches[0].clientY;
+    }, []);
 
-    const handleTouchMove = (e: React.TouchEvent) => {
+    const handleTouchMove = useCallback((e: React.TouchEvent) => {
         touchEndX.current = e.targetTouches[0].clientX;
-    };
+        touchEndY.current = e.targetTouches[0].clientY;
+    }, []);
 
-    const handleTouchEnd = () => {
+    const handleTouchEnd = useCallback(() => {
         if (scrollLocked.current) return;
-        const swipeDistance = touchStartX.current - touchEndX.current;
-        if (Math.abs(swipeDistance) > 50) {
-            const direction = swipeDistance > 0 ? 'next' : 'prev';
+
+        const swipeDistanceX = touchStartX.current - touchEndX.current;
+        const swipeDistanceY = touchStartY.current - touchEndY.current;
+
+        // Check if it's a significant swipe
+        const isHorizontalSwipe = Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY) && Math.abs(swipeDistanceX) > 50;
+        const isVerticalSwipe = Math.abs(swipeDistanceY) > Math.abs(swipeDistanceX) && Math.abs(swipeDistanceY) > 50;
+
+        if (isHorizontalSwipe || isVerticalSwipe) {
+            let direction: 'next' | 'prev';
+
+            if (isHorizontalSwipe) {
+                // Horizontal swipe: left = next, right = prev
+                direction = swipeDistanceX > 0 ? 'next' : 'prev';
+            } else {
+                // Vertical swipe: down = next, up = prev
+                direction = swipeDistanceY > 0 ? 'next' : 'prev';
+            }
+
             const newIndex = direction === 'next'
                 ? (activeIndex + 1) % experienceData.length
                 : (activeIndex - 1 + experienceData.length) % experienceData.length;
 
             animateExperienceChange(direction, newIndex);
         }
-    };
+    }, [activeIndex, animateExperienceChange, experienceData.length]);
 
-    // Add wheel event listener
+    // Add wheel event listeners for both desktop and mobile
     useEffect(() => {
-        if (!isMobile && isContentVisible) {
-            window.addEventListener('wheel', handleScroll, { passive: false });
-            return () => window.removeEventListener('wheel', handleScroll);
+        if (isContentVisible) {
+            if (isMobile) {
+                // Mobile
+                window.addEventListener('wheel', handleMobileScroll, { passive: false });
+                return () => window.removeEventListener('wheel', handleMobileScroll);
+            } else {
+                // Desktop
+                window.addEventListener('wheel', handleScroll, { passive: false });
+                return () => window.removeEventListener('wheel', handleScroll);
+            }
         }
-    }, [handleScroll, isMobile, isContentVisible]);
-
-    if (isLoading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-            </div>
-        );
-    }
+    }, [handleScroll, handleMobileScroll, isMobile, isContentVisible]);
 
     return (
         <div
