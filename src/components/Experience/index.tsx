@@ -387,19 +387,6 @@ const Experience = () => {
 
     return (
         <div ref={containerRef} className="relative">
-            {/* Floating Background Elements (always render, as they are not the flicker cause) */}
-            {[...Array(12)].map((_, i) => (
-                <div
-                    key={i}
-                    className="absolute w-1 h-1 rounded-full opacity-30"
-                    style={{
-                        backgroundColor: colors.floatingElement,
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                    }}
-                />
-            ))}
-
             {/* Main content container with controlled visibility */}
             <div className={`relative z-10 ${isContentVisible ? 'opacity-100 transition-opacity duration-300' : 'opacity-0'}`}>
                 {experienceData.map((experience, index) => (
