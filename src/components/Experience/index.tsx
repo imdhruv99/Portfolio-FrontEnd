@@ -22,7 +22,6 @@ interface ExperienceItem {
 interface BentoCardProps {
     children: React.ReactNode;
     className?: string;
-    delay?: number;
     style?: React.CSSProperties;
 }
 
@@ -52,9 +51,8 @@ interface ExperienceGridProps {
     index: number;
 }
 
-const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
+const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
     const { colors, isDarkTheme } = useThemeColors();
-    const baseDelay = index * 0.1;
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4">
@@ -63,10 +61,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                 <div className="lg:hidden space-y-4 h-[80vh] overflow-y-auto flex flex-col justify-start">
                     {/* Company Logo and Info */}
                     <div className="grid grid-cols-2 gap-4 h-32">
-                        <BentoCard
-                            className="flex justify-center items-center relative"
-                            delay={baseDelay}
-                        >
+                        <BentoCard className="flex justify-center items-center relative">
                             <div className="relative w-full h-full">
                                 <Image
                                     src={experience.image}
@@ -80,7 +75,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
 
                         <BentoCard
                             className="flex flex-col justify-center items-center text-center"
-                            delay={baseDelay + 0.1}
                             style={{ background: `${colors.card}` }}
                         >
                             <h3 className={`text-sm font-medium ${colors.text} mb-1`}>
@@ -92,7 +86,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
 
                     {/* Coffee Mug */}
                     <div className="grid grid-cols-3 gap-4">
-                        <BentoCard className="aspect-[4/3] flex justify-center items-center" delay={baseDelay + 0.5}>
+                        <BentoCard className="aspect-[4/3] flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
                                     src='/props/03.png'
@@ -105,7 +99,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         </BentoCard>
 
                         {/* User with Laptop */}
-                        <BentoCard className="aspect-[4/3] flex justify-center items-center" delay={baseDelay + 0.6}>
+                        <BentoCard className="aspect-[4/3] flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
                                     src='/props/02.png'
@@ -118,7 +112,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         </BentoCard>
 
                         {/* Mac Setup */}
-                        <BentoCard className="aspect-[4/3] flex justify-center items-center" delay={baseDelay + 0.7}>
+                        <BentoCard className="aspect-[4/3] flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
                                     src='/props/01.png'
@@ -134,7 +128,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                     {/* Designation */}
                     <BentoCard
                         className="h-25 flex items-center justify-center"
-                        delay={baseDelay + 0.2}
                         style={{ background: `${colors.card}` }}
                     >
                         <h1 className={`text-xl font-light ${colors.text} text-center`}>
@@ -145,7 +138,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                     {/* Tech Icons */}
                     <BentoCard
                         className="h-35 flex flex-col justify-center items-center"
-                        delay={baseDelay + 0.3}
                         style={{ background: `${colors.card}` }}
                     >
                         <div></div>
@@ -162,7 +154,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                     {/* Description */}
                     <BentoCard
                         className="min-h-[150px] overflow-y-auto custom-scrollbar p-6"
-                        delay={baseDelay + 0.4}
                     >
                         <div className="space-y-6">
                             {experience.description.map((desc, descIndex) => (
@@ -183,10 +174,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                 <div className="hidden lg:block">
                     <div className="grid grid-cols-14 grid-rows-10 gap-5 h-[80vh] min-h-[600px]">
                         {/* Company Logo Image */}
-                        <BentoCard
-                            className="col-span-4 row-span-3 flex justify-center items-center"
-                            delay={baseDelay + 0.1}
-                        >
+                        <BentoCard className="col-span-4 row-span-3 flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
                                     src={experience.image}
@@ -201,7 +189,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         {/* Company Name and Period */}
                         <BentoCard
                             className="col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
-                            delay={baseDelay}
                             style={{ background: `${colors.card}` }}
                         >
                             <h3 className={`text-xl font-semibold ${colors.text} mb-2`}>
@@ -213,7 +200,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         {/* Mac Setup */}
                         <BentoCard
                             className="col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
-                            delay={baseDelay}
                             style={{ background: `${colors.card}` }}
                         >
                             <div className="relative w-full h-full">
@@ -230,7 +216,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         {/* Icon */}
                         <BentoCard
                             className="col-span-4 row-span-4 flex flex-col justify-center items-center text-center"
-                            delay={baseDelay}
                             style={{ background: `${colors.card}` }}
                         >
                             <div className="flex flex-wrap justify-center items-center gap-4">
@@ -244,10 +229,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         </BentoCard>
 
                         {/* Coffee Mug */}
-                        <BentoCard
-                            className="col-span-4 row-span-3 flex justify-center items-center"
-                            delay={baseDelay + 0.1}
-                        >
+                        <BentoCard className="col-span-4 row-span-3 flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
                                     src='/props/03.png'
@@ -262,7 +244,6 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         {/* Designation */}
                         <BentoCard
                             className="col-span-6 row-span-3 flex items-center justify-center relative overflow-hidden"
-                            delay={baseDelay + 0.3}
                             style={{ background: `${colors.card}` }}
                         >
                             <div className="relative z-10 text-center">
@@ -273,10 +254,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         </BentoCard>
 
                         {/* User with Laptop */}
-                        <BentoCard
-                            className="col-span-4 row-span-6 flex justify-center items-center"
-                            delay={baseDelay + 0.1}
-                        >
+                        <BentoCard className="col-span-4 row-span-6 flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
                                     src='/props/02.png'
@@ -289,10 +267,7 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
                         </BentoCard>
 
                         {/* Description */}
-                        <BentoCard
-                            className="col-span-10 row-span-4 overflow-y-auto custom-scrollbar p-6"
-                            delay={baseDelay + 0.4}
-                        >
+                        <BentoCard className="col-span-10 row-span-4 overflow-y-auto custom-scrollbar p-6">
                             <div className="space-y-6">
                                 {experience.description.map((desc, descIndex) => (
                                     <div key={descIndex} className="relative group">
@@ -317,13 +292,13 @@ const ExperienceGrid = ({ experience, index }: ExperienceGridProps) => {
 };
 
 const Experience = () => {
-    const { colors, isDarkTheme } = useThemeColors();
+    const { colors, isDarkTheme, isLoading } = useThemeColors();
     const experienceData = getExperienceData(isDarkTheme);
     const [activeIndex, setActiveIndex] = useState(0);
     const [isMobile, setIsMobile] = useState(false);
+    const [isContentVisible, setIsContentVisible] = useState(false);
 
     const isProgrammaticScroll = useRef(false);
-
     const containerRef = useRef<HTMLDivElement>(null);
     const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -334,7 +309,22 @@ const Experience = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    // Effect to control content visibility
     useEffect(() => {
+        if (!isLoading) {
+            // Reveal content after theme is loaded
+            const timer = setTimeout(() => {
+                setIsContentVisible(true);
+            }, 50);
+            return () => clearTimeout(timer);
+        } else {
+            setIsContentVisible(false);
+        }
+    }, [isLoading]);
+
+    useEffect(() => {
+        if (!isContentVisible) return; // Only perform scroll logic if content is visible and stable
+
         const section = sectionRefs.current[activeIndex];
         if (section) {
             isProgrammaticScroll.current = true;
@@ -347,11 +337,12 @@ const Experience = () => {
             }, 700);
             return () => clearTimeout(timer);
         }
-    }, [activeIndex]);
+    }, [activeIndex, isContentVisible]);
+
 
     const handleScroll = useCallback(() => {
-        if (isProgrammaticScroll.current) {
-            return; // Ignore scroll events if we just programmatically scrolled
+        if (!isContentVisible || isProgrammaticScroll.current) { // Only scroll if content is visible
+            return;
         }
 
         const scrollPosition = window.scrollY + window.innerHeight / 2;
@@ -374,17 +365,29 @@ const Experience = () => {
         if (newActiveIndex !== activeIndex) {
             setActiveIndex(newActiveIndex);
         }
-    }, [activeIndex]);
+    }, [activeIndex, isContentVisible]);
+
 
     useEffect(() => {
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll();
+        if (isContentVisible) {
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            handleScroll();
 
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [handleScroll]);
+            return () => window.removeEventListener('scroll', handleScroll);
+        }
+    }, [isContentVisible, handleScroll]);
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+            </div>
+        );
+    }
 
     return (
         <div ref={containerRef} className="relative">
+            {/* Floating Background Elements (always render, as they are not the flicker cause) */}
             {[...Array(12)].map((_, i) => (
                 <div
                     key={i}
@@ -397,8 +400,8 @@ const Experience = () => {
                 />
             ))}
 
-            {/* Experience Sections */}
-            <div className="relative z-10">
+            {/* Main content container with controlled visibility */}
+            <div className={`relative z-10 ${isContentVisible ? 'opacity-100 transition-opacity duration-300' : 'opacity-0'}`}>
                 {experienceData.map((experience, index) => (
                     <div
                         key={experience.id}
