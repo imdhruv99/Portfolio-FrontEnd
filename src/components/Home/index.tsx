@@ -22,27 +22,44 @@ const Home = () => {
             const firstNameLetters = firstNameRef.current?.querySelectorAll('span');
             const lastNameLetters = lastNameRef.current?.querySelectorAll('span');
 
-            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+            // Animation styles
+            const animationPresets = [
+                { y: 100, opacity: 0, rotationX: -90 },
+                { y: -100, opacity: 0, rotationX: 90 },
+                { x: -100, opacity: 0, rotationY: -90 },
+                { x: 100, opacity: 0, rotationY: 90 },
+                { scale: 0, opacity: 0, rotation: 360 },
+                { y: 50, x: -50, opacity: 0, rotation: -45 },
+            ];
+
+            const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 1.2 } });
 
             if (firstNameLetters) {
-                tl.from(firstNameLetters, {
-                    y: 100,
-                    opacity: 0,
-                    rotationX: -90,
-                    stagger: 0.05,
-                    duration: 1.2,
+                firstNameLetters.forEach((letter, i) => {
+                    if (letter.textContent === ' ') return; // skip spaces
+
+                    const preset = animationPresets[i % animationPresets.length];
+                    tl.from(letter, {
+                        ...preset,
+                        duration: 1.2,
+                        opacity: 0,
+                    }, `start+=${i * 0.07}`);
                 });
             }
 
             if (lastNameLetters) {
-                tl.from(lastNameLetters, {
-                    y: 100,
-                    opacity: 0,
-                    rotationX: -90,
-                    stagger: 0.05,
-                    duration: 1.2,
-                }, "<0.1");
+                lastNameLetters.forEach((letter, i) => {
+                    if (letter.textContent === ' ') return; // Skip spaces
+
+                    const preset = animationPresets[(i + firstName.length) % animationPresets.length];
+                    tl.from(letter, {
+                        ...preset,
+                        duration: 1.2,
+                        opacity: 0,
+                    }, `start+=${(firstName.length * 0.07) + (i * 0.07) + 0.1}`);
+                });
             }
+
 
             if (quoteRef.current) {
                 tl.from(quoteRef.current, {
@@ -50,7 +67,7 @@ const Home = () => {
                     opacity: 0,
                     duration: 1,
                     ease: "power2.out",
-                }, "<0.5");
+                }, ">-0.5");
             }
         });
 
@@ -117,7 +134,7 @@ const Home = () => {
                     `}
                     style={{ color: theme.subtext }}
                 >
-                    I don’t just ship code - I architect engines that hum through chaos and scale with silence.
+                    I don&apos;t just ship code - I architect engines that hum through chaos and scale with silence.
                 </p>
             </section>
         </div>
