@@ -8,17 +8,15 @@ import { useThemeColors } from '@/hooks/useThemeColors';
 
 interface PlanetProps {
     radius: number;
-    color?: string;
     distance: number;
     speed: number;
     initialAngle: number;
     lineColor: string;
-    textureUrl?: string;
+    textureUrl: string;
 }
 
 const Planet: React.FC<PlanetProps> = ({
     radius,
-    color,
     distance,
     speed,
     initialAngle,
@@ -37,7 +35,7 @@ const Planet: React.FC<PlanetProps> = ({
         return points;
     }, [distance]);
 
-    const texture = useLoader(THREE.TextureLoader, textureUrl || '/texture/earth.jpg');
+    const texture = useLoader(THREE.TextureLoader, textureUrl);
 
     useFrame(({ clock }) => {
         if (planetRef.current) {
@@ -50,15 +48,14 @@ const Planet: React.FC<PlanetProps> = ({
 
     return (
         <>
-            <ambientLight intensity={0.8} color={color} />
+            <ambientLight intensity={0.8} />
             <Sphere args={[radius, 32, 32]} ref={planetRef}>
                 <meshStandardMaterial
                     attach="material"
                     map={textureUrl ? texture : undefined}
-                    color={color}
                 />
             </Sphere>
-            <Line points={linePoints} color={lineColor} lineWidth={0.5} />
+            <Line points={linePoints} color={lineColor} lineWidth={0.3} />
         </>
     );
 };
