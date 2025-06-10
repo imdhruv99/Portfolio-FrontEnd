@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { gsap } from 'gsap';
+import SolarSystemCanvas from '../SolarSystem';
 
 const Home = () => {
     const { colors: theme, isLoading, isDarkTheme } = useThemeColors();
@@ -87,6 +88,9 @@ const Home = () => {
 
     return (
         <div className={`relative w-full min-h-screen flex items-center justify-center overflow-hidden ${theme.background} transition-colors duration-500`}>
+
+            <SolarSystemCanvas />
+
             {/* Hero Section */}
             <section className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-8 lg:p-16">
                 <div className="flex flex-col items-start">

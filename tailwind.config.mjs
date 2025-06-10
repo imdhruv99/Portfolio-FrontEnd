@@ -21,12 +21,12 @@ const config = {
                 '3xl': '1920px',
                 '4xl': '2560px',
                 '5xl': '3840px',
+                'xs': '475px',
             },
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
             },
-            // Optional: Add custom theme colors for CSS custom properties approach
             colors: {
                 theme: {
                     background: 'var(--theme-background)',
