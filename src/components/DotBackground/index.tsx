@@ -116,10 +116,12 @@ const DotBackground: FC<DotBackgroundProps> = ({
                 const glowIntensity = (Math.sin(dot.glowPhase) + 1) / 2;
 
                 // Interpolate between base and glow colors
-                const r = Math.round(baseDot.r + (glowDot.r - baseDot.r) * glowIntensity);
-                const g = Math.round(baseDot.g + (glowDot.g - baseDot.g) * glowIntensity);
-                const b = Math.round(baseDot.b + (glowDot.b - baseDot.b) * glowIntensity);
-                const alpha = dot.baseOpacity * (0.7 + 0.3 * glowIntensity);
+                const glowInfluence = 0.3;
+                const r = Math.round(baseDot.r + (glowDot.r - baseDot.r) * glowIntensity * glowInfluence);
+                const g = Math.round(baseDot.g + (glowDot.g - baseDot.g) * glowIntensity * glowInfluence);
+                const b = Math.round(baseDot.b + (glowDot.b - baseDot.b) * glowIntensity * glowInfluence);
+                const alpha = dot.baseOpacity * (0.7 + 0.3 * glowIntensity * glowInfluence);
+
 
                 // Draw dot
                 ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
@@ -129,8 +131,10 @@ const DotBackground: FC<DotBackgroundProps> = ({
 
                 // Add subtle glow effect for strong glow phases
                 if (glowIntensity > 0.8) {
-                    ctx.shadowColor = `rgba(${glowDot.r}, ${glowDot.g}, ${glowDot.b}, ${alpha * 0.5})`;
-                    ctx.shadowBlur = 4;
+                    const maxShadowAlpha = 0.3;
+                    ctx.shadowColor = `rgba(${glowDot.r}, ${glowDot.g}, ${glowDot.b}, ${alpha * maxShadowAlpha})`;
+                    ctx.shadowBlur = 2;
+
                     ctx.beginPath();
                     ctx.arc(dot.x, dot.y, gridSize / 2, 0, Math.PI * 2);
                     ctx.fill();
