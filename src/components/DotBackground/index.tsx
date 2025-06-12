@@ -68,7 +68,7 @@ const DotBackground: FC<DotBackgroundProps> = ({
                     opacity: baseOpacity,
                     baseOpacity,
                     glowPhase: Math.random() * Math.PI * 2,
-                    glowSpeed: 0.02 + Math.random() * 0.01,
+                    glowSpeed: 0.005 + Math.random() * 0.002,
                 });
             }
         }
@@ -116,7 +116,7 @@ const DotBackground: FC<DotBackgroundProps> = ({
                 const glowIntensity = (Math.sin(dot.glowPhase) + 1) / 2;
 
                 // Interpolate between base and glow colors
-                const glowInfluence = 0.3;
+                const glowInfluence = 0.05;
                 const r = Math.round(baseDot.r + (glowDot.r - baseDot.r) * glowIntensity * glowInfluence);
                 const g = Math.round(baseDot.g + (glowDot.g - baseDot.g) * glowIntensity * glowInfluence);
                 const b = Math.round(baseDot.b + (glowDot.b - baseDot.b) * glowIntensity * glowInfluence);
@@ -131,7 +131,7 @@ const DotBackground: FC<DotBackgroundProps> = ({
 
                 // Add subtle glow effect for strong glow phases
                 if (glowIntensity > 0.8) {
-                    const maxShadowAlpha = 0.3;
+                    const maxShadowAlpha = 0.05;
                     ctx.shadowColor = `rgba(${glowDot.r}, ${glowDot.g}, ${glowDot.b}, ${alpha * maxShadowAlpha})`;
                     ctx.shadowBlur = 2;
 
