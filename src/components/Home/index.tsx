@@ -373,7 +373,7 @@ const Home = () => {
                         >
                             <div className="flex items-center justify-center space-x-4 pb-4">
                                 <span className="font-light text-5xl">{'{'}</span>
-                                <span className="text-center justify-center">About Me</span>
+                                <span className="text-center justify-center">Who I Am</span>
                                 <span className="font-light text-5xl">{'}'}</span>
                             </div>
                         </div>
@@ -418,7 +418,7 @@ const Home = () => {
                         >
                             <div className="flex items-center space-x-4">
                                 <span className="font-light text-5xl">{'{'}</span>
-                                <span>What I Do</span>
+                                <span>Engineering & Artistry</span>
                                 <span className="font-light text-5xl">{'}'}</span>
                             </div>
                         </div>
