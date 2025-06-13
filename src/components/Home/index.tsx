@@ -221,34 +221,37 @@ const Home = () => {
             {/* About Me Section */}
             <section
                 ref={aboutSectionRef}
-                className="relative w-full min-h-screen flex flex-col items-center justify-center px-4 sm:px-8 lg:px-16 py-20 sm:py-32"
+                className="relative w-full flex flex-col items-center justify-center px-4 sm:px-8 lg:px-16 py-20 sm:py-32"
                 style={{ backgroundColor: theme.background }}
             >
-                <div className="w-full max-w-[90vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
+                <div className="w-full max-w-[100vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
                     <div className="flex flex-col items-start">
                         {/* Top horizontal line */}
-                        <div className="w-full border-t border-gray-400 opacity-30 mb-8 sm:mb-12"></div>
+                        <div className="mt-0 sm:mt-0 mb-30 sm:mb-6 w-full border-t border-gray-400 opacity-30"></div>
 
-                        <p
+                        <div
                             ref={aboutHeadingRef}
-                            className="text-lg sm:text-xl md:text-2xl font-semibold mb-4 text-left"
+                            className="text-lg sm:text-xl md:text-2xl font-semibold mb-5 mt-15 text-left"
                             style={{ color: theme.subtext }}
                         >
-                            <span className="font-light text-xl">{'{ '}</span>About Me<span className="font-light text-xl">{' }'}</span>
-                        </p>
+                            <div className="flex items-center justify-center space-x-4">
+                                <span className="font-light text-5xl">{'{'}</span>
+                                <span className="text-center justify-center">About Me</span>
+                                <span className="font-light text-5xl">{'}'}</span>
+                            </div>
+                        </div>
+
                         <h2
                             ref={aboutTextRef}
-                            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight text-left"
+                            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight text-left mb-10"
                             style={{ color: theme.heroText }}
                         >
-                            {/* Original statements, carefully split to achieve 4 lines on screen */}
-                            <span className="block">Experienced Software Engineer with a strong track record of building secure, scalable</span>
-                            <span className="block">applications, automating cloud infrastructure, and deploying data-driven solutions.</span>
-
+                            <span className="block">Experienced Software Engineer with a strong track record of building secure, scalable applications,</span>
+                            <span className="block">automating cloud infrastructure, and deploying Artificial Intelligent based data-driven solutions.</span>
                         </h2>
 
                         {/* Bottom horizontal line */}
-                        <div className="w-full border-b border-gray-400 opacity-30 mt-8 sm:mt-12"></div>
+                        <div className="w-full border-b border-gray-400 opacity-30 sm:mt-12"></div>
                     </div>
                 </div>
             </section>
