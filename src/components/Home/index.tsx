@@ -2,11 +2,15 @@
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Icon } from '@iconify/react';
+import Image from 'next/image';
 
 import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
 
 import DotBackground from '@/components/DotBackground';
 import { useThemeColors } from '@/hooks/useThemeColors';
+import techIconMap from '@/constants/techIconMap';
+import whatIDoData, { WhatIDoItem } from '@/constants/WhatIDo';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,6 +27,10 @@ const Home = () => {
     const aboutSectionRef = useRef<HTMLDivElement>(null);
     const aboutHeadingRef = useRef<HTMLParagraphElement>(null);
 
+    // MyServices refs
+    const servicesSectionRef = useRef<HTMLDivElement>(null);
+    const servicesHeadingRef = useRef<HTMLDivElement>(null);
+    const servicesItemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
         setMounted(true);
@@ -91,7 +99,7 @@ const Home = () => {
         return () => ctx.revert();
     }, [mounted, isLoading]);
 
-
+    // Hero section animation
     useLayoutEffect(() => {
         if (!mounted || isLoading) return;
 
@@ -164,6 +172,48 @@ const Home = () => {
         return () => ctx.revert();
     }, [mounted, isLoading]);
 
+    // MyServices section animation
+    useLayoutEffect(() => {
+        if (!mounted || isLoading) return;
+
+        const ctx = gsap.context(() => {
+            // Animate services heading
+            if (servicesHeadingRef.current) {
+                gsap.from(servicesHeadingRef.current, {
+                    scrollTrigger: {
+                        trigger: servicesHeadingRef.current,
+                        start: 'top 85%',
+                        toggleActions: 'play none none reverse',
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power3.out',
+                });
+            }
+
+            // Animate each service item
+            servicesItemsRef.current.forEach((item, index) => {
+                if (item) {
+                    gsap.from(item, {
+                        scrollTrigger: {
+                            trigger: item,
+                            start: 'top 85%',
+                            toggleActions: 'play none none reverse',
+                        },
+                        y: 80,
+                        opacity: 0,
+                        duration: 1.2,
+                        delay: index * 0.1,
+                        ease: 'power3.out',
+                    });
+                }
+            });
+        }, servicesSectionRef);
+
+        return () => ctx.revert();
+    }, [mounted, isLoading]);
+
     if (!mounted || isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: isDarkTheme ? '#1a1a1a' : '#f0f0f0' }}>
@@ -177,7 +227,6 @@ const Home = () => {
     const wordsToHighlight = [
         "secure", "scalable", "cloud", "infrastructure", "artificial", "intelligent"
     ];
-
 
     // Function to split text and wrap highlight words
     const renderHighlightedText = (text: string, wordsToHighlight: string[]) => {
@@ -197,6 +246,120 @@ const Home = () => {
             }
             return <span key={index}>{part}</span>;
         });
+    };
+
+    // Function to render tech icons for services
+    const renderTechIcons = (technologies: string[]) => {
+        return technologies.map((tech, index) => {
+            const iconConfig = techIconMap[tech];
+            if (!iconConfig) return null;
+
+            const iconName = isDarkTheme ? iconConfig.dark : iconConfig.light;
+
+            return (
+                <div
+                    key={index}
+                    className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg transition-all duration-300 hover:scale-110"
+                    style={{
+                        backgroundColor: isDarkTheme ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
+                        border: `1px solid ${isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
+                    }}
+                >
+                    <Icon
+                        icon={iconName}
+                        className="w-5 h-5 sm:w-6 sm:h-6"
+                        style={{ color: theme.subtext }}
+                    />
+                </div>
+            );
+        });
+    };
+
+    // Function to render individual service items
+    const renderWhatIDoItem = (item: WhatIDoItem, index: number) => {
+        const isEven = index % 2 === 0;
+
+        return (
+            <div
+                key={item.id}
+                ref={(el) => {
+                    servicesItemsRef.current[index] = el;
+                }}
+                className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 lg:gap-16 mb-16 lg:mb-24`}
+            >
+                {/* Image Section */}
+                <div className="w-full lg:w-1/2 flex justify-center">
+                    <div className="relative w-full max-w-md lg:max-w-lg">
+                        <div
+                            className="absolute inset-0 rounded-2xl opacity-20 blur-xl"
+                            style={{
+                                background: `linear-gradient(135deg, ${theme.highlightColor}40, ${theme.highlightColor}10)`,
+                            }}
+                        />
+                        <div
+                            className="relative rounded-2xl p-8 backdrop-blur-sm border"
+                            style={{
+                                backgroundColor: isDarkTheme ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.02)',
+                                borderColor: isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+                            }}
+                        >
+                            <Image
+                                src={item.image}
+                                alt={item.title}
+                                width={400}
+                                height={300}
+                                className="w-full h-auto rounded-lg object-cover"
+                                style={{
+                                    filter: isDarkTheme ? 'brightness(0.9)' : 'brightness(1.1)',
+                                }}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Content Section */}
+                <div className="w-full lg:w-1/2 space-y-6">
+                    <div className="space-y-4">
+                        <h3
+                            className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight"
+                            style={{ color: theme.heroText }}
+                        >
+                            {item.title}
+                        </h3>
+
+                        <p
+                            className="text-base sm:text-lg leading-relaxed opacity-80"
+                            style={{ color: theme.subtext }}
+                        >
+                            {item.description}
+                        </p>
+                    </div>
+
+                    {/* Technology Icons */}
+                    <div className="flex flex-wrap gap-3">
+                        {renderTechIcons(item.technologies)}
+                    </div>
+
+                    {/* Experience Points */}
+                    <div className="space-y-3">
+                        {item.points.map((point, pointIndex) => (
+                            <div key={pointIndex} className="flex items-start gap-3">
+                                <div
+                                    className="w-1.5 h-1.5 rounded-full mt-2.5 flex-shrink-0"
+                                    style={{ backgroundColor: theme.highlightColor }}
+                                />
+                                <p
+                                    className="text-sm sm:text-base leading-relaxed"
+                                    style={{ color: theme.subtext }}
+                                >
+                                    {point}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
     };
 
     const firstName = "Dhruv";
@@ -271,7 +434,7 @@ const Home = () => {
 
                         <div
                             ref={aboutHeadingRef}
-                            className="text-lg sm:text-xl md:text-2xl font-semibold mb-5 mt-15 text-left"
+                            className="text-lg sm:text-xl md:text-2xl font-semibold mt-15 text-left"
                             style={{ color: theme.subtext }}
                         >
                             <div className="flex items-center justify-center space-x-4">
@@ -299,9 +462,38 @@ const Home = () => {
                                 )}
                             </span>
                         </h2>
+                    </div>
+                </div>
+            </section>
 
-                        {/* Bottom horizontal line */}
-                        <div className="w-full border-b border-gray-400 opacity-30 sm:mt-12"></div>
+            {/* What I Do Section (formerly MyServices) */}
+            <section
+                ref={servicesSectionRef}
+                className="relative w-full px-4 sm:px-8 lg:px-16 py-20 sm:py-32"
+                style={{ backgroundColor: theme.background }}
+            >
+                <div className="w-full max-w-[100vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
+                    {/* Section Header */}
+                    <div className="flex flex-col items-start mb-16 lg:mb-24">
+                        {/* Top horizontal line */}
+                        <div className="w-full border-t border-gray-400 opacity-30 mb-8" />
+
+                        <div
+                            ref={servicesHeadingRef}
+                            className="text-lg sm:text-xl md:text-2xl font-semibold mb-6 text-left"
+                            style={{ color: theme.subtext }}
+                        >
+                            <div className="flex items-center space-x-4">
+                                <span className="font-light text-5xl">{'{'}</span>
+                                <span>What I Do</span>
+                                <span className="font-light text-5xl">{'}'}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* What I Do Items */}
+                    <div className="space-y-16 lg:space-y-24">
+                        {whatIDoData.map((item, index) => renderWhatIDoItem(item, index))}
                     </div>
                 </div>
             </section>

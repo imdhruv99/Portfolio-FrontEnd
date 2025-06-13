@@ -33,6 +33,8 @@ const techIconMap: Record<string, { light: string; dark: string }> = {
     Tensorflow: { light: 'logos:tensorflow', dark: 'logos:tensorflow' },
     Terraform: { light: 'logos:terraform-icon', dark: 'logos:terraform-icon' },
     ReactJs: { light: 'skill-icons:react-dark', dark: 'skill-icons:react-dark' },
+    Photoshop: { light: 'logos:adobe-photoshop', dark: 'logos:adobe-photoshop' },
+    Lightroom: { light: 'logos:adobe-lightroom', dark: 'logos:adobe-lightroom' },
 };
 
 export default techIconMap;
