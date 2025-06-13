@@ -96,6 +96,7 @@ const Home = () => {
         if (!mounted || isLoading) return;
 
         const firstName = "Dhruv";
+        const lastName = "Prajapati";
         const ctx = gsap.context(() => {
             const firstNameLetters = firstNameRef.current?.querySelectorAll('span');
             const lastNameLetters = lastNameRef.current?.querySelectorAll('span');
@@ -135,6 +136,19 @@ const Home = () => {
                         opacity: 0,
                     }, `start+=${(firstName.length * 0.07) + (i * 0.07) + 0.1}`);
                 });
+
+                const iIndex = lastName.toLowerCase().indexOf('i');
+                if (iIndex !== -1 && lastNameLetters[iIndex]) {
+                    const iSpan = lastNameLetters[iIndex];
+                    tl.to(iSpan, {
+                        rotationX: 180,
+                        duration: 0.8,
+                        ease: "power2.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        repeatDelay: 3,
+                    }, ">+1");
+                }
             }
 
             if (quoteRef.current) {
@@ -158,12 +172,38 @@ const Home = () => {
         );
     }
 
+    const highlightColor = isDarkTheme ? theme.highlightColor : theme.highlightColor;
+
+    const wordsToHighlight = [
+        "secure", "scalable", "cloud", "infrastructure", "artificial", "intelligent"
+    ];
+
+
+    // Function to split text and wrap highlight words
+    const renderHighlightedText = (text: string, wordsToHighlight: string[]) => {
+        const parts = text.split(/(\s+)/);
+        return parts.map((part, index) => {
+            const cleanPart = part.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").toLowerCase();
+            if (wordsToHighlight.includes(cleanPart)) {
+                return (
+                    <span
+                        key={index}
+                        className="highlight-word inline-block"
+                        style={{ color: highlightColor, transition: 'color 0.5s ease-in-out' }}
+                    >
+                        {part}
+                    </span>
+                );
+            }
+            return <span key={index}>{part}</span>;
+        });
+    };
+
     const firstName = "Dhruv";
     const lastName = "Prajapati";
 
     const dotColor = isDarkTheme ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
     const glowColor = isDarkTheme ? '#cfcfcf' : '#333333';
-
 
     return (
         <div className={`w-full transition-colors duration-500 ${theme.background}`}>
@@ -246,8 +286,18 @@ const Home = () => {
                             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight text-left mb-10"
                             style={{ color: theme.heroText }}
                         >
-                            <span className="block">Experienced Software Engineer with a strong track record of building secure, scalable applications,</span>
-                            <span className="block">automating cloud infrastructure, and deploying Artificial Intelligent based data-driven solutions.</span>
+                            <span className="block">
+                                {renderHighlightedText(
+                                    "Experienced Software Engineer with a strong track record of building secure, scalable applications,",
+                                    wordsToHighlight
+                                )}
+                            </span>
+                            <span className="block">
+                                {renderHighlightedText(
+                                    "automating cloud infrastructure, and deploying Artificial Intelligent based data-driven solutions.",
+                                    wordsToHighlight
+                                )}
+                            </span>
                         </h2>
 
                         {/* Bottom horizontal line */}

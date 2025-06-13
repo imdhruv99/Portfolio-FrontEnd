@@ -33,6 +33,8 @@ export interface ThemeColors {
     experienceScrollbarTrack: string;
     experienceScrollbarThumb: string;
     experienceScrollbarThumbHover: string;
+    // Home Page Styles
+    highlightColor: string;
 }
 
 export interface Theme {
@@ -78,6 +80,8 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(0, 0, 0, 0.2)',
             experienceScrollbarThumbHover: 'rgba(0, 0, 0, 0.3)',
+            // Home-Page Style
+            highlightColor: '#007BFF',
         },
     },
     dark: {
@@ -117,6 +121,8 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(255, 255, 255, 0.3)',
             experienceScrollbarThumbHover: 'rgba(255, 255, 255, 0.5)',
+            // Home-Page Style
+            highlightColor: '#42f542',
         },
     },
 };
