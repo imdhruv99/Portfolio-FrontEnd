@@ -231,7 +231,6 @@ const Navbar = () => {
                                     style={{
                                         animation:
                                             'fadeIn 0.2s ease-in-out forwards',
-                                        fontFamily: 'Cormorant Garamond, serif',
                                         fontSize: '0.7rem',
                                     }}
                                 >

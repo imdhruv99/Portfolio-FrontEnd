@@ -12,7 +12,7 @@ const config = {
     theme: {
         extend: {
             fontFamily: {
-                serif: ['var(--font-cormorant)', 'serif'],
+                times: ['"Times New Roman"', 'Times', 'serif'],
             },
             fontSize: {
                 '2xs': '0.625rem',
