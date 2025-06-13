@@ -7,7 +7,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import educationData from '../../constants/EducationData';
 import certificateData from '../../constants/CertificateData';
-import quotesData from '../../constants/quotesData';
 
 import { useThemeColors } from '@/hooks/useThemeColors';
 
@@ -164,9 +163,6 @@ const Education = () => {
 
     if (!mounted) return null;
 
-    // Select a random quote
-    const randomQuote = quotesData[Math.floor(Math.random() * quotesData.length)];
-
     const formatPeriod = (period: string) => period.replace(' - ', ' - ');
 
     // sorting certificate data based on priority
@@ -203,14 +199,7 @@ const Education = () => {
                     Scholarly Achievements
                 </h1>
 
-                {/* Quote Section */}
-                <div
-                    ref={quoteRef}
-                    className="mb-24 max-w-3xl mx-auto text-center"
-                >
-                    <p className={`text-sm sm:text-base ${theme.text} mb-2`}>&quot;{randomQuote.slogan}&quot;</p>
-                    <p className={`text-xs ${theme.subtext}`}>— {randomQuote.author}</p>
-                </div>
+                <div className="w-full border-t border-gray-400 opacity-30 mb-8" />
 
                 {/* Academic Journey Section */}
                 <div className="mb-32">
