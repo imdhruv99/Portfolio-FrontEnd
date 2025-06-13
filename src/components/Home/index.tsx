@@ -325,7 +325,7 @@ const Home = () => {
                 <div className="flex flex-col items-start relative z-20 max-w-7xl mx-auto">
                     <h1
                         ref={firstNameRef}
-                        className="font-times text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10"
+                        className="text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10"
                         style={{ color: theme.heroText }}
                     >
                         {firstName.split('').map((char, index) => (
@@ -336,7 +336,7 @@ const Home = () => {
                     </h1>
                     <h1
                         ref={lastNameRef}
-                        className="font-times mb-10 text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10 mt-2 xs:mt-4 sm:mt-6 md:mt-8 lg:mt-10 ml-8 xs:ml-12 sm:ml-16 md:ml-24 lg:ml-32 xl:ml-40 2xl:ml-48"
+                        className="mb-10 text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10 mt-2 xs:mt-4 sm:mt-6 md:mt-8 lg:mt-10 ml-8 xs:ml-12 sm:ml-16 md:ml-24 lg:ml-32 xl:ml-40 2xl:ml-48"
                         style={{ color: theme.heroText }}
                     >
                         {lastName.split('').map((char, index) => (
