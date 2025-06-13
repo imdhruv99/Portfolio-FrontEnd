@@ -7,7 +7,7 @@ import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState, useCallback, useLayoutEffect } from 'react';
 
-import projectData from '@/constants/projectsData';
+import projectData from '@/constants/ProjectData';
 import techIconMap from '@/constants/techIconMap';
 import NavigationDots from '../NavigationDots';
 import { useThemeColors } from '@/hooks/useThemeColors';
