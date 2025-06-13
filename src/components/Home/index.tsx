@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 
 import { useThemeColors } from '@/hooks/useThemeColors';
-import techIconMap from '@/constants/techIconMap';
+import techIconMap from '@/constants/TechIconMap';
 import whatIDoData, { WhatIDoItem } from '@/constants/WhatIDo';
 
 gsap.registerPlugin(ScrollTrigger);

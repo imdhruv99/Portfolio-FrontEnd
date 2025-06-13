@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
 
-import techIconMap from '@/constants/techIconMap';
+import techIconMap from '@/constants/TechIconMap';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { getExperienceData } from '@/constants/ExperienceData';
 import NavigationDots from '../NavigationDots';
