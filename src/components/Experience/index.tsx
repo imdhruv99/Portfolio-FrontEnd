@@ -90,7 +90,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         <BentoCard className="aspect-[4/3] flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
-                                    src='/props/03.png'
+                                    src='/images/coffee.png'
                                     alt="Design Element"
                                     layout="fill"
                                     objectFit="contain"
@@ -103,7 +103,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         <BentoCard className="aspect-[4/3] flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
-                                    src='/props/02.png'
+                                    src='/images/user_with_mac.png'
                                     alt="Design Element"
                                     layout="fill"
                                     objectFit="contain"
@@ -116,7 +116,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         <BentoCard className="aspect-[4/3] flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
-                                    src='/props/01.png'
+                                    src='/images/imac.png'
                                     alt="Design Element"
                                     layout="fill"
                                     objectFit="contain"
@@ -205,7 +205,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         >
                             <div className="relative w-full h-full">
                                 <Image
-                                    src='/props/01.png'
+                                    src='/images/imac.png'
                                     alt="Company Logo"
                                     layout="fill"
                                     objectFit="contain"
@@ -233,7 +233,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         <BentoCard className="col-span-4 row-span-3 flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
-                                    src='/props/03.png'
+                                    src='/images/coffee.png'
                                     alt="Design Element"
                                     layout="fill"
                                     objectFit="contain"
@@ -258,7 +258,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         <BentoCard className="col-span-4 row-span-6 flex justify-center items-center">
                             <div className="relative w-full h-full">
                                 <Image
-                                    src='/props/02.png'
+                                    src='/images/user_with_mac.png'
                                     alt="Design Element"
                                     layout="fill"
                                     objectFit="contain"

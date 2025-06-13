@@ -5,9 +5,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
 
-import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 
-import DotBackground from '@/components/DotBackground';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import techIconMap from '@/constants/techIconMap';
 import whatIDoData, { WhatIDoItem } from '@/constants/WhatIDo';
@@ -21,8 +20,6 @@ const Home = () => {
     const lastNameRef = useRef<HTMLDivElement>(null);
     const quoteRef = useRef<HTMLParagraphElement>(null);
     const heroSectionRef = useRef<HTMLDivElement>(null);
-    const [heroDimensions, setHeroDimensions] = useState({ width: 0, height: 0 });
-    const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const aboutTextRef = useRef<HTMLHeadingElement>(null);
     const aboutSectionRef = useRef<HTMLDivElement>(null);
     const aboutHeadingRef = useRef<HTMLParagraphElement>(null);
@@ -33,45 +30,6 @@ const Home = () => {
     useEffect(() => {
         setMounted(true);
     }, []);
-
-    // Throttled resize handler
-    const updateDimensions = useCallback(() => {
-        if (heroSectionRef.current) {
-            const { width, height } = heroSectionRef.current.getBoundingClientRect();
-            const newWidth = Math.round(width);
-            const newHeight = Math.round(height);
-
-            // Only update if dimensions actually changed significantly
-            setHeroDimensions(prev => {
-                if (Math.abs(prev.width - newWidth) > 10 || Math.abs(prev.height - newHeight) > 10) {
-                    return { width: newWidth, height: newHeight };
-                }
-                return prev;
-            });
-        }
-    }, []);
-
-    const throttledUpdateDimensions = useCallback(() => {
-        if (resizeTimeoutRef.current) {
-            clearTimeout(resizeTimeoutRef.current);
-        }
-        resizeTimeoutRef.current = setTimeout(updateDimensions, 100);
-    }, [updateDimensions]);
-
-    useLayoutEffect(() => {
-        let timeoutId: NodeJS.Timeout;
-        if (mounted && !isLoading) {
-            timeoutId = setTimeout(updateDimensions, 50);
-        }
-
-        window.addEventListener('resize', throttledUpdateDimensions, { passive: true });
-
-        return () => {
-            window.removeEventListener('resize', throttledUpdateDimensions);
-            if (timeoutId) clearTimeout(timeoutId);
-            if (resizeTimeoutRef.current) clearTimeout(resizeTimeoutRef.current);
-        };
-    }, [mounted, isLoading, throttledUpdateDimensions, updateDimensions]);
 
     // About Me section animation
     useLayoutEffect(() => {
@@ -290,16 +248,9 @@ const Home = () => {
                     <div className="relative w-full max-w-md lg:max-w-lg">
                         <div
                             className="absolute inset-0 rounded-2xl opacity-20 blur-xl"
-                            style={{
-                                background: `linear-gradient(135deg, ${theme.highlightColor}40, ${theme.highlightColor}10)`,
-                            }}
                         />
                         <div
-                            className="relative rounded-2xl p-8 backdrop-blur-sm border"
-                            style={{
-                                backgroundColor: isDarkTheme ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.02)',
-                                borderColor: isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                            }}
+                            className="relative rounded-2xl p-8 backdrop-blur-sm"
                         >
                             <Image
                                 src={item.image}
@@ -363,9 +314,6 @@ const Home = () => {
     const firstName = "Dhruv";
     const lastName = "Prajapati";
 
-    const dotColor = isDarkTheme ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
-    const glowColor = isDarkTheme ? '#cfcfcf' : '#333333';
-
     return (
         <div className={`w-full transition-colors duration-500 ${theme.background}`}>
             {/* Hero Section */}
@@ -373,18 +321,6 @@ const Home = () => {
                 ref={heroSectionRef}
                 className="relative w-full min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 lg:p-16 overflow-hidden"
             >
-                {/* Only render when we have stable dimensions */}
-                {heroDimensions.width > 100 && heroDimensions.height > 100 && (
-                    <DotBackground
-                        dotColor={dotColor}
-                        glowColor={glowColor}
-                        gridSize={2}
-                        spacing={25}
-                        fadeFactor={0.00008}
-                        containerWidth={heroDimensions.width}
-                        containerHeight={heroDimensions.height}
-                    />
-                )}
 
                 <div className="flex flex-col items-start relative z-20 max-w-7xl mx-auto">
                     <h1

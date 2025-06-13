@@ -19,20 +19,20 @@ export const whatIDoData: WhatIDoItem[] = [
             "Built recommendation systems handling millions of user interactions daily",
             "Optimized neural networks for edge deployment reducing inference time by 60%"
         ],
-        image: "/props/01.png"
+        image: "/images/aiml.png"
     },
     {
         id: "fullstack",
         title: "Full Stack Development",
         description: "Crafting end-to-end web applications with modern frameworks, focusing on performance, scalability, and exceptional user experiences.",
-        technologies: ["ReactJs", "NodeJs", "JavaScript", "Python", "Django", "Flask", "MongoDB", "Postgres"],
+        technologies: ["ReactJs", "NodeJs", "JavaScript", "Python", "Flask", "MongoDB", "Postgres", "Java"],
         points: [
             "Built responsive web applications serving 100K+ active users",
             "Developed RESTful APIs with robust authentication and authorization systems",
             "Implemented real-time features using WebSocket connections and event-driven architecture",
             "Optimized database queries reducing response times by 75%"
         ],
-        image: "/props/02.png"
+        image: "/images/oldpc.png"
     },
     {
         id: "devops-cloud",
@@ -45,7 +45,7 @@ export const whatIDoData: WhatIDoItem[] = [
             "Managed multi-region AWS infrastructure serving global traffic with 99.9% uptime",
             "Automated infrastructure provisioning using Infrastructure as Code principles"
         ],
-        image: "/props/03.png"
+        image: "/images/automation.png"
     },
     {
         id: "photography",
@@ -58,7 +58,7 @@ export const whatIDoData: WhatIDoItem[] = [
             "Created visual content for digital marketing campaigns and brand storytelling",
             "Developed custom presets and workflows for efficient batch processing"
         ],
-        image: "/props/01.png"
+        image: "/images/camera.png"
     }
 ];
 
