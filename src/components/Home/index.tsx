@@ -26,8 +26,6 @@ const Home = () => {
     const aboutTextRef = useRef<HTMLHeadingElement>(null);
     const aboutSectionRef = useRef<HTMLDivElement>(null);
     const aboutHeadingRef = useRef<HTMLParagraphElement>(null);
-
-    // MyServices refs
     const servicesSectionRef = useRef<HTMLDivElement>(null);
     const servicesHeadingRef = useRef<HTMLDivElement>(null);
     const servicesItemsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -172,7 +170,7 @@ const Home = () => {
         return () => ctx.revert();
     }, [mounted, isLoading]);
 
-    // MyServices section animation
+    // What I Do section animation
     useLayoutEffect(() => {
         if (!mounted || isLoading) return;
 
@@ -424,7 +422,7 @@ const Home = () => {
             {/* About Me Section */}
             <section
                 ref={aboutSectionRef}
-                className="relative w-full flex flex-col items-center justify-center px-4 sm:px-8 lg:px-16 py-20 sm:py-32"
+                className="relative w-full flex flex-col items-center justify-center px-4 sm:px-8 lg:px-16 py-12 sm:py-16"
                 style={{ backgroundColor: theme.background }}
             >
                 <div className="w-full max-w-[100vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
@@ -437,7 +435,7 @@ const Home = () => {
                             className="text-lg sm:text-xl md:text-2xl font-semibold mt-15 text-left"
                             style={{ color: theme.subtext }}
                         >
-                            <div className="flex items-center justify-center space-x-4">
+                            <div className="flex items-center justify-center space-x-4 pb-4">
                                 <span className="font-light text-5xl">{'{'}</span>
                                 <span className="text-center justify-center">About Me</span>
                                 <span className="font-light text-5xl">{'}'}</span>
@@ -466,14 +464,13 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* What I Do Section (formerly MyServices) */}
+            {/* What I Do Section */}
             <section
                 ref={servicesSectionRef}
-                className="relative w-full px-4 sm:px-8 lg:px-16 py-20 sm:py-32"
+                className="relative w-full px-4 sm:px-8 lg:px-16 pt-8 sm:pt-12 pb-20 sm:pb-32"
                 style={{ backgroundColor: theme.background }}
             >
                 <div className="w-full max-w-[100vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
-                    {/* Section Header */}
                     <div className="flex flex-col items-start mb-16 lg:mb-24">
                         {/* Top horizontal line */}
                         <div className="w-full border-t border-gray-400 opacity-30 mb-8" />
