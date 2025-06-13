@@ -1,9 +1,14 @@
 'use client';
 
-import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
-import { useThemeColors } from '@/hooks/useThemeColors';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
+
 import DotBackground from '@/components/DotBackground';
+import { useThemeColors } from '@/hooks/useThemeColors';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
     const { colors: theme, isLoading, isDarkTheme } = useThemeColors();
@@ -14,6 +19,10 @@ const Home = () => {
     const heroSectionRef = useRef<HTMLDivElement>(null);
     const [heroDimensions, setHeroDimensions] = useState({ width: 0, height: 0 });
     const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const aboutTextRef = useRef<HTMLHeadingElement>(null);
+    const aboutSectionRef = useRef<HTMLDivElement>(null);
+    const aboutHeadingRef = useRef<HTMLParagraphElement>(null);
+
 
     useEffect(() => {
         setMounted(true);
@@ -57,6 +66,31 @@ const Home = () => {
             if (resizeTimeoutRef.current) clearTimeout(resizeTimeoutRef.current);
         };
     }, [mounted, isLoading, throttledUpdateDimensions, updateDimensions]);
+
+    // About Me section animation
+    useLayoutEffect(() => {
+        if (!mounted || isLoading) return;
+
+        const ctx = gsap.context(() => {
+            if (aboutHeadingRef.current && aboutTextRef.current) {
+                gsap.from([aboutHeadingRef.current, aboutTextRef.current], {
+                    scrollTrigger: {
+                        trigger: aboutSectionRef.current,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse',
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: 0.2,
+                    ease: 'power3.out',
+                });
+            }
+        }, aboutSectionRef);
+
+        return () => ctx.revert();
+    }, [mounted, isLoading]);
+
 
     useLayoutEffect(() => {
         if (!mounted || isLoading) return;
@@ -130,11 +164,13 @@ const Home = () => {
     const dotColor = isDarkTheme ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
     const glowColor = isDarkTheme ? '#cfcfcf' : '#333333';
 
+
     return (
-        <div className={`relative w-full min-h-screen flex items-center justify-center overflow-hidden ${theme.background} transition-colors duration-500`}>
-            <div
+        <div className={`w-full transition-colors duration-500 ${theme.background}`}>
+            {/* Hero Section */}
+            <section
                 ref={heroSectionRef}
-                className="relative w-full min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 lg:p-16"
+                className="relative w-full min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 lg:p-16 overflow-hidden"
             >
                 {/* Only render when we have stable dimensions */}
                 {heroDimensions.width > 100 && heroDimensions.height > 100 && (
@@ -149,7 +185,7 @@ const Home = () => {
                     />
                 )}
 
-                <div className="flex flex-col items-start relative z-20">
+                <div className="flex flex-col items-start relative z-20 max-w-7xl mx-auto">
                     <h1
                         ref={firstNameRef}
                         className="text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10"
@@ -163,7 +199,7 @@ const Home = () => {
                     </h1>
                     <h1
                         ref={lastNameRef}
-                        className="text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10 mt-2 xs:mt-4 sm:mt-6 md:mt-8 lg:mt-10 ml-16 xs:ml-20 sm:ml-24 md:ml-32 lg:ml-40 xl:ml-48 2xl:ml-56"
+                        className="text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10 mt-2 xs:mt-4 sm:mt-6 md:mt-8 lg:mt-10 ml-8 xs:ml-12 sm:ml-16 md:ml-24 lg:ml-32 xl:ml-40 2xl:ml-48"
                         style={{ color: theme.heroText }}
                     >
                         {lastName.split('').map((char, index) => (
@@ -175,12 +211,47 @@ const Home = () => {
                 </div>
                 <p
                     ref={quoteRef}
-                    className="mt-8 sm:mt-12 text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl text-center font-medium opacity-80 z-10"
+                    className="mt-8 sm:mt-12 text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl text-center font-medium opacity-80 z-10 relative"
                     style={{ color: theme.subtext }}
                 >
                     I don&apos;t just ship code - I architect engines that hum through chaos and scale with silence.
                 </p>
-            </div>
+            </section>
+
+            {/* About Me Section */}
+            <section
+                ref={aboutSectionRef}
+                className="relative w-full min-h-screen flex flex-col items-center justify-center px-4 sm:px-8 lg:px-16 py-20 sm:py-32"
+                style={{ backgroundColor: theme.background }}
+            >
+                <div className="w-full max-w-[90vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
+                    <div className="flex flex-col items-start">
+                        {/* Top horizontal line */}
+                        <div className="w-full border-t border-gray-400 opacity-30 mb-8 sm:mb-12"></div>
+
+                        <p
+                            ref={aboutHeadingRef}
+                            className="text-lg sm:text-xl md:text-2xl font-semibold mb-4 text-left"
+                            style={{ color: theme.subtext }}
+                        >
+                            <span className="font-light text-xl">{'{ '}</span>About Me<span className="font-light text-xl">{' }'}</span>
+                        </p>
+                        <h2
+                            ref={aboutTextRef}
+                            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight text-left"
+                            style={{ color: theme.heroText }}
+                        >
+                            {/* Original statements, carefully split to achieve 4 lines on screen */}
+                            <span className="block">Experienced Software Engineer with a strong track record of building secure, scalable</span>
+                            <span className="block">applications, automating cloud infrastructure, and deploying data-driven solutions.</span>
+
+                        </h2>
+
+                        {/* Bottom horizontal line */}
+                        <div className="w-full border-b border-gray-400 opacity-30 mt-8 sm:mt-12"></div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };

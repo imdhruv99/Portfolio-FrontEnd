@@ -45,22 +45,44 @@ const DotBackground: FC<DotBackgroundProps> = ({
         const numRows = Math.ceil(containerHeight / spacing);
         const centerX = containerWidth / 2;
         const centerY = containerHeight / 2;
-        const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY);
 
-        // Create dots data
+        // Create dots data with 4-directional fade
         dotsRef.current = [];
         for (let row = 0; row < numRows; row++) {
             for (let col = 0; col < numCols; col++) {
                 const x = col * spacing + spacing / 2;
                 const y = row * spacing + spacing / 2;
 
-                const distanceX = Math.abs(x - centerX);
-                const distanceY = Math.abs(y - centerY);
-                const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+                // Calculate fade based on distance from all edges
+                const distanceFromLeft = x;
+                const distanceFromRight = containerWidth - x;
+                const distanceFromTop = y;
+                const distanceFromBottom = containerHeight - y;
 
-                // Better fade calculation
-                const fadeRatio = distance / maxDistance;
-                const baseOpacity = Math.max(0.05, Math.min(1, 1 - fadeRatio * 1.2));
+                // Fade zones (adjust these values to control fade intensity)
+                const fadeZoneWidth = containerWidth * 0.15; // 15% of width
+                const fadeZoneHeight = containerHeight * 0.15; // 15% of height
+
+                // Calculate fade multipliers for each edge (0 = fully faded, 1 = no fade)
+                const leftFade = Math.min(1, distanceFromLeft / fadeZoneWidth);
+                const rightFade = Math.min(1, distanceFromRight / fadeZoneWidth);
+                const topFade = Math.min(1, distanceFromTop / fadeZoneHeight);
+                const bottomFade = Math.min(1, distanceFromBottom / fadeZoneHeight);
+
+                // Combine all fade effects (multiplicative for smooth corners)
+                const combinedFade = leftFade * rightFade * topFade * bottomFade;
+
+                // Additional center-based fade for extra depth
+                const distanceFromCenter = Math.sqrt(
+                    Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2)
+                );
+                const maxCenterDistance = Math.sqrt(
+                    Math.pow(centerX, 2) + Math.pow(centerY, 2)
+                );
+                const centerFade = Math.max(0.1, 1 - (distanceFromCenter / maxCenterDistance) * 0.3);
+
+                // Apply minimum opacity to prevent complete invisibility
+                const baseOpacity = Math.max(0.02, combinedFade * centerFade * 0.8);
 
                 dotsRef.current.push({
                     x,
@@ -121,7 +143,6 @@ const DotBackground: FC<DotBackgroundProps> = ({
                 const g = Math.round(baseDot.g + (glowDot.g - baseDot.g) * glowIntensity * glowInfluence);
                 const b = Math.round(baseDot.b + (glowDot.b - baseDot.b) * glowIntensity * glowInfluence);
                 const alpha = dot.baseOpacity * (0.7 + 0.3 * glowIntensity * glowInfluence);
-
 
                 // Draw dot
                 ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
