@@ -31,30 +31,6 @@ const Home = () => {
         setMounted(true);
     }, []);
 
-    // About Me section animation
-    useLayoutEffect(() => {
-        if (!mounted || isLoading) return;
-
-        const ctx = gsap.context(() => {
-            if (aboutHeadingRef.current && aboutTextRef.current) {
-                gsap.from([aboutHeadingRef.current, aboutTextRef.current], {
-                    scrollTrigger: {
-                        trigger: aboutSectionRef.current,
-                        start: 'top 80%',
-                        toggleActions: 'play none none reverse',
-                    },
-                    y: 50,
-                    opacity: 0,
-                    duration: 1,
-                    stagger: 0.2,
-                    ease: 'power3.out',
-                });
-            }
-        }, aboutSectionRef);
-
-        return () => ctx.revert();
-    }, [mounted, isLoading]);
-
     // Hero section animation
     useLayoutEffect(() => {
         if (!mounted || isLoading) return;
@@ -89,6 +65,15 @@ const Home = () => {
                 });
             }
 
+            if (quoteRef.current) {
+                tl.from(quoteRef.current, {
+                    y: 30,
+                    opacity: 0,
+                    duration: 1.5,
+                    ease: "power2.out",
+                }, ">-0.5");
+            }
+
             if (lastNameLetters) {
                 lastNameLetters.forEach((letter, i) => {
                     if (letter.textContent === ' ') return;
@@ -110,20 +95,35 @@ const Home = () => {
                         ease: "power2.inOut",
                         repeat: -1,
                         yoyo: true,
-                        repeatDelay: 3,
+                        repeatDelay: 2,
                     }, ">+1");
                 }
             }
+        });
 
-            if (quoteRef.current) {
-                tl.from(quoteRef.current, {
+        return () => ctx.revert();
+    }, [mounted, isLoading]);
+
+    // About Me section animation
+    useLayoutEffect(() => {
+        if (!mounted || isLoading) return;
+
+        const ctx = gsap.context(() => {
+            if (aboutHeadingRef.current && aboutTextRef.current) {
+                gsap.from([aboutHeadingRef.current, aboutTextRef.current], {
+                    scrollTrigger: {
+                        trigger: aboutSectionRef.current,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse',
+                    },
                     y: 50,
                     opacity: 0,
                     duration: 1,
-                    ease: "power2.out",
-                }, ">-0.5");
+                    stagger: 0.2,
+                    ease: 'power3.out',
+                });
             }
-        });
+        }, aboutSectionRef);
 
         return () => ctx.revert();
     }, [mounted, isLoading]);
@@ -270,14 +270,14 @@ const Home = () => {
                 <div className="w-full lg:w-1/2 space-y-6">
                     <div className="space-y-4">
                         <h3
-                            className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight"
+                            className="text-2xl sm:text-3xl lg:text-5xl font-bold leading-tight"
                             style={{ color: theme.heroText }}
                         >
                             {item.title}
                         </h3>
 
                         <p
-                            className="text-base sm:text-lg leading-relaxed opacity-80"
+                            className="text-base sm:text-xl leading-relaxed opacity-80"
                             style={{ color: theme.subtext }}
                         >
                             {item.description}
@@ -298,7 +298,7 @@ const Home = () => {
                                     style={{ backgroundColor: theme.highlightColor }}
                                 />
                                 <p
-                                    className="text-sm sm:text-base leading-relaxed"
+                                    className="text-sm sm:text-lg leading-relaxed"
                                     style={{ color: theme.subtext }}
                                 >
                                     {point}
@@ -319,7 +319,7 @@ const Home = () => {
             {/* Hero Section */}
             <section
                 ref={heroSectionRef}
-                className="relative w-full min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 lg:p-16 overflow-hidden"
+                className="relative w-full min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 lg:p-8 overflow-hidden mb-[-8rem]"
             >
 
                 <div className="flex flex-col items-start relative z-20 max-w-7xl mx-auto">
@@ -336,7 +336,7 @@ const Home = () => {
                     </h1>
                     <h1
                         ref={lastNameRef}
-                        className="text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10 mt-2 xs:mt-4 sm:mt-6 md:mt-8 lg:mt-10 ml-8 xs:ml-12 sm:ml-16 md:ml-24 lg:ml-32 xl:ml-40 2xl:ml-48"
+                        className="mb-10 text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10 mt-2 xs:mt-4 sm:mt-6 md:mt-8 lg:mt-10 ml-8 xs:ml-12 sm:ml-16 md:ml-24 lg:ml-32 xl:ml-40 2xl:ml-48"
                         style={{ color: theme.heroText }}
                     >
                         {lastName.split('').map((char, index) => (
@@ -373,25 +373,25 @@ const Home = () => {
                         >
                             <div className="flex items-center justify-center space-x-4 pb-4">
                                 <span className="font-light text-5xl">{'{'}</span>
-                                <span className="text-center justify-center">Who I Am</span>
+                                <span className="text-center justify-center text-lg mt-1.5">Who I Am</span>
                                 <span className="font-light text-5xl">{'}'}</span>
                             </div>
                         </div>
 
                         <h2
                             ref={aboutTextRef}
-                            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight text-left mb-10"
+                            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light leading-tight tracking-tight text-left mb-10"
                             style={{ color: theme.heroText }}
                         >
                             <span className="block">
                                 {renderHighlightedText(
-                                    "Experienced Software Engineer with a strong track record of building secure, scalable applications,",
+                                    "Experienced Software Engineer with a strong track record of building Secure, Scalable applications, automating",
                                     wordsToHighlight
                                 )}
                             </span>
                             <span className="block">
                                 {renderHighlightedText(
-                                    "automating cloud infrastructure, and deploying Artificial Intelligent based data-driven solutions.",
+                                    "Cloud Infrastructure, and deploying Artificial Intelligent based data-driven solutions.",
                                     wordsToHighlight
                                 )}
                             </span>
@@ -403,7 +403,7 @@ const Home = () => {
             {/* What I Do Section */}
             <section
                 ref={servicesSectionRef}
-                className="relative w-full px-4 sm:px-8 lg:px-16 pt-8 sm:pt-12 pb-20 sm:pb-32"
+                className="relative w-full px-4 sm:px-8 lg:px-16 pt-8 sm:pt-12 pb-10 sm:pb-5"
                 style={{ backgroundColor: theme.background }}
             >
                 <div className="w-full max-w-[100vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
@@ -418,7 +418,7 @@ const Home = () => {
                         >
                             <div className="flex items-center space-x-4">
                                 <span className="font-light text-5xl">{'{'}</span>
-                                <span>Engineering & Artistry</span>
+                                <span className="text-center justify-center text-lg mt-1.5">Engineering & Artistry</span>
                                 <span className="font-light text-5xl">{'}'}</span>
                             </div>
                         </div>

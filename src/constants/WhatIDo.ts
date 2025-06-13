@@ -10,7 +10,7 @@ export interface WhatIDoItem {
 export const whatIDoData: WhatIDoItem[] = [
     {
         id: "ml-ai",
-        title: "Machine Learning and Artificial Intelligence",
+        title: "Machine Learning & Artificial Intelligence",
         description: "Building intelligent systems that learn, adapt, and deliver actionable insights through advanced algorithms and deep learning architectures.",
         technologies: ["Python", "Tensorflow", "Keras", "Sklearn", "Pandas", "Numpy", "JupyterNotebook", "CV2"],
         points: [
@@ -49,7 +49,7 @@ export const whatIDoData: WhatIDoItem[] = [
     },
     {
         id: "photography",
-        title: "Photography and Editing",
+        title: "Photography & Editing",
         description: "Capturing moments through creative lens work and transforming them into compelling visual narratives through advanced post-processing.",
         technologies: ["Photoshop", "Lightroom"],
         points: [
