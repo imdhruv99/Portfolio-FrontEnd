@@ -2,8 +2,9 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 
-import { ThemeProvider, ThemeScript } from '@/components/ThemeProvider';
 import Navbar from '@/components/Navbar';
+import { allFontVariables } from '@/config/fonts';
+import { ThemeProvider, ThemeScript } from '@/components/ThemeProvider';
 
 export const metadata: Metadata = {
     title: 'Portfolio - Dhruv Prajapati',
@@ -16,7 +17,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en" suppressHydrationWarning className={allFontVariables}>
             <head>
                 <script
                     dangerouslySetInnerHTML={{
