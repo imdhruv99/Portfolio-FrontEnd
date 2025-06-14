@@ -39,6 +39,10 @@ export interface ThemeColors {
     experienceScrollbarTrack: string;
     experienceScrollbarThumb: string;
     experienceScrollbarThumbHover: string;
+    experienceCard: string;
+    experienceText: string;
+    experienceSubText: string;
+    experienceDescriptionText: string;
 
     // Project Page Styles
     projectPatternBackground: string;
@@ -122,6 +126,10 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(0, 0, 0, 0.2)',
             experienceScrollbarThumbHover: 'rgba(0, 0, 0, 0.3)',
+            experienceCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
+            experienceText: 'text-gray-900',
+            experienceSubText: 'text-gray-600',
+            experienceDescriptionText: 'text-gray-700',
 
             // Project Page Styles
             projectPatternBackground: 'modern-pattern-light',
@@ -198,6 +206,10 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(255, 255, 255, 0.3)',
             experienceScrollbarThumbHover: 'rgba(255, 255, 255, 0.5)',
+            experienceCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
+            experienceText: 'text-white',
+            experienceSubText: 'text-white/60',
+            experienceDescriptionText: 'text-white/80',
 
             // Project Page Styles
             projectPatternBackground: 'modern-pattern-dark',
