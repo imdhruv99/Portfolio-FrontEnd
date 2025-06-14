@@ -271,7 +271,7 @@ const Education = () => {
                                 {/* Certificate image and title in a row */}
                                 <div className="flex items-center mb-6">
                                     {/* Square certificate image with white background */}
-                                    <div className={`w-16 h-16 flex-shrink-0 mr-4 rounded-lg overflow-hidden ${theme.badgeBg} shadow-sm`}>
+                                    <div className={`w-16 h-16 flex-shrink-0 mr-4 rounded-lg overflow-hidden ${theme.educationBadgeBackground} shadow-sm`}>
                                         {cert.image ? (
                                             <div className="w-full h-full relative bg-white">
                                                 <Image

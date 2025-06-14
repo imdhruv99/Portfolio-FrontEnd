@@ -155,7 +155,7 @@ const SolarSystemCanvas: React.FC = () => {
                         distance={7}
                         speed={0.15}
                         initialAngle={0}
-                        lineColor={theme.subtext}
+                        lineColor={theme.solarSystemSubtext}
                         textureUrl="/texture/mercury.jpg"
                     />
                     <Planet
@@ -163,7 +163,7 @@ const SolarSystemCanvas: React.FC = () => {
                         distance={10}
                         speed={0.12}
                         initialAngle={Math.PI / 4}
-                        lineColor={theme.subtext}
+                        lineColor={theme.solarSystemSubtext}
                         textureUrl="/texture/venus.jpg"
                     />
                     <Planet
@@ -171,7 +171,7 @@ const SolarSystemCanvas: React.FC = () => {
                         distance={14}
                         speed={0.1}
                         initialAngle={Math.PI / 2}
-                        lineColor={theme.subtext}
+                        lineColor={theme.solarSystemSubtext}
                         textureUrl="/texture/earth.jpg"
                     />
                     <Planet
@@ -179,7 +179,7 @@ const SolarSystemCanvas: React.FC = () => {
                         distance={18}
                         speed={0.08}
                         initialAngle={3 * Math.PI / 4}
-                        lineColor={theme.subtext}
+                        lineColor={theme.solarSystemSubtext}
                         textureUrl="/texture/mars.jpg"
                     />
                     <Planet
@@ -187,7 +187,7 @@ const SolarSystemCanvas: React.FC = () => {
                         distance={26}
                         speed={0.06}
                         initialAngle={Math.PI}
-                        lineColor={theme.subtext}
+                        lineColor={theme.solarSystemSubtext}
                         textureUrl="/texture/jupiter.jpg"
                     />
                     <Planet
@@ -195,7 +195,7 @@ const SolarSystemCanvas: React.FC = () => {
                         distance={32}
                         speed={0.05}
                         initialAngle={5 * Math.PI / 4}
-                        lineColor={theme.subtext}
+                        lineColor={theme.solarSystemSubtext}
                         textureUrl="/texture/saturn.jpg"
                     />
                     <Planet
@@ -203,7 +203,7 @@ const SolarSystemCanvas: React.FC = () => {
                         distance={38}
                         speed={0.04}
                         initialAngle={3 * Math.PI / 2}
-                        lineColor={theme.subtext}
+                        lineColor={theme.solarSystemSubtext}
                         textureUrl="/texture/uranus.jpg"
                     />
                     <Planet
@@ -211,7 +211,7 @@ const SolarSystemCanvas: React.FC = () => {
                         distance={44}
                         speed={0.03}
                         initialAngle={7 * Math.PI / 4}
-                        lineColor={theme.subtext}
+                        lineColor={theme.solarSystemSubtext}
                         textureUrl="/texture/neptune.jpg"
                     />
                 </group>
