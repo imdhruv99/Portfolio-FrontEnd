@@ -1,17 +1,9 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
-import { Cormorant_Garamond } from 'next/font/google';
 
 import { ThemeProvider, ThemeScript } from '@/components/ThemeProvider';
 import Navbar from '@/components/Navbar';
-
-const cormorantGaramond = Cormorant_Garamond({
-    subsets: ['latin'],
-    variable: '--font-cormorant',
-    display: 'swap',
-    weight: '400',
-});
 
 export const metadata: Metadata = {
     title: 'Portfolio - Dhruv Prajapati',
@@ -33,7 +25,7 @@ export default function RootLayout({
                 />
             </head>
             <body
-                className={`${cormorantGaramond.variable} font-sans theme-transition`}
+                className={`theme-transition`}
             >
                 <ThemeProvider
                     attribute="data-theme"
