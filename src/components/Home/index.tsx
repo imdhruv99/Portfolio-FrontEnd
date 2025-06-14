@@ -217,8 +217,8 @@ const Home = () => {
                     key={index}
                     className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg transition-all duration-300 hover:scale-110"
                     style={{
-                        backgroundColor: isDarkTheme ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
-                        border: `1px solid ${isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
+                        backgroundColor: theme.homeTechIconBackground,
+                        border: theme.homeTechIconBorder,
                     }}
                 >
                     <Icon
@@ -364,7 +364,7 @@ const Home = () => {
                 <div className="w-full max-w-[100vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
                     <div className="flex flex-col items-start">
                         {/* Top horizontal line */}
-                        <div className="mt-0 sm:mt-0 mb-30 sm:mb-6 w-full border-t border-gray-400 opacity-30"></div>
+                        <div className={`mt-0 sm:mt-0 mb-30 sm:mb-6 w-full border-t ${theme.homeSectionDivider}`}></div>
 
                         <div
                             ref={aboutHeadingRef}
@@ -409,7 +409,7 @@ const Home = () => {
                 <div className="w-full max-w-[100vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
                     <div className="flex flex-col items-start mb-16 lg:mb-24">
                         {/* Top horizontal line */}
-                        <div className="w-full border-t border-gray-400 opacity-30 mb-8" />
+                        <div className={`w-full border-t ${theme.homeSectionDivider} opacity-30 mb-8`} />
 
                         <div
                             ref={servicesHeadingRef}

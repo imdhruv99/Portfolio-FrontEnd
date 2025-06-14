@@ -7,6 +7,9 @@ export interface ThemeColors {
     homeHighlightColor: string;
     homeHeroText: string;
     homeSubText: string;
+    homeTechIconBackground: string;
+    homeTechIconBorder: string;
+    homeSectionDivider: string;
 
     // Experience Page Styles
     experienceBentoCard: string;
@@ -75,6 +78,9 @@ export const themes: Record<string, Theme> = {
             homeHighlightColor: '#007BFF',
             homeHeroText: 'text-gray-900',
             homeSubText: 'text-gray-600',
+            homeTechIconBackground: 'rgba(0, 0, 0, 0.05)',
+            homeTechIconBorder: '1px solid rgba(0, 0, 0, 0.1)',
+            homeSectionDivider: 'border-gray-400/30',
 
             // Experience Page Styles
             experienceBentoCard: 'bg-white/60',
@@ -137,6 +143,9 @@ export const themes: Record<string, Theme> = {
             homeHighlightColor: '#42f542',
             homeHeroText: 'text-white',
             homeSubText: 'text-white/60',
+            homeTechIconBackground: 'rgba(255, 255, 255, 0.05)',
+            homeTechIconBorder: '1px solid rgba(255, 255, 255, 0.1)',
+            homeSectionDivider: 'border-white/20',
 
             // Experience Page Styles
             experienceBentoCard: 'bg-[#1c1c1e]/70',
