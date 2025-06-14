@@ -24,7 +24,11 @@ export interface ThemeColors {
     linkButton: string;
     cardPattern: string;
     floatingElement: string;
-    // Experience-specific styles
+
+    // Home Page Styles
+    highlightColor: string;
+
+    // Experience Page Styles
     experienceBentoCard: string;
     experienceBentoBorder: string;
     experienceBentoHover: string;
@@ -33,8 +37,13 @@ export interface ThemeColors {
     experienceScrollbarTrack: string;
     experienceScrollbarThumb: string;
     experienceScrollbarThumbHover: string;
-    // Home Page Styles
-    highlightColor: string;
+
+    // Contact Page Styles
+    contactIcon: string;
+    contactText: string;
+    contactSubtext: string;
+    contactButton: string;
+    contactBorder: string;
 }
 
 export interface Theme {
@@ -71,7 +80,11 @@ export const themes: Record<string, Theme> = {
             linkButton: 'bg-white/80 hover:bg-white text-gray-700 border border-gray-200/50',
             cardPattern: 'geometric-pattern-light',
             floatingElement: 'bg-gray-400',
-            // Experience-specific styles
+
+            // Home Page Styles
+            highlightColor: '#007BFF',
+
+            // Experience Page Styles
             experienceBentoCard: 'bg-white/60',
             experienceBentoBorder: 'border border-[#e5e7eb]',
             experienceBentoHover: 'hover:bg-white/80 hover:border-[#d1d5db]',
@@ -80,8 +93,13 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(0, 0, 0, 0.2)',
             experienceScrollbarThumbHover: 'rgba(0, 0, 0, 0.3)',
-            // Home-Page Style
-            highlightColor: '#007BFF',
+
+            // Contact Page Styles
+            contactIcon: 'text-gray-400',
+            contactText: 'text-gray-900',
+            contactSubtext: 'text-gray-600',
+            contactButton: 'bg-white/80 hover:bg-white text-gray-900 border border-gray-200',
+            contactBorder: 'border-gray-200',
         },
     },
     dark: {
@@ -112,7 +130,11 @@ export const themes: Record<string, Theme> = {
             linkButton: 'bg-white/[0.08] hover:bg-white/[0.15] text-white/80 border border-white/10',
             cardPattern: 'geometric-pattern-dark',
             floatingElement: 'bg-white',
-            // Experience-specific styles
+
+            // Home Page Styles
+            highlightColor: '#42f542',
+
+            // Experience Page Styles
             experienceBentoCard: 'bg-[#1c1c1e]/70',
             experienceBentoBorder: 'border border-[#2c2c2e]',
             experienceBentoHover: 'hover:bg-[#2a2a2c]/80 hover:border-[#3a3a3c]',
@@ -121,8 +143,14 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(255, 255, 255, 0.3)',
             experienceScrollbarThumbHover: 'rgba(255, 255, 255, 0.5)',
-            // Home-Page Style
-            highlightColor: '#42f542',
+
+            // Contact Page Styles
+            contactIcon: 'text-white/30',
+            contactText: 'text-white',
+            contactSubtext: 'text-white/60',
+            contactButton: 'bg-white/10 hover:bg-white/20 text-white border border-white/10',
+            contactBorder: 'border-white/10',
+
         },
     },
 };
