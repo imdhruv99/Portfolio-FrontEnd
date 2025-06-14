@@ -1,5 +1,8 @@
 export interface ThemeColors {
+
+    // Common Styles
     background: string;
+
     text: string;
     subtext: string;
     border: string;
@@ -38,6 +41,16 @@ export interface ThemeColors {
     experienceScrollbarThumb: string;
     experienceScrollbarThumbHover: string;
 
+    // Education Page Styles
+    educationText: string;
+    educationSubtext: string;
+    educationBorder: string;
+    educationTimeLine: string;
+    educationTimeLineNode: string;
+    educationCard: string,
+    educationBadgeBackground: string;
+
+
     // Contact Page Styles
     contactIcon: string;
     contactText: string;
@@ -55,6 +68,8 @@ export const themes: Record<string, Theme> = {
     light: {
         name: 'light',
         colors: {
+
+            // Common Styles
             background: 'bg-gradient-to-br from-[#fafafa] via-[#f5f5f5] to-[#efefef]',
             text: 'text-gray-900',
             subtext: 'text-gray-600',
@@ -94,6 +109,15 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarThumb: 'rgba(0, 0, 0, 0.2)',
             experienceScrollbarThumbHover: 'rgba(0, 0, 0, 0.3)',
 
+            // Education Page Styles
+            educationText: 'text-gray-900',
+            educationSubtext: 'text-gray-600',
+            educationBorder: 'border-gray-200',
+            educationTimeLine: 'bg-gray-200',
+            educationTimeLineNode: 'bg-gray-200',
+            educationCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
+            educationBadgeBackground: 'bg-white',
+
             // Contact Page Styles
             contactIcon: 'text-gray-400',
             contactText: 'text-gray-900',
@@ -105,6 +129,8 @@ export const themes: Record<string, Theme> = {
     dark: {
         name: 'dark',
         colors: {
+
+            // Common Styles
             background: 'bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#0f0f0f]',
             text: 'text-white',
             subtext: 'text-white/60',
@@ -143,6 +169,15 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(255, 255, 255, 0.3)',
             experienceScrollbarThumbHover: 'rgba(255, 255, 255, 0.5)',
+
+            // Education Page Styles
+            educationText: 'text-white',
+            educationSubtext: 'text-white/60',
+            educationBorder: 'border-white/10',
+            educationTimeLine: 'bg-white/10',
+            educationTimeLineNode: 'bg-neutral-500 border-neutral-700',
+            educationCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
+            educationBadgeBackground: 'bg-white',
 
             // Contact Page Styles
             contactIcon: 'text-white/30',
