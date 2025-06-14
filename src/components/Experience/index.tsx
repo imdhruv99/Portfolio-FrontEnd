@@ -293,7 +293,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
 };
 
 const Experience = () => {
-    const { colors, isDarkTheme, isLoading } = useThemeColors();
+    const { colors: theme, isDarkTheme, isLoading } = useThemeColors();
 
     // Memoize experience data to prevent recalculation on every render
     const experienceData = useMemo(() => getExperienceData(isDarkTheme), [isDarkTheme]);
@@ -472,7 +472,7 @@ const Experience = () => {
     return (
         <div
             ref={containerRef}
-            className="relative overflow-hidden"
+            className={`relative overflow-hidden ${theme.background}`}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -501,15 +501,15 @@ const Experience = () => {
                     width: 4px;
                 }
                 .custom-scrollbar::-webkit-scrollbar-track {
-                    background: ${colors.experienceScrollbarTrack};
+                    background: ${theme.experienceScrollbarTrack};
                     border-radius: 2px;
                 }
                 .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: ${colors.experienceScrollbarThumb};
+                    background: ${theme.experienceScrollbarThumb};
                     border-radius: 2px;
                 }
                 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: ${colors.experienceScrollbarThumbHover};
+                    background: ${theme.experienceScrollbarThumbHover};
                 }
             `}</style>
         </div>
