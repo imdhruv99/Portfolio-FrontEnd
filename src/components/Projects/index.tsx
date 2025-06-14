@@ -331,7 +331,7 @@ const Projects = () => {
                             const key = tech.replace(/\s+|\.|-/g, '').replace(/js/i, 'Js');
                             const icon = techIconMap[key]?.[isDarkTheme ? 'dark' : 'light'] || `logos:${key.toLowerCase()}`;
                             return (
-                                <div key={tech} className={`flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-full ${theme.projectTechBadge} backdrop-blur-md`}>
+                                <div key={tech} className={`${fontClasses.eireneSansBold} flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-full ${theme.projectTechBadge} backdrop-blur-md`}>
                                     <Icon icon={icon} width={isMobile ? "12" : "14"} height={isMobile ? "12" : "14"} />
                                     <span className="hidden sm:inline">{tech}</span>
                                 </div>
@@ -363,7 +363,7 @@ const Projects = () => {
                         <div className="absolute inset-0 z-20 flex flex-col justify-between p-6 sm:p-8 lg:p-12">
                             {/* Top Area - Year Badge */}
                             <div className="flex justify-between items-start">
-                                <div className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.projectYearBadge} backdrop-blur-md`}>
+                                <div className={`${fontClasses.eireneSans} inline-flex items-center px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.projectYearBadge} backdrop-blur-md`}>
                                     {projectToDisplay.yearOfDevelopment}
                                 </div>
                             </div>
@@ -372,23 +372,14 @@ const Projects = () => {
                             <div className="space-y-4 sm:space-y-6">
                                 {/* Project Title */}
                                 <div className="space-y-2 sm:space-y-3">
-                                    <h1 ref={titleRef} className={`${fontClasses.classyVogue} text-4xl sm:text-6xl lg:text-8xl font-black tracking-tight ${theme.projecHeroText} leading-[0.85] break-words`}>
+                                    <h1 ref={titleRef} className={`${fontClasses.classyVogue} text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight ${theme.projecHeroText} leading-[0.85] break-words`}>
                                         {projectToDisplay.title.toUpperCase()}
                                     </h1>
 
                                     {/* Category and Description */}
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 mt-4 sm:mt-6">
                                         <div className="space-y-2">
-                                            <div className={`text-xs sm:text-sm font-medium tracking-[0.15em] ${theme.projectCategoryText} opacity-70`}>
-                                                {projectToDisplay.category.toUpperCase()}
-                                            </div>
-                                            <div className={`text-xs sm:text-sm font-mono ${theme.projectMetaText} opacity-50`}>
-                                                WEB DEVELOPMENT
-                                            </div>
-                                        </div>
-
-                                        <div className="lg:max-w-md">
-                                            <p ref={descRef} className={`text-sm sm:text-base leading-relaxed ${theme.projectDescriptionText} opacity-80`}>
+                                            <p ref={descRef} className={`${fontClasses.eireneSans} text-sm sm:text-base leading-relaxed ${theme.projectDescriptionText} opacity-80`}>
                                                 {projectToDisplay.description}
                                             </p>
                                         </div>
@@ -401,7 +392,7 @@ const Projects = () => {
                     {/* Links Section */}
                     <div ref={linksRef} className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-6 sm:gap-8">
-                            <div className={`text-xs sm:text-sm font-mono tracking-[0.15em] ${theme.projectLinkText} opacity-60`}>
+                            <div className={`${fontClasses.eireneSans} text-xs sm:text-sm font-mono tracking-[0.15em] ${theme.projectLinkText} opacity-60`}>
                                 LINKS
                             </div>
                             <div className="flex gap-3 sm:gap-4">

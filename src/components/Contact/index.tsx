@@ -204,7 +204,7 @@ const Contact = () => {
                     </h1>
                     <p
                         ref={paraRef}
-                        className={`text-lg sm:text-xl font-light ${theme.contactSubtext}`}
+                        className={`${fontClasses.eireneSans} text-lg sm:text-xl font-light ${theme.contactSubtext}`}
                     >
                         I value genuine connections and creative discussions. Whether it&apos;s collaboration, mentorship, or curiosity — feel free to reach out.
                     </p>
@@ -228,10 +228,6 @@ const Contact = () => {
                             </div>
                         </a>
                     ))}
-
-                    <p className={`mt-10 text-sm text-center md:text-left ${theme.contactSubtext}`}>
-                        Typically responds within 24–48 hours. Let&apos;s create something meaningful.
-                    </p>
                 </div>
             </div>
         </section>

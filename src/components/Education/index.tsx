@@ -229,11 +229,11 @@ const Education = () => {
 
                                     <div className={`relative sm:w-1/2 ${index % 2 === 0 ? 'ml-16 sm:ml-0' : 'ml-16 sm:ml-auto sm:mr-0'} ${index % 2 === 0 ? 'sm:pr-12' : 'sm:pl-12'}`}>
                                         <div className={`${theme.educationCard} border ${theme.educationBorder} rounded-lg p-8 shadow-md hover:shadow-lg transition-all duration-300 transform perspective-1000 hover:scale-[1.02]`}>
-                                            <h3 className={`text-xl font-bold ${theme.educationText}`}>{edu.degree}</h3>
-                                            <p className={`text-sm mt-2 ${theme.educationSubtext}`}>{edu.institution}</p>
+                                            <h3 className={`${fontClasses.classyVogue} text-xl font-bold ${theme.educationText}`}>{edu.degree}</h3>
+                                            <p className={`${fontClasses.eireneSans} text-sm mt-2 ${theme.educationSubtext}`}>{edu.institution}</p>
                                             <div className={`flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4 pt-4 border-t ${theme.educationBorder}`}>
-                                                <p className={`text-sm ${theme.educationSubtext}`}>{formatPeriod(edu.period)}</p>
-                                                <p className={`text-sm font-medium ${theme.educationText} mt-2 sm:mt-0`}>
+                                                <p className={`${fontClasses.eireneSans} text-sm ${theme.educationSubtext}`}>{formatPeriod(edu.period)}</p>
+                                                <p className={`${fontClasses.classyVogue} text-sm font-medium ${theme.educationText} mt-2 sm:mt-0`}>
                                                     Grade: {edu.grade}
                                                 </p>
                                             </div>
@@ -291,8 +291,8 @@ const Education = () => {
                                     </div>
 
                                     <div>
-                                        <h3 className={`text-lg font-semibold ${theme.educationText} line-clamp-2`}>{cert.title}</h3>
-                                        <p className={`text-sm ${theme.educationSubtext} mt-1`}>{cert.issuer}</p>
+                                        <h3 className={`${fontClasses.classyVogue} text-lg font-semibold ${theme.educationText} line-clamp-2`}>{cert.title}</h3>
+                                        <p className={`${fontClasses.eireneSans} text-sm ${theme.educationSubtext} mt-1`}>{cert.issuer}</p>
                                     </div>
                                 </div>
 
@@ -302,14 +302,14 @@ const Education = () => {
                                         {cert.skills.slice(0, 3).map((skill, i) => (
                                             <span
                                                 key={i}
-                                                className={`text-xs px-2 py-1 rounded-full ${isDarkTheme ? 'bg-white/10 text-gray-300' : 'bg-gray-100 text-gray-600'}`}
+                                                className={`${fontClasses.eireneSansBold} text-xs px-2 py-1 rounded-full ${isDarkTheme ? 'bg-white/10 text-gray-300' : 'bg-gray-100 text-gray-600'}`}
                                             >
                                                 {skill}
                                             </span>
                                         ))}
                                         {cert.skills.length > 3 && (
                                             <span
-                                                className={`text-xs px-2 py-1 rounded-full ${isDarkTheme ? 'bg-white/10 text-gray-300' : 'bg-gray-100 text-gray-600'}`}
+                                                className={`${fontClasses.eireneSansBold} text-xs px-2 py-1 rounded-full ${isDarkTheme ? 'bg-white/10 text-gray-300' : 'bg-gray-100 text-gray-600'}`}
                                             >
                                                 +{cert.skills.length - 3} more
                                             </span>
@@ -322,7 +322,7 @@ const Education = () => {
 
                                 {/* Horizontal line and date/verification - positioned at bottom */}
                                 <div className={`border-t ${theme.educationBorder} mt-auto pt-4 flex justify-between items-center`}>
-                                    <p className={`text-xs ${theme.educationSubtext}`}>
+                                    <p className={`${fontClasses.eireneSans} text-xs ${theme.educationSubtext}`}>
                                         {cert.issueDate !== '—' ? cert.issueDate : 'No date'}
                                     </p>
                                     {cert.credentialUrl && (
@@ -330,7 +330,7 @@ const Education = () => {
                                             href={cert.credentialUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className={`text-xs ${isDarkTheme ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'} hover:underline transition-colors duration-300`}
+                                            className={`${fontClasses.eireneSans} text-xs ${isDarkTheme ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'} hover:underline transition-colors duration-300`}
                                         >
                                             Verify →
                                         </a>

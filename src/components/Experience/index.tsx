@@ -79,10 +79,10 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                             className="flex flex-col justify-center items-center text-center"
                             style={{ background: `${theme.experienceCard}` }}
                         >
-                            <h3 className={`text-sm font-medium ${theme.experienceText} mb-1`}>
+                            <h3 className={`${fontClasses.eireneSansBold} text-sm font-medium ${theme.experienceText} mb-1`}>
                                 {experience.company}
                             </h3>
-                            <p className={`text-xs ${theme.experienceSubText}`}>{experience.period}</p>
+                            <p className={`${fontClasses.eireneSans} text-xs ${theme.experienceSubText}`}>{experience.period}</p>
                         </BentoCard>
                     </div>
 
@@ -160,7 +160,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         <div className="space-y-6">
                             {experience.description.map((desc, descIndex) => (
                                 <div key={descIndex} className="relative group">
-                                    <p className={`text-sm md:text-base ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}>
+                                    <p className={`${fontClasses.eireneSans} text-sm md:text-base ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}>
                                         <span className="mr-2 text-primary">✦</span>{desc}
                                     </p>
                                     <div
@@ -193,10 +193,10 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                             className="col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
                             style={{ background: `${theme.experienceCard}` }}
                         >
-                            <h3 className={`text-xl font-semibold ${theme.experienceText} mb-2`}>
+                            <h3 className={`${fontClasses.eireneSansBold} text-xl font-semibold ${theme.experienceText} mb-2`}>
                                 {experience.company}
                             </h3>
-                            <p className={`text-sm ${theme.experienceSubText}`}>{experience.period}</p>
+                            <p className={`${fontClasses.eireneSans} text-sm ${theme.experienceSubText}`}>{experience.period}</p>
                         </BentoCard>
 
                         {/* Mac Setup */}
@@ -274,7 +274,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                                 {experience.description.map((desc, descIndex) => (
                                     <div key={descIndex} className="relative group">
                                         <p
-                                            className={`text-base ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}
+                                            className={`${fontClasses.eireneSans} text-base ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}
                                         >
                                             <span className="mr-2 text-primary">✦</span>
                                             {desc}

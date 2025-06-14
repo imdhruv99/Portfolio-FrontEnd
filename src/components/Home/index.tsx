@@ -278,7 +278,7 @@ const Home = () => {
                         </h3>
 
                         <p
-                            className="text-base sm:text-xl leading-relaxed opacity-80"
+                            className={`${fontClasses.eireneSansBold} text-base sm:text-xl leading-relaxed opacity-80`}
                             style={{ color: theme.homeSubText }}
                         >
                             {item.description}
@@ -295,11 +295,11 @@ const Home = () => {
                         {item.points.map((point, pointIndex) => (
                             <div key={pointIndex} className="flex items-start gap-3">
                                 <div
-                                    className="w-1.5 h-1.5 rounded-full mt-2.5 flex-shrink-0"
+                                    className={`w-1.5 h-1.5 rounded-full mt-2.5 flex-shrink-0`}
                                     style={{ backgroundColor: theme.homeHighlightColor }}
                                 />
                                 <p
-                                    className="text-sm sm:text-lg leading-relaxed"
+                                    className={`${fontClasses.eireneSans} text-sm sm:text-lg leading-relaxed`}
                                     style={{ color: theme.homeSubText }}
                                 >
                                     {point}
@@ -348,7 +348,7 @@ const Home = () => {
                 </div>
                 <p
                     ref={quoteRef}
-                    className="mt-8 sm:mt-12 text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl text-center font-medium opacity-80 z-10 relative"
+                    className={`${fontClasses.eireneSans} mt-8 sm:mt-12 text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl text-center font-medium opacity-80 z-10 relative`}
                     style={{ color: theme.homeSubText }}
                 >
                     I don&apos;t just ship code - I architect engines that hum through chaos and scale with silence.
@@ -374,7 +374,7 @@ const Home = () => {
                         >
                             <div className="flex items-center justify-center space-x-4 pb-4">
                                 <span className="font-light text-5xl">{'{'}</span>
-                                <span className="text-center justify-center text-lg mt-1.5">Who I Am</span>
+                                <span className={`${fontClasses.eireneSansBold} text-center justify-center text-lg mt-1.5`}>Who I Am</span>
                                 <span className="font-light text-5xl">{'}'}</span>
                             </div>
                         </div>
@@ -419,7 +419,7 @@ const Home = () => {
                         >
                             <div className="flex items-center space-x-4">
                                 <span className="font-light text-5xl">{'{'}</span>
-                                <span className="text-center justify-center text-lg mt-1.5">Engineering & Artistry</span>
+                                <span className={`${fontClasses.eireneSansBold} text-center justify-center text-lg mt-1.5`}>Engineering & Artistry</span>
                                 <span className="font-light text-5xl">{'}'}</span>
                             </div>
                         </div>
