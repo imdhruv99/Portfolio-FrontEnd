@@ -15,7 +15,7 @@ const projectData: ProjectData[] = [
     {
         id: 1,
         title: "Task Manager",
-        description: "Containerized task management system using Flask and Kubernetes.",
+        description: "Deployment-ready secure task management application.",
         technicalStack: ['Python', 'Flask', 'Redis', 'Postgres', 'Docker', 'Kubernetes', 'Helm'],
         link: ['https://github.com/imdhruv99/Task-Manager'],
         category: 'Web Development',
