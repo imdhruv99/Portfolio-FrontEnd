@@ -28,7 +28,9 @@ export interface ThemeColors {
     cardPattern: string;
 
     // Home Page Styles
-    highlightColor: string;
+    homeHighlightColor: string;
+    homeHeroText: string;
+    homeSubText: string;
 
     // Experience Page Styles
     experienceBentoCard: string;
@@ -115,7 +117,9 @@ export const themes: Record<string, Theme> = {
             cardPattern: 'geometric-pattern-light',
 
             // Home Page Styles
-            highlightColor: '#007BFF',
+            homeHighlightColor: '#007BFF',
+            homeHeroText: 'text-gray-900',
+            homeSubText: 'text-gray-600',
 
             // Experience Page Styles
             experienceBentoCard: 'bg-white/60',
@@ -195,7 +199,9 @@ export const themes: Record<string, Theme> = {
             cardPattern: 'geometric-pattern-dark',
 
             // Home Page Styles
-            highlightColor: '#42f542',
+            homeHighlightColor: '#42f542',
+            homeHeroText: 'text-white',
+            homeSubText: 'text-white/60',
 
             // Experience Page Styles
             experienceBentoCard: 'bg-[#1c1c1e]/70',
