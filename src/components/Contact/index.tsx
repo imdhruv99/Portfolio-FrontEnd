@@ -178,7 +178,7 @@ const Contact = () => {
                     <div
                         key={index}
                         ref={(el) => { iconRefs.current[index] = el; }}
-                        className={`absolute ${theme.iconColor} transition-colors duration-500`}
+                        className={`absolute ${theme.contactIcon} transition-colors duration-500`}
                         style={{
                             top: `${icon.y}%`,
                             left: `${icon.x}%`,
@@ -197,13 +197,13 @@ const Contact = () => {
                 <div className="md:w-1/2 text-center md:text-left">
                     <h1
                         ref={headingRef}
-                        className={`text-4xl sm:text-5xl font-serif font-bold mb-6 leading-tight ${theme.text}`}
+                        className={`text-4xl sm:text-5xl font-serif font-bold mb-6 leading-tight ${theme.contactText}`}
                     >
                         Let&apos;s Have a Conversation
                     </h1>
                     <p
                         ref={paraRef}
-                        className={`text-lg sm:text-xl font-light ${theme.subtext}`}
+                        className={`text-lg sm:text-xl font-light ${theme.contactSubtext}`}
                     >
                         I value genuine connections and creative discussions. Whether it&apos;s collaboration, mentorship, or curiosity — feel free to reach out.
                     </p>
@@ -219,7 +219,7 @@ const Contact = () => {
                             }}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`group flex justify-center items-center w-64 px-6 py-4 rounded-full transition-all duration-300 ${theme.button} border ${theme.border} shadow-sm hover:scale-105`}
+                            className={`group flex justify-center items-center w-64 px-6 py-4 rounded-full transition-all duration-300 ${theme.contactButton} border ${theme.contactBorder} shadow-sm hover:scale-105`}
                         >
                             <div className="flex items-center gap-3">
                                 <Icon icon={contact.icon} width={22} height={22} />
@@ -228,7 +228,7 @@ const Contact = () => {
                         </a>
                     ))}
 
-                    <p className={`mt-10 text-sm text-center md:text-left ${theme.subtext}`}>
+                    <p className={`mt-10 text-sm text-center md:text-left ${theme.contactSubtext}`}>
                         Typically responds within 24–48 hours. Let&apos;s create something meaningful.
                     </p>
                 </div>

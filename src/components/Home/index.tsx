@@ -178,7 +178,7 @@ const Home = () => {
         );
     }
 
-    const highlightColor = isDarkTheme ? theme.highlightColor : theme.highlightColor;
+    const highlightColor = isDarkTheme ? theme.homeHighlightColor : theme.homeHighlightColor;
 
     const wordsToHighlight = [
         "secure", "scalable", "cloud", "infrastructure", "artificial", "intelligent"
@@ -217,14 +217,14 @@ const Home = () => {
                     key={index}
                     className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg transition-all duration-300 hover:scale-110"
                     style={{
-                        backgroundColor: isDarkTheme ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
-                        border: `1px solid ${isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
+                        backgroundColor: theme.homeTechIconBackground,
+                        border: theme.homeTechIconBorder,
                     }}
                 >
                     <Icon
                         icon={iconName}
                         className="w-5 h-5 sm:w-6 sm:h-6"
-                        style={{ color: theme.subtext }}
+                        style={{ color: theme.homeSubText }}
                     />
                 </div>
             );
@@ -271,14 +271,14 @@ const Home = () => {
                     <div className="space-y-4">
                         <h3
                             className="text-2xl sm:text-3xl lg:text-5xl font-bold leading-tight"
-                            style={{ color: theme.heroText }}
+                            style={{ color: theme.homeHeroText }}
                         >
                             {item.title}
                         </h3>
 
                         <p
                             className="text-base sm:text-xl leading-relaxed opacity-80"
-                            style={{ color: theme.subtext }}
+                            style={{ color: theme.homeSubText }}
                         >
                             {item.description}
                         </p>
@@ -295,11 +295,11 @@ const Home = () => {
                             <div key={pointIndex} className="flex items-start gap-3">
                                 <div
                                     className="w-1.5 h-1.5 rounded-full mt-2.5 flex-shrink-0"
-                                    style={{ backgroundColor: theme.highlightColor }}
+                                    style={{ backgroundColor: theme.homeHighlightColor }}
                                 />
                                 <p
                                     className="text-sm sm:text-lg leading-relaxed"
-                                    style={{ color: theme.subtext }}
+                                    style={{ color: theme.homeSubText }}
                                 >
                                     {point}
                                 </p>
@@ -326,7 +326,7 @@ const Home = () => {
                     <h1
                         ref={firstNameRef}
                         className="text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10"
-                        style={{ color: theme.heroText }}
+                        style={{ color: theme.homeHeroText }}
                     >
                         {firstName.split('').map((char, index) => (
                             <span key={`firstName-${index}`} className="inline-block" style={{ width: char === ' ' ? '1ch' : 'auto' }}>
@@ -337,7 +337,7 @@ const Home = () => {
                     <h1
                         ref={lastNameRef}
                         className="mb-10 text-7xl xs:text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] font-extrabold text-left select-none leading-none tracking-tight relative z-10 mt-2 xs:mt-4 sm:mt-6 md:mt-8 lg:mt-10 ml-8 xs:ml-12 sm:ml-16 md:ml-24 lg:ml-32 xl:ml-40 2xl:ml-48"
-                        style={{ color: theme.heroText }}
+                        style={{ color: theme.homeHeroText }}
                     >
                         {lastName.split('').map((char, index) => (
                             <span key={`lastName-${index}`} className="inline-block" style={{ width: char === ' ' ? '1ch' : 'auto' }}>
@@ -349,7 +349,7 @@ const Home = () => {
                 <p
                     ref={quoteRef}
                     className="mt-8 sm:mt-12 text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl text-center font-medium opacity-80 z-10 relative"
-                    style={{ color: theme.subtext }}
+                    style={{ color: theme.homeSubText }}
                 >
                     I don&apos;t just ship code - I architect engines that hum through chaos and scale with silence.
                 </p>
@@ -364,12 +364,12 @@ const Home = () => {
                 <div className="w-full max-w-[100vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
                     <div className="flex flex-col items-start">
                         {/* Top horizontal line */}
-                        <div className="mt-0 sm:mt-0 mb-30 sm:mb-6 w-full border-t border-gray-400 opacity-30"></div>
+                        <div className={`mt-0 sm:mt-0 mb-30 sm:mb-6 w-full border-t ${theme.homeSectionDivider}`}></div>
 
                         <div
                             ref={aboutHeadingRef}
                             className="text-lg sm:text-xl md:text-2xl font-semibold mt-15 text-left"
-                            style={{ color: theme.subtext }}
+                            style={{ color: theme.homeSubText }}
                         >
                             <div className="flex items-center justify-center space-x-4 pb-4">
                                 <span className="font-light text-5xl">{'{'}</span>
@@ -381,7 +381,7 @@ const Home = () => {
                         <h2
                             ref={aboutTextRef}
                             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light leading-tight tracking-tight text-left mb-10"
-                            style={{ color: theme.heroText }}
+                            style={{ color: theme.homeHeroText }}
                         >
                             <span className="block">
                                 {renderHighlightedText(
@@ -409,12 +409,12 @@ const Home = () => {
                 <div className="w-full max-w-[100vw] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
                     <div className="flex flex-col items-start mb-16 lg:mb-24">
                         {/* Top horizontal line */}
-                        <div className="w-full border-t border-gray-400 opacity-30 mb-8" />
+                        <div className={`w-full border-t ${theme.homeSectionDivider} opacity-30 mb-8`} />
 
                         <div
                             ref={servicesHeadingRef}
                             className="text-lg sm:text-xl md:text-2xl font-semibold mb-6 text-left"
-                            style={{ color: theme.subtext }}
+                            style={{ color: theme.homeSubText }}
                         >
                             <div className="flex items-center space-x-4">
                                 <span className="font-light text-5xl">{'{'}</span>

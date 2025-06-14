@@ -27,15 +27,15 @@ interface BentoCardProps {
 }
 
 const BentoCard = ({ children, className = '', style }: BentoCardProps) => {
-    const { colors } = useThemeColors();
+    const { colors: theme } = useThemeColors();
 
     return (
         <div
             className={`
-                ${colors.experienceBentoCard}
-                ${colors.experienceBentoBorder}
-                ${colors.experienceBentoHover}
-                ${colors.experienceBentoShadow}
+                ${theme.experienceBentoCard}
+                ${theme.experienceBentoBorder}
+                ${theme.experienceBentoHover}
+                ${theme.experienceBentoShadow}
                 backdrop-blur-md rounded-2xl
                 transition-all duration-300
                 ${className}
@@ -53,7 +53,7 @@ interface ExperienceGridProps {
 }
 
 const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
-    const { colors, isDarkTheme } = useThemeColors();
+    const { colors: theme, isDarkTheme } = useThemeColors();
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4">
@@ -76,12 +76,12 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
 
                         <BentoCard
                             className="flex flex-col justify-center items-center text-center"
-                            style={{ background: `${colors.card}` }}
+                            style={{ background: `${theme.experienceCard}` }}
                         >
-                            <h3 className={`text-sm font-medium ${colors.text} mb-1`}>
+                            <h3 className={`text-sm font-medium ${theme.experienceText} mb-1`}>
                                 {experience.company}
                             </h3>
-                            <p className={`text-xs ${colors.subtext}`}>{experience.period}</p>
+                            <p className={`text-xs ${theme.experienceSubText}`}>{experience.period}</p>
                         </BentoCard>
                     </div>
 
@@ -129,9 +129,9 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                     {/* Designation */}
                     <BentoCard
                         className="h-25 flex items-center justify-center"
-                        style={{ background: `${colors.card}` }}
+                        style={{ background: `${theme.experienceCard}` }}
                     >
-                        <h1 className={`text-xl font-light ${colors.text} text-center`}>
+                        <h1 className={`text-xl font-light ${theme.experienceText} text-center`}>
                             {experience.designation}
                         </h1>
                     </BentoCard>
@@ -139,7 +139,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                     {/* Tech Icons */}
                     <BentoCard
                         className="h-35 flex flex-col justify-center items-center"
-                        style={{ background: `${colors.card}` }}
+                        style={{ background: `${theme.experienceCard}` }}
                     >
                         <div></div>
                         <div className="flex flex-wrap justify-center items-center gap-4">
@@ -159,11 +159,11 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         <div className="space-y-6">
                             {experience.description.map((desc, descIndex) => (
                                 <div key={descIndex} className="relative group">
-                                    <p className={`text-sm md:text-base ${colors.descriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}>
+                                    <p className={`text-sm md:text-base ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}>
                                         <span className="mr-2 text-primary">✦</span>{desc}
                                     </p>
                                     <div
-                                        className={`mt-3 h-px w-full transition-all duration-300 ${colors.experienceDescriptionDivider}`}
+                                        className={`mt-3 h-px w-full transition-all duration-300 ${theme.experienceDescriptionDivider}`}
                                     />
                                 </div>
                             ))}
@@ -190,18 +190,18 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         {/* Company Name and Period */}
                         <BentoCard
                             className="col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
-                            style={{ background: `${colors.card}` }}
+                            style={{ background: `${theme.experienceCard}` }}
                         >
-                            <h3 className={`text-xl font-semibold ${colors.text} mb-2`}>
+                            <h3 className={`text-xl font-semibold ${theme.experienceText} mb-2`}>
                                 {experience.company}
                             </h3>
-                            <p className={`text-sm ${colors.subtext}`}>{experience.period}</p>
+                            <p className={`text-sm ${theme.experienceSubText}`}>{experience.period}</p>
                         </BentoCard>
 
                         {/* Mac Setup */}
                         <BentoCard
                             className="col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
-                            style={{ background: `${colors.card}` }}
+                            style={{ background: `${theme.experienceCard}` }}
                         >
                             <div className="relative w-full h-full">
                                 <Image
@@ -217,7 +217,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         {/* Icon */}
                         <BentoCard
                             className="col-span-4 row-span-4 flex flex-col justify-center items-center text-center"
-                            style={{ background: `${colors.card}` }}
+                            style={{ background: `${theme.experienceCard}` }}
                         >
                             <div className="flex flex-wrap justify-center items-center gap-4">
                                 {experience.technologies.map((tech, techIndex) => {
@@ -245,10 +245,10 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         {/* Designation */}
                         <BentoCard
                             className="col-span-6 row-span-3 flex items-center justify-center relative overflow-hidden"
-                            style={{ background: `${colors.card}` }}
+                            style={{ background: `${theme.experienceCard}` }}
                         >
                             <div className="relative z-10 text-center">
-                                <h1 className={`text-4xl font-light ${colors.text}`}>
+                                <h1 className={`text-4xl font-light ${theme.experienceText}`}>
                                     {experience.designation}
                                 </h1>
                             </div>
@@ -273,13 +273,13 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                                 {experience.description.map((desc, descIndex) => (
                                     <div key={descIndex} className="relative group">
                                         <p
-                                            className={`text-base ${colors.descriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}
+                                            className={`text-base ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}
                                         >
                                             <span className="mr-2 text-primary">✦</span>
                                             {desc}
                                         </p>
                                         <div
-                                            className={`mt-3 h-px w-full transition-all duration-300 ${colors.experienceDescriptionDivider}`}
+                                            className={`mt-3 h-px w-full transition-all duration-300 ${theme.experienceDescriptionDivider}`}
                                         />
                                     </div>
                                 ))}

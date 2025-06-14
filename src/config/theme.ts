@@ -1,30 +1,17 @@
 export interface ThemeColors {
+
+    // Common Styles
     background: string;
-    text: string;
-    subtext: string;
-    border: string;
-    card: string;
-    gradientOverlay: string;
-    button: string;
-    techBadge: string;
-    iconColor: string;
-    indexLine: string;
-    indexText: string;
-    pulseDot: string;
-    timeline: string;
-    timelineNode: string;
-    badgeBg: string;
-    patternBackground: string;
-    heroText: string;
-    descriptionText: string;
-    categoryText: string;
-    metaText: string;
-    linkText: string;
-    yearBadge: string;
-    linkButton: string;
-    cardPattern: string;
-    floatingElement: string;
-    // Experience-specific styles
+
+    // Home Page Styles
+    homeHighlightColor: string;
+    homeHeroText: string;
+    homeSubText: string;
+    homeTechIconBackground: string;
+    homeTechIconBorder: string;
+    homeSectionDivider: string;
+
+    // Experience Page Styles
     experienceBentoCard: string;
     experienceBentoBorder: string;
     experienceBentoHover: string;
@@ -33,8 +20,45 @@ export interface ThemeColors {
     experienceScrollbarTrack: string;
     experienceScrollbarThumb: string;
     experienceScrollbarThumbHover: string;
-    // Home Page Styles
-    highlightColor: string;
+    experienceCard: string;
+    experienceText: string;
+    experienceSubText: string;
+    experienceDescriptionText: string;
+
+    // Project Page Styles
+    projectPatternBackground: string;
+    projectIndexText: string;
+    projecHeroText: string;
+    projectCategoryText: string;
+    projectMetaText: string;
+    projectDescriptionText: string
+    projectLinkText: string;
+    projectLinkButton: string;
+    projectButton: string;
+    projectTechBadge: string;
+    projectCard: string;
+    projectCardPattern: string;
+    projectGradientOverlay: string;
+    projectYearBadge: string;
+
+    // Education Page Styles
+    educationText: string;
+    educationSubtext: string;
+    educationBorder: string;
+    educationTimeLine: string;
+    educationTimeLineNode: string;
+    educationCard: string,
+    educationBadgeBackground: string;
+
+    // Contact Page Styles
+    contactIcon: string;
+    contactText: string;
+    contactSubtext: string;
+    contactButton: string;
+    contactBorder: string;
+
+    // Solar System Styles
+    solarSystemSubtext: string;
 }
 
 export interface Theme {
@@ -46,32 +70,19 @@ export const themes: Record<string, Theme> = {
     light: {
         name: 'light',
         colors: {
+
+            // Common Styles
             background: 'bg-gradient-to-br from-[#fafafa] via-[#f5f5f5] to-[#efefef]',
-            text: 'text-gray-900',
-            subtext: 'text-gray-600',
-            border: 'border-gray-200',
-            card: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
-            gradientOverlay: 'bg-gradient-to-t from-white/20 via-transparent to-white/10',
-            button: 'bg-white/80 hover:bg-white text-gray-900 border border-gray-200',
-            techBadge: 'text-gray-800 bg-gray-100 border border-gray-300 hover:bg-gray-200',
-            iconColor: 'text-gray-400',
-            indexLine: 'bg-gray-300',
-            indexText: 'text-gray-500',
-            pulseDot: 'bg-gray-300/30',
-            timeline: 'bg-gray-200',
-            timelineNode: 'bg-gray-200',
-            badgeBg: 'bg-white',
-            patternBackground: 'modern-pattern-light',
-            heroText: 'text-gray-900',
-            descriptionText: 'text-gray-700',
-            categoryText: 'text-gray-600',
-            metaText: 'text-gray-500',
-            linkText: 'text-gray-500',
-            yearBadge: 'bg-white/90 text-gray-800 border border-gray-200/50',
-            linkButton: 'bg-white/80 hover:bg-white text-gray-700 border border-gray-200/50',
-            cardPattern: 'geometric-pattern-light',
-            floatingElement: 'bg-gray-400',
-            // Experience-specific styles
+
+            // Home Page Styles
+            homeHighlightColor: '#007BFF',
+            homeHeroText: 'text-gray-900',
+            homeSubText: 'text-gray-600',
+            homeTechIconBackground: 'rgba(0, 0, 0, 0.05)',
+            homeTechIconBorder: '1px solid rgba(0, 0, 0, 0.1)',
+            homeSectionDivider: 'border-gray-400/30',
+
+            // Experience Page Styles
             experienceBentoCard: 'bg-white/60',
             experienceBentoBorder: 'border border-[#e5e7eb]',
             experienceBentoHover: 'hover:bg-white/80 hover:border-[#d1d5db]',
@@ -80,39 +91,63 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(0, 0, 0, 0.2)',
             experienceScrollbarThumbHover: 'rgba(0, 0, 0, 0.3)',
-            // Home-Page Style
-            highlightColor: '#007BFF',
+            experienceCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
+            experienceText: 'text-gray-900',
+            experienceSubText: 'text-gray-600',
+            experienceDescriptionText: 'text-gray-700',
+
+            // Project Page Styles
+            projectPatternBackground: 'modern-pattern-light',
+            projectIndexText: 'bg-gray-300',
+            projecHeroText: 'text-gray-900',
+            projectCategoryText: 'text-gray-600',
+            projectMetaText: 'text-gray-500',
+            projectDescriptionText: 'text-gray-700',
+            projectButton: 'bg-white/80 hover:bg-white text-gray-900 border border-gray-200',
+            projectLinkText: 'text-gray-500',
+            projectLinkButton: 'bg-white/80 hover:bg-white text-gray-700 border border-gray-200/50',
+            projectTechBadge: 'text-gray-800 bg-gray-100 border border-gray-300 hover:bg-gray-200',
+            projectCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
+            projectCardPattern: 'geometric-pattern-light',
+            projectGradientOverlay: 'bg-gradient-to-t from-white/20 via-transparent to-white/10',
+            projectYearBadge: 'bg-white/90 text-gray-800 border border-gray-200/50',
+
+            // Education Page Styles
+            educationText: 'text-gray-900',
+            educationSubtext: 'text-gray-600',
+            educationBorder: 'border-gray-200',
+            educationTimeLine: 'bg-gray-200',
+            educationTimeLineNode: 'bg-gray-200',
+            educationCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
+            educationBadgeBackground: 'bg-white',
+
+            // Contact Page Styles
+            contactIcon: 'text-gray-400',
+            contactText: 'text-gray-900',
+            contactSubtext: 'text-gray-600',
+            contactButton: 'bg-white/80 hover:bg-white text-gray-900 border border-gray-200',
+            contactBorder: 'border-gray-200',
+
+            // Solar System Styles
+            solarSystemSubtext: 'text-gray-600',
         },
     },
     dark: {
         name: 'dark',
         colors: {
+
+            // Common Styles
             background: 'bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#0f0f0f]',
-            text: 'text-white',
-            subtext: 'text-white/60',
-            border: 'border-white/10',
-            card: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
-            gradientOverlay: 'bg-gradient-to-t from-black/30 via-transparent to-black/10',
-            button: 'bg-white/10 hover:bg-white/20 text-white border border-white/10',
-            techBadge: 'text-white/80 bg-white/10 border border-white/10 hover:bg-white/20',
-            iconColor: 'text-white/30',
-            indexLine: 'bg-white/20',
-            indexText: 'text-white/50',
-            pulseDot: 'bg-white/10',
-            timeline: 'bg-white/10',
-            timelineNode: 'bg-neutral-500 border-neutral-700',
-            badgeBg: 'bg-white',
-            patternBackground: 'modern-pattern-dark',
-            heroText: 'text-white',
-            descriptionText: 'text-white/80',
-            categoryText: 'text-white/70',
-            metaText: 'text-white/50',
-            linkText: 'text-white/50',
-            yearBadge: 'bg-white/[0.08] text-white/90 border border-white/10',
-            linkButton: 'bg-white/[0.08] hover:bg-white/[0.15] text-white/80 border border-white/10',
-            cardPattern: 'geometric-pattern-dark',
-            floatingElement: 'bg-white',
-            // Experience-specific styles
+
+            // Home Page Styles
+            homeHighlightColor: '#42f542',
+            homeHeroText: 'text-white',
+            homeSubText: 'text-white/60',
+            homeTechIconBackground: 'rgba(255, 255, 255, 0.05)',
+            homeTechIconBorder: '1px solid rgba(255, 255, 255, 0.1)',
+            homeSectionDivider: 'border-white/20',
+
+            // Experience Page Styles
             experienceBentoCard: 'bg-[#1c1c1e]/70',
             experienceBentoBorder: 'border border-[#2c2c2e]',
             experienceBentoHover: 'hover:bg-[#2a2a2c]/80 hover:border-[#3a3a3c]',
@@ -121,8 +156,46 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(255, 255, 255, 0.3)',
             experienceScrollbarThumbHover: 'rgba(255, 255, 255, 0.5)',
-            // Home-Page Style
-            highlightColor: '#42f542',
+            experienceCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
+            experienceText: 'text-white',
+            experienceSubText: 'text-white/60',
+            experienceDescriptionText: 'text-white/80',
+
+            // Project Page Styles
+            projectPatternBackground: 'modern-pattern-dark',
+            projectIndexText: 'text-white/50',
+            projecHeroText: 'text-white',
+            projectCategoryText: 'text-white/70',
+            projectMetaText: 'text-white/50',
+            projectDescriptionText: 'text-white/80',
+            projectButton: 'bg-white/10 hover:bg-white/20 text-white border border-white/10',
+            projectLinkText: 'text-white/50',
+            projectLinkButton: 'bg-white/[0.08] hover:bg-white/[0.15] text-white/80 border border-white/10',
+            projectTechBadge: 'text-white/80 bg-white/10 border border-white/10 hover:bg-white/20',
+            projectCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
+            projectCardPattern: 'geometric-pattern-dark',
+            projectGradientOverlay: 'bg-gradient-to-t from-black/30 via-transparent to-black/10',
+            projectYearBadge: 'bg-white/[0.08] text-white/90 border border-white/10',
+
+            // Education Page Styles
+            educationText: 'text-white',
+            educationSubtext: 'text-white/60',
+            educationBorder: 'border-white/10',
+            educationTimeLine: 'bg-white/10',
+            educationTimeLineNode: 'bg-neutral-500 border-neutral-700',
+            educationCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
+            educationBadgeBackground: 'bg-white',
+
+            // Contact Page Styles
+            contactIcon: 'text-white/30',
+            contactText: 'text-white',
+            contactSubtext: 'text-white/60',
+            contactButton: 'bg-white/10 hover:bg-white/20 text-white border border-white/10',
+            contactBorder: 'border-white/10',
+
+            // Solar System Styles
+            solarSystemSubtext: 'text-white/60',
+
         },
     },
 };
