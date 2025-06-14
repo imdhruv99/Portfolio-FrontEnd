@@ -26,7 +26,6 @@ export interface ThemeColors {
     yearBadge: string;
     linkButton: string;
     cardPattern: string;
-    floatingElement: string;
 
     // Home Page Styles
     highlightColor: string;
@@ -40,6 +39,22 @@ export interface ThemeColors {
     experienceScrollbarTrack: string;
     experienceScrollbarThumb: string;
     experienceScrollbarThumbHover: string;
+
+    // Project Page Styles
+    projectPatternBackground: string;
+    projectIndexText: string;
+    projecHeroText: string;
+    projectCategoryText: string;
+    projectMetaText: string;
+    projectDescriptionText: string
+    projectLinkText: string;
+    projectLinkButton: string;
+    projectButton: string;
+    projectTechBadge: string;
+    projectCard: string;
+    projectCardPattern: string;
+    projectGradientOverlay: string;
+    projectYearBadge: string;
 
     // Education Page Styles
     educationText: string;
@@ -94,7 +109,6 @@ export const themes: Record<string, Theme> = {
             yearBadge: 'bg-white/90 text-gray-800 border border-gray-200/50',
             linkButton: 'bg-white/80 hover:bg-white text-gray-700 border border-gray-200/50',
             cardPattern: 'geometric-pattern-light',
-            floatingElement: 'bg-gray-400',
 
             // Home Page Styles
             highlightColor: '#007BFF',
@@ -108,6 +122,22 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(0, 0, 0, 0.2)',
             experienceScrollbarThumbHover: 'rgba(0, 0, 0, 0.3)',
+
+            // Project Page Styles
+            projectPatternBackground: 'modern-pattern-light',
+            projectIndexText: 'bg-gray-300',
+            projecHeroText: 'text-gray-900',
+            projectCategoryText: 'text-gray-600',
+            projectMetaText: 'text-gray-500',
+            projectDescriptionText: 'text-gray-700',
+            projectButton: 'bg-white/80 hover:bg-white text-gray-900 border border-gray-200',
+            projectLinkText: 'text-gray-500',
+            projectLinkButton: 'bg-white/80 hover:bg-white text-gray-700 border border-gray-200/50',
+            projectTechBadge: 'text-gray-800 bg-gray-100 border border-gray-300 hover:bg-gray-200',
+            projectCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
+            projectCardPattern: 'geometric-pattern-light',
+            projectGradientOverlay: 'bg-gradient-to-t from-white/20 via-transparent to-white/10',
+            projectYearBadge: 'bg-white/90 text-gray-800 border border-gray-200/50',
 
             // Education Page Styles
             educationText: 'text-gray-900',
@@ -155,7 +185,6 @@ export const themes: Record<string, Theme> = {
             yearBadge: 'bg-white/[0.08] text-white/90 border border-white/10',
             linkButton: 'bg-white/[0.08] hover:bg-white/[0.15] text-white/80 border border-white/10',
             cardPattern: 'geometric-pattern-dark',
-            floatingElement: 'bg-white',
 
             // Home Page Styles
             highlightColor: '#42f542',
@@ -169,6 +198,22 @@ export const themes: Record<string, Theme> = {
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(255, 255, 255, 0.3)',
             experienceScrollbarThumbHover: 'rgba(255, 255, 255, 0.5)',
+
+            // Project Page Styles
+            projectPatternBackground: 'modern-pattern-dark',
+            projectIndexText: 'text-white/50',
+            projecHeroText: 'text-white',
+            projectCategoryText: 'text-white/70',
+            projectMetaText: 'text-white/50',
+            projectDescriptionText: 'text-white/80',
+            projectButton: 'bg-white/10 hover:bg-white/20 text-white border border-white/10',
+            projectLinkText: 'text-white/50',
+            projectLinkButton: 'bg-white/[0.08] hover:bg-white/[0.15] text-white/80 border border-white/10',
+            projectTechBadge: 'text-white/80 bg-white/10 border border-white/10 hover:bg-white/20',
+            projectCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
+            projectCardPattern: 'geometric-pattern-dark',
+            projectGradientOverlay: 'bg-gradient-to-t from-black/30 via-transparent to-black/10',
+            projectYearBadge: 'bg-white/[0.08] text-white/90 border border-white/10',
 
             // Education Page Styles
             educationText: 'text-white',
