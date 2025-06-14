@@ -9,6 +9,7 @@ import educationData from '../../constants/EducationData';
 import certificateData from '../../constants/CertificateData';
 
 import { useThemeColors } from '@/hooks/useThemeColors';
+import { fontClasses } from '@/config/fonts';
 
 
 if (typeof window !== 'undefined') {
@@ -194,7 +195,7 @@ const Education = () => {
                 {/* Main heading with more spacing */}
                 <h1
                     ref={headingRef}
-                    className={`text-4xl sm:text-5xl font-serif font-bold text-center tracking-tight leading-tight mb-16 ${theme.educationText}`}
+                    className={`${fontClasses.classyVogue} text-4xl sm:text-5xl font-serif font-bold text-center tracking-tight leading-tight mb-16 ${theme.educationText}`}
                 >
                     Scholarly Achievements
                 </h1>
@@ -207,7 +208,7 @@ const Education = () => {
                         ref={educationHeaderRef}
                         className={`${theme.educationBorder} pb-3 mb-16 text-center`}
                     >
-                        <h2 className={`text-3xl md:text-4xl font-serif font-bold ${theme.educationText}`}>
+                        <h2 className={`${fontClasses.classyVogue} text-3xl md:text-4xl font-serif font-bold ${theme.educationText}`}>
                             Academic Journey
                         </h2>
                     </div>
@@ -250,7 +251,7 @@ const Education = () => {
                         ref={certificationHeaderRef}
                         className={`${theme.educationBorder} pb-3 mb-16 text-center`}
                     >
-                        <h2 className={`text-3xl md:text-4xl font-serif font-bold ${theme.educationText}`}>
+                        <h2 className={`${fontClasses.classyVogue} text-3xl md:text-4xl font-serif font-bold ${theme.educationText}`}>
                             Professional Certifications
                         </h2>
                     </div>

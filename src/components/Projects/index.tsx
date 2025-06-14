@@ -11,6 +11,7 @@ import projectData from '@/constants/ProjectData';
 import NavigationDots from '../NavigationDots';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import techIconMap from '@/constants/TechIconMap';
+import { fontClasses } from '@/config/fonts';
 
 const requestDeviceMotionPermission = async (): Promise<boolean> => {
     if (
@@ -318,7 +319,7 @@ const Projects = () => {
                     ref={indexRef}
                     className={`absolute left-4 sm:left-8 top-8 sm:top-12 will-change-transform z-20`}
                 >
-                    <div className={`text-xs sm:text-sm font-mono tracking-[0.2em] ${theme.projectIndexText} opacity-60`}>
+                    <div className={`${fontClasses.classyVogue} text-xs sm:text-sm font-mono tracking-[0.2em] ${theme.projectIndexText} opacity-60`}>
                         {String(currentProject + 1).padStart(4, '0')}
                     </div>
                 </div>
@@ -371,7 +372,7 @@ const Projects = () => {
                             <div className="space-y-4 sm:space-y-6">
                                 {/* Project Title */}
                                 <div className="space-y-2 sm:space-y-3">
-                                    <h1 ref={titleRef} className={`text-4xl sm:text-6xl lg:text-8xl font-black tracking-tight ${theme.projecHeroText} leading-[0.85] break-words`}>
+                                    <h1 ref={titleRef} className={`${fontClasses.classyVogue} text-4xl sm:text-6xl lg:text-8xl font-black tracking-tight ${theme.projecHeroText} leading-[0.85] break-words`}>
                                         {projectToDisplay.title.toUpperCase()}
                                     </h1>
 

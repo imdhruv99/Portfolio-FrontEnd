@@ -13,6 +13,7 @@ const config = {
         extend: {
             fontFamily: {
                 times: ['"Times New Roman"', 'Times', 'serif'],
+                'classy-vogue': ['var(--font-classy-vogue)', 'serif'],
             },
             fontSize: {
                 '2xs': '0.625rem',

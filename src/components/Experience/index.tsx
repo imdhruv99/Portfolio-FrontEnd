@@ -9,6 +9,7 @@ import techIconMap from '@/constants/TechIconMap';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { getExperienceData } from '@/constants/ExperienceData';
 import NavigationDots from '../NavigationDots';
+import { fontClasses } from '@/config/fonts';
 
 interface ExperienceItem {
     id: number;
@@ -131,7 +132,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                         className="h-25 flex items-center justify-center"
                         style={{ background: `${theme.experienceCard}` }}
                     >
-                        <h1 className={`text-xl font-light ${theme.experienceText} text-center`}>
+                        <h1 className={`${fontClasses.classyVogue} text-xl font-light ${theme.experienceText} text-center`}>
                             {experience.designation}
                         </h1>
                     </BentoCard>
@@ -248,7 +249,7 @@ const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
                             style={{ background: `${theme.experienceCard}` }}
                         >
                             <div className="relative z-10 text-center">
-                                <h1 className={`text-4xl font-light ${theme.experienceText}`}>
+                                <h1 className={`${fontClasses.classyVogue} text-4xl font-light ${theme.experienceText}`}>
                                     {experience.designation}
                                 </h1>
                             </div>

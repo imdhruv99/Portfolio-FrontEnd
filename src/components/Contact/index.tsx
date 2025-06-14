@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { useThemeColors } from '@/hooks/useThemeColors';
+import { fontClasses } from '@/config/fonts';
 
 const Contact = () => {
     const { colors: theme, isDarkTheme, isLoading } = useThemeColors();
@@ -197,7 +198,7 @@ const Contact = () => {
                 <div className="md:w-1/2 text-center md:text-left">
                     <h1
                         ref={headingRef}
-                        className={`text-4xl sm:text-5xl font-serif font-bold mb-6 leading-tight ${theme.contactText}`}
+                        className={`${fontClasses.classyVogue} text-4xl sm:text-5xl font-serif font-bold mb-6 leading-tight ${theme.contactText}`}
                     >
                         Let&apos;s Have a Conversation
                     </h1>
