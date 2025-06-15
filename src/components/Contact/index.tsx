@@ -182,7 +182,9 @@ const Contact = () => {
                 {floatingIcons.map((icon, index) => (
                     <div
                         key={index}
-                        ref={(el) => (iconRefs.current[index] = el)}
+                        ref={(el) => {
+                            iconRefs.current[index] = el;
+                        }}
                         className={`absolute ${theme.contactIcon} transition-colors duration-500 will-change-transform`}
                         style={{
                             top: `${icon.y}%`,
