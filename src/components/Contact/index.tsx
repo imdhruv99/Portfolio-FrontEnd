@@ -31,23 +31,24 @@ const Contact = () => {
     const bgRef = useRef<HTMLDivElement | null>(null);
     const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-    const iconNames = [
-        'mdi:linkedin',
-        'mdi:github',
-        'mdi:instagram',
-        'mdi:facebook',
-        'mdi:twitter',
-        'mdi:dribbble',
-        'mdi:behance',
-        'mdi:youtube',
-        'mdi:reddit',
-        'mdi:snapchat',
-        'mdi:whatsapp',
-        'mdi:medium',
-        'mdi:discord',
-    ];
-
     useEffect(() => {
+
+        const iconNames = [
+            'mdi:linkedin',
+            'mdi:github',
+            'mdi:instagram',
+            'mdi:facebook',
+            'mdi:twitter',
+            'mdi:dribbble',
+            'mdi:behance',
+            'mdi:youtube',
+            'mdi:reddit',
+            'mdi:snapchat',
+            'mdi:whatsapp',
+            'mdi:medium',
+            'mdi:discord',
+        ];
+
         setMounted(true);
 
         // Generate floating icons only once
@@ -123,28 +124,30 @@ const Contact = () => {
 
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-        if (headingRef.current && paraRef.current) {
+        if (headingRef.current && paraRef.current && formRef.current) {
             tl.fromTo(
                 headingRef.current,
                 { y: 40, opacity: 0 },
                 { y: 0, opacity: 1, duration: 1 },
-            ).fromTo(
+                0,
+            );
+
+            tl.fromTo(
                 paraRef.current,
                 { y: 20, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.8 },
-                '-=0.5',
+                0,
             );
-        }
 
-        if (formRef.current) {
             tl.fromTo(
                 formRef.current,
                 { y: 30, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.8 },
-                '-=0.3',
+                0,
             );
         }
 
+        // Animate floating icons as before
         if (validIcons.length > 0) {
             validIcons.forEach((icon) => {
                 if (!icon) return;
@@ -185,7 +188,6 @@ const Contact = () => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Simulate form submission
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         // Reset form
@@ -197,8 +199,6 @@ const Contact = () => {
         });
         setIsSubmitting(false);
 
-        // You can add your actual form submission logic here
-        console.log('Form submitted:', formData);
     };
 
     if (!mounted || isLoading) {
@@ -268,7 +268,7 @@ const Contact = () => {
                             {/* Name and Email Row */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div className="group">
-                                    <label className={`block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
+                                    <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
                                         Full Name
                                     </label>
                                     <input
@@ -277,13 +277,13 @@ const Contact = () => {
                                         value={formData.name}
                                         onChange={handleInputChange}
                                         required
-                                        className={`w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 placeholder:${theme.contactFormPlaceholder}`}
+                                        className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 placeholder:${theme.contactFormPlaceholder}`}
                                         placeholder="Enter your name"
                                     />
                                 </div>
 
                                 <div className="group">
-                                    <label className={`block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
+                                    <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
                                         Email Address
                                     </label>
                                     <input
@@ -292,7 +292,7 @@ const Contact = () => {
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         required
-                                        className={`w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 placeholder:${theme.contactFormPlaceholder}`}
+                                        className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 placeholder:${theme.contactFormPlaceholder}`}
                                         placeholder="Enter your email"
                                     />
                                 </div>
@@ -300,7 +300,7 @@ const Contact = () => {
 
                             {/* Subject */}
                             <div className="group">
-                                <label className={`block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
+                                <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
                                     Subject
                                 </label>
                                 <input
@@ -309,14 +309,14 @@ const Contact = () => {
                                     value={formData.subject}
                                     onChange={handleInputChange}
                                     required
-                                    className={`w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 placeholder:${theme.contactFormPlaceholder}`}
+                                    className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 placeholder:${theme.contactFormPlaceholder}`}
                                     placeholder="What's this about?"
                                 />
                             </div>
 
                             {/* Message */}
                             <div className="group">
-                                <label className={`block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
+                                <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
                                     Message
                                 </label>
                                 <textarea
@@ -325,7 +325,7 @@ const Contact = () => {
                                     onChange={handleInputChange}
                                     required
                                     rows={6}
-                                    className={`w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 resize-none placeholder:${theme.contactFormPlaceholder}`}
+                                    className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 resize-none placeholder:${theme.contactFormPlaceholder}`}
                                     placeholder="Tell me about your project, idea, or just say hello..."
                                 />
                             </div>
@@ -338,7 +338,7 @@ const Contact = () => {
                                     className={`group relative w-full sm:w-auto px-12 py-4 ${theme.contactFormButton} ${theme.contactFormButtonHover} backdrop-blur-sm rounded-xl font-medium transition-all duration-300 transform ${isSubmitting ? 'scale-95 opacity-75' : 'hover:scale-[1.02] hover:shadow-xl'
                                         } focus:outline-none focus:ring-2 ${theme.contactFormButtonFocus} disabled:cursor-not-allowed`}
                                 >
-                                    <span className={`flex items-center justify-center gap-3 ${theme.contactFormButtonText}`}>
+                                    <span className={`${fontClasses.eireneSansBold} flex items-center justify-center gap-3 ${theme.contactFormButtonText}`}>
                                         {isSubmitting ? (
                                             <>
                                                 <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
