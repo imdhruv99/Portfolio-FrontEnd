@@ -21,7 +21,6 @@ const Education = () => {
     const [mounted, setMounted] = useState(false);
     const sectionRef = useRef<HTMLDivElement | null>(null);
     const headingRef = useRef<HTMLHeadingElement | null>(null);
-    const quoteRef = useRef<HTMLDivElement | null>(null);
     const educationHeaderRef = useRef<HTMLDivElement | null>(null);
     const certificationHeaderRef = useRef<HTMLDivElement | null>(null);
     const timelineRef = useRef<HTMLDivElement | null>(null);
@@ -45,13 +44,6 @@ const Education = () => {
                 headingRef.current,
                 { y: 50, opacity: 0 },
                 { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }
-            );
-
-            // Quote animation
-            gsap.fromTo(
-                quoteRef.current,
-                { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, delay: 0.3, ease: "power2.out" }
             );
 
             // Education header animation
