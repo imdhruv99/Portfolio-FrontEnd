@@ -12,7 +12,6 @@ const Contact = () => {
     const sectionRef = useRef<HTMLDivElement | null>(null);
     const headingRef = useRef<HTMLHeadingElement | null>(null);
     const paraRef = useRef<HTMLParagraphElement | null>(null);
-    const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([]);
     const bgRef = useRef<HTMLDivElement | null>(null);
     const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -23,15 +22,21 @@ const Contact = () => {
     useLayoutEffect(() => {
         if (!mounted) return;
 
-        const validButtons = buttonRefs.current.filter(Boolean);
         const validIcons = iconRefs.current.filter(Boolean);
 
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
         if (headingRef.current && paraRef.current) {
-            tl.fromTo(headingRef.current, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1 })
-                .fromTo(paraRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.5')
-                .fromTo(validButtons, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15 }, '-=0.4');
+            tl.fromTo(
+                headingRef.current,
+                { y: 40, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1 },
+            ).fromTo(
+                paraRef.current,
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8 },
+                '-=0.5',
+            );
         }
 
         if (validIcons.length > 0) {
@@ -61,26 +66,6 @@ const Contact = () => {
             gsap.killTweensOf(validIcons);
         };
     }, [mounted]);
-
-    if (!mounted || isLoading) return null;
-
-    const contacts = [
-        {
-            label: 'LinkedIn',
-            link: 'https://linkedin.com/in/imdhruv99',
-            icon: 'mdi:linkedin',
-        },
-        {
-            label: 'Email',
-            link: 'mailto:dhruvprajapati.work@gmail.com',
-            icon: 'mdi:email',
-        },
-        {
-            label: 'GitHub',
-            link: 'https://github.com/imdhruv99',
-            icon: 'mdi:github',
-        },
-    ];
 
     const iconNames = [
         'mdi:linkedin',
@@ -147,7 +132,9 @@ const Contact = () => {
                         icon={iconNames[iconIndex]}
                         width={sizes[sizeIndex]}
                         height={sizes[sizeIndex]}
-                        className={isDarkTheme ? 'brightness-125' : 'brightness-90'}
+                        className={
+                            isDarkTheme ? 'brightness-125' : 'brightness-90'
+                        }
                     />
                 ),
                 x,
@@ -160,7 +147,7 @@ const Contact = () => {
 
     const floatingIcons = generateFloatingIcons();
 
-    if (isLoading) {
+    if (!mounted || isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
@@ -174,11 +161,16 @@ const Contact = () => {
             className={`relative w-full min-h-screen ${theme.background} transition-colors duration-500 flex items-center justify-center px-6 overflow-hidden`}
         >
             {/* Floating Icons */}
-            <div ref={bgRef} className="fixed inset-0 overflow-hidden pointer-events-none">
+            <div
+                ref={bgRef}
+                className="fixed inset-0 overflow-hidden pointer-events-none"
+            >
                 {floatingIcons.map((icon, index) => (
                     <div
                         key={index}
-                        ref={(el) => { iconRefs.current[index] = el; }}
+                        ref={(el) => {
+                            iconRefs.current[index] = el;
+                        }}
                         className={`absolute ${theme.contactIcon} transition-colors duration-500`}
                         style={{
                             top: `${icon.y}%`,
@@ -206,28 +198,14 @@ const Contact = () => {
                         ref={paraRef}
                         className={`${fontClasses.eireneSans} text-lg sm:text-xl font-light ${theme.contactSubtext}`}
                     >
-                        I value genuine connections and creative discussions. Whether it&apos;s collaboration, mentorship, or curiosity — feel free to reach out.
+                        I value genuine connections and creative discussions.
+                        Whether it&apos;s collaboration, mentorship, or
+                        curiosity — feel free to reach out.
                     </p>
                 </div>
 
                 <div className="md:w-1/2 w-full flex flex-col gap-5 items-center md:items-start">
-                    {contacts.map((contact, index) => (
-                        <a
-                            key={index}
-                            href={contact.link}
-                            ref={(el) => {
-                                buttonRefs.current[index] = el;
-                            }}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`group flex justify-center items-center w-64 px-6 py-4 rounded-full transition-all duration-300 ${theme.contactButton} border ${theme.contactBorder} shadow-sm hover:scale-105`}
-                        >
-                            <div className="flex items-center gap-3">
-                                <Icon icon={contact.icon} width={22} height={22} />
-                                <span className="font-medium text-sm tracking-wide">{contact.label}</span>
-                            </div>
-                        </a>
-                    ))}
+                    {/* Add form here */}
                 </div>
             </div>
         </section>
