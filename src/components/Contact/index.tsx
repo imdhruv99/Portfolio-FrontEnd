@@ -31,27 +31,18 @@ const Contact = () => {
     const bgRef = useRef<HTMLDivElement | null>(null);
     const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
+        setMounted(true);
+    }, []);
 
+    useEffect(() => {
         const iconNames = [
-            'mdi:linkedin',
-            'mdi:github',
-            'mdi:instagram',
-            'mdi:facebook',
-            'mdi:twitter',
-            'mdi:dribbble',
-            'mdi:behance',
-            'mdi:youtube',
-            'mdi:reddit',
-            'mdi:snapchat',
-            'mdi:whatsapp',
-            'mdi:medium',
-            'mdi:discord',
+            'mdi:linkedin', 'mdi:github', 'mdi:instagram', 'mdi:facebook',
+            'mdi:twitter', 'mdi:dribbble', 'mdi:behance', 'mdi:youtube',
+            'mdi:reddit', 'mdi:snapchat', 'mdi:whatsapp', 'mdi:medium',
+            'mdi:discord'
         ];
 
-        setMounted(true);
-
-        // Generate floating icons only once
         const generateFloatingIcons = () => {
             const icons = [];
             const sizes = [16, 20, 24, 28];
@@ -59,7 +50,7 @@ const Contact = () => {
             const positionedIcons = [];
             const minDistance = 150;
 
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 20; i++) {
                 let iconIndex, sizeIndex, combination;
                 let x, y;
                 let validPosition = false;
@@ -81,8 +72,8 @@ const Contact = () => {
                     validPosition = true;
 
                     for (const pos of positionedIcons) {
-                        const dx = Math.abs(pos.x - x);
-                        const dy = Math.abs(pos.y - y);
+                        const dx = pos.x - x;
+                        const dy = pos.y - y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
                         if (distance < minDistance / 10) {
                             validPosition = false;
@@ -101,9 +92,7 @@ const Contact = () => {
                             icon={iconNames[iconIndex]}
                             width={sizes[sizeIndex]}
                             height={sizes[sizeIndex]}
-                            className={
-                                isDarkTheme ? 'brightness-125' : 'brightness-90'
-                            }
+                            className={isDarkTheme ? 'brightness-125' : 'brightness-90'}
                         />
                     ),
                     x,
@@ -122,32 +111,15 @@ const Contact = () => {
 
         const validIcons = iconRefs.current.filter(Boolean);
 
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        const textTimeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
         if (headingRef.current && paraRef.current && formRef.current) {
-            tl.fromTo(
-                headingRef.current,
-                { y: 40, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1 },
-                0,
-            );
-
-            tl.fromTo(
-                paraRef.current,
-                { y: 20, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8 },
-                0,
-            );
-
-            tl.fromTo(
-                formRef.current,
-                { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8 },
-                0,
-            );
+            textTimeline
+                .fromTo(headingRef.current, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, 0)
+                .fromTo(paraRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.1)
+                .fromTo(formRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, 0.2);
         }
 
-        // Animate floating icons as before
         if (validIcons.length > 0) {
             validIcons.forEach((icon) => {
                 if (!icon) return;
@@ -178,27 +150,15 @@ const Contact = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-
         await new Promise(resolve => setTimeout(resolve, 2000));
-
-        // Reset form
-        setFormData({
-            name: '',
-            email: '',
-            subject: '',
-            message: ''
-        });
+        setFormData({ name: '', email: '', subject: '', message: '' });
         setIsSubmitting(false);
-
     };
 
     if (!mounted || isLoading) {
@@ -222,10 +182,8 @@ const Contact = () => {
                 {floatingIcons.map((icon, index) => (
                     <div
                         key={index}
-                        ref={(el) => {
-                            iconRefs.current[index] = el;
-                        }}
-                        className={`absolute ${theme.contactIcon} transition-colors duration-500`}
+                        ref={(el) => (iconRefs.current[index] = el)}
+                        className={`absolute ${theme.contactIcon} transition-colors duration-500 will-change-transform`}
                         style={{
                             top: `${icon.y}%`,
                             left: `${icon.x}%`,
@@ -244,13 +202,13 @@ const Contact = () => {
                 <div className="lg:w-2/5 text-center lg:text-left">
                     <h1
                         ref={headingRef}
-                        className={`${fontClasses.classyVogue} text-4xl sm:text-5xl lg:text-6xl font-serif font-bold mb-8 leading-tight ${theme.contactText}`}
+                        className={`${fontClasses.classyVogue} text-4xl sm:text-5xl lg:text-6xl font-serif font-bold mb-8 leading-tight ${theme.contactText} will-change-transform`}
                     >
                         Let&apos;s Have a Conversation
                     </h1>
                     <p
                         ref={paraRef}
-                        className={`${fontClasses.eireneSans} text-lg sm:text-xl font-light leading-relaxed ${theme.contactSubtext}`}
+                        className={`${fontClasses.eireneSans} text-lg sm:text-xl font-light leading-relaxed ${theme.contactSubtext} will-change-transform`}
                     >
                         I value genuine connections and creative discussions.
                         Whether it&apos;s collaboration, mentorship, or
@@ -262,13 +220,12 @@ const Contact = () => {
                     <form
                         ref={formRef}
                         onSubmit={handleSubmit}
-                        className={`${theme.contactFormBackground} ${theme.contactBorder} backdrop-blur-xl rounded-3xl p-8 sm:p-10 shadow-2xl transition-all duration-300`}
+                        className={`${theme.contactFormBackground} ${theme.contactBorder} backdrop-blur-sm rounded-3xl p-8 sm:p-10 shadow-2xl transition-all duration-300 will-change-transform`}
                     >
                         <div className="space-y-8">
-                            {/* Name and Email Row */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div className="group">
-                                    <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
+                                    <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel}`}>
                                         Full Name
                                     </label>
                                     <input
@@ -277,13 +234,13 @@ const Contact = () => {
                                         value={formData.name}
                                         onChange={handleInputChange}
                                         required
-                                        className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 placeholder:${theme.contactFormPlaceholder}`}
+                                        className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} placeholder:${theme.contactFormPlaceholder}`}
                                         placeholder="Enter your name"
                                     />
                                 </div>
 
                                 <div className="group">
-                                    <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
+                                    <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel}`}>
                                         Email Address
                                     </label>
                                     <input
@@ -292,15 +249,14 @@ const Contact = () => {
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         required
-                                        className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 placeholder:${theme.contactFormPlaceholder}`}
+                                        className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} placeholder:${theme.contactFormPlaceholder}`}
                                         placeholder="Enter your email"
                                     />
                                 </div>
                             </div>
 
-                            {/* Subject */}
                             <div className="group">
-                                <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
+                                <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel}`}>
                                     Subject
                                 </label>
                                 <input
@@ -309,14 +265,13 @@ const Contact = () => {
                                     value={formData.subject}
                                     onChange={handleInputChange}
                                     required
-                                    className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 placeholder:${theme.contactFormPlaceholder}`}
+                                    className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} placeholder:${theme.contactFormPlaceholder}`}
                                     placeholder="What's this about?"
                                 />
                             </div>
 
-                            {/* Message */}
                             <div className="group">
-                                <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel} transition-colors duration-200`}>
+                                <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel}`}>
                                     Message
                                 </label>
                                 <textarea
@@ -325,18 +280,16 @@ const Contact = () => {
                                     onChange={handleInputChange}
                                     required
                                     rows={6}
-                                    className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} transition-all duration-300 resize-none placeholder:${theme.contactFormPlaceholder}`}
+                                    className={`${fontClasses.eireneSans} w-full px-5 py-4 ${theme.contactFormInput} ${theme.contactFormInputBorder} backdrop-blur-sm rounded-xl focus:outline-none focus:ring-2 ${theme.contactFormInputFocus} resize-none placeholder:${theme.contactFormPlaceholder}`}
                                     placeholder="Tell me about your project, idea, or just say hello..."
                                 />
                             </div>
 
-                            {/* Submit Button */}
                             <div className="pt-4">
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className={`group relative w-full sm:w-auto px-12 py-4 ${theme.contactFormButton} ${theme.contactFormButtonHover} backdrop-blur-sm rounded-xl font-medium transition-all duration-300 transform ${isSubmitting ? 'scale-95 opacity-75' : 'hover:scale-[1.02] hover:shadow-xl'
-                                        } focus:outline-none focus:ring-2 ${theme.contactFormButtonFocus} disabled:cursor-not-allowed`}
+                                    className={`group relative w-full sm:w-auto px-12 py-4 ${theme.contactFormButton} ${theme.contactFormButtonHover} backdrop-blur-sm rounded-xl font-medium transition-all duration-300 transform ${isSubmitting ? 'scale-95 opacity-75' : 'hover:scale-[1.02] hover:shadow-xl'} focus:outline-none focus:ring-2 ${theme.contactFormButtonFocus} disabled:cursor-not-allowed`}
                                 >
                                     <span className={`${fontClasses.eireneSansBold} flex items-center justify-center gap-3 ${theme.contactFormButtonText}`}>
                                         {isSubmitting ? (
