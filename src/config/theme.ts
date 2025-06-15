@@ -56,6 +56,16 @@ export interface ThemeColors {
     contactSubtext: string;
     contactButton: string;
     contactBorder: string;
+    contactFormBackground: string;
+    contactFormLabel: string;
+    contactFormInput: string;
+    contactFormInputBorder: string;
+    contactFormInputFocus: string;
+    contactFormPlaceholder: string;
+    contactFormButton: string;
+    contactFormButtonHover: string;
+    contactFormButtonFocus: string;
+    contactFormButtonText: string;
 
     // Solar System Styles
     solarSystemSubtext: string;
@@ -127,6 +137,16 @@ export const themes: Record<string, Theme> = {
             contactSubtext: 'text-gray-600',
             contactButton: 'bg-white/80 hover:bg-white text-gray-900 border border-gray-200',
             contactBorder: 'border-gray-200',
+            contactFormBackground: 'bg-white/40 border border-white/60',
+            contactFormLabel: 'text-gray-700',
+            contactFormInput: 'bg-white/50 text-gray-900',
+            contactFormInputBorder: 'border border-gray-200/50',
+            contactFormInputFocus: 'focus:border-gray-400 focus:ring-gray-300/50',
+            contactFormPlaceholder: 'text-gray-400',
+            contactFormButton: 'bg-gray-900 text-white',
+            contactFormButtonHover: 'hover:bg-gray-800',
+            contactFormButtonFocus: 'focus:ring-gray-300',
+            contactFormButtonText: 'text-white',
 
             // Solar System Styles
             solarSystemSubtext: 'text-gray-600',
@@ -192,6 +212,16 @@ export const themes: Record<string, Theme> = {
             contactSubtext: 'text-white/60',
             contactButton: 'bg-white/10 hover:bg-white/20 text-white border border-white/10',
             contactBorder: 'border-white/10',
+            contactFormBackground: 'bg-white/5 border border-white/10',
+            contactFormLabel: 'text-white/80',
+            contactFormInput: 'bg-white/5 text-white',
+            contactFormInputBorder: 'border border-white/20',
+            contactFormInputFocus: 'focus:border-white/40 focus:ring-white/20',
+            contactFormPlaceholder: 'text-white/40',
+            contactFormButton: 'bg-white text-black',
+            contactFormButtonHover: 'hover:bg-white/90',
+            contactFormButtonFocus: 'focus:ring-white/30',
+            contactFormButtonText: 'text-black',
 
             // Solar System Styles
             solarSystemSubtext: 'text-white/60',
