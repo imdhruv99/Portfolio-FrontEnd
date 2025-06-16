@@ -16,8 +16,8 @@ type NavItem = {
 const navItems: NavItem[] = [
     { id: 'home', label: 'Home', icon: 'mdi:home-outline', path: '/' },
     { id: 'experience', label: 'Experience', icon: 'mdi:briefcase-outline', path: '/experience' },
-    { id: 'education', label: 'Education', icon: 'mdi:school-outline', path: '/education' },
     { id: 'projects', label: 'Projects', icon: 'mdi:lightbulb-outline', path: '/projects' },
+    { id: 'education', label: 'Education', icon: 'mdi:school-outline', path: '/education' },
     { id: 'contact', label: 'Contact', icon: 'mdi:account-circle-outline', path: '/contact' },
     { id: 'separator-1', label: 'separator-1', type: 'separator', icon: null, path: null },
     { id: 'github', label: 'Github', icon: 'mdi:github', path: 'https://github.com/imdhruv99' },
