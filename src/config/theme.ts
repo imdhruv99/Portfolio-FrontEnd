@@ -49,6 +49,7 @@ export interface ThemeColors {
     educationTimeLineNode: string;
     educationCard: string,
     educationBadgeBackground: string;
+    educationCertVerifyLink: string;
 
     // Contact Page Styles
     contactIcon: string;
@@ -136,6 +137,7 @@ export const themes: Record<string, Theme> = {
             educationTimeLineNode: 'bg-gray-200',
             educationCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
             educationBadgeBackground: 'bg-white',
+            educationCertVerifyLink: 'text-blue-600 hover:text-blue-800',
 
             // Contact Page Styles
             contactIcon: 'text-gray-400',
@@ -218,6 +220,7 @@ export const themes: Record<string, Theme> = {
             educationTimeLineNode: 'bg-neutral-500 border-neutral-700',
             educationCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
             educationBadgeBackground: 'bg-white',
+            educationCertVerifyLink: 'text-blue-400 hover:text-blue-300',
 
             // Contact Page Styles
             contactIcon: 'text-white/30',

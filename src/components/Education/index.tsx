@@ -322,7 +322,7 @@ const Education = () => {
                                             href={cert.credentialUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className={`${fontClasses.eireneSans} text-xs ${isDarkTheme ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'} hover:underline transition-colors duration-300`}
+                                            className={`${fontClasses.eireneSans} text-xs ${theme.educationCertVerifyLink} hover:underline transition-colors duration-300`}
                                         >
                                             Verify →
                                         </a>

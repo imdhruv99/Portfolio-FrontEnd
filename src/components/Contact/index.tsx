@@ -342,7 +342,7 @@ const Contact = () => {
                                 >
                                     {getStatusIcon()}
                                     <span
-                                        className={`text-sm ${formStatus === 'success'
+                                        className={`${fontClasses.eireneSans} text-sm ${formStatus === 'success'
                                             ? theme.contactSuccessText
                                             : theme.contactErrorText
                                             }`}
