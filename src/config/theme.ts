@@ -49,6 +49,7 @@ export interface ThemeColors {
     educationTimeLineNode: string;
     educationCard: string,
     educationBadgeBackground: string;
+    educationCertVerifyLink: string;
 
     // Contact Page Styles
     contactIcon: string;
@@ -56,6 +57,22 @@ export interface ThemeColors {
     contactSubtext: string;
     contactButton: string;
     contactBorder: string;
+    contactFormBackground: string;
+    contactFormLabel: string;
+    contactFormInput: string;
+    contactFormInputBorder: string;
+    contactFormInputFocus: string;
+    contactFormPlaceholder: string;
+    contactFormButton: string;
+    contactFormButtonHover: string;
+    contactFormButtonFocus: string;
+    contactFormButtonText: string;
+    contactSuccessBackground: string;
+    contactSuccessBorder: string;
+    contactSuccessText: string;
+    contactErrorBackground: string;
+    contactErrorBorder: string;
+    contactErrorText: string;
 
     // Solar System Styles
     solarSystemSubtext: string;
@@ -120,6 +137,7 @@ export const themes: Record<string, Theme> = {
             educationTimeLineNode: 'bg-gray-200',
             educationCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
             educationBadgeBackground: 'bg-white',
+            educationCertVerifyLink: 'text-blue-600 hover:text-blue-800',
 
             // Contact Page Styles
             contactIcon: 'text-gray-400',
@@ -127,6 +145,23 @@ export const themes: Record<string, Theme> = {
             contactSubtext: 'text-gray-600',
             contactButton: 'bg-white/80 hover:bg-white text-gray-900 border border-gray-200',
             contactBorder: 'border-gray-200',
+            contactFormBackground: 'bg-white/40 border border-white/60',
+            contactFormLabel: 'text-gray-700',
+            contactFormInput: 'bg-white/50 text-gray-900',
+            contactFormInputBorder: 'border border-gray-200/50',
+            contactFormInputFocus: 'focus:border-gray-400 focus:ring-gray-300/50',
+            contactFormPlaceholder: 'text-gray-400',
+            contactFormButton: 'bg-gray-900 text-white',
+            contactFormButtonHover: 'hover:bg-gray-800',
+            contactFormButtonFocus: 'focus:ring-gray-300',
+            contactFormButtonText: 'text-white',
+            contactSuccessBackground: 'bg-green-50',
+            contactSuccessBorder: 'border border-green-200',
+            contactSuccessText: 'text-green-600',
+            contactErrorBackground: 'bg-red-50',
+            contactErrorBorder: 'border border-red-200',
+            contactErrorText: 'text-red-600',
+
 
             // Solar System Styles
             solarSystemSubtext: 'text-gray-600',
@@ -185,6 +220,7 @@ export const themes: Record<string, Theme> = {
             educationTimeLineNode: 'bg-neutral-500 border-neutral-700',
             educationCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
             educationBadgeBackground: 'bg-white',
+            educationCertVerifyLink: 'text-blue-400 hover:text-blue-300',
 
             // Contact Page Styles
             contactIcon: 'text-white/30',
@@ -192,6 +228,23 @@ export const themes: Record<string, Theme> = {
             contactSubtext: 'text-white/60',
             contactButton: 'bg-white/10 hover:bg-white/20 text-white border border-white/10',
             contactBorder: 'border-white/10',
+            contactFormBackground: 'bg-white/5 border border-white/10',
+            contactFormLabel: 'text-white/80',
+            contactFormInput: 'bg-white/5 text-white',
+            contactFormInputBorder: 'border border-white/20',
+            contactFormInputFocus: 'focus:border-white/40 focus:ring-white/20',
+            contactFormPlaceholder: 'text-white/40',
+            contactFormButton: 'bg-white text-black',
+            contactFormButtonHover: 'hover:bg-white/90',
+            contactFormButtonFocus: 'focus:ring-white/30',
+            contactFormButtonText: 'text-black',
+            contactSuccessBackground: 'bg-green-900/20',
+            contactSuccessBorder: 'border border-green-800',
+            contactSuccessText: 'text-green-400',
+            contactErrorBackground: 'bg-red-900/20',
+            contactErrorBorder: 'border border-red-800',
+            contactErrorText: 'text-red-400',
+
 
             // Solar System Styles
             solarSystemSubtext: 'text-white/60',
