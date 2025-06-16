@@ -44,7 +44,7 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
         overlayRef.current.style.height = '100vh';
         overlayRef.current.style.pointerEvents = 'none';
         overlayRef.current.style.zIndex = '9998';
-        overlayRef.current.style.overflow = 'hidden';
+        overlayRef.current.style.overflow = 'hidden'; // Hide overflow
 
         // Create and append squares
         for (let i = 0; i < totalSquares; i++) {
@@ -68,7 +68,6 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
     }, [initializeSquares]);
 
     useEffect(() => {
-
         if (pathname === previousPathname.current || isTransitioning) {
             previousPathname.current = pathname;
             if (!isTransitioning) {
@@ -94,7 +93,8 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
                     stagger: {
                         amount: 0.5,
                         grid: 'auto',
-                        from: 'random',
+                        from: 'end',
+                        each: 0.02,
                     },
                     onComplete: () => {
                         setIsTransitioning(false);
@@ -107,14 +107,14 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
             opacity: 1,
             scale: 1,
             ease: 'power3.inOut',
-            duration: 0.5,
+            duration: 0.8,
             stagger: {
                 amount: 0.5,
                 grid: 'auto',
-                from: 'random',
+                from: 'end',
+                each: 0.03,
             },
         });
-
     }, [pathname, children, isTransitioning, initializeSquares]);
 
     return (
