@@ -1,11 +1,9 @@
-// src/components/Navbar/index.tsx
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Icon } from '@iconify/react';
-import { useRouter } from 'next/navigation';
-import { usePageTransition } from '@/components/PageTransition';
 
 type NavItem = {
     id: string;
@@ -40,9 +38,6 @@ const Navbar = () => {
     const [isMounted, setIsMounted] = useState(false);
     const [mobileView, setMobileView] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
-
-    const router = useRouter(); // Initialize useRouter
-    const { startTransition } = usePageTransition(); // Use the page transition hook
 
     useEffect(() => {
         setIsMounted(true);
@@ -107,15 +102,8 @@ const Navbar = () => {
     };
 
     const handleNavigation = (path: string | null) => {
-        if (path) {
-            if (path.startsWith('http')) {
-                window.open(path, '_blank');
-            } else {
-                // Trigger the page transition animation
-                startTransition(() => {
-                    router.push(path); // Navigate after animation
-                });
-            }
+        if (path && path.startsWith('http')) {
+            window.open(path, '_blank');
         }
     };
 
@@ -131,7 +119,7 @@ const Navbar = () => {
     if (!isMounted) return null;
 
     return (
-        <div className="fixed bottom-2 sm:bottom-3 lg:bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-[95%]">
+        <div className="fixed bottom-2 sm:bottom-3 lg:bottom-6 left-1/2 transform -translate-x-1/2 z-10000 w-auto max-w-[95%]">
             <nav
                 ref={navRef}
                 className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-1.5 lg:gap-2'} p-1 sm:p-1.5 lg:p-3 rounded-full theme-transition ${isDarkTheme
@@ -173,12 +161,9 @@ const Navbar = () => {
                             }
                         >
                             {item.path && !item.path.startsWith('http') ? (
-                                <div
+                                <Link
+                                    href={item.path}
                                     className="flex items-center justify-center w-full h-full"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        handleNavigation(item.path);
-                                    }}
                                 >
                                     <div
                                         className={`flex items-center justify-center rounded-full theme-transition ${mobileView
@@ -198,7 +183,7 @@ const Navbar = () => {
                                             />
                                         )}
                                     </div>
-                                </div>
+                                </Link>
                             ) : (
                                 <div
                                     className={`flex items-center justify-center rounded-full theme-transition ${mobileView
@@ -242,7 +227,7 @@ const Navbar = () => {
                                     className={`absolute top-[-1.5rem] sm:top-[-1.5rem] lg:top-[-1.75rem] left-1/2 transform -translate-x-1/2 theme-transition ${isDarkTheme
                                         ? 'bg-neutral-600 hover:bg-neutral-700'
                                         : 'bg-gray-100 text-gray-800'
-                                        } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none font-serif animate-fadeIn z-50`}
+                                        } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none font-serif animate-fadeIn z-10000`}
                                     style={{
                                         animation:
                                             'fadeIn 0.2s ease-in-out forwards',

@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import './globals.css';
 
 import type { Metadata } from 'next';
@@ -39,8 +38,8 @@ export default function RootLayout({
                 >
                     <PageTransition>
                         {children}
-                        <Navbar />
                     </PageTransition>
+                    <Navbar />
                 </ThemeProvider>
             </body>
         </html>

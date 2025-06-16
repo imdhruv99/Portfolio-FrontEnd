@@ -76,6 +76,9 @@ export interface ThemeColors {
 
     // Solar System Styles
     solarSystemSubtext: string;
+
+    // Page Transition Styles
+    pageTransitionSquaresColor: string;
 }
 
 export interface Theme {
@@ -162,9 +165,11 @@ export const themes: Record<string, Theme> = {
             contactErrorBorder: 'border border-red-200',
             contactErrorText: 'text-red-600',
 
-
             // Solar System Styles
             solarSystemSubtext: 'text-gray-600',
+
+            // Page Transition Styles
+            pageTransitionSquaresColor: '#E1E1E1',
         },
     },
     dark: {
@@ -245,10 +250,11 @@ export const themes: Record<string, Theme> = {
             contactErrorBorder: 'border border-red-800',
             contactErrorText: 'text-red-400',
 
-
             // Solar System Styles
             solarSystemSubtext: 'text-white/60',
 
+            // Page Transition Styles
+            pageTransitionSquaresColor: '#242424',
         },
     },
 };
