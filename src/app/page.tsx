@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Home from '@/components/Home';
 
-export default function ProjectsPage() {
+export default function HomePage() {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
