@@ -5,12 +5,15 @@ import { JSX, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { fontClasses } from '@/config/fonts';
+import emailjs from '@emailjs/browser';
 
 type FloatingIcon = {
     component: JSX.Element;
     x: number;
     y: number;
 };
+
+type FormStatus = 'idle' | 'sending' | 'success' | 'error';
 
 const Contact = () => {
     const { colors: theme, isDarkTheme, isLoading } = useThemeColors();
@@ -22,7 +25,8 @@ const Contact = () => {
         subject: '',
         message: ''
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [formStatus, setFormStatus] = useState<FormStatus>('idle');
+    const [statusMessage, setStatusMessage] = useState('');
 
     const sectionRef = useRef<HTMLDivElement | null>(null);
     const headingRef = useRef<HTMLHeadingElement | null>(null);
@@ -151,14 +155,128 @@ const Contact = () => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+
+        // Clear status message when user starts typing again
+        if (formStatus === 'success' || formStatus === 'error') {
+            setFormStatus('idle');
+            setStatusMessage('');
+        }
+    };
+
+    const validateForm = () => {
+        if (!formData.name.trim()) {
+            setStatusMessage('Please enter your name');
+            return false;
+        }
+        if (!formData.email.trim()) {
+            setStatusMessage('Please enter your email');
+            return false;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            setStatusMessage('Please enter a valid email address');
+            return false;
+        }
+        if (!formData.subject.trim()) {
+            setStatusMessage('Please enter a subject');
+            return false;
+        }
+        if (!formData.message.trim()) {
+            setStatusMessage('Please enter your message');
+            return false;
+        }
+        return true;
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmitting(true);
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        setFormData({ name: '', email: '', subject: '', message: '' });
-        setIsSubmitting(false);
+
+        if (!validateForm()) {
+            setFormStatus('error');
+            return;
+        }
+
+        setFormStatus('sending');
+        setStatusMessage('');
+
+        try {
+            // Get EmailJS configuration
+            const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+            const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+            const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+            // Check if all required env vars are present
+            if (!serviceId || !templateId || !publicKey) {
+                throw new Error('Missing EmailJS configuration. Please check your environment variables.');
+            }
+
+            // Template parameters
+            const templateParams = {
+                from_name: formData.name,
+                from_email: formData.email,
+                subject: formData.subject,
+                message: formData.message,
+                reply_to: formData.email,
+            };
+
+            // Send email
+            const response = await emailjs.send(
+                serviceId,
+                templateId,
+                templateParams,
+                publicKey
+            );
+
+            if (response.status === 200) {
+                setFormStatus('success');
+                setStatusMessage('Thank you! Your message has been sent successfully.');
+                setFormData({ name: '', email: '', subject: '', message: '' });
+
+                // Auto-clear success message after 5 seconds
+                setTimeout(() => {
+                    setFormStatus('idle');
+                    setStatusMessage('');
+                }, 5000);
+            } else {
+                throw new Error(`EmailJS returned status: ${response.status}`);
+            }
+        } catch (error) {
+            setFormStatus('error');
+
+            // More specific error messages
+            if (error instanceof Error) {
+                if (error.message.includes('Missing EmailJS configuration')) {
+                    setStatusMessage('Configuration error. Please check environment variables.');
+                } else if (error.message.includes('network') || error.message.includes('fetch')) {
+                    setStatusMessage('Network error. Please check your internet connection.');
+                } else {
+                    setStatusMessage(`Error: ${error.message}`);
+                }
+            } else {
+                setStatusMessage('Sorry, there was an error sending your message. Please try again later.');
+            }
+        }
+    };
+
+    const getStatusIcon = () => {
+        switch (formStatus) {
+            case 'success':
+                return <Icon icon="mdi:check-circle" className="w-5 h-5 text-green-500" />;
+            case 'error':
+                return <Icon icon="mdi:alert-circle" className="w-5 h-5 text-red-500" />;
+            default:
+                return null;
+        }
+    };
+
+    const getStatusColor = () => {
+        switch (formStatus) {
+            case 'success':
+                return 'text-green-600 dark:text-green-400';
+            case 'error':
+                return 'text-red-600 dark:text-red-400';
+            default:
+                return '';
+        }
     };
 
     if (!mounted || isLoading) {
@@ -225,6 +343,19 @@ const Contact = () => {
                         className={`${theme.contactFormBackground} ${theme.contactBorder} backdrop-blur-sm rounded-3xl p-8 sm:p-10 shadow-2xl transition-all duration-300 will-change-transform`}
                     >
                         <div className="space-y-8">
+                            {/* Status Message */}
+                            {statusMessage && (
+                                <div className={`flex items-center gap-2 p-4 rounded-xl ${formStatus === 'success'
+                                    ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
+                                    : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+                                    }`}>
+                                    {getStatusIcon()}
+                                    <span className={`text-sm ${getStatusColor()}`}>
+                                        {statusMessage}
+                                    </span>
+                                </div>
+                            )}
+
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div className="group">
                                     <label className={`${fontClasses.eireneSansBold} block text-sm font-medium mb-3 ${theme.contactFormLabel}`}>
@@ -290,11 +421,14 @@ const Contact = () => {
                             <div className="pt-4">
                                 <button
                                     type="submit"
-                                    disabled={isSubmitting}
-                                    className={`group relative w-full sm:w-auto px-12 py-4 ${theme.contactFormButton} ${theme.contactFormButtonHover} backdrop-blur-sm rounded-xl font-medium transition-all duration-300 transform ${isSubmitting ? 'scale-95 opacity-75' : 'hover:scale-[1.02] hover:shadow-xl'} focus:outline-none focus:ring-2 ${theme.contactFormButtonFocus} disabled:cursor-not-allowed`}
+                                    disabled={formStatus === 'sending'}
+                                    className={`group relative w-full sm:w-auto px-12 py-4 ${theme.contactFormButton} ${theme.contactFormButtonHover} backdrop-blur-sm rounded-xl font-medium transition-all duration-300 transform ${formStatus === 'sending'
+                                        ? 'scale-95 opacity-75'
+                                        : 'hover:scale-[1.02] hover:shadow-xl'
+                                        } focus:outline-none focus:ring-2 ${theme.contactFormButtonFocus} disabled:cursor-not-allowed`}
                                 >
                                     <span className={`${fontClasses.eireneSansBold} flex items-center justify-center gap-3 ${theme.contactFormButtonText}`}>
-                                        {isSubmitting ? (
+                                        {formStatus === 'sending' ? (
                                             <>
                                                 <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
                                                 Sending...
