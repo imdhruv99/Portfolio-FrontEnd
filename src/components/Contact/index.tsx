@@ -268,17 +268,6 @@ const Contact = () => {
         }
     };
 
-    const getStatusColor = () => {
-        switch (formStatus) {
-            case 'success':
-                return 'text-green-600 dark:text-green-400';
-            case 'error':
-                return 'text-red-600 dark:text-red-400';
-            default:
-                return '';
-        }
-    };
-
     if (!mounted || isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
@@ -345,12 +334,19 @@ const Contact = () => {
                         <div className="space-y-8">
                             {/* Status Message */}
                             {statusMessage && (
-                                <div className={`flex items-center gap-2 p-4 rounded-xl ${formStatus === 'success'
-                                    ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
-                                    : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
-                                    }`}>
+                                <div
+                                    className={`flex items-center gap-2 p-4 rounded-xl ${formStatus === 'success'
+                                        ? `${theme.contactSuccessBackground} ${theme.contactSuccessBorder}`
+                                        : `${theme.contactErrorBackground} ${theme.contactErrorBorder}`
+                                        }`}
+                                >
                                     {getStatusIcon()}
-                                    <span className={`text-sm ${getStatusColor()}`}>
+                                    <span
+                                        className={`text-sm ${formStatus === 'success'
+                                            ? theme.contactSuccessText
+                                            : theme.contactErrorText
+                                            }`}
+                                    >
                                         {statusMessage}
                                     </span>
                                 </div>

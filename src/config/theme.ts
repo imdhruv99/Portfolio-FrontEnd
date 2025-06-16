@@ -66,6 +66,12 @@ export interface ThemeColors {
     contactFormButtonHover: string;
     contactFormButtonFocus: string;
     contactFormButtonText: string;
+    contactSuccessBackground: string;
+    contactSuccessBorder: string;
+    contactSuccessText: string;
+    contactErrorBackground: string;
+    contactErrorBorder: string;
+    contactErrorText: string;
 
     // Solar System Styles
     solarSystemSubtext: string;
@@ -147,6 +153,13 @@ export const themes: Record<string, Theme> = {
             contactFormButtonHover: 'hover:bg-gray-800',
             contactFormButtonFocus: 'focus:ring-gray-300',
             contactFormButtonText: 'text-white',
+            contactSuccessBackground: 'bg-green-50',
+            contactSuccessBorder: 'border border-green-200',
+            contactSuccessText: 'text-green-600',
+            contactErrorBackground: 'bg-red-50',
+            contactErrorBorder: 'border border-red-200',
+            contactErrorText: 'text-red-600',
+
 
             // Solar System Styles
             solarSystemSubtext: 'text-gray-600',
@@ -222,6 +235,13 @@ export const themes: Record<string, Theme> = {
             contactFormButtonHover: 'hover:bg-white/90',
             contactFormButtonFocus: 'focus:ring-white/30',
             contactFormButtonText: 'text-black',
+            contactSuccessBackground: 'bg-green-900/20',
+            contactSuccessBorder: 'border border-green-800',
+            contactSuccessText: 'text-green-400',
+            contactErrorBackground: 'bg-red-900/20',
+            contactErrorBorder: 'border border-red-800',
+            contactErrorText: 'text-red-400',
+
 
             // Solar System Styles
             solarSystemSubtext: 'text-white/60',
