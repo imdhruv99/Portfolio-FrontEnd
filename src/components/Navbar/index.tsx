@@ -1,11 +1,9 @@
-// src/components/Navbar/index.tsx
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Icon } from '@iconify/react';
-import { useRouter } from 'next/navigation';
-import { usePageTransition } from '@/components/PageTransition';
 
 type NavItem = {
     id: string;
@@ -40,9 +38,6 @@ const Navbar = () => {
     const [isMounted, setIsMounted] = useState(false);
     const [mobileView, setMobileView] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
-
-    const router = useRouter(); // Initialize useRouter
-    const { startTransition } = usePageTransition(); // Use the page transition hook
 
     useEffect(() => {
         setIsMounted(true);
@@ -107,15 +102,8 @@ const Navbar = () => {
     };
 
     const handleNavigation = (path: string | null) => {
-        if (path) {
-            if (path.startsWith('http')) {
-                window.open(path, '_blank');
-            } else {
-                // Trigger the page transition animation
-                startTransition(() => {
-                    router.push(path); // Navigate after animation
-                });
-            }
+        if (path && path.startsWith('http')) {
+            window.open(path, '_blank');
         }
     };
 
@@ -173,12 +161,9 @@ const Navbar = () => {
                             }
                         >
                             {item.path && !item.path.startsWith('http') ? (
-                                <div
+                                <Link
+                                    href={item.path}
                                     className="flex items-center justify-center w-full h-full"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        handleNavigation(item.path);
-                                    }}
                                 >
                                     <div
                                         className={`flex items-center justify-center rounded-full theme-transition ${mobileView
@@ -198,7 +183,7 @@ const Navbar = () => {
                                             />
                                         )}
                                     </div>
-                                </div>
+                                </Link>
                             ) : (
                                 <div
                                     className={`flex items-center justify-center rounded-full theme-transition ${mobileView

@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import './globals.css';
 
 import type { Metadata } from 'next';
@@ -6,7 +5,6 @@ import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import { allFontVariables } from '@/config/fonts';
 import { ThemeProvider, ThemeScript } from '@/components/ThemeProvider';
-import PageTransition from '@/components/PageTransition';
 
 export const metadata: Metadata = {
     title: 'Portfolio - Dhruv Prajapati',
@@ -37,10 +35,8 @@ export default function RootLayout({
                     disableTransitionOnChange={false}
                     themes={['light', 'dark', 'system']}
                 >
-                    <PageTransition>
-                        {children}
-                        <Navbar />
-                    </PageTransition>
+                    {children}
+                    <Navbar />
                 </ThemeProvider>
             </body>
         </html>
