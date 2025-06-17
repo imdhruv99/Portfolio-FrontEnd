@@ -1,4 +1,3 @@
-// src/components/Home/index.tsx
 'use client';
 
 import { gsap } from 'gsap';

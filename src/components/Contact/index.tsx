@@ -11,6 +11,7 @@ type FloatingIcon = {
     component: JSX.Element;
     x: number;
     y: number;
+    initialDelay: number;
 };
 
 type FormStatus = 'idle' | 'sending' | 'success' | 'error';
@@ -35,6 +36,7 @@ const Contact = () => {
     const bgRef = useRef<HTMLDivElement | null>(null);
     const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+    // Ensure component is mounted for GSAP to target elements
     useLayoutEffect(() => {
         setMounted(true);
     }, []);
@@ -71,10 +73,12 @@ const Contact = () => {
 
                 attempts = 0;
                 do {
+                    // Generate coordinates in percentage
                     x = Math.random() * 90 + 5;
                     y = Math.random() * 90 + 5;
                     validPosition = true;
 
+                    // Check distance from existing icons
                     for (const pos of positionedIcons) {
                         const dx = pos.x - x;
                         const dy = pos.y - y;
@@ -84,7 +88,6 @@ const Contact = () => {
                             break;
                         }
                     }
-
                     attempts++;
                 } while (!validPosition && attempts < 30);
 
@@ -101,6 +104,7 @@ const Contact = () => {
                     ),
                     x,
                     y,
+                    initialDelay: gsap.utils.random(0, 8),
                 });
             }
 
@@ -113,42 +117,70 @@ const Contact = () => {
     useLayoutEffect(() => {
         if (!mounted) return;
 
+        // Ensure all refs are current when animations are created
+        const headingElement = headingRef.current;
+        const paraElement = paraRef.current;
+        const formElement = formRef.current;
         const validIcons = iconRefs.current.filter(Boolean);
 
-        const textTimeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        gsap.killTweensOf([headingElement, paraElement, formElement, ...validIcons]);
 
-        if (headingRef.current && paraRef.current && formRef.current) {
-            textTimeline
-                .fromTo(headingRef.current, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, 0)
-                .fromTo(paraRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.1)
-                .fromTo(formRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, 0.2);
+        const mainContentTimeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        if (headingElement && paraElement && formElement) {
+            mainContentTimeline
+                .fromTo(headingElement,
+                    { y: 40, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 1.0 },
+                    0
+                )
+                .fromTo(paraElement,
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8 },
+                    0.4
+                )
+                .fromTo(formElement,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 1.0 },
+                    0.6
+                );
         }
 
+        // Floating Icons Animation
         if (validIcons.length > 0) {
-            validIcons.forEach((icon) => {
-                if (!icon) return;
+            validIcons.forEach((icon, index) => {
+                // Ensure the icon exists and its initialDelay is available from the state
+                const iconData = floatingIcons[index];
+                if (!icon || !iconData) return;
 
                 gsap.set(icon, {
-                    x: gsap.utils.random(-20, 20),
-                    y: gsap.utils.random(-20, 20),
+                    x: `+=${gsap.utils.random(-20, 20)}`,
+                    y: `+=${gsap.utils.random(-20, 20)}`,
                     rotation: gsap.utils.random(-10, 10),
+                    opacity: icon.style.opacity
                 });
 
                 gsap.to(icon, {
-                    y: gsap.utils.random(-100, 100),
-                    x: gsap.utils.random(-100, 100),
-                    rotation: gsap.utils.random(-20, 20),
+                    y: `+=${gsap.utils.random(-100, 100)}`,
+                    x: `+=${gsap.utils.random(-100, 100)}`,
+                    rotation: `+=${gsap.utils.random(-20, 20)}`,
                     duration: gsap.utils.random(15, 30),
                     repeat: -1,
                     yoyo: true,
                     ease: 'sine.inOut',
-                    delay: gsap.utils.random(0, 8),
+                    delay: iconData.initialDelay,
+                    overwrite: "auto"
                 });
             });
         }
 
+        // Cleanup function for GSAP tweens
         return () => {
+            if (headingElement) gsap.killTweensOf(headingElement);
+            if (paraElement) gsap.killTweensOf(paraElement);
+            if (formElement) gsap.killTweensOf(formElement);
             gsap.killTweensOf(validIcons);
+            mainContentTimeline.kill();
         };
     }, [mounted, floatingIcons]);
 
@@ -199,17 +231,14 @@ const Contact = () => {
         setStatusMessage('');
 
         try {
-            // Get EmailJS configuration
             const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
             const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
             const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-            // Check if all required env vars are present
             if (!serviceId || !templateId || !publicKey) {
                 throw new Error('Missing EmailJS configuration. Please check your environment variables.');
             }
 
-            // Template parameters
             const templateParams = {
                 from_name: formData.name,
                 from_email: formData.email,
@@ -242,7 +271,6 @@ const Contact = () => {
         } catch (error) {
             setFormStatus('error');
 
-            // More specific error messages
             if (error instanceof Error) {
                 if (error.message.includes('Missing EmailJS configuration')) {
                     setStatusMessage('Configuration error. Please check environment variables.');
@@ -290,7 +318,7 @@ const Contact = () => {
                     <div
                         key={index}
                         ref={(el) => {
-                            iconRefs.current[index] = el;
+                            if (el) iconRefs.current[index] = el;
                         }}
                         className={`absolute ${theme.contactIcon} transition-colors duration-500 will-change-transform`}
                         style={{
