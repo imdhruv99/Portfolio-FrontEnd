@@ -1,3 +1,4 @@
+// src/components/Home/index.tsx
 'use client';
 
 import { gsap } from 'gsap';
@@ -356,7 +357,7 @@ const Home = () => {
             </section>
 
 
-            {/* About Me Section */}
+            {/* About Me Section (Rebuilt for consistency) */}
             <section
                 ref={aboutSectionRef}
                 className="relative w-full flex flex-col items-center justify-center px-4 sm:px-8 lg:px-16 py-12 sm:py-16"
@@ -381,21 +382,27 @@ const Home = () => {
 
                         <h2
                             ref={aboutTextRef}
-                            className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light leading-tight tracking-tight text-left mb-10`}
+                            className={`
+                                text-3xl
+                                sm:text-4xl
+                                md:text-5xl
+                                lg:text-[5.25rem]
+                                xl:text-[5.1rem]
+                                2xl:text-[4.9rem]
+                                3xl:text-[4.7rem]
+                                4xl:text-[4.5rem]
+                                font-light
+                                leading-tight
+                                tracking-tight
+                                text-left
+                                mb-10
+                            `}
                             style={{ color: theme.homeHeroText }}
                         >
-                            <span className="block">
-                                {renderHighlightedText(
-                                    "Experienced Software Engineer with a strong track record of building Secure, Scalable applications, automating",
-                                    wordsToHighlight
-                                )}
-                            </span>
-                            <span className="block">
-                                {renderHighlightedText(
-                                    "Cloud Infrastructure, and deploying Artificial Intelligent based data-driven solutions.",
-                                    wordsToHighlight
-                                )}
-                            </span>
+                            {renderHighlightedText(
+                                "Experienced Software Engineer with a strong track record of building Secure, Scalable applications, automating cloud infrastructure efficiently, and deploying Artificial Intelligent based data-driven and highly reliable solutions with a robust and precise approach.",
+                                wordsToHighlight
+                            )}
                         </h2>
                     </div>
                 </div>
