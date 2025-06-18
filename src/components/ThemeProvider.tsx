@@ -10,23 +10,20 @@ import { useEffect, useState } from 'react';
 export const ThemeScript = `
 (function() {
   try {
-    // First try to get theme from localStorage
     let theme = localStorage.getItem('theme');
 
-    // If theme is 'system' or not set, check system preference
-    if (!theme || theme === 'system') {
-      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    // Default to 'dark' if not set
+    if (!theme) {
+      theme = 'dark';
     }
 
-    // Apply theme immediately to prevent flash
+    // Apply theme immediately
     document.documentElement.setAttribute('data-theme', theme);
-
-    // Optional: Also add as a class for additional styling options
     document.documentElement.classList.add(theme);
   } catch (e) {
-    // Fallback if localStorage is not available
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    // Fallback if localStorage not available
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('dark');
   }
 })();
 `;
@@ -87,10 +84,10 @@ export function ThemeProvider({
     return (
         <NextThemeProvider
             attribute={attribute}
-            defaultTheme={defaultTheme}
-            enableSystem={enableSystem}
+            defaultTheme="dark"
+            enableSystem={false}
             disableTransitionOnChange={true}
-            themes={themes}
+            themes={['light', 'dark']}
             onChangeStart={onThemeChange}
         >
             {children}
