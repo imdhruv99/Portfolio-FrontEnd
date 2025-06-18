@@ -320,8 +320,48 @@ const Home = () => {
             {/* Hero Section */}
             <section
                 ref={heroSectionRef}
-                className="relative w-full min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 lg:p-8 overflow-hidden mb-[-8rem]"
+                className={`relative w-full min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 lg:p-8 overflow-hidden mb-[-8rem] ${theme.homeHeroGradient}`}
             >
+                {/* Base Background */}
+                <div className="absolute inset-0 z-0" />
+
+                {/* Orbital Gradient Overlay */}
+                <div
+                    className={`absolute inset-0 z-5 ${theme.homeHeroGradientOverlay}`}
+                    style={{
+                        backgroundSize: '100% 100%',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'center top',
+                    }}
+                />
+
+                {/* Additional Orbital Ring Effect - Desktop Only */}
+                <div className="absolute inset-0 z-6 hidden md:block">
+                    <div
+                        className="absolute w-full h-full"
+                        style={{
+                            backgroundImage: theme.homeHeroOrbitalRingDesktop,
+                            backgroundSize: '100% 100%',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: 'center top',
+                        }}
+                    />
+                </div>
+
+                {/* Mobile Gradient Adjustment */}
+                <div className="absolute inset-0 z-6 block md:hidden">
+                    <div
+                        className="absolute w-full h-full"
+                        style={{
+                            backgroundImage: theme.homeHeroOrbitalRingMobile,
+                            backgroundSize: '100% 100%',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: 'center top',
+                        }}
+                    />
+                </div>
+
+                {/* Content Container */}
                 <div className="flex flex-col items-start relative z-20 max-w-7xl mx-auto">
                     <h1
                         ref={firstNameRef}
@@ -346,6 +386,8 @@ const Home = () => {
                         ))}
                     </h1>
                 </div>
+
+                {/* Quote Text */}
                 <p
                     ref={quoteRef}
                     className={`${fontClasses.eireneSans} mt-8 sm:mt-12 text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl text-center font-medium opacity-80 z-10 relative`}
@@ -354,7 +396,6 @@ const Home = () => {
                     I don&apos;t just ship code - I architect engines that hum through chaos and scale with silence.
                 </p>
             </section>
-
 
             {/* About Me Section (Rebuilt for consistency) */}
             <section
