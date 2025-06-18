@@ -397,7 +397,7 @@ const Home = () => {
                 </p>
             </section>
 
-            {/* About Me Section (Rebuilt for consistency) */}
+            {/* About Me Section */}
             <section
                 ref={aboutSectionRef}
                 className="relative w-full flex flex-col items-center justify-center px-4 sm:px-8 lg:px-16 py-12 sm:py-16"
