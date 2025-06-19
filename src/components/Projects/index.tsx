@@ -319,7 +319,7 @@ const Projects = () => {
                     ref={indexRef}
                     className={`absolute left-4 sm:left-8 top-8 sm:top-12 will-change-transform z-20`}
                 >
-                    <div className={`${fontClasses.classyVogue} text-xs sm:text-sm font-mono tracking-[0.2em] ${theme.projectIndexText} opacity-60`}>
+                    <div className={`${fontClasses.classyVogue} text-xs sm:text-sm ${fontClasses.classyVogue} tracking-[0.2em] ${theme.projectIndexText} opacity-60`}>
                         {String(currentProject + 1).padStart(4, '0')}
                     </div>
                 </div>
