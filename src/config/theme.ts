@@ -1,5 +1,4 @@
 export interface ThemeColors {
-
     // Common Styles
     background: string;
 
@@ -10,6 +9,10 @@ export interface ThemeColors {
     homeTechIconBackground: string;
     homeTechIconBorder: string;
     homeSectionDivider: string;
+    homeHeroGradient: string;
+    homeHeroGradientOverlay: string;
+    homeHeroOrbitalRingDesktop: string;
+    homeHeroOrbitalRingMobile: string;
 
     // Experience Page Styles
     experienceBentoCard: string;
@@ -87,7 +90,6 @@ export const themes: Record<string, Theme> = {
     light: {
         name: 'light',
         colors: {
-
             // Common Styles
             background: 'bg-gradient-to-br from-[#fafafa] via-[#f5f5f5] to-[#efefef]',
 
@@ -98,6 +100,10 @@ export const themes: Record<string, Theme> = {
             homeTechIconBackground: 'rgba(0, 0, 0, 0.05)',
             homeTechIconBorder: '1px solid rgba(0, 0, 0, 0.1)',
             homeSectionDivider: 'border-gray-400/30',
+            homeHeroGradient: 'bg-gradient-to-br from-[#fafafa] via-[#f5f5f5] to-[#efefef]',
+            homeHeroGradientOverlay: 'bg-[radial-gradient(ellipse_1200px_800px_at_50%_20%,_rgba(2,62,138,0.35)_0%,_rgba(0,119,182,0.25)_30%,_rgba(0,150,199,0.15)_50%,_transparent_80%)]',
+            homeHeroOrbitalRingDesktop: `radial-gradient(ellipse 900px 600px at 50% 15%, rgba(2,62,138,0.25)_0%,_rgba(0,119,182,0.18)_30%,_rgba(0,150,199,0.1)_50%,_transparent_80%)`,
+            homeHeroOrbitalRingMobile: `radial-gradient(ellipse 600px 400px at 50% 10%, rgba(2,62,138,0.35)_0%,_rgba(0,119,182,0.25)_40%,_transparent_80%)`,
 
             // Experience Page Styles
             experienceBentoCard: 'bg-white/60',
@@ -162,7 +168,6 @@ export const themes: Record<string, Theme> = {
             contactErrorBorder: 'border border-red-200',
             contactErrorText: 'text-red-600',
 
-
             // Solar System Styles
             solarSystemSubtext: 'text-gray-600',
         },
@@ -170,7 +175,6 @@ export const themes: Record<string, Theme> = {
     dark: {
         name: 'dark',
         colors: {
-
             // Common Styles
             background: 'bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#0f0f0f]',
 
@@ -181,6 +185,10 @@ export const themes: Record<string, Theme> = {
             homeTechIconBackground: 'rgba(255, 255, 255, 0.05)',
             homeTechIconBorder: '1px solid rgba(255, 255, 255, 0.1)',
             homeSectionDivider: 'border-white/20',
+            homeHeroGradient: 'bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#0f0f0f]',
+            homeHeroGradientOverlay: 'bg-[radial-gradient(ellipse_1200px_800px_at_50%_20%,_rgba(58,90,64,0.2)_0%,_rgba(58,90,64,0.15)_30%,_rgba(58,90,64,0.1)_50%,_transparent_70%)]',
+            homeHeroOrbitalRingDesktop: `radial-gradient(ellipse 900px 600px at 50% 15%, rgba(88,129,87,0.15) 0%, rgba(58,90,64,0.1) 30%, rgba(52,78,65,0.08) 50%, transparent 70%)`,
+            homeHeroOrbitalRingMobile: `radial-gradient(ellipse 600px 400px at 50% 10%, rgba(88,129,87,0.2) 0%, rgba(58,90,64,0.12) 40%, transparent 70%)`,
 
             // Experience Page Styles
             experienceBentoCard: 'bg-[#1c1c1e]/70',
@@ -245,10 +253,8 @@ export const themes: Record<string, Theme> = {
             contactErrorBorder: 'border border-red-800',
             contactErrorText: 'text-red-400',
 
-
             // Solar System Styles
             solarSystemSubtext: 'text-white/60',
-
         },
     },
 };
