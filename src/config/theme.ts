@@ -100,10 +100,22 @@ export const themes: Record<string, Theme> = {
             homeTechIconBackground: 'rgba(0, 0, 0, 0.05)',
             homeTechIconBorder: '1px solid rgba(0, 0, 0, 0.1)',
             homeSectionDivider: 'border-gray-400/30',
-            homeHeroGradient: 'bg-gradient-to-br from-[#fafafa] via-[#f5f5f5] to-[#efefef]',
-            homeHeroGradientOverlay: 'bg-[radial-gradient(ellipse_1200px_800px_at_50%_20%,_rgba(2,62,138,0.35)_0%,_rgba(0,119,182,0.25)_30%,_rgba(0,150,199,0.15)_50%,_transparent_80%)]',
-            homeHeroOrbitalRingDesktop: `radial-gradient(ellipse 900px 600px at 50% 15%, rgba(2,62,138,0.25)_0%,_rgba(0,119,182,0.18)_30%,_rgba(0,150,199,0.1)_50%,_transparent_80%)`,
-            homeHeroOrbitalRingMobile: `radial-gradient(ellipse 600px 400px at 50% 10%, rgba(2,62,138,0.35)_0%,_rgba(0,119,182,0.25)_40%,_transparent_80%)`,
+            homeHeroGradient: '',
+            homeHeroGradientOverlay: `
+                radial-gradient(ellipse 1200px 800px at 50% 20%, rgba(2,62,138,0.08) 0%, transparent 80%),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.035) 0px, rgba(0,0,0,0.03) 2px, transparent 1px, transparent 6rem),
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.035) 0px, rgba(0,0,0,0.03) 2px, transparent 1px, transparent 6rem)
+            `,
+            homeHeroOrbitalRingDesktop: `
+                radial-gradient(ellipse 900px 600px at 50% 15%, rgba(2,62,138,0.06) 0%, transparent 80%),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 1px, transparent 6rem),
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 1px, transparent 6rem)
+            `,
+            homeHeroOrbitalRingMobile: `
+                radial-gradient(ellipse 600px 400px at 50% 10%, rgba(2,62,138,0.08) 0%, transparent 80%),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 1px, transparent 6rem),
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 1px, transparent 6rem)
+            `,
 
             // Experience Page Styles
             experienceBentoCard: 'bg-white/60',
