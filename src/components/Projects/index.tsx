@@ -12,6 +12,7 @@ import NavigationDots from '../NavigationDots';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import techIconMap from '@/constants/TechIconMap';
 import { fontClasses } from '@/config/fonts';
+import DotBackground from '../DotBackground';
 
 const requestDeviceMotionPermission = async (): Promise<boolean> => {
     if (
@@ -35,6 +36,8 @@ const Projects = () => {
     const [displayProject, setDisplayProject] = useState(projectData[0]);
     const [isMobile, setIsMobile] = useState(false);
     const [deviceMotionPermissionGranted, setDeviceMotionPermissionGranted] = useState(false);
+    const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
+    const [isContainerMeasured, setIsContainerMeasured] = useState(false);
 
     const titleRef = useRef<HTMLHeadingElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);
@@ -50,10 +53,51 @@ const Projects = () => {
     const rotationTargetY = useRef(0);
     const rotationTimeline = useRef<gsap.core.Timeline | null>(null);
     const rAFId = useRef<number | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+
 
     useEffect(() => {
         setDisplayProject(projectData[currentProject]);
     }, [currentProject]);
+
+    // Effect to measure container dimensions for DotBackground
+    useEffect(() => {
+        const updateContainerDimensions = () => {
+            if (containerRef.current) {
+                const width = containerRef.current.offsetWidth;
+                const height = containerRef.current.offsetHeight;
+                if (width > 0 && height > 0) {
+                    setContainerDimensions({ width, height });
+                    setIsContainerMeasured(true);
+                } else {
+                    setIsContainerMeasured(false);
+                }
+            }
+        };
+
+        updateContainerDimensions();
+
+        const observer = new MutationObserver(updateContainerDimensions);
+        if (containerRef.current) {
+            observer.observe(containerRef.current, {
+                attributes: true,
+                childList: true,
+                subtree: true
+            });
+        }
+
+        window.addEventListener('resize', updateContainerDimensions);
+
+        const timeoutId = setTimeout(updateContainerDimensions, 100);
+
+
+        return () => {
+            window.removeEventListener('resize', updateContainerDimensions);
+            observer.disconnect();
+            clearTimeout(timeoutId);
+        };
+    }, []);
+
 
     const animateProjectChange = useCallback((direction: 'next' | 'prev', newIndex: number) => {
         if (scrollLocked.current) return;
@@ -280,15 +324,25 @@ const Projects = () => {
 
     const projectToDisplay = displayProject;
 
+    const dotColor = isDarkTheme ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)';
+    const glowColor = isDarkTheme ? '#E0BBE4' : '#007BFF';
+
     return (
         <div
+            ref={containerRef}
             className={`min-h-screen overflow-hidden relative transition-colors duration-500 ${theme.background}`}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
         >
-            {/* Background Pattern */}
-            <div className={`fixed inset-0 ${theme.projectPatternBackground}`} />
+            {isContainerMeasured && (
+                <DotBackground
+                    dotColor={dotColor}
+                    glowColor={glowColor}
+                    containerWidth={containerDimensions.width}
+                    containerHeight={containerDimensions.height}
+                />
+            )}
 
             <div
                 className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-8"
