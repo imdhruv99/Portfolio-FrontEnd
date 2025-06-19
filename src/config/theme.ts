@@ -121,7 +121,7 @@ export const themes: Record<string, Theme> = {
 
             // Project Page Styles
             projectPatternBackground: 'modern-pattern-light',
-            projectIndexText: 'bg-gray-300',
+            projectIndexText: 'text-gray-900 opacity-80',
             projecHeroText: 'text-gray-900',
             projectCategoryText: 'text-gray-600',
             projectMetaText: 'text-gray-500',
@@ -213,9 +213,9 @@ export const themes: Record<string, Theme> = {
             projectDescriptionText: 'text-white/80',
             projectButton: 'bg-white/10 hover:bg-white/20 text-white border border-white/10',
             projectLinkText: 'text-white/50',
-            projectLinkButton: 'bg-white/[0.08] hover:bg-white/[0.15] text-white/80 border border-white/10',
+            projectLinkButton: 'bg-neutral-900 border border-neutral-700',
             projectTechBadge: 'text-white/80 bg-white/10 border border-white/10 hover:bg-white/20',
-            projectCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
+            projectCard: 'bg-neutral-900 border border-neutral-700',
             projectCardPattern: 'geometric-pattern-dark',
             projectGradientOverlay: 'bg-gradient-to-t from-black/30 via-transparent to-black/10',
             projectYearBadge: 'bg-white/[0.08] text-white/90 border border-white/10',
