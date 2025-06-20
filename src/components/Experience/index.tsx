@@ -69,6 +69,13 @@ const ExperienceHeroSection = () => {
                     >
                         A journey through my professional growth and contributions across various technologies and industries.
                     </p>
+                    <p
+                        ref={paragraphRef}
+                        className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-2xl mx-auto lg:mx-0 pt-5`}
+                    >
+                        I have worked with many companies as Software Engineer, DevOps Engineer and Software Architect.
+                        I have also work with some of the well established companies mostly as Software Engineer.
+                    </p>
                 </div>
 
                 {/* Image */}
@@ -77,7 +84,7 @@ const ExperienceHeroSection = () => {
                     className="relative w-full aspect-square max-w-[min(80vw,40rem)] mx-auto lg:max-w-full lg:mx-0 flex items-center justify-center"
                 >
                     <Image
-                        src="/images/character.png"
+                        src="/svgs/experience.svg"
                         alt="Experience Overview"
                         layout="fill"
                         objectFit="contain"
