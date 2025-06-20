@@ -1,14 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import { Icon } from '@iconify/react';
+import { Icon } from '@iconify/react'; // Although not directly used in this hero, keeping as per original
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
 
-import techIconMap from '@/constants/TechIconMap';
+import techIconMap from '@/constants/TechIconMap'; // Not used in hero, but keeping
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { getExperienceData } from '@/constants/ExperienceData';
-import NavigationDots from '../NavigationDots';
+import NavigationDots from '../NavigationDots'; // Not used in hero, but keeping
 import { fontClasses } from '@/config/fonts';
 
 interface ExperienceItem {
@@ -21,275 +21,63 @@ interface ExperienceItem {
     image: string;
 }
 
-interface BentoCardProps {
-    children: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
-}
-
-const BentoCard = ({ children, className = '', style }: BentoCardProps) => {
+const ExperienceHeroSection = () => {
     const { colors: theme } = useThemeColors();
 
-    return (
-        <div
-            className={`
-                ${theme.experienceBentoCard}
-                ${theme.experienceBentoBorder}
-                ${theme.experienceBentoHover}
-                ${theme.experienceBentoShadow}
-                backdrop-blur-md rounded-2xl
-                transition-all duration-300
-                ${className}
-            `}
-            style={style}
-        >
-            {children}
-        </div>
-    );
-};
-
-interface ExperienceGridProps {
-    experience: ExperienceItem;
-    index: number;
-}
-
-const ExperienceGrid = ({ experience }: ExperienceGridProps) => {
-    const { colors: theme, isDarkTheme } = useThemeColors();
+    const summaryText = "I have worked with companies as a Software Engineer, Software Architect, \
+    and DevOps Engineer, contributing across the full product lifecycle. I’m passionate about building \
+    innovative products that simplify and enhance everyday human life. I thrive in fast-paced environments \
+    where technology drives meaningful impact."
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4">
-            <div className="w-full max-w-7xl mx-auto">
-                {/* Mobile Layout */}
-                <div className="lg:hidden space-y-4 h-[80vh] overflow-y-auto flex flex-col justify-start">
-                    {/* Company Logo and Info */}
-                    <div className="grid grid-cols-2 gap-4 h-32">
-                        <BentoCard className="flex justify-center items-center relative">
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src={experience.image}
-                                    alt="Company Logo"
-                                    layout="fill"
-                                    objectFit="contain"
-                                    className="p-4"
-                                />
-                            </div>
-                        </BentoCard>
-
-                        <BentoCard
-                            className="flex flex-col justify-center items-center text-center"
-                            style={{ background: `${theme.experienceCard}` }}
-                        >
-                            <h3 className={`${fontClasses.eireneSansBold} text-sm font-medium ${theme.experienceText} mb-1`}>
-                                {experience.company}
-                            </h3>
-                            <p className={`${fontClasses.eireneSans} text-xs ${theme.experienceSubText}`}>{experience.period}</p>
-                        </BentoCard>
-                    </div>
-
-                    {/* Coffee Mug */}
-                    <div className="grid grid-cols-3 gap-4">
-                        <BentoCard className="aspect-[4/3] flex justify-center items-center">
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src='/images/coffee.png'
-                                    alt="Design Element"
-                                    layout="fill"
-                                    objectFit="contain"
-                                    className="p-2"
-                                />
-                            </div>
-                        </BentoCard>
-
-                        {/* User with Laptop */}
-                        <BentoCard className="aspect-[4/3] flex justify-center items-center">
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src='/images/user_with_mac.png'
-                                    alt="Design Element"
-                                    layout="fill"
-                                    objectFit="contain"
-                                    className="p-2"
-                                />
-                            </div>
-                        </BentoCard>
-
-                        {/* Mac Setup */}
-                        <BentoCard className="aspect-[4/3] flex justify-center items-center">
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src='/images/imac.png'
-                                    alt="Design Element"
-                                    layout="fill"
-                                    objectFit="contain"
-                                    className="p-2"
-                                />
-                            </div>
-                        </BentoCard>
-                    </div>
-
-                    {/* Designation */}
-                    <BentoCard
-                        className="h-25 flex items-center justify-center"
-                        style={{ background: `${theme.experienceCard}` }}
-                    >
-                        <h1 className={`${fontClasses.classyVogue} text-xl font-light ${theme.experienceText} text-center`}>
-                            {experience.designation}
-                        </h1>
-                    </BentoCard>
-
-                    {/* Tech Icons */}
-                    <BentoCard
-                        className="h-35 flex flex-col justify-center items-center"
-                        style={{ background: `${theme.experienceCard}` }}
-                    >
-                        <div></div>
-                        <div className="flex flex-wrap justify-center items-center gap-4">
-                            {experience.technologies.map((tech, techIndex) => {
-                                const iconName = isDarkTheme ? techIconMap[tech]?.dark : techIconMap[tech]?.light;
-                                return iconName ? (
-                                    <Icon key={techIndex} icon={iconName} className="w-8 h-8 md:w-10 md:h-10" />
-                                ) : null;
-                            })}
-                        </div>
-                    </BentoCard>
-
-                    {/* Description */}
-                    <BentoCard
-                        className="min-h-[150px] overflow-y-auto custom-scrollbar p-6"
-                    >
-                        <div className="space-y-6">
-                            {experience.description.map((desc, descIndex) => (
-                                <div key={descIndex} className="relative group">
-                                    <p className={`${fontClasses.eireneSans} text-sm md:text-base ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}>
-                                        <span className="mr-2 text-primary">✦</span>{desc}
-                                    </p>
-                                    <div
-                                        className={`mt-3 h-px w-full transition-all duration-300 ${theme.experienceDescriptionDivider}`}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </BentoCard>
+        <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden p-4 sm:p-6 lg:p-8">
+            <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center py-10 lg:py-0">
+                {/* Left Section: Text Content */}
+                <div className="flex flex-col justify-center text-center lg:text-left animate-fade-in-up">
+                    <h1 className={`${fontClasses.classyVogue} text-6xl sm:text-7xl lg:text-8xl font-light ${theme.experienceText} mb-4 lg:mb-6 leading-tight`}>
+                        Experience
+                    </h1>
+                    <p className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-2xl mx-auto lg:mx-0 opacity-0 animate-fade-in-up delay-200`}>
+                        A journey through my professional growth and contributions across various technologies and industries.
+                    </p>
+                    <p className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceDescriptionText} max-w-2xl mx-auto lg:mx-0 mt-4 opacity-0 animate-fade-in-up delay-400`}>
+                        {summaryText}
+                    </p>
                 </div>
 
-                {/* Desktop Layout */}
-                <div className="hidden lg:block">
-                    <div className="grid grid-cols-14 grid-rows-10 gap-5 h-[80vh] min-h-[600px]">
-                        {/* Company Logo Image */}
-                        <BentoCard className="col-span-4 row-span-3 flex justify-center items-center">
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src={experience.image}
-                                    alt="Design Element"
-                                    layout="fill"
-                                    objectFit="contain"
-                                    className="p-10"
-                                />
-                            </div>
-                        </BentoCard>
-
-                        {/* Company Name and Period */}
-                        <BentoCard
-                            className="col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
-                            style={{ background: `${theme.experienceCard}` }}
-                        >
-                            <h3 className={`${fontClasses.eireneSansBold} text-xl font-semibold ${theme.experienceText} mb-2`}>
-                                {experience.company}
-                            </h3>
-                            <p className={`${fontClasses.eireneSans} text-sm ${theme.experienceSubText}`}>{experience.period}</p>
-                        </BentoCard>
-
-                        {/* Mac Setup */}
-                        <BentoCard
-                            className="col-span-3 row-span-3 flex flex-col justify-center items-center text-center"
-                            style={{ background: `${theme.experienceCard}` }}
-                        >
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src='/images/imac.png'
-                                    alt="Company Logo"
-                                    layout="fill"
-                                    objectFit="contain"
-                                    className="p-5"
-                                />
-                            </div>
-                        </BentoCard>
-
-                        {/* Icon */}
-                        <BentoCard
-                            className="col-span-4 row-span-4 flex flex-col justify-center items-center text-center"
-                            style={{ background: `${theme.experienceCard}` }}
-                        >
-                            <div className="flex flex-wrap justify-center items-center gap-4">
-                                {experience.technologies.map((tech, techIndex) => {
-                                    const iconName = isDarkTheme ? techIconMap[tech]?.dark : techIconMap[tech]?.light;
-                                    return iconName ? (
-                                        <Icon key={techIndex} icon={iconName} className="w-10 h-10 md:w-12 md:h-12" />
-                                    ) : null;
-                                })}
-                            </div>
-                        </BentoCard>
-
-                        {/* Coffee Mug */}
-                        <BentoCard className="col-span-4 row-span-3 flex justify-center items-center">
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src='/images/coffee.png'
-                                    alt="Design Element"
-                                    layout="fill"
-                                    objectFit="contain"
-                                    className="p-2"
-                                />
-                            </div>
-                        </BentoCard>
-
-                        {/* Designation */}
-                        <BentoCard
-                            className="col-span-6 row-span-3 flex items-center justify-center relative overflow-hidden"
-                            style={{ background: `${theme.experienceCard}` }}
-                        >
-                            <div className="relative z-10 text-center">
-                                <h1 className={`${fontClasses.classyVogue} text-4xl font-light ${theme.experienceText}`}>
-                                    {experience.designation}
-                                </h1>
-                            </div>
-                        </BentoCard>
-
-                        {/* User with Laptop */}
-                        <BentoCard className="col-span-4 row-span-6 flex justify-center items-center">
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src='/images/user_with_mac.png'
-                                    alt="Design Element"
-                                    layout="fill"
-                                    objectFit="contain"
-                                    className="p-5"
-                                />
-                            </div>
-                        </BentoCard>
-
-                        {/* Description */}
-                        <BentoCard className="col-span-10 row-span-4 overflow-y-auto custom-scrollbar p-6">
-                            <div className="space-y-6">
-                                {experience.description.map((desc, descIndex) => (
-                                    <div key={descIndex} className="relative group">
-                                        <p
-                                            className={`${fontClasses.eireneSans} text-base ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}
-                                        >
-                                            <span className="mr-2 text-primary">✦</span>
-                                            {desc}
-                                        </p>
-                                        <div
-                                            className={`mt-3 h-px w-full transition-all duration-300 ${theme.experienceDescriptionDivider}`}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </BentoCard>
-                    </div>
+                {/* Right Section: Image */}
+                <div className="relative w-full aspect-square max-w-[min(80vw,40rem)] mx-auto lg:max-w-full lg:mx-0 flex items-center justify-center opacity-0 animate-fade-in-up delay-600">
+                    <Image
+                        src="/images/cubical.png"
+                        alt="Experience Overview"
+                        layout="fill"
+                        objectFit="contain"
+                        className="pointer-events-none select-none"
+                    />
                 </div>
             </div>
-        </div>
+
+            {/* Animation styles */}
+            <style jsx>{`
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+
+                @keyframes fadeInUp {
+                    from { opacity: 0; transform: translateY(2rem); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+
+                .animate-fade-in-up {
+                    animation: fadeInUp 0.8s ease-out forwards;
+                }
+
+                .delay-200 { animation-delay: 0.2s; }
+                .delay-400 { animation-delay: 0.4s; }
+                .delay-600 { animation-delay: 0.6s; }
+            `}</style>
+        </section>
     );
 };
 
@@ -299,11 +87,11 @@ const Experience = () => {
     // Memoize experience data to prevent recalculation on every render
     const experienceData = useMemo(() => getExperienceData(isDarkTheme), [isDarkTheme]);
 
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [isMobile, setIsMobile] = useState(false);
-    const [isContentVisible, setIsContentVisible] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(0); // Keeping for future sections
+    const [isMobile, setIsMobile] = useState(false); // Keeping for future sections
+    const [isContentVisible, setIsContentVisible] = useState(false); // Keeping for future sections
 
-    // Fluid scrolling refs and state
+    // Fluid scrolling refs and state - Keeping for future sections
     const scrollLocked = useRef(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const experienceRef = useRef<HTMLDivElement>(null);
@@ -312,12 +100,12 @@ const Experience = () => {
     const touchStartY = useRef(0);
     const touchEndY = useRef(0);
 
-    // Memoize current experience to prevent unnecessary re-renders
+    // Memoize current experience to prevent unnecessary re-renders - Keeping for future sections
     const displayExperience = useMemo(() => {
         return experienceData[activeIndex] || experienceData[0];
     }, [experienceData, activeIndex]);
 
-    // Check mobile only once on mount and on resize
+    // Check mobile only once on mount and on resize - Keeping for future sections
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
         checkMobile();
@@ -325,7 +113,7 @@ const Experience = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // Handle content visibility
+    // Handle content visibility - Keeping for future sections
     useEffect(() => {
         if (!isLoading) {
             const timer = setTimeout(() => {
@@ -337,7 +125,7 @@ const Experience = () => {
         }
     }, [isLoading]);
 
-    // Memoized animation function to prevent recreation on every render
+    // Memoized animation function to prevent recreation on every render - Keeping for future sections
     const animateExperienceChange = useCallback((direction: 'next' | 'prev', newIndex: number) => {
         if (scrollLocked.current || newIndex === activeIndex) return;
         scrollLocked.current = true;
@@ -387,7 +175,7 @@ const Experience = () => {
         });
     }, [activeIndex]);
 
-    // Memoized scroll handler for desktop
+    // Memoized scroll handler for desktop - Keeping for future sections
     const handleScroll = useCallback((e: WheelEvent) => {
         if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 30) return;
 
@@ -401,7 +189,7 @@ const Experience = () => {
         animateExperienceChange(direction, newIndex);
     }, [isMobile, activeIndex, animateExperienceChange, experienceData.length]);
 
-    // Mobile scroll handler for vertical scrolling
+    // Mobile scroll handler for vertical scrolling - Keeping for future sections
     const handleMobileScroll = useCallback((e: WheelEvent) => {
         if (scrollLocked.current || !isMobile || Math.abs(e.deltaY) < 50) return;
 
@@ -415,7 +203,7 @@ const Experience = () => {
         animateExperienceChange(direction, newIndex);
     }, [isMobile, activeIndex, animateExperienceChange, experienceData.length]);
 
-    // Memoized touch handlers - support both horizontal and vertical swipes
+    // Memoized touch handlers - support both horizontal and vertical swipes - Keeping for future sections
     const handleTouchStart = useCallback((e: React.TouchEvent) => {
         touchStartX.current = e.targetTouches[0].clientX;
         touchStartY.current = e.targetTouches[0].clientY;
@@ -455,7 +243,7 @@ const Experience = () => {
         }
     }, [activeIndex, animateExperienceChange, experienceData.length]);
 
-    // Add wheel event listeners for both desktop and mobile
+    // Add wheel event listeners for both desktop and mobile - Keeping for future sections
     useEffect(() => {
         if (isContentVisible) {
             if (isMobile) {
@@ -474,44 +262,37 @@ const Experience = () => {
         <div
             ref={containerRef}
             className={`relative overflow-hidden ${theme.background}`}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            onTouchStart={handleTouchStart} // Keeping for future sections
+            onTouchMove={handleTouchMove}   // Keeping for future sections
+            onTouchEnd={handleTouchEnd}     // Keeping for future sections
         >
             {/* Main content container with controlled visibility */}
             <div className={`relative z-10 ${isContentVisible ? 'opacity-100 transition-opacity duration-300' : 'opacity-0'}`}>
-                <div
-                    ref={experienceRef}
-                    className="experience-section transition-opacity duration-300"
-                >
-                    <ExperienceGrid experience={displayExperience} index={activeIndex} />
-                </div>
+                {/* The hero section component */}
+                <ExperienceHeroSection />
             </div>
 
-            <NavigationDots
-                currentIndex={activeIndex}
-                total={experienceData.length}
-                isDark={isDarkTheme}
-                setCurrentProject={setActiveIndex}
-                isMobile={isMobile}
-                className="hidden lg:block"
-            />
+            {/* NavigationDots and custom-scrollbar styles are removed as they are not relevant for the hero section
+                and will be reintroduced when we implement the full experience scroll/sections. */}
 
             <style jsx>{`
-                .custom-scrollbar::-webkit-scrollbar {
-                    width: 4px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                    background: ${theme.experienceScrollbarTrack};
-                    border-radius: 2px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: ${theme.experienceScrollbarThumb};
-                    border-radius: 2px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: ${theme.experienceScrollbarThumbHover};
-                }
+                /* Basic responsive rem units for padding.
+                   Tailwind's default rem conversion handles most cases,
+                   but explicit values can be used here if needed for finer control. */
+                .p-4 { padding: 1rem; }
+                .sm\\:p-6 { padding: 1.5rem; }
+                .lg\\:p-8 { padding: 2rem; }
+
+                .py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+                .lg\\:py-0 { padding-top: 0rem; padding-bottom: 0rem; }
+
+                .text-6xl { font-size: 3.75rem; } /* 60px */
+                .sm\\:text-7xl { font-size: 4.5rem; } /* 72px */
+                .lg\\:text-8xl { font-size: 6rem; } /* 96px */
+
+                .text-base { font-size: 1rem; } /* 16px */
+                .sm\\:text-lg { font-size: 1.125rem; } /* 18px */
+                .lg\\:text-xl { font-size: 1.25rem; } /* 20px */
             `}</style>
         </div>
     );
