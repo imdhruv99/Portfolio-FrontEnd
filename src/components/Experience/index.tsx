@@ -1,5 +1,6 @@
 'use client';
 
+import gsap from 'gsap';
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
@@ -22,21 +23,58 @@ interface ExperienceItem {
 const ExperienceHeroSection = () => {
     const { colors: theme } = useThemeColors();
 
+    const headingRef = useRef<HTMLHeadingElement>(null);
+    const paragraphRef = useRef<HTMLParagraphElement>(null);
+    const imageRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const tl = gsap.timeline({
+            defaults: { ease: 'power3.out', duration: 1 }
+        });
+
+        tl.fromTo(
+            headingRef.current,
+            { y: 80, opacity: 0, rotateX: 45 },
+            { y: 0, opacity: 1, rotateX: 0 }
+        )
+            .fromTo(
+                paragraphRef.current,
+                { opacity: 0, y: 40, scale: 0.95 },
+                { opacity: 1, y: 0, scale: 1 },
+                '-=0.5'
+            )
+            .fromTo(
+                imageRef.current,
+                { opacity: 0, rotateY: 60, scale: 0.8 },
+                { opacity: 1, rotateY: 0, scale: 1 },
+                '-=0.6'
+            );
+    }, []);
+
     return (
         <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden p-4 sm:p-6 lg:p-8">
             <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center py-10 lg:py-0">
                 {/* Text Content */}
-                <div className="flex flex-col justify-center text-center lg:text-left animate-fade-in-up">
-                    <h1 className={`${fontClasses.classyVogue} text-6xl sm:text-7xl lg:text-8xl font-light ${theme.experienceText} mb-4 lg:mb-6 leading-tight`}>
+                <div className="flex flex-col justify-center text-center lg:text-left">
+                    <h1
+                        ref={headingRef}
+                        className={`${fontClasses.classyVogue} text-6xl sm:text-7xl lg:text-8xl font-light ${theme.experienceText} mb-4 lg:mb-6 leading-tight`}
+                    >
                         Experience
                     </h1>
-                    <p className={`${fontClasses.eireneSansBold} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-2xl mx-auto lg:mx-0 opacity-0 animate-fade-in-up delay-200`}>
+                    <p
+                        ref={paragraphRef}
+                        className={`${fontClasses.eireneSansBold} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-2xl mx-auto lg:mx-0`}
+                    >
                         A journey through my professional growth and contributions across various technologies and industries.
                     </p>
                 </div>
 
                 {/* Image */}
-                <div className="relative w-full aspect-square max-w-[min(80vw,40rem)] mx-auto lg:max-w-full lg:mx-0 flex items-center justify-center opacity-0 animate-fade-in-up delay-600">
+                <div
+                    ref={imageRef}
+                    className="relative w-full aspect-square max-w-[min(80vw,40rem)] mx-auto lg:max-w-full lg:mx-0 flex items-center justify-center"
+                >
                     <Image
                         src="/images/character.png"
                         alt="Experience Overview"
@@ -46,26 +84,6 @@ const ExperienceHeroSection = () => {
                     />
                 </div>
             </div>
-
-            <style jsx>{`
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-
-                @keyframes fadeInUp {
-                    from { opacity: 0; transform: translateY(2rem); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-
-                .animate-fade-in-up {
-                    animation: fadeInUp 0.8s ease-out forwards;
-                }
-
-                .delay-200 { animation-delay: 0.2s; }
-                .delay-400 { animation-delay: 0.4s; }
-                .delay-600 { animation-delay: 0.6s; }
-            `}</style>
         </section>
     );
 };
