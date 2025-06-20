@@ -320,7 +320,7 @@ const Home = () => {
             {/* Hero Section */}
             <section
                 ref={heroSectionRef}
-                className={`relative w-full min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 lg:p-8 overflow-hidden mb-[-8rem] ${theme.homeHeroGradient}`}
+                className={`relative w-full min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 lg:p-8 overflow-hidden mb-[-8rem]`}
             >
                 {/* Base Background */}
                 <div className="absolute inset-0 z-0" />
