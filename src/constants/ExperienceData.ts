@@ -28,7 +28,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
                 'Go',
                 'Python',
                 'Prometheus',
-                'Apache Kafka',
+                'Kafka',
                 'Kubernetes',
                 'Helm',
                 'Docker',

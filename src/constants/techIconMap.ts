@@ -31,6 +31,7 @@ const techIconMap: Record<string, { light: string; dark: string }> = {
     Redis: { light: 'logos:redis', dark: 'logos:redis' },
     Sklearn: { light: 'skill-icons:scikitlearn-dark', dark: 'skill-icons:scikitlearn-light' },
     Tensorflow: { light: 'logos:tensorflow', dark: 'logos:tensorflow' },
+    Kafka: { light: 'devicon:apachekafka', dark: 'simple-icons:apachekafka' },
     Terraform: { light: 'logos:terraform-icon', dark: 'logos:terraform-icon' },
     ReactJs: { light: 'skill-icons:react-dark', dark: 'skill-icons:react-dark' },
     Photoshop: { light: 'logos:adobe-photoshop', dark: 'logos:adobe-photoshop' },
