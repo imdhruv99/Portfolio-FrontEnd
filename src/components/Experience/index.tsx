@@ -3,12 +3,13 @@
 import gsap from 'gsap';
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
-import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 
 import techIconMap from '@/constants/TechIconMap';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { getExperienceData } from '@/constants/ExperienceData';
 import { fontClasses } from '@/config/fonts';
+import { scrambleText } from '@/utils/scramble';
 
 interface ExperienceItem {
     id: number;
@@ -96,17 +97,50 @@ interface ExperienceListViewProps {
 
 const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExperienceId }: ExperienceListViewProps) => {
     const { colors: theme } = useThemeColors();
-    const itemRefs = useRef<(HTMLDivElement | null)[]>([]); // Ref to scroll to the expanded item
+    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const companyNameRefs = useRef<(HTMLHeadingElement | null)[]>([]);
+    const timelines = useRef<(gsap.core.Tween | null)[]>([]);
+    const animatedIndexes = useRef<Set<number>>(new Set());
 
-    const handleToggleCase = useCallback((id: number) => {
-        if (activeExperienceId === id) {
-            setActiveExperienceId(null); // Collapse if already active
-        } else {
-            setActiveExperienceId(id); // Expand new item
-        }
-    }, [activeExperienceId, setActiveExperienceId]);
+    // IntersectionObserver callback
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Find the index of the element in companyNameRefs
+                        const index = companyNameRefs.current.findIndex(el => el === entry.target);
+                        if (index !== -1 && !animatedIndexes.current.has(index)) {
+                            animatedIndexes.current.add(index);
+                            const el = companyNameRefs.current[index];
+                            if (!el) return;
+                            // Kill any existing timeline
+                            if (timelines.current[index]) {
+                                timelines.current[index]?.kill();
+                                timelines.current[index] = null;
+                            }
+                            const originalText = el.textContent ?? '';
+                            timelines.current[index] = scrambleText(el, originalText);
+                        }
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
 
-    // Scroll to the active item when it expands/collapses
+        const currentCompanyNameRefs = companyNameRefs.current;
+
+        currentCompanyNameRefs.forEach(el => {
+            if (el) observer.observe(el);
+        });
+
+        return () => {
+            currentCompanyNameRefs.forEach(el => {
+                if (el) observer.unobserve(el);
+            });
+        };
+    }, []);
+
     useEffect(() => {
         if (activeExperienceId !== null) {
             const index = experienceData.findIndex(exp => exp.id === activeExperienceId);
@@ -117,16 +151,13 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
         }
     }, [activeExperienceId, experienceData]);
 
-
     return (
         <section className="relative w-full overflow-hidden">
             <div className="relative z-10 w-full">
                 {experienceData.map((experience, index) => (
                     <div
                         key={experience.id}
-                        ref={(el) => {
-                            itemRefs.current[index] = el;
-                        }}
+                        ref={(el) => { itemRefs.current[index] = el; }}
                         className={`
                             group
                             border-b ${theme.experienceListItemBorder}
@@ -134,12 +165,12 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                             ${activeExperienceId === experience.id ? 'bg-white/[0.05] dark:bg-black/[0.05]' : 'hover:bg-white/[0.03] dark:hover:bg-black/[0.03]'}
                             cursor-pointer
                         `}
+                        onClick={() => {
+                            if (activeExperienceId === experience.id) setActiveExperienceId(null);
+                            else setActiveExperienceId(experience.id);
+                        }}
                     >
-                        <div
-                            className="flex items-center justify-between py-6 px-4 sm:py-8 sm:px-6 lg:py-10 lg:px-8"
-                            onClick={() => handleToggleCase(experience.id)}
-                        >
-                            {/* Image + Company Name Row */}
+                        <div className="flex items-center justify-between py-6 px-4 sm:py-8 sm:px-6 lg:py-10 lg:px-8">
                             <div className="flex items-center space-x-4 flex-grow text-left">
                                 <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 flex-shrink-0 rounded-lg overflow-hidden border border-transparent group-hover:border-white/20 dark:group-hover:border-white/10 transition-colors duration-300">
                                     <Image
@@ -150,12 +181,14 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                                         className="p-1 sm:p-2 lg:p-3"
                                     />
                                 </div>
-                                <h2 className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.projecHeroText} leading-tight`}>
+                                <h2
+                                    ref={(el) => { companyNameRefs.current[index] = el; }}
+                                    className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.projecHeroText} leading-tight`}
+                                >
                                     {experience.company}
                                 </h2>
                             </div>
 
-                            {/* View/Close Button */}
                             <button
                                 className={`
                                     ${theme.projectLinkButton}
@@ -165,15 +198,17 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                                     flex items-center whitespace-nowrap
                                     hover:bg-opacity-80
                                 `}
-                                onClick={(e) => { e.stopPropagation(); handleToggleCase(experience.id); }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (activeExperienceId === experience.id) setActiveExperienceId(null);
+                                    else setActiveExperienceId(experience.id);
+                                }}
                             >
                                 {activeExperienceId === experience.id ? 'Close' : 'View'}
                                 <Icon icon={activeExperienceId === experience.id ? "akar-icons:cross" : "akar-icons:arrow-right"} className="ml-1 w-3 h-3 sm:w-4 sm:h-4" />
                             </button>
                         </div>
 
-
-                        {/* Expanded View, conditionally rendered */}
                         {activeExperienceId === experience.id && (
                             <div className="px-4 sm:px-6 lg:px-8 pb-8 pt-4 animate-fade-in-down">
                                 <ExpandedExperienceContent experience={experience} />
@@ -194,6 +229,7 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
         </section>
     );
 };
+
 
 interface ExpandedExperienceContentProps {
     experience: ExperienceItem;
