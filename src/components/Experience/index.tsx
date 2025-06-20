@@ -142,7 +142,7 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                                 className={`
                                     ${theme.projectLinkButton}
                                     ${fontClasses.eireneSansBold}
-                                    px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base lg:text-lg
+                                    px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm
                                     transition-all duration-300 ease-in-out
                                     flex items-center whitespace-nowrap
                                     hover:bg-opacity-80
@@ -150,7 +150,7 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                                 onClick={(e) => { e.stopPropagation(); handleToggleCase(experience.id); }}
                             >
                                 {activeExperienceId === experience.id ? 'Close' : 'View'}
-                                <Icon icon={activeExperienceId === experience.id ? "akar-icons:cross" : "akar-icons:arrow-right"} className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                                <Icon icon={activeExperienceId === experience.id ? "akar-icons:cross" : "akar-icons:arrow-right"} className="ml-1 w-3 h-3 sm:w-4 sm:h-4" />
                             </button>
                         </div>
 
