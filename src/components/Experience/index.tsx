@@ -121,16 +121,9 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                             className="flex items-center justify-between py-6 px-4 sm:py-8 sm:px-6 lg:py-10 lg:px-8"
                             onClick={() => handleToggleCase(experience.id)}
                         >
-                            {/* Company Name */}
-                            <div className="flex flex-col flex-grow text-left">
-                                <h2 className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.projecHeroText} leading-tight mb-1`}>
-                                    {experience.company}
-                                </h2>
-                            </div>
-
-                            {/* Thumbnail Image & View Case Button */}
-                            <div className="flex flex-shrink-0 items-center space-x-4 sm:space-x-6">
-                                <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 flex-shrink-0 rounded-lg overflow-hidden border border-transparent group-hover:border-white/20 dark:group-hover:border-white/10 transition-colors duration-300">
+                            {/* Image + Company Name Row */}
+                            <div className="flex items-center space-x-4 flex-grow text-left">
+                                <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 flex-shrink-0 rounded-lg overflow-hidden border border-transparent group-hover:border-white/20 dark:group-hover:border-white/10 transition-colors duration-300">
                                     <Image
                                         src={experience.image}
                                         alt={`${experience.company} Logo`}
@@ -139,22 +132,28 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                                         className="p-1 sm:p-2 lg:p-3"
                                     />
                                 </div>
-                                <button
-                                    className={`
-                                        ${theme.projectLinkButton}
-                                        ${fontClasses.eireneSansBold}
-                                        px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base lg:text-lg
-                                        transition-all duration-300 ease-in-out
-                                        flex items-center whitespace-nowrap
-                                        hover:bg-opacity-80
-                                    `}
-                                    onClick={(e) => { e.stopPropagation(); handleToggleCase(experience.id); }}
-                                >
-                                    {activeExperienceId === experience.id ? 'Close' : 'View'}
-                                    <Icon icon={activeExperienceId === experience.id ? "akar-icons:cross" : "akar-icons:arrow-right"} className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
-                                </button>
+                                <h2 className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.projecHeroText} leading-tight`}>
+                                    {experience.company}
+                                </h2>
                             </div>
+
+                            {/* View/Close Button */}
+                            <button
+                                className={`
+                                    ${theme.projectLinkButton}
+                                    ${fontClasses.eireneSansBold}
+                                    px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base lg:text-lg
+                                    transition-all duration-300 ease-in-out
+                                    flex items-center whitespace-nowrap
+                                    hover:bg-opacity-80
+                                `}
+                                onClick={(e) => { e.stopPropagation(); handleToggleCase(experience.id); }}
+                            >
+                                {activeExperienceId === experience.id ? 'Close' : 'View'}
+                                <Icon icon={activeExperienceId === experience.id ? "akar-icons:cross" : "akar-icons:arrow-right"} className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+                            </button>
                         </div>
+
 
                         {/* Expanded View, conditionally rendered */}
                         {activeExperienceId === experience.id && (
