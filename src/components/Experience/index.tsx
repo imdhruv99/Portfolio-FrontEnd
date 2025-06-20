@@ -28,7 +28,9 @@ const ExperienceHeroSection = () => {
     const imageRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const prefersReducedMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)',
+        ).matches;
         if (prefersReducedMotion) return;
 
         const tl = gsap.timeline({
@@ -38,19 +40,19 @@ const ExperienceHeroSection = () => {
         tl.fromTo(
             headingRef.current,
             { y: 80, opacity: 0, rotateX: 45 },
-            { y: 0, opacity: 1, rotateX: 0 }
+            { y: 0, opacity: 1, rotateX: 0 },
         )
             .fromTo(
                 paragraphRef.current,
                 { opacity: 0, y: 40, scale: 0.95 },
                 { opacity: 1, y: 0, scale: 1 },
-                '-=0.5'
+                '-=0.5',
             )
             .fromTo(
                 imageRef.current,
                 { opacity: 0, rotateY: 60, scale: 0.8 },
                 { opacity: 1, rotateY: 0, scale: 1 },
-                '-=0.6'
+                '-=0.6',
             );
     }, []);
 
@@ -68,18 +70,23 @@ const ExperienceHeroSection = () => {
                     <p
                         className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-xl mx-auto lg:mx-0 pt-5`}
                     >
-                        A journey through my professional growth and contributions across various technologies and industries.
-
+                        A journey through my professional growth and
+                        contributions across various technologies and
+                        industries.
                     </p>
                     <p
                         className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-xl mx-auto lg:mx-0 pt-5`}
                     >
-                        I’ve worked with a range of companies in roles such as Software Engineer, DevOps Engineer, and Software Architect.
+                        I’ve worked with a range of companies in roles such as
+                        Software Engineer, DevOps Engineer, and Software
+                        Architect.
                     </p>
                     <p
                         className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-xl mx-auto lg:mx-0 pt-3`}
                     >
-                        My experience includes building scalable systems and delivering reliable software solutions in diverse tech stacks.
+                        My experience includes building scalable systems and
+                        delivering reliable software solutions in diverse tech
+                        stacks.
                     </p>
                 </div>
 
@@ -105,7 +112,11 @@ interface ExperienceListViewProps {
     setActiveExperienceId: (id: number | null) => void;
 }
 
-const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExperienceId }: ExperienceListViewProps) => {
+const ExperienceListView = ({
+    experienceData,
+    activeExperienceId,
+    setActiveExperienceId,
+}: ExperienceListViewProps) => {
     const { colors: theme } = useThemeColors();
     const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
     const companyNameRefs = useRef<(HTMLHeadingElement | null)[]>([]);
@@ -114,11 +125,16 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-            entries => {
-                entries.forEach(entry => {
+            (entries) => {
+                entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        const index = companyNameRefs.current.findIndex(el => el === entry.target);
-                        if (index !== -1 && !animatedIndexes.current.has(index)) {
+                        const index = companyNameRefs.current.findIndex(
+                            (el) => el === entry.target,
+                        );
+                        if (
+                            index !== -1 &&
+                            !animatedIndexes.current.has(index)
+                        ) {
                             animatedIndexes.current.add(index);
                             const el = companyNameRefs.current[index];
                             if (!el) return;
@@ -127,21 +143,24 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                                 timelines.current[index] = null;
                             }
                             const originalText = el.textContent ?? '';
-                            timelines.current[index] = scrambleText(el, originalText);
+                            timelines.current[index] = scrambleText(
+                                el,
+                                originalText,
+                            );
                         }
                     }
                 });
             },
-            { threshold: 0.5 }
+            { threshold: 0.5 },
         );
 
         const currentRefs = companyNameRefs.current;
-        currentRefs.forEach(el => {
+        currentRefs.forEach((el) => {
             if (el) observer.observe(el);
         });
 
         return () => {
-            currentRefs.forEach(el => {
+            currentRefs.forEach((el) => {
                 if (el) observer.unobserve(el);
             });
         };
@@ -149,9 +168,14 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
 
     useEffect(() => {
         if (activeExperienceId !== null) {
-            const index = experienceData.findIndex(exp => exp.id === activeExperienceId);
+            const index = experienceData.findIndex(
+                (exp) => exp.id === activeExperienceId,
+            );
             if (index !== -1 && itemRefs.current[index]) {
-                itemRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                itemRefs.current[index]?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                });
             }
         }
     }, [activeExperienceId, experienceData]);
@@ -174,7 +198,11 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                             cursor-pointer
                         `}
                         onClick={() => {
-                            setActiveExperienceId(activeExperienceId === experience.id ? null : experience.id);
+                            setActiveExperienceId(
+                                activeExperienceId === experience.id
+                                    ? null
+                                    : experience.id,
+                            );
                         }}
                     >
                         <div className="flex items-center justify-between py-6 px-4 sm:py-8 sm:px-6 lg:py-10 lg:px-8">
@@ -189,7 +217,9 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                                 </div>
                                 <h2
                                     id={`exp-heading-${experience.id}`}
-                                    ref={(el) => { companyNameRefs.current[index] = el; }}
+                                    ref={(el) => {
+                                        companyNameRefs.current[index] = el;
+                                    }}
                                     className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.projecHeroText} leading-tight`}
                                 >
                                     {experience.company}
@@ -197,7 +227,9 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                             </div>
 
                             <button
-                                aria-expanded={activeExperienceId === experience.id}
+                                aria-expanded={
+                                    activeExperienceId === experience.id
+                                }
                                 aria-controls={`exp-panel-${experience.id}`}
                                 className={`
                                     ${theme.projectLinkButton}
@@ -209,11 +241,24 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                                 `}
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    setActiveExperienceId(activeExperienceId === experience.id ? null : experience.id);
+                                    setActiveExperienceId(
+                                        activeExperienceId === experience.id
+                                            ? null
+                                            : experience.id,
+                                    );
                                 }}
                             >
-                                {activeExperienceId === experience.id ? 'Close' : 'View'}
-                                <Icon icon={activeExperienceId === experience.id ? "akar-icons:cross" : "akar-icons:arrow-right"} className="ml-1 w-3 h-3 sm:w-4 sm:h-4" />
+                                {activeExperienceId === experience.id
+                                    ? 'Close'
+                                    : 'View'}
+                                <Icon
+                                    icon={
+                                        activeExperienceId === experience.id
+                                            ? 'akar-icons:cross'
+                                            : 'akar-icons:arrow-right'
+                                    }
+                                    className="ml-1 w-3 h-3 sm:w-4 sm:h-4"
+                                />
                             </button>
                         </div>
 
@@ -221,12 +266,17 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                             id={`exp-panel-${experience.id}`}
                             role="region"
                             aria-labelledby={`exp-heading-${experience.id}`}
-                            style={{ transition: 'max-height 0.5s ease', overflow: 'hidden' }}
+                            style={{
+                                transition: 'max-height 0.5s ease',
+                                overflow: 'hidden',
+                            }}
                             className={`transition-all duration-500 ${activeExperienceId === experience.id ? 'max-h-[1000px]' : 'max-h-0'}`}
                         >
                             {activeExperienceId === experience.id && (
                                 <div className="px-4 sm:px-6 lg:px-8 pb-8 pt-4 animate-fade-in-down">
-                                    <ExpandedExperienceContent experience={experience} />
+                                    <ExpandedExperienceContent
+                                        experience={experience}
+                                    />
                                 </div>
                             )}
                         </div>
@@ -237,14 +287,20 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
             <style jsx>
                 {`
                     @keyframes fadeInDown {
-                    from { opacity: 0; transform: translateY(-1rem); }
-                    to { opacity: 1; transform: translateY(0); }
+                        from {
+                            opacity: 0;
+                            transform: translateY(-1rem);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
                     }
                     .animate-fade-in-down {
-                    animation: fadeInDown 0.5s ease-out forwards;
+                        animation: fadeInDown 0.5s ease-out forwards;
                     }
                     .scroll-offset {
-                    scroll-margin-top: 6rem;
+                        scroll-margin-top: 6rem;
                     }
                 `}
             </style>
@@ -256,26 +312,40 @@ interface ExpandedExperienceContentProps {
     experience: ExperienceItem;
 }
 
-const ExpandedExperienceContent = ({ experience }: ExpandedExperienceContentProps) => {
+const ExpandedExperienceContent = ({
+    experience,
+}: ExpandedExperienceContentProps) => {
     const { colors: theme, isDarkTheme } = useThemeColors();
 
     return (
         <div className="relative w-full max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
                 <div className="flex flex-col space-y-6">
-                    <h3 className={`${fontClasses.classyVogue} text-3xl sm:text-4xl ${theme.experienceText}`}>
+                    <h3
+                        className={`${fontClasses.classyVogue} text-3xl sm:text-4xl ${theme.experienceText}`}
+                    >
                         {experience.designation}
                     </h3>
-                    <p className={`${fontClasses.eireneSans} text-lg sm:text-xl ${theme.experienceSubText}`}>
+                    <p
+                        className={`${fontClasses.eireneSans} text-lg sm:text-xl ${theme.experienceSubText}`}
+                    >
                         {experience.period}
                     </p>
 
                     <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-4">
                         {experience.technologies.map((tech, techIndex) => {
-                            const iconName = isDarkTheme ? techIconMap[tech]?.dark : techIconMap[tech]?.light;
+                            const iconName = isDarkTheme
+                                ? techIconMap[tech]?.dark
+                                : techIconMap[tech]?.light;
                             return iconName ? (
-                                <div key={techIndex} className="flex items-center space-x-2">
-                                    <Icon icon={iconName} className={`w-8 h-8 sm:w-10 sm:h-10 ${theme.experienceTechIcon}`} />
+                                <div
+                                    key={techIndex}
+                                    className="flex items-center space-x-2"
+                                >
+                                    <Icon
+                                        icon={iconName}
+                                        className={`w-8 h-8 sm:w-10 sm:h-10 ${theme.experienceTechIcon}`}
+                                    />
                                 </div>
                             ) : null;
                         })}
@@ -285,11 +355,16 @@ const ExpandedExperienceContent = ({ experience }: ExpandedExperienceContentProp
                 <div className="space-y-6 overflow-y-auto custom-scrollbar-expanded max-h-[60vh] lg:max-h-[unset]">
                     {experience.description.map((desc, descIndex) => (
                         <div key={descIndex} className="relative group">
-                            <p className={`${fontClasses.eireneSans} text-base sm:text-lg ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}>
-                                <span className="mr-2 text-primary">✦</span>{desc}
+                            <p
+                                className={`${fontClasses.eireneSans} text-base sm:text-lg ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}
+                            >
+                                <span className="mr-2 text-primary">✦</span>
+                                {desc}
                             </p>
                             <div className="mt-3 w-full px-8 max-w-4xl mx-auto">
-                                <div className={`h-px w-full transition-all duration-300 ${theme.experienceDescriptionDivider} opacity-30`} />
+                                <div
+                                    className={`h-px w-full transition-all duration-300 ${theme.experienceDescriptionDivider} opacity-30`}
+                                />
                             </div>
                         </div>
                     ))}
@@ -299,18 +374,18 @@ const ExpandedExperienceContent = ({ experience }: ExpandedExperienceContentProp
             <style jsx>
                 {`
                     .custom-scrollbar-expanded::-webkit-scrollbar {
-                    width: 0.5rem;
+                        width: 0.5rem;
                     }
                     .custom-scrollbar-expanded::-webkit-scrollbar-track {
-                    background: ${theme.experienceScrollbarTrack};
-                    border-radius: 0.25rem;
+                        background: ${theme.experienceScrollbarTrack};
+                        border-radius: 0.25rem;
                     }
                     .custom-scrollbar-expanded::-webkit-scrollbar-thumb {
-                    background: ${theme.experienceScrollbarThumb};
-                    border-radius: 0.25rem;
+                        background: ${theme.experienceScrollbarThumb};
+                        border-radius: 0.25rem;
                     }
                     .custom-scrollbar-expanded::-webkit-scrollbar-thumb:hover {
-                    background: ${theme.experienceScrollbarThumbHover};
+                        background: ${theme.experienceScrollbarThumbHover};
                     }
                 `}
             </style>
@@ -320,9 +395,14 @@ const ExpandedExperienceContent = ({ experience }: ExpandedExperienceContentProp
 
 const Experience = () => {
     const { colors: theme, isLoading, isDarkTheme } = useThemeColors();
-    const experienceData = useMemo(() => getExperienceData(isDarkTheme), [isDarkTheme]);
+    const experienceData = useMemo(
+        () => getExperienceData(isDarkTheme),
+        [isDarkTheme],
+    );
 
-    const [activeExperienceId, setActiveExperienceId] = useState<number | null>(null);
+    const [activeExperienceId, setActiveExperienceId] = useState<number | null>(
+        null,
+    );
     const [isContentVisible, setIsContentVisible] = useState(false);
 
     useEffect(() => {
@@ -336,7 +416,9 @@ const Experience = () => {
 
     return (
         <div className={`relative overflow-hidden ${theme.background}`}>
-            <div className={`relative z-10 ${isContentVisible ? 'opacity-100 transition-opacity duration-300' : 'opacity-0'}`}>
+            <div
+                className={`relative z-10 pb-16 ${isContentVisible ? 'opacity-100 transition-opacity duration-300' : 'opacity-0'}`}
+            >
                 <ExperienceHeroSection />
                 <ExperienceListView
                     experienceData={experienceData}
