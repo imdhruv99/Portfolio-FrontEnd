@@ -3,13 +3,10 @@
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
-import { gsap } from 'gsap';
-// Removed ScrollToPlugin import as it's not needed for in-place expansion
 
 import techIconMap from '@/constants/TechIconMap';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { getExperienceData } from '@/constants/ExperienceData';
-// Removed NavigationDots as it's not used
 import { fontClasses } from '@/config/fonts';
 
 interface ExperienceItem {
@@ -22,36 +19,6 @@ interface ExperienceItem {
     image: string;
 }
 
-// BentoCard is not used and is removed
-/*
-interface BentoCardProps {
-    children: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
-}
-
-const BentoCard = ({ children, className = '', style }: BentoCardProps) => {
-    const { colors: theme } = useThemeColors();
-
-    return (
-        <div
-            className={`
-                ${theme.experienceBentoCard}
-                ${theme.experienceBentoBorder}
-                ${theme.experienceBentoHover}
-                ${theme.experienceBentoShadow}
-                backdrop-blur-md rounded-2xl
-                transition-all duration-300
-                ${className}
-            `}
-            style={style}
-        >
-            {children}
-        </div>
-    );
-};
-*/
-
 const ExperienceHeroSection = () => {
     const { colors: theme } = useThemeColors();
 
@@ -63,7 +30,7 @@ const ExperienceHeroSection = () => {
     return (
         <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden p-4 sm:p-6 lg:p-8">
             <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center py-10 lg:py-0">
-                {/* Left Section: Text Content */}
+                {/* Text Content */}
                 <div className="flex flex-col justify-center text-center lg:text-left animate-fade-in-up">
                     <h1 className={`${fontClasses.classyVogue} text-6xl sm:text-7xl lg:text-8xl font-light ${theme.experienceText} mb-4 lg:mb-6 leading-tight`}>
                         Experience
@@ -76,7 +43,7 @@ const ExperienceHeroSection = () => {
                     </p>
                 </div>
 
-                {/* Right Section: Image */}
+                {/* Image */}
                 <div className="relative w-full aspect-square max-w-[min(80vw,40rem)] mx-auto lg:max-w-full lg:mx-0 flex items-center justify-center opacity-0 animate-fade-in-up delay-600">
                     <Image
                         src="/images/desktop.png" // Using desktop.png as discussed
@@ -113,8 +80,8 @@ const ExperienceHeroSection = () => {
 
 interface ExperienceListViewProps {
     experienceData: ExperienceItem[];
-    activeExperienceId: number | null; // Use activeExperienceId directly
-    setActiveExperienceId: (id: number | null) => void; // Function to update active ID
+    activeExperienceId: number | null;
+    setActiveExperienceId: (id: number | null) => void;
 }
 
 const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExperienceId }: ExperienceListViewProps) => {
@@ -135,7 +102,6 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
             const index = experienceData.findIndex(exp => exp.id === activeExperienceId);
             if (index !== -1 && itemRefs.current[index]) {
                 const element = itemRefs.current[index];
-                // Smooth scroll into view, adjust block to 'start' or 'center' as needed
                 element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
@@ -148,7 +114,9 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                 {experienceData.map((experience, index) => (
                     <div
                         key={experience.id}
-                        ref={(el) => (itemRefs.current[index] = el)}
+                        ref={(el) => {
+                            itemRefs.current[index] = el;
+                        }}
                         className={`
                             group
                             border-b ${theme.experienceListItemBorder}
@@ -161,14 +129,14 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                             className="flex items-center justify-between py-6 px-4 sm:py-8 sm:px-6 lg:py-10 lg:px-8"
                             onClick={() => handleToggleCase(experience.id)}
                         >
-                            {/* Left Section: Company Name and Designation */}
+                            {/*Company Name */}
                             <div className="flex flex-col flex-grow text-left">
                                 <h2 className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.projecHeroText} leading-tight mb-1`}>
                                     {experience.company}
                                 </h2>
                             </div>
 
-                            {/* Right Section: Thumbnail Image & View Case Button */}
+                            {/*Thumbnail Image & View Case Button */}
                             <div className="flex flex-shrink-0 items-center space-x-4 sm:space-x-6">
                                 <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 flex-shrink-0 rounded-lg overflow-hidden border border-transparent group-hover:border-white/20 dark:group-hover:border-white/10 transition-colors duration-300">
                                     <Image
@@ -188,7 +156,7 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                                         flex items-center whitespace-nowrap
                                         hover:bg-opacity-80
                                     `}
-                                    onClick={(e) => { e.stopPropagation(); handleToggleCase(experience.id); }} // Ensure button also toggles
+                                    onClick={(e) => { e.stopPropagation(); handleToggleCase(experience.id); }}
                                 >
                                     {activeExperienceId === experience.id ? 'Close' : 'View'}
                                     <Icon icon={activeExperienceId === experience.id ? "akar-icons:cross" : "akar-icons:arrow-right"} className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
@@ -218,7 +186,6 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
     );
 };
 
-// Renamed to ExpandedExperienceContent because it's no longer a full section
 interface ExpandedExperienceContentProps {
     experience: ExperienceItem;
 }
@@ -228,9 +195,9 @@ const ExpandedExperienceContent = ({ experience }: ExpandedExperienceContentProp
 
     return (
         <div className="relative w-full max-w-7xl mx-auto">
-            {/* Main Content Area (Two Columns for larger screens, stacked for smaller) */}
+            {/* Main Content Area */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-                {/* Left Column: Designation, Period, Technologies */}
+                {/* Designation, Period, Technologies */}
                 <div className="flex flex-col space-y-6">
                     <h3 className={`${fontClasses.classyVogue} text-3xl sm:text-4xl ${theme.experienceText}`}>
                         {experience.designation}
@@ -254,21 +221,23 @@ const ExpandedExperienceContent = ({ experience }: ExpandedExperienceContentProp
                     </div>
                 </div>
 
-                {/* Right Column: Description */}
+                {/* Description */}
                 <div className="space-y-6 overflow-y-auto custom-scrollbar-expanded max-h-[60vh] lg:max-h-[unset]">
                     {experience.description.map((desc, descIndex) => (
                         <div key={descIndex} className="relative group">
                             <p className={`${fontClasses.eireneSans} text-base sm:text-lg ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}>
                                 <span className="mr-2 text-primary">✦</span>{desc}
                             </p>
-                            {/* Horizontal line: reduced width and opacity, with side padding */}
-                            <div
-                                className={`
-                                    mt-3 h-px w-[calc(100%-4rem)] mx-auto
+                            {/* Horizontal line */}
+                            <div className="mt-3 w-full px-8 max-w-4xl mx-auto">
+                                <div
+                                    className={`
+                                    h-px w-full
                                     transition-all duration-300
                                     ${theme.experienceDescriptionDivider} opacity-30
-                                `}
-                            />
+                                    `}
+                                />
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -297,16 +266,15 @@ const ExpandedExperienceContent = ({ experience }: ExpandedExperienceContentProp
 
 
 const Experience = () => {
-    const { colors: theme, isLoading } = useThemeColors();
+    const { colors: theme, isLoading, isDarkTheme } = useThemeColors();
 
-    // No need for isDarkTheme here, as it's passed down to useMemo and children components
-    const experienceData = useMemo(() => getExperienceData(theme.isDark), [theme.isDark]);
+    const experienceData = useMemo(() => getExperienceData(isDarkTheme), [isDarkTheme]);
 
     // Use activeExperienceId to track which item is open
     const [activeExperienceId, setActiveExperienceId] = useState<number | null>(null);
     const [isContentVisible, setIsContentVisible] = useState(false);
 
-    // Initial content visibility logic (remains similar)
+    // Initial content visibility logic
     useEffect(() => {
         if (!isLoading) {
             const timer = setTimeout(() => {
@@ -322,82 +290,18 @@ const Experience = () => {
         <div
             className={`relative overflow-hidden ${theme.background}`}
         >
-            {/* Main content container with controlled visibility */}
+            {/* Main content containe */}
             <div className={`relative z-10 ${isContentVisible ? 'opacity-100 transition-opacity duration-300' : 'opacity-0'}`}>
                 {/* Hero Section */}
                 <ExperienceHeroSection />
 
-                {/* Experience List View with in-place expansion */}
+                {/* Experience List */}
                 <ExperienceListView
                     experienceData={experienceData}
                     activeExperienceId={activeExperienceId}
                     setActiveExperienceId={setActiveExperienceId}
                 />
             </div>
-
-            <style jsx>{`
-                /* General responsive rem units */
-                .p-4 { padding: 1rem; }
-                .sm\\:p-6 { padding: 1.5rem; }
-                .lg\\:p-8 { padding: 2rem; }
-
-                .py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
-                .lg\\:py-0 { padding-top: 0rem; padding-bottom: 0rem; }
-
-                .text-6xl { font-size: 3.75rem; } /* 60px */
-                .sm\\:text-7xl { font-size: 4.5rem; } /* 72px */
-                .lg\\:text-8xl { font-size: 6rem; } /* 96px */
-
-                .text-base { font-size: 1rem; } /* 16px */
-                .sm\\:text-lg { font-size: 1.125rem; } /* 18px */
-                .lg\\:text-xl { font-size: 1.25rem; } /* 20px */
-
-                /* Styles specific to ExperienceListView */
-                .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-                .px-4 { padding-left: 1rem; padding-right: 1rem; }
-                .sm\\:py-8 { padding-top: 2rem; padding-bottom: 2rem; }
-                .sm\\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-                .lg\\:py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
-                .lg\\:px-8 { padding-left: 2rem; padding-right: 2rem; }
-
-                /* Company name in list view */
-                .text-2xl { font-size: 1.5rem; } /* 24px */
-                .sm\\:text-3xl { font-size: 1.875rem; } /* 30px */
-                .lg\\:text-4xl { font-size: 2.25rem; } /* 36px */
-
-                .w-20 { width: 5rem; }
-                .h-20 { height: 5rem; }
-                .sm\\:w-24 { width: 6rem; }
-                .sm\\:h-24 { height: 6rem; }
-                .lg\\:w-28 { width: 7rem; }
-                .lg\\:h-28 { height: 7rem; }
-
-                /* Styles specific to ExpandedExperienceContent */
-                .gap-8 { gap: 2rem; }
-                .lg\\:gap-16 { gap: 4rem; }
-
-                /* Adjusted text sizes in expanded view for better hierarchy */
-                /* Company name will be large, Designation slightly smaller */
-                .text-4xl { font-size: 2.25rem; }
-                .sm\\:text-5xl { font-size: 3rem; }
-                .lg\\:text-6xl { font-size: 3.75rem; }
-
-                .text-sm { font-size: 0.875rem; }
-                .sm\\:text-base { font-size: 1rem; }
-                .lg\\:text-lg { font-size: 1.125rem; }
-
-                .w-8 { width: 2rem; }
-                .h-8 { height: 2rem; }
-                .sm\\:w-10 { width: 2.5rem; }
-                .sm\\:h-10 { height: 2.5rem; }
-                /* Icon size for close/arrow in buttons */
-                .w-4 { width: 1rem; }
-                .h-4 { height: 1rem; }
-                .sm\\:w-5 { width: 1.25rem; }
-                .sm\\:h-5 { height: 1.25rem; }
-                .lg\\:w-6 { width: 1.5rem; }
-                .lg\\:h-6 { height: 1.5rem; }
-            `}</style>
         </div>
     );
 };

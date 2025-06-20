@@ -124,7 +124,7 @@ export const themes: Record<string, Theme> = {
             experienceText: 'text-gray-900',
             experienceSubText: 'text-gray-600',
             experienceDescriptionText: 'text-gray-700',
-            experienceListItemBorder: 'border-gray-200/50',
+            experienceListItemBorder: 'border-gray-200/90',
             experienceTechIcon: 'text-gray-700',
 
             // Project Page Styles
