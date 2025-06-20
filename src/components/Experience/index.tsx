@@ -203,9 +203,6 @@ const ExpandedExperienceContent = ({ experience }: ExpandedExperienceContentProp
                             return iconName ? (
                                 <div key={techIndex} className="flex items-center space-x-2">
                                     <Icon icon={iconName} className={`w-8 h-8 sm:w-10 sm:h-10 ${theme.experienceTechIcon}`} />
-                                    <span className={`${fontClasses.eireneSans} text-sm sm:text-base ${theme.experienceDescriptionText}`}>
-                                        {tech}
-                                    </span>
                                 </div>
                             ) : null;
                         })}
