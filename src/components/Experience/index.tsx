@@ -59,22 +59,23 @@ const ExperienceHeroSection = () => {
                 <div className="flex flex-col justify-center text-center lg:text-left">
                     <h1
                         ref={headingRef}
-                        className={`${fontClasses.classyVogue} text-6xl sm:text-7xl lg:text-8xl font-light ${theme.experienceText} mb-4 lg:mb-6 leading-tight`}
+                        className={`${fontClasses.classyVogue} text-5xl sm:text-6xl lg:text-7xl font-light ${theme.experienceText} mb-4 lg:mb-6 leading-tight`}
                     >
                         Experience
                     </h1>
                     <p
                         ref={paragraphRef}
-                        className={`${fontClasses.eireneSansBold} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-2xl mx-auto lg:mx-0`}
+                        className={`${fontClasses.eireneSansBold} text-lg sm:text-xl lg:text-2xl ${theme.experienceSubText} max-w-2xl mx-auto lg:mx-0`}
                     >
                         A journey through my professional growth and contributions across various technologies and industries.
                     </p>
                     <p
                         ref={paragraphRef}
-                        className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-2xl mx-auto lg:mx-0 pt-5`}
+                        className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-xl mx-auto lg:mx-0 pt-5`}
                     >
-                        I have worked with many companies as Software Engineer, DevOps Engineer and Software Architect.
-                        I have also work with some of the well established companies mostly as Software Engineer.
+                        I have worked with a range of companies in roles such as Software Engineer, DevOps Engineer, and Software Architect.
+                        My experience includes contributing to several well-established organizations, primarily as a Software Engineer.
+                        Over the years, I’ve gained a deep understanding of building scalable systems and delivering reliable software solutions.
                     </p>
                 </div>
 
