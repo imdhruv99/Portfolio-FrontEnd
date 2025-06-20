@@ -15,10 +15,6 @@ export interface ThemeColors {
     homeHeroOrbitalRingMobile: string;
 
     // Experience Page Styles
-    experienceBentoCard: string;
-    experienceBentoBorder: string;
-    experienceBentoHover: string;
-    experienceBentoShadow: string;
     experienceDescriptionDivider: string;
     experienceScrollbarTrack: string;
     experienceScrollbarThumb: string;
@@ -27,6 +23,8 @@ export interface ThemeColors {
     experienceText: string;
     experienceSubText: string;
     experienceDescriptionText: string;
+    experienceListItemBorder: string;
+    experienceTechIcon: string;
 
     // Project Page Styles
     projectPatternBackground: string;
@@ -118,10 +116,6 @@ export const themes: Record<string, Theme> = {
             `,
 
             // Experience Page Styles
-            experienceBentoCard: 'bg-white/60',
-            experienceBentoBorder: 'border border-[#e5e7eb]',
-            experienceBentoHover: 'hover:bg-white/80 hover:border-[#d1d5db]',
-            experienceBentoShadow: 'shadow-[0_4px_12px_rgba(0,0,0,0.08)]',
             experienceDescriptionDivider: 'bg-gradient-to-r from-[#d1d5db] via-[#bbb] to-[#d1d5db]',
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(0, 0, 0, 0.2)',
@@ -130,6 +124,8 @@ export const themes: Record<string, Theme> = {
             experienceText: 'text-gray-900',
             experienceSubText: 'text-gray-600',
             experienceDescriptionText: 'text-gray-700',
+            experienceListItemBorder: 'border-gray-200/90',
+            experienceTechIcon: 'text-gray-700',
 
             // Project Page Styles
             projectPatternBackground: 'modern-pattern-light',
@@ -203,10 +199,6 @@ export const themes: Record<string, Theme> = {
             homeHeroOrbitalRingMobile: `radial-gradient(ellipse 600px 400px at 50% 10%, rgba(88,129,87,0.2) 0%, rgba(58,90,64,0.12) 40%, transparent 70%)`,
 
             // Experience Page Styles
-            experienceBentoCard: 'bg-[#1c1c1e]/70',
-            experienceBentoBorder: 'border border-[#2c2c2e]',
-            experienceBentoHover: 'hover:bg-[#2a2a2c]/80 hover:border-[#3a3a3c]',
-            experienceBentoShadow: 'shadow-[0_4px_12px_rgba(0,0,0,0.3)]',
             experienceDescriptionDivider: 'bg-gradient-to-r from-[#3a3a3c] via-[#555] to-[#3a3a3c]',
             experienceScrollbarTrack: 'rgba(255, 255, 255, 0.1)',
             experienceScrollbarThumb: 'rgba(255, 255, 255, 0.3)',
@@ -215,6 +207,8 @@ export const themes: Record<string, Theme> = {
             experienceText: 'text-white',
             experienceSubText: 'text-white/60',
             experienceDescriptionText: 'text-white/80',
+            experienceListItemBorder: 'border-white/10',
+            experienceTechIcon: 'text-white/80',
 
             // Project Page Styles
             projectPatternBackground: 'modern-pattern-dark',
