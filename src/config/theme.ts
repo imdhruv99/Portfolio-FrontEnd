@@ -88,7 +88,7 @@ export const themes: Record<string, Theme> = {
         name: 'light',
         colors: {
             // Common Styles
-            background: 'bg-gradient-to-br from-[#0a0a0a] via-[#141414] to-[#0f0f0f]',
+            background: 'bg-gradient-to-br from-[#fafafa] via-[#f5f5f5] to-[#efefef]',
 
             // Home Page Styles
             homeHighlightColor: '#007BFF',
