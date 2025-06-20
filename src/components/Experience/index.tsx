@@ -22,11 +22,6 @@ interface ExperienceItem {
 const ExperienceHeroSection = () => {
     const { colors: theme } = useThemeColors();
 
-    const summaryText = "I have worked with companies as a Software Engineer, Software Architect, \
-    and DevOps Engineer, contributing across the full product lifecycle. I’m passionate about building \
-    innovative products that simplify and enhance everyday human life. I thrive in fast-paced environments \
-    where technology drives meaningful impact."
-
     return (
         <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden p-4 sm:p-6 lg:p-8">
             <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center py-10 lg:py-0">
@@ -35,11 +30,8 @@ const ExperienceHeroSection = () => {
                     <h1 className={`${fontClasses.classyVogue} text-6xl sm:text-7xl lg:text-8xl font-light ${theme.experienceText} mb-4 lg:mb-6 leading-tight`}>
                         Experience
                     </h1>
-                    <p className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-2xl mx-auto lg:mx-0 opacity-0 animate-fade-in-up delay-200`}>
+                    <p className={`${fontClasses.eireneSansBold} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-2xl mx-auto lg:mx-0 opacity-0 animate-fade-in-up delay-200`}>
                         A journey through my professional growth and contributions across various technologies and industries.
-                    </p>
-                    <p className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceDescriptionText} max-w-2xl mx-auto lg:mx-0 mt-4 opacity-0 animate-fade-in-up delay-400`}>
-                        {summaryText}
                     </p>
                 </div>
 
