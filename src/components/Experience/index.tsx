@@ -46,7 +46,7 @@ const ExperienceHeroSection = () => {
                 {/* Image */}
                 <div className="relative w-full aspect-square max-w-[min(80vw,40rem)] mx-auto lg:max-w-full lg:mx-0 flex items-center justify-center opacity-0 animate-fade-in-up delay-600">
                     <Image
-                        src="/images/desktop.png" // Using desktop.png as discussed
+                        src="/images/character.png"
                         alt="Experience Overview"
                         layout="fill"
                         objectFit="contain"
@@ -129,14 +129,14 @@ const ExperienceListView = ({ experienceData, activeExperienceId, setActiveExper
                             className="flex items-center justify-between py-6 px-4 sm:py-8 sm:px-6 lg:py-10 lg:px-8"
                             onClick={() => handleToggleCase(experience.id)}
                         >
-                            {/*Company Name */}
+                            {/* Company Name */}
                             <div className="flex flex-col flex-grow text-left">
                                 <h2 className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.projecHeroText} leading-tight mb-1`}>
                                     {experience.company}
                                 </h2>
                             </div>
 
-                            {/*Thumbnail Image & View Case Button */}
+                            {/* Thumbnail Image & View Case Button */}
                             <div className="flex flex-shrink-0 items-center space-x-4 sm:space-x-6">
                                 <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 flex-shrink-0 rounded-lg overflow-hidden border border-transparent group-hover:border-white/20 dark:group-hover:border-white/10 transition-colors duration-300">
                                     <Image
