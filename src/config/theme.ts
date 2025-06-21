@@ -24,11 +24,12 @@ export interface ThemeColors {
     experienceDescriptionText: string;
     experienceListItemBorder: string;
     experienceTechIcon: string;
+    experienceLinkButton: string;
 
     // Project Page Styles
     projectPatternBackground: string;
     projectIndexText: string;
-    projecHeroText: string;
+    projectHeroText: string;
     projectCategoryText: string;
     projectMetaText: string;
     projectDescriptionText: string
@@ -124,11 +125,12 @@ export const themes: Record<string, Theme> = {
             experienceDescriptionText: 'text-gray-700',
             experienceListItemBorder: 'border-gray-200/90',
             experienceTechIcon: 'text-gray-700',
+            experienceLinkButton: 'bg-white/80 hover:bg-white text-gray-700 border border-gray-200/50',
 
             // Project Page Styles
             projectPatternBackground: 'modern-pattern-light',
             projectIndexText: 'text-gray-900 opacity-80',
-            projecHeroText: 'text-gray-900',
+            projectHeroText: 'text-gray-900',
             projectCategoryText: 'text-gray-600',
             projectMetaText: 'text-gray-500',
             projectDescriptionText: 'text-gray-700',
@@ -206,11 +208,12 @@ export const themes: Record<string, Theme> = {
             experienceDescriptionText: 'text-white/80',
             experienceListItemBorder: 'border-white/10',
             experienceTechIcon: 'text-white/80',
+            experienceLinkButton: 'bg-neutral-900 border border-neutral-700',
 
             // Project Page Styles
             projectPatternBackground: 'modern-pattern-dark',
             projectIndexText: 'text-white/50',
-            projecHeroText: 'text-white',
+            projectHeroText: 'text-white',
             projectCategoryText: 'text-white/70',
             projectMetaText: 'text-white/50',
             projectDescriptionText: 'text-white/80',

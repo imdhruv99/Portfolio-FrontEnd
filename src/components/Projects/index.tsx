@@ -398,7 +398,7 @@ const Projects = () => {
                             <div className="space-y-4 sm:space-y-6">
                                 {/* Project Title */}
                                 <div className="space-y-2 sm:space-y-3">
-                                    <h1 ref={titleRef} className={`${fontClasses.classyVogue} text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight ${theme.projecHeroText} leading-[0.85] break-words`}>
+                                    <h1 ref={titleRef} className={`${fontClasses.classyVogue} text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight ${theme.projectHeroText} leading-[0.85] break-words`}>
                                         {projectToDisplay.title.toUpperCase()}
                                     </h1>
 

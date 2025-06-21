@@ -24,6 +24,7 @@ interface ExperienceItem {
     company: string;
     roles: ExperienceRole[];
     image: string;
+    tenure: string;
 }
 
 const ExperienceHeroSection = () => {
@@ -227,10 +228,13 @@ const ExperienceListView = ({
                                         ref={(el) => {
                                             companyNameRefs.current[index] = el;
                                         }}
-                                        className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.projecHeroText} leading-tight`}
+                                        className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.experienceText} leading-tight`}
                                     >
                                         {experience.company}
                                     </h2>
+                                    <p className={`${fontClasses.eireneSans} text-sm sm:text-sm lg:text-sm  ${theme.experienceSubText} leading-tight`}>
+                                        {experience.tenure}
+                                    </p>
                                 </div>
                             </div>
 
@@ -240,7 +244,7 @@ const ExperienceListView = ({
                                 }
                                 aria-controls={`exp-panel-${experience.id}`}
                                 className={`
-                                    ${theme.projectLinkButton}
+                                    ${theme.experienceLinkButton}
                                     ${fontClasses.eireneSansBold}
                                     px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm
                                     transition-all duration-300 ease-in-out

@@ -11,6 +11,7 @@ type ExperienceData = {
     company: string;
     roles: ExperienceRole[];
     image: string;
+    tenure: string;
 };
 
 export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
@@ -18,6 +19,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
         {
             id: 1,
             company: 'Juniper Networks',
+            tenure: 'Dec 2023 - Present',
             roles: [
                 {
                     designation: 'Software Engineer 4',
@@ -49,6 +51,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
         {
             id: 2,
             company: 'IBM',
+            tenure: 'Aug 2023 - Dec 2023',
             roles: [
                 {
                     designation: 'Senior Software Engineer',
@@ -78,6 +81,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
         {
             id: 3,
             company: 'Crest Data Systems',
+            tenure: 'Jun 2020 - Jul 2023',
             roles: [
                 {
                     designation: 'Senior Software Engineer',
@@ -150,6 +154,7 @@ export const getExperienceData = (isDarkTheme: boolean): ExperienceData[] => {
         {
             id: 4,
             company: 'Softvan Pvt Ltd',
+            tenure: 'Jun 2019 - Jun 2020',
             roles: [
                 {
                     designation: 'Software Engineer-Intern',
