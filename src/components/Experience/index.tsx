@@ -11,13 +11,18 @@ import { getExperienceData } from '@/constants/ExperienceData';
 import { fontClasses } from '@/config/fonts';
 import { scrambleText } from '@/utils/scramble';
 
-interface ExperienceItem {
-    id: number;
-    company: string;
+interface ExperienceRole {
     designation: string;
     period: string;
     description: string[];
     technologies: string[];
+    client?: string;
+}
+
+interface ExperienceItem {
+    id: number;
+    company: string;
+    roles: ExperienceRole[];
     image: string;
 }
 
@@ -68,6 +73,7 @@ const ExperienceHeroSection = () => {
                     </h1>
 
                     <p
+                        ref={paragraphRef}
                         className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-xl mx-auto lg:mx-0 pt-5`}
                     >
                         A journey through my professional growth and
@@ -77,7 +83,7 @@ const ExperienceHeroSection = () => {
                     <p
                         className={`${fontClasses.eireneSans} text-base sm:text-lg lg:text-xl ${theme.experienceSubText} max-w-xl mx-auto lg:mx-0 pt-5`}
                     >
-                        I’ve worked with a range of companies in roles such as
+                        I&apos;ve worked with a range of companies in roles such as
                         Software Engineer, DevOps Engineer, and Software
                         Architect.
                     </p>
@@ -215,15 +221,17 @@ const ExperienceListView = ({
                                         className="object-contain p-1 sm:p-2 lg:p-3"
                                     />
                                 </div>
-                                <h2
-                                    id={`exp-heading-${experience.id}`}
-                                    ref={(el) => {
-                                        companyNameRefs.current[index] = el;
-                                    }}
-                                    className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.projecHeroText} leading-tight`}
-                                >
-                                    {experience.company}
-                                </h2>
+                                <div className="flex flex-col">
+                                    <h2
+                                        id={`exp-heading-${experience.id}`}
+                                        ref={(el) => {
+                                            companyNameRefs.current[index] = el;
+                                        }}
+                                        className={`${fontClasses.classyVogue} text-2xl sm:text-3xl lg:text-4xl ${theme.projecHeroText} leading-tight`}
+                                    >
+                                        {experience.company}
+                                    </h2>
+                                </div>
                             </div>
 
                             <button
@@ -270,7 +278,7 @@ const ExperienceListView = ({
                                 transition: 'max-height 0.5s ease',
                                 overflow: 'hidden',
                             }}
-                            className={`transition-all duration-500 ${activeExperienceId === experience.id ? 'max-h-[1000px]' : 'max-h-0'}`}
+                            className={`transition-all duration-500 ${activeExperienceId === experience.id ? 'max-h-[2000px]' : 'max-h-0'}`}
                         >
                             {activeExperienceId === experience.id && (
                                 <div className="px-4 sm:px-6 lg:px-8 pb-8 pt-4 animate-fade-in-down">
@@ -319,56 +327,86 @@ const ExpandedExperienceContent = ({
 
     return (
         <div className="relative w-full max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-                <div className="flex flex-col space-y-6">
-                    <h3
-                        className={`${fontClasses.classyVogue} text-2xl sm:text-2xl ${theme.experienceText}`}
-                    >
-                        {experience.designation}
-                    </h3>
-                    <p
-                        className={`${fontClasses.eireneSans} text-lg sm:text-xl ${theme.experienceSubText}`}
-                    >
-                        {experience.period}
-                    </p>
+            {/* Company Overview */}
 
-                    <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-4">
-                        {experience.technologies.map((tech, techIndex) => {
-                            const iconName = isDarkTheme
-                                ? techIconMap[tech]?.dark
-                                : techIconMap[tech]?.light;
-                            return iconName ? (
-                                <div
-                                    key={techIndex}
-                                    className="flex items-center space-x-2"
-                                >
-                                    <Icon
-                                        icon={iconName}
-                                        className={`w-8 h-8 sm:w-10 sm:h-10 ${theme.experienceTechIcon}`}
-                                    />
+            {/* Roles */}
+            <div className="space-y-8">
+                {experience.roles.map((role, roleIndex) => (
+                    <div key={roleIndex} className="relative">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                            <div className="flex flex-col space-y-4">
+                                <div className="flex items-center space-x-3">
+                                    <div className={`w-2 h-2 rounded-full ${theme.experienceText} opacity-60`} />
+                                    <h3
+                                        className={`${fontClasses.classyVogue} text-xl sm:text-2xl ${theme.experienceText}`}
+                                    >
+                                        {role.designation}
+                                    </h3>
                                 </div>
-                            ) : null;
-                        })}
-                    </div>
-                </div>
 
-                <div className="space-y-6 overflow-y-auto custom-scrollbar-expanded max-h-[60vh] lg:max-h-[unset]">
-                    {experience.description.map((desc, descIndex) => (
-                        <div key={descIndex} className="relative group">
-                            <p
-                                className={`${fontClasses.eireneSans} text-base sm:text-lg ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}
-                            >
-                                <span className="mr-2 text-primary">✦</span>
-                                {desc}
-                            </p>
-                            <div className="mt-3 w-full px-8 max-w-4xl mx-auto">
-                                <div
-                                    className={`h-px w-full transition-all duration-300 ${theme.experienceDescriptionDivider} opacity-30`}
-                                />
+                                {role.client && (
+                                    <p className={`${fontClasses.eireneSans} text-sm sm:text-base ${theme.experienceSubText} ml-5`}>
+                                        {role.client}
+                                    </p>
+                                )}
+                                <p
+                                    className={`${fontClasses.eireneSans} text-base sm:text-lg ${theme.experienceSubText} ml-5`}
+                                >
+                                    {role.period}
+                                </p>
+
+                                {/* Role-specific technologies */}
+                                <div className="flex flex-wrap items-center gap-3 ml-5 mt-4">
+                                    {role.technologies.map((tech, techIndex) => {
+                                        const iconName = isDarkTheme
+                                            ? techIconMap[tech]?.dark
+                                            : techIconMap[tech]?.light;
+                                        return iconName ? (
+                                            <div
+                                                key={techIndex}
+                                                className="flex items-center space-x-1"
+                                            >
+                                                <Icon
+                                                    icon={iconName}
+                                                    className={`w-6 h-6 sm:w-7 sm:h-7 ${theme.experienceTechIcon} opacity-80`}
+                                                />
+                                            </div>
+                                        ) : null;
+                                    })}
+                                </div>
+                            </div>
+
+                            <div className="space-y-4 overflow-y-auto custom-scrollbar-expanded max-h-[50vh] lg:max-h-[unset]">
+                                {role.description.map((desc, descIndex) => (
+                                    <div key={descIndex} className="relative group">
+                                        <p
+                                            className={`${fontClasses.eireneSans} text-sm sm:text-base ${theme.experienceDescriptionText} leading-relaxed tracking-wide transition-all duration-300 group-hover:opacity-90`}
+                                        >
+                                            <span className="mr-2 text-primary">✦</span>
+                                            {desc}
+                                        </p>
+                                        {descIndex < role.description.length - 1 && (
+                                            <div className="mt-3 w-full px-4 max-w-3xl">
+                                                <div
+                                                    className={`h-px w-full transition-all duration-300 ${theme.experienceDescriptionDivider} opacity-20`}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    ))}
-                </div>
+
+                        {/* Separator between roles */}
+                        {roleIndex < experience.roles.length - 1 && (
+                            <div className="mt-8 pt-8 border-t border-white/5 dark:border-black/5">
+                                <div className="w-full flex justify-center">
+                                    <div className={`w-16 h-px ${theme.experienceDescriptionDivider} opacity-30`} />
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
 
             <style jsx>
