@@ -403,10 +403,7 @@ const ExpandedExperienceContent = ({
 
                         {/* Separator between roles */}
                         {roleIndex < experience.roles.length - 1 && (
-                            <div className="mt-8 pt-8 border-t border-white/5 dark:border-black/5">
-                                <div className="w-full flex justify-center">
-                                    <div className={`w-16 h-px ${theme.experienceDescriptionDivider} opacity-30`} />
-                                </div>
+                            <div className={`mt-8 border-t opacity-5 ${theme.experienceDescriptionDivider}`}>
                             </div>
                         )}
                     </div>
