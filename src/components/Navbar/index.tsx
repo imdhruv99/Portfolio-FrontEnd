@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Icon } from '@iconify/react';
+import { fontClasses } from '@/config/fonts';
 
 type NavItem = {
     id: string;
@@ -15,15 +16,62 @@ type NavItem = {
 
 const navItems: NavItem[] = [
     { id: 'home', label: 'Home', icon: 'mdi:home-outline', path: '/' },
-    { id: 'experience', label: 'Experience', icon: 'mdi:briefcase-outline', path: '/experience' },
-    { id: 'projects', label: 'Projects', icon: 'mdi:lightbulb-outline', path: '/projects' },
-    { id: 'education', label: 'Education', icon: 'mdi:school-outline', path: '/education' },
-    { id: 'contact', label: 'Contact', icon: 'mdi:account-circle-outline', path: '/contact' },
-    { id: 'separator-1', label: 'separator-1', type: 'separator', icon: null, path: null },
-    { id: 'github', label: 'Github', icon: 'mdi:github', path: 'https://github.com/imdhruv99' },
-    { id: 'instagram', label: 'Instagram', icon: 'mdi:instagram', path: 'https://www.instagram.com/_imdhruv99_/' },
-    { id: 'linkedin', label: 'LinkedIn', icon: 'mdi:linkedin', path: 'https://www.linkedin.com/in/imdhruv99/' },
-    { id: 'separator-2', label: 'separator-2', type: 'separator', icon: null, path: null },
+    {
+        id: 'experience',
+        label: 'Experience',
+        icon: 'mdi:briefcase-outline',
+        path: '/experience',
+    },
+    {
+        id: 'projects',
+        label: 'Projects',
+        icon: 'mdi:lightbulb-outline',
+        path: '/projects',
+    },
+    {
+        id: 'education',
+        label: 'Education',
+        icon: 'mdi:school-outline',
+        path: '/education',
+    },
+    {
+        id: 'contact',
+        label: 'Contact',
+        icon: 'mdi:account-circle-outline',
+        path: '/contact',
+    },
+    {
+        id: 'separator-1',
+        label: 'separator-1',
+        type: 'separator',
+        icon: null,
+        path: null,
+    },
+    {
+        id: 'github',
+        label: 'Github',
+        icon: 'mdi:github',
+        path: 'https://github.com/imdhruv99',
+    },
+    {
+        id: 'instagram',
+        label: 'Instagram',
+        icon: 'mdi:instagram',
+        path: 'https://www.instagram.com/_imdhruv99_/',
+    },
+    {
+        id: 'linkedin',
+        label: 'LinkedIn',
+        icon: 'mdi:linkedin',
+        path: 'https://www.linkedin.com/in/imdhruv99/',
+    },
+    {
+        id: 'separator-2',
+        label: 'separator-2',
+        type: 'separator',
+        icon: null,
+        path: null,
+    },
     { id: 'theme', label: 'Theme', icon: null, path: null },
 ];
 
@@ -53,20 +101,20 @@ const Navbar = () => {
 
     const displayNavItems = mobileView
         ? navItems.filter((item) =>
-            [
-                'home',
-                'experience',
-                'projects',
-                'education',
-                'contact',
-                'separator-1',
-                'github',
-                'linkedin',
-                'instagram',
-                'separator-2',
-                'theme',
-            ].includes(item.id),
-        )
+              [
+                  'home',
+                  'experience',
+                  'projects',
+                  'education',
+                  'contact',
+                  'separator-1',
+                  'github',
+                  'linkedin',
+                  'instagram',
+                  'separator-2',
+                  'theme',
+              ].includes(item.id),
+          )
         : navItems;
 
     const resetIcons = (index: number) => {
@@ -122,10 +170,11 @@ const Navbar = () => {
         <div className="fixed bottom-2 sm:bottom-3 lg:bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-[95%]">
             <nav
                 ref={navRef}
-                className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-1.5 lg:gap-2'} p-1 sm:p-1.5 lg:p-3 rounded-full theme-transition ${isDarkTheme
-                    ? 'bg-neutral-800 shadow-md shadow-neutral-900/40'
-                    : 'bg-white shadow-md shadow-neutral-300'
-                    }`}
+                className={`flex items-center justify-center ${mobileView ? 'gap-0.5' : 'gap-1 sm:gap-1.5 lg:gap-2'} p-1 sm:p-1.5 lg:p-3 rounded-full theme-transition ${
+                    isDarkTheme
+                        ? 'bg-neutral-800 shadow-md shadow-neutral-900/40'
+                        : 'bg-white shadow-md shadow-neutral-300'
+                }`}
             >
                 {displayNavItems.map((item, index) =>
                     item.type === 'separator' ? (
@@ -139,10 +188,11 @@ const Navbar = () => {
                             ref={(el) => {
                                 itemsRef.current[index] = el;
                             }}
-                            className={`relative flex items-center justify-center rounded-full cursor-pointer origin-bottom transition-transform duration-200 ${mobileView
-                                ? 'w-8 h-8'
-                                : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10'
-                                }`}
+                            className={`relative flex items-center justify-center rounded-full cursor-pointer origin-bottom transition-transform duration-200 ${
+                                mobileView
+                                    ? 'w-8 h-8'
+                                    : 'w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10'
+                            }`}
                             onMouseEnter={() => {
                                 setShowTooltip(item.id);
                                 focusIcon(index);
@@ -166,19 +216,25 @@ const Navbar = () => {
                                     className="flex items-center justify-center w-full h-full"
                                 >
                                     <div
-                                        className={`flex items-center justify-center rounded-full theme-transition ${mobileView
-                                            ? 'w-7 h-7'
-                                            : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
-                                            } ${isDarkTheme
+                                        className={`flex items-center justify-center rounded-full theme-transition ${
+                                            mobileView
+                                                ? 'w-7 h-7'
+                                                : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
+                                        } ${
+                                            isDarkTheme
                                                 ? 'bg-neutral-700 hover:bg-neutral-700'
                                                 : 'bg-gray-100 hover:bg-gray-200'
-                                            }`}
+                                        }`}
                                     >
                                         {item.icon && (
                                             <Icon
                                                 icon={item.icon}
                                                 className="theme-transition"
-                                                color={isDarkTheme ? '#e5e5e5' : '#4b5563'}
+                                                color={
+                                                    isDarkTheme
+                                                        ? '#e5e5e5'
+                                                        : '#4b5563'
+                                                }
                                                 width={mobileView ? 18 : 20}
                                             />
                                         )}
@@ -186,13 +242,15 @@ const Navbar = () => {
                                 </Link>
                             ) : (
                                 <div
-                                    className={`flex items-center justify-center rounded-full theme-transition ${mobileView
-                                        ? 'w-7 h-7'
-                                        : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
-                                        } ${isDarkTheme
+                                    className={`flex items-center justify-center rounded-full theme-transition ${
+                                        mobileView
+                                            ? 'w-7 h-7'
+                                            : 'w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8'
+                                    } ${
+                                        isDarkTheme
                                             ? 'bg-neutral-700 hover:bg-neutral-700'
                                             : 'bg-gray-100 hover:bg-gray-200'
-                                        }`}
+                                    }`}
                                 >
                                     {item.id === 'theme' ? (
                                         <div
@@ -208,7 +266,11 @@ const Navbar = () => {
                                                         ? 'mdi:weather-sunny'
                                                         : 'mdi:weather-night'
                                                 }
-                                                color={isDarkTheme ? '#e5e5e5' : '#4b5563'}
+                                                color={
+                                                    isDarkTheme
+                                                        ? '#e5e5e5'
+                                                        : '#4b5563'
+                                                }
                                                 width={mobileView ? 18 : 20}
                                             />
                                         </div>
@@ -216,7 +278,11 @@ const Navbar = () => {
                                         <Icon
                                             icon={item.icon}
                                             className="theme-transition"
-                                            color={isDarkTheme ? '#e5e5e5' : '#4b5563'}
+                                            color={
+                                                isDarkTheme
+                                                    ? '#e5e5e5'
+                                                    : '#4b5563'
+                                            }
                                             width={mobileView ? 18 : 20}
                                         />
                                     ) : null}
@@ -224,14 +290,15 @@ const Navbar = () => {
                             )}
                             {showTooltip === item.id && !mobileView && (
                                 <div
-                                    className={`absolute top-[-1.5rem] sm:top-[-1.5rem] lg:top-[-1.75rem] left-1/2 transform -translate-x-1/2 theme-transition ${isDarkTheme
-                                        ? 'bg-neutral-600 hover:bg-neutral-700'
-                                        : 'bg-gray-100 text-gray-800'
-                                        } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none font-serif animate-fadeIn z-50`}
+                                    className={` ${fontClasses.eireneSans} absolute top-[-1.5rem] sm:top-[-1.5rem] lg:top-[-1.75rem] left-1/2 transform -translate-x-1/2 theme-transition ${
+                                        isDarkTheme
+                                            ? 'bg-neutral-600 hover:bg-neutral-700'
+                                            : 'bg-gray-100 text-gray-800'
+                                    } px-1.5 py-0.5 rounded text-xs whitespace-nowrap shadow-md pointer-events-none font-serif animate-fadeIn z-50`}
                                     style={{
                                         animation:
                                             'fadeIn 0.2s ease-in-out forwards',
-                                        fontSize: '0.7rem',
+                                        fontSize: '0.5rem',
                                     }}
                                 >
                                     {item.label}
