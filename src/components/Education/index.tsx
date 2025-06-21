@@ -142,9 +142,7 @@ const Education = () => {
                         scale: 1.03,
                         rotationY: 5,
                         rotationX: 5,
-                        boxShadow: isDarkTheme
-                            ? "0 25px 50px -12px rgba(0, 0, 0, 0.7)"
-                            : "0 20px 25px -5px rgba(0, 0, 0, 0.08)",
+                        boxShadow: theme.educationCertHoverShadow,
                         duration: 0.4,
                         ease: "power2.out"
                     });
@@ -155,9 +153,7 @@ const Education = () => {
                         scale: 1,
                         rotationY: 0,
                         rotationX: 0,
-                        boxShadow: isDarkTheme
-                            ? "0 10px 15px -3px rgba(0, 0, 0, 0.5)"
-                            : "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                        boxShadow: theme.educationCertLeaveShadow,
                         duration: 0.4,
                         ease: "power2.out"
                     });
@@ -296,14 +292,14 @@ const Education = () => {
                                         {cert.skills.slice(0, 3).map((skill, i) => (
                                             <span
                                                 key={i}
-                                                className={`${fontClasses.eireneSansBold} text-xs px-2 py-1 rounded-full ${isDarkTheme ? 'bg-white/10 text-gray-300' : 'bg-gray-100 text-gray-600'}`}
+                                                className={`${fontClasses.eireneSansBold} text-xs px-2 py-1 rounded-full ${theme.educationSkillBadge}`}
                                             >
                                                 {skill}
                                             </span>
                                         ))}
                                         {cert.skills.length > 3 && (
                                             <span
-                                                className={`${fontClasses.eireneSansBold} text-xs px-2 py-1 rounded-full ${isDarkTheme ? 'bg-white/10 text-gray-300' : 'bg-gray-100 text-gray-600'}`}
+                                                className={`${fontClasses.eireneSansBold} text-xs px-2 py-1 rounded-full ${theme.educationSkillBadge}`}
                                             >
                                                 +{cert.skills.length - 3} more
                                             </span>

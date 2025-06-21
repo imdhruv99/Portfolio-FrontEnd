@@ -51,6 +51,9 @@ export interface ThemeColors {
     educationCard: string,
     educationBadgeBackground: string;
     educationCertVerifyLink: string;
+    educationCertHoverShadow: string;
+    educationCertLeaveShadow: string;
+    educationSkillBadge: string;
 
     // Contact Page Styles
     contactIcon: string;
@@ -152,6 +155,10 @@ export const themes: Record<string, Theme> = {
             educationCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
             educationBadgeBackground: 'bg-white',
             educationCertVerifyLink: 'text-blue-600 hover:text-blue-800',
+            educationCertHoverShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.08)',
+            educationCertLeaveShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            educationSkillBadge: 'bg-gray-100 text-gray-600',
+
 
             // Contact Page Styles
             contactIcon: 'text-gray-400',
@@ -235,6 +242,10 @@ export const themes: Record<string, Theme> = {
             educationCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
             educationBadgeBackground: 'bg-white',
             educationCertVerifyLink: 'text-blue-400 hover:text-blue-300',
+            educationCertHoverShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+            educationCertLeaveShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)',
+            educationSkillBadge: 'bg-white/10 text-gray-300',
+
 
             // Contact Page Styles
             contactIcon: 'text-white/30',
