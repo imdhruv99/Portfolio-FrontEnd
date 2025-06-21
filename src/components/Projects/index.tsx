@@ -5,7 +5,13 @@ import './Projects.css';
 import { gsap } from 'gsap';
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
-import React, { useEffect, useRef, useState, useCallback, useLayoutEffect } from 'react';
+import React, {
+    useEffect,
+    useRef,
+    useState,
+    useCallback,
+    useLayoutEffect,
+} from 'react';
 
 import projectData from '@/constants/ProjectData';
 import NavigationDots from '../NavigationDots';
@@ -34,7 +40,8 @@ const Projects = () => {
     const [currentProject, setCurrentProject] = useState(0);
     const [displayProject, setDisplayProject] = useState(projectData[0]);
     const [isMobile, setIsMobile] = useState(false);
-    const [deviceMotionPermissionGranted, setDeviceMotionPermissionGranted] = useState(false);
+    const [deviceMotionPermissionGranted, setDeviceMotionPermissionGranted] =
+        useState(false);
 
     const titleRef = useRef<HTMLHeadingElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);
@@ -58,92 +65,109 @@ const Projects = () => {
         setDisplayProject(projectData[currentProject]);
     }, [currentProject]);
 
-    const animateProjectChange = useCallback((direction: 'next' | 'prev', newIndex: number) => {
-        if (scrollLocked.current) return;
-        scrollLocked.current = true;
+    const animateProjectChange = useCallback(
+        (direction: 'next' | 'prev', newIndex: number) => {
+            if (scrollLocked.current) return;
+            scrollLocked.current = true;
 
-        const cardElement = cardRef.current;
-        if (!cardElement) {
-            scrollLocked.current = false;
-            return;
-        }
-
-        const tl = gsap.timeline({
-            defaults: { ease: 'power2.inOut', force3D: true },
-            onComplete: () => {
-                setCurrentProject(newIndex);
+            const cardElement = cardRef.current;
+            if (!cardElement) {
                 scrollLocked.current = false;
-                gsap.set(cardElement, { y: '0%', opacity: 1 });
-            },
-        });
+                return;
+            }
 
-        // Current card animating out
-        if (direction === 'next') {
-            tl.to(cardElement, {
-                y: '-100%',
-                opacity: 0,
-                duration: 0.5,
-                ease: 'power2.in',
+            const tl = gsap.timeline({
+                defaults: { ease: 'power2.inOut', force3D: true },
+                onComplete: () => {
+                    setCurrentProject(newIndex);
+                    scrollLocked.current = false;
+                    gsap.set(cardElement, { y: '0%', opacity: 1 });
+                },
             });
-        } else {
-            tl.to(cardElement, {
-                y: '100%',
-                opacity: 0,
-                duration: 0.5,
-                ease: 'power2.in',
+
+            // Current card animating out
+            if (direction === 'next') {
+                tl.to(cardElement, {
+                    y: '-100%',
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: 'power2.in',
+                });
+            } else {
+                tl.to(cardElement, {
+                    y: '100%',
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: 'power2.in',
+                });
+            }
+
+            // Set up the new project to enter
+            tl.add(() => {
+                setDisplayProject(projectData[newIndex]);
+                gsap.set(cardElement, {
+                    y: direction === 'next' ? '100%' : '-100%',
+                    opacity: 0,
+                });
             });
-        }
 
-        // Set up the new project to enter
-        tl.add(() => {
-            setDisplayProject(projectData[newIndex]);
-            gsap.set(cardElement, {
-                y: direction === 'next' ? '100%' : '-100%',
-                opacity: 0,
-            });
-        });
+            // New card animating in
+            tl.to(
+                cardElement,
+                {
+                    y: '0%',
+                    opacity: 1,
+                    duration: 0.6,
+                    ease: 'power2.out',
+                },
+                '<',
+            );
 
-        // New card animating in
-        tl.to(cardElement, {
-            y: '0%',
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power2.out',
-        }, "<");
+            tl.to(
+                cardElement,
+                { rotateX: 0, rotateY: 0, duration: 0.4, ease: 'power2.out' },
+                '<0.3',
+            );
+        },
+        [],
+    );
 
-        tl.to(cardElement, { rotateX: 0, rotateY: 0, duration: 0.4, ease: 'power2.out' }, "<0.3");
-    }, []);
+    const handleMouseMove = useCallback(
+        (e: React.MouseEvent) => {
+            if (isMobile || !cardRef.current) return;
+            const { left, top, width, height } =
+                cardRef.current.getBoundingClientRect();
+            const centerX = left + width / 2;
+            const centerY = top + height / 2;
+            const mouseX = e.clientX - centerX;
+            const mouseY = e.clientY - centerY;
 
-    const handleMouseMove = useCallback((e: React.MouseEvent) => {
-        if (isMobile || !cardRef.current) return;
-        const { left, top, width, height } = cardRef.current.getBoundingClientRect();
-        const centerX = left + width / 2;
-        const centerY = top + height / 2;
-        const mouseX = e.clientX - centerX;
-        const mouseY = e.clientY - centerY;
+            const rotateY = (mouseX / (width / 2)) * 2;
+            const rotateX = (mouseY / (height / 2)) * -2;
 
-        const rotateY = (mouseX / (width / 2)) * 2;
-        const rotateX = (mouseY / (height / 2)) * -2;
+            rotationTargetX.current = rotateX;
+            rotationTargetY.current = rotateY;
 
-        rotationTargetX.current = rotateX;
-        rotationTargetY.current = rotateY;
+            if (rotationTimeline.current) rotationTimeline.current.kill();
 
-        if (rotationTimeline.current) rotationTimeline.current.kill();
-
-        rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.6 } })
-            .to(cardRef.current, {
-                rotateX: rotationTargetX.current,
-                rotateY: rotationTargetY.current,
-                transformPerspective: 1000,
-                transformOrigin: "center center",
-            });
-    }, [isMobile]);
+            rotationTimeline.current = gsap
+                .timeline({ defaults: { ease: 'power4.out', duration: 0.6 } })
+                .to(cardRef.current, {
+                    rotateX: rotationTargetX.current,
+                    rotateY: rotationTargetY.current,
+                    transformPerspective: 1000,
+                    transformOrigin: 'center center',
+                });
+        },
+        [isMobile],
+    );
 
     const handleMouseLeave = useCallback(() => {
         if (isMobile || !cardRef.current) return;
         if (rotationTimeline.current) rotationTimeline.current.kill();
 
-        rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.8 } })
+        rotationTimeline.current = gsap
+            .timeline({ defaults: { ease: 'power4.out', duration: 0.8 } })
             .to(cardRef.current, {
                 rotateX: 0,
                 rotateY: 0,
@@ -151,33 +175,40 @@ const Projects = () => {
             });
     }, [isMobile]);
 
-    const handleDeviceOrientation = useCallback((e: DeviceOrientationEvent) => {
-        if (!cardRef.current || !isMobile || !deviceMotionPermissionGranted) return;
-        if (rAFId.current !== null) cancelAnimationFrame(rAFId.current);
+    const handleDeviceOrientation = useCallback(
+        (e: DeviceOrientationEvent) => {
+            if (!cardRef.current || !isMobile || !deviceMotionPermissionGranted)
+                return;
+            if (rAFId.current !== null) cancelAnimationFrame(rAFId.current);
 
-        rAFId.current = requestAnimationFrame(() => {
-            const beta = e.beta || 0;
-            const gamma = e.gamma || 0;
+            rAFId.current = requestAnimationFrame(() => {
+                const beta = e.beta || 0;
+                const gamma = e.gamma || 0;
 
-            const rotateX = gsap.utils.mapRange(-30, 30, 2, -2, gamma);
-            const rotateY = gsap.utils.mapRange(-30, 30, -2, 2, beta);
+                const rotateX = gsap.utils.mapRange(-30, 30, 2, -2, gamma);
+                const rotateY = gsap.utils.mapRange(-30, 30, -2, 2, beta);
 
-            rotationTargetX.current = rotateX;
-            rotationTargetY.current = rotateY;
+                rotationTargetX.current = rotateX;
+                rotationTargetY.current = rotateY;
 
-            if (rotationTimeline.current) rotationTimeline.current.kill();
+                if (rotationTimeline.current) rotationTimeline.current.kill();
 
-            rotationTimeline.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.6 } })
-                .to(cardRef.current, {
-                    rotateX: rotationTargetX.current,
-                    rotateY: rotationTargetY.current,
-                    transformPerspective: 1000,
-                    transformOrigin: "center center",
-                });
+                rotationTimeline.current = gsap
+                    .timeline({
+                        defaults: { ease: 'power4.out', duration: 0.6 },
+                    })
+                    .to(cardRef.current, {
+                        rotateX: rotationTargetX.current,
+                        rotateY: rotationTargetY.current,
+                        transformPerspective: 1000,
+                        transformOrigin: 'center center',
+                    });
 
-            rAFId.current = null;
-        });
-    }, [isMobile, deviceMotionPermissionGranted]);
+                rAFId.current = null;
+            });
+        },
+        [isMobile, deviceMotionPermissionGranted],
+    );
 
     // Mobile touch handlers
     const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -206,7 +237,9 @@ const Projects = () => {
             if (direction === 'next') {
                 newIndex = (currentProject + 1) % projectData.length;
             } else {
-                newIndex = (currentProject - 1 + projectData.length) % projectData.length;
+                newIndex =
+                    (currentProject - 1 + projectData.length) %
+                    projectData.length;
             }
 
             animateProjectChange(direction, newIndex);
@@ -217,15 +250,21 @@ const Projects = () => {
         touchEndY.current = 0;
     }, [currentProject, animateProjectChange]);
 
-    const handleScroll = useCallback((e: WheelEvent) => {
-        if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 30) return;
-        const direction = e.deltaY > 0 ? 'next' : 'prev';
-        const newIndex = direction === 'next'
-            ? (currentProject + 1) % projectData.length
-            : (currentProject - 1 + projectData.length) % projectData.length;
+    const handleScroll = useCallback(
+        (e: WheelEvent) => {
+            if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 30)
+                return;
+            const direction = e.deltaY > 0 ? 'next' : 'prev';
+            const newIndex =
+                direction === 'next'
+                    ? (currentProject + 1) % projectData.length
+                    : (currentProject - 1 + projectData.length) %
+                      projectData.length;
 
-        animateProjectChange(direction, newIndex);
-    }, [isMobile, currentProject, animateProjectChange]);
+            animateProjectChange(direction, newIndex);
+        },
+        [isMobile, currentProject, animateProjectChange],
+    );
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -244,17 +283,26 @@ const Projects = () => {
                 // Permission will be requested via button
             } else {
                 setDeviceMotionPermissionGranted(true);
-                window.addEventListener('deviceorientation', handleDeviceOrientation);
+                window.addEventListener(
+                    'deviceorientation',
+                    handleDeviceOrientation,
+                );
             }
         } else {
-            window.removeEventListener('deviceorientation', handleDeviceOrientation);
+            window.removeEventListener(
+                'deviceorientation',
+                handleDeviceOrientation,
+            );
             if (rAFId.current !== null) {
                 cancelAnimationFrame(rAFId.current);
                 rAFId.current = null;
             }
         }
         return () => {
-            window.removeEventListener('deviceorientation', handleDeviceOrientation);
+            window.removeEventListener(
+                'deviceorientation',
+                handleDeviceOrientation,
+            );
             if (rAFId.current !== null) {
                 cancelAnimationFrame(rAFId.current);
                 rAFId.current = null;
@@ -264,17 +312,31 @@ const Projects = () => {
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            const tl = gsap.timeline({ defaults: { ease: 'power2.out', force3D: true } });
+            const tl = gsap.timeline({
+                defaults: { ease: 'power2.out', force3D: true },
+            });
             if (indexRef.current && cardRef.current) {
-                tl.from(indexRef.current, { opacity: 0, x: -30, duration: 0.5 });
-                tl.from(cardRef.current, {
+                tl.from(indexRef.current, {
                     opacity: 0,
-                    y: 30,
-                    scale: 0.97,
-                    duration: 0.7,
-                }, '-=0.3');
+                    x: -30,
+                    duration: 0.5,
+                });
+                tl.from(
+                    cardRef.current,
+                    {
+                        opacity: 0,
+                        y: 30,
+                        scale: 0.97,
+                        duration: 0.7,
+                    },
+                    '-=0.3',
+                );
                 if (!isMobile && dotsRef.current) {
-                    tl.from(dotsRef.current, { x: -50, opacity: 0, duration: 0.8 }, '<0.1');
+                    tl.from(
+                        dotsRef.current,
+                        { x: -50, opacity: 0, duration: 0.8 },
+                        '<0.1',
+                    );
                 }
             }
         });
@@ -294,7 +356,10 @@ const Projects = () => {
         const granted = await requestDeviceMotionPermission();
         setDeviceMotionPermissionGranted(granted);
         if (granted) {
-            window.addEventListener('deviceorientation', handleDeviceOrientation);
+            window.addEventListener(
+                'deviceorientation',
+                handleDeviceOrientation,
+            );
         }
     };
 
@@ -322,14 +387,16 @@ const Projects = () => {
                 onMouseLeave={!isMobile ? handleMouseLeave : undefined}
             >
                 {/* iOS 13+ Permission Prompt for Device Motion */}
-                {isMobile && !deviceMotionPermissionGranted &&
+                {isMobile &&
+                    !deviceMotionPermissionGranted &&
                     typeof DeviceMotionEvent !== 'undefined' &&
                     'requestPermission' in DeviceMotionEvent &&
-                    typeof DeviceMotionEvent.requestPermission === 'function'
-                    && (
+                    typeof DeviceMotionEvent.requestPermission ===
+                        'function' && (
                         <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center z-50 p-4">
                             <p className="text-white text-center mb-4">
-                                To enable the interactive card experience, please allow access to device motion sensors.
+                                To enable the interactive card experience,
+                                please allow access to device motion sensors.
                             </p>
                             <button
                                 onClick={handleRequestPermission}
@@ -345,80 +412,114 @@ const Projects = () => {
                     ref={indexRef}
                     className={`absolute left-4 sm:left-8 top-8 sm:top-12 will-change-transform z-20`}
                 >
-                    <div className={`${fontClasses.classyVogue} text-xs sm:text-sm ${fontClasses.classyVogue} tracking-[0.2em] ${theme.projectIndexText} opacity-60`}>
+                    <div
+                        className={`${fontClasses.classyVogue} text-xs sm:text-sm ${fontClasses.classyVogue} tracking-[0.2em] ${theme.projectIndexText} opacity-60`}
+                    >
                         {String(currentProject + 1).padStart(4, '0')}
                     </div>
                 </div>
 
                 {/* Tech Stack - Top Right */}
-                <div ref={techRef} className="absolute top-4 sm:top-8 right-4 sm:right-8 z-20">
+                <div
+                    ref={techRef}
+                    className="absolute top-4 sm:top-8 right-4 sm:right-8 z-20"
+                >
                     <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-end max-w-xs sm:max-w-sm">
-                        {projectToDisplay.technicalStack.slice(0, isMobile ? 4 : 6).map((tech) => {
-                            const key = tech.replace(/\s+|\.|-/g, '').replace(/js/i, 'Js');
-                            const icon = techIconMap[key]?.[isDarkTheme ? 'dark' : 'light'] || `logos:${key.toLowerCase()}`;
-                            return (
-                                <div key={tech} className={`${fontClasses.eireneSansBold} flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-full ${theme.projectTechBadge} backdrop-blur-md`}>
-                                    <Icon icon={icon} width={isMobile ? "12" : "14"} height={isMobile ? "12" : "14"} />
-                                    <span className="hidden sm:inline">{tech}</span>
-                                </div>
-                            );
-                        })}
+                        {projectToDisplay.technicalStack
+                            .slice(0, isMobile ? 4 : 6)
+                            .map((tech) => {
+                                const key = tech
+                                    .replace(/\s+|\.|-/g, '')
+                                    .replace(/js/i, 'Js');
+                                const icon =
+                                    techIconMap[key]?.[
+                                        isDarkTheme ? 'dark' : 'light'
+                                    ] || `logos:${key.toLowerCase()}`;
+                                return (
+                                    <div
+                                        key={tech}
+                                        className={`${fontClasses.eireneSansBold} flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-full ${theme.projectTechBadge} backdrop-blur-md`}
+                                    >
+                                        <Icon
+                                            icon={icon}
+                                            width={isMobile ? '12' : '14'}
+                                            height={isMobile ? '12' : '14'}
+                                        />
+                                        <span className="hidden sm:inline">
+                                            {tech}
+                                        </span>
+                                    </div>
+                                );
+                            })}
                     </div>
                 </div>
 
                 {/* Main Card */}
-                <div ref={cardRef} className={`relative w-full max-w-6xl will-change-transform`}>
-                    <div className={`relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] rounded-3xl sm:rounded-[2rem] overflow-hidden ${theme.projectCard} backdrop-blur-xl shadow-2xl`}>
-                        {/* Background Image or Pattern */}
-                        {projectToDisplay.image ? (
-                            <Image
-                                src={projectToDisplay.image}
-                                alt={projectToDisplay.title}
-                                fill
-                                style={{ objectFit: 'cover' }}
-                                className="absolute inset-0 z-0"
-                            />
-                        ) : (
-                            <div className={`absolute inset-0 z-0 ${theme.projectCardPattern}`} />
-                        )}
-
-                        {/* Gradient Overlay */}
-                        <div className={`absolute inset-0 z-10 ${theme.projectGradientOverlay}`} />
-
-                        {/* Content Area */}
-                        <div className="absolute inset-0 z-20 flex flex-col justify-between p-6 sm:p-8 lg:p-12">
-                            {/* Year Badge */}
-                            <div className="flex justify-between items-start">
-                                <div className={`${fontClasses.eireneSans} inline-flex items-center px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.projectYearBadge} backdrop-blur-md`}>
-                                    {projectToDisplay.yearOfDevelopment}
+                <div
+                    ref={cardRef}
+                    className="relative w-full max-w-6xl will-change-transform"
+                >
+                    <div
+                        className={`relative rounded-3xl sm:rounded-[2rem] overflow-hidden ${theme.projectCard} ${theme.projectGradientOverlay}  backdrop-blur-xl shadow-2xl w-full`}
+                    >
+                        <div className="grid grid-cols-1 md:grid-cols-2 w-full h-full min-h-[400px] lg:min-h-[480px]">
+                            {/*Text Content */}
+                            <div className="p-6 sm:p-8 lg:p-12 flex flex-col justify-between">
+                                {/* Year Badge */}
+                                <div className="flex justify-between items-start">
+                                    <div
+                                        className={`${fontClasses.eireneSans} inline-flex items-center px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.projectYearBadge} backdrop-blur-md`}
+                                    >
+                                        {projectToDisplay.yearOfDevelopment}
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Main Content */}
-                            <div className="space-y-4 sm:space-y-6">
-                                {/* Project Title */}
-                                <div className="space-y-2 sm:space-y-3">
-                                    <h1 ref={titleRef} className={`${fontClasses.classyVogue} text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight ${theme.projectHeroText} leading-[0.85] break-words`}>
-                                        {projectToDisplay.title.toUpperCase()}
-                                    </h1>
-
-                                    {/* Category and Description */}
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 mt-4 sm:mt-6">
-                                        <div className="space-y-2">
-                                            <p ref={descRef} className={`${fontClasses.eireneSans} text-sm sm:text-base leading-relaxed ${theme.projectDescriptionText} opacity-80`}>
-                                                {projectToDisplay.description}
-                                            </p>
-                                        </div>
+                                {/* Title and Description */}
+                                <div className="space-y-4 sm:space-y-6">
+                                    <div className="space-y-2 sm:space-y-3">
+                                        <h1
+                                            ref={titleRef}
+                                            className={`${fontClasses.classyVogue} text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight ${theme.projectHeroText} leading-[0.85] break-words`}
+                                        >
+                                            {projectToDisplay.title.toUpperCase()}
+                                        </h1>
+                                        <p
+                                            ref={descRef}
+                                            className={`${fontClasses.eireneSans} text-sm sm:text-base leading-relaxed ${theme.projectDescriptionText} opacity-80`}
+                                        >
+                                            {projectToDisplay.description}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Image */}
+                            {projectToDisplay.image && (
+                                <div className="relative w-full h-full flex items-center justify-center">
+                                    <div className="relative w-[60%] h-[60%]">
+                                        <Image
+                                            src={
+                                                projectToDisplay.image as string
+                                            }
+                                            alt={projectToDisplay.title}
+                                            fill
+                                            className="object-cover rounded-2xl"
+                                        />
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
 
                     {/* Links Section */}
-                    <div ref={linksRef} className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div
+                        ref={linksRef}
+                        className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                    >
                         <div className="flex items-center gap-6 sm:gap-8">
-                            <div className={`${fontClasses.eireneSans} text-xs sm:text-sm font-mono tracking-[0.15em] ${theme.projectLinkText} opacity-60`}>
+                            <div
+                                className={`${fontClasses.eireneSans} text-xs sm:text-sm font-mono tracking-[0.15em] ${theme.projectLinkText} opacity-60`}
+                            >
                                 LINKS
                             </div>
                             <div className="flex gap-3 sm:gap-4">
@@ -430,7 +531,17 @@ const Projects = () => {
                                         rel="noopener noreferrer"
                                         className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full ${theme.projectLinkButton} backdrop-blur-md transition-all duration-300 hover:scale-105`}
                                     >
-                                        <Icon icon={techIconMap.Github[isDarkTheme ? 'dark' : 'light']} width={isMobile ? "16" : "18"} height={isMobile ? "16" : "18"} />
+                                        <Icon
+                                            icon={
+                                                techIconMap.Github[
+                                                    isDarkTheme
+                                                        ? 'dark'
+                                                        : 'light'
+                                                ]
+                                            }
+                                            width={isMobile ? '16' : '18'}
+                                            height={isMobile ? '16' : '18'}
+                                        />
                                     </a>
                                 ))}
                             </div>
@@ -441,11 +552,17 @@ const Projects = () => {
                 {/* Mobile swipe indicator*/}
                 {isMobile && (
                     <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20">
-                        <div className={`flex flex-col items-center gap-2 ${theme.projectIndexText} opacity-40`}>
+                        <div
+                            className={`flex flex-col items-center gap-2 ${theme.projectIndexText} opacity-40`}
+                        >
                             <div className="w-6 h-10 border-2 border-current rounded-full flex justify-center">
                                 <div className="w-1 h-3 bg-current rounded-full mt-2 animate-bounce"></div>
                             </div>
-                            <span className={`${fontClasses.eireneSans} text-xs`}>Swipe</span>
+                            <span
+                                className={`${fontClasses.eireneSans} text-xs`}
+                            >
+                                Swipe
+                            </span>
                         </div>
                     </div>
                 )}

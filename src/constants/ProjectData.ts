@@ -22,7 +22,7 @@ const projectData: ProjectData[] = [
         tags: ['Containerization', 'Task Management', 'Docker', 'Kubernetes', 'Scalability'],
         difficulty: 'Intermediate',
         yearOfDevelopment: "Apr 2025 - May 2025",
-        // image: '/images/task_manager.png',
+        image: '/images/aiml.png',
     },
     {
         id: 2,
