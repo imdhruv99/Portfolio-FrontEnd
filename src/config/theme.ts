@@ -99,22 +99,22 @@ export const themes: Record<string, Theme> = {
             homeHeroText: 'text-gray-900',
             homeSubText: 'text-gray-600',
             homeTechIconBackground: 'rgba(0, 0, 0, 0.05)',
-            homeTechIconBorder: '1px solid rgba(0, 0, 0, 0.1)',
+            homeTechIconBorder: '0.063rem solid rgba(0, 0, 0, 0.1)',
             homeSectionDivider: 'border-gray-400/30',
             homeHeroGradientOverlay: `
-                radial-gradient(ellipse 1200px 800px at 50% 20%, rgba(2,62,138,0.08) 0%, transparent 80%),
-                repeating-linear-gradient(0deg, rgba(0,0,0,0.035) 0px, rgba(0,0,0,0.03) 2px, transparent 1px, transparent 6rem),
-                repeating-linear-gradient(90deg, rgba(0,0,0,0.035) 0px, rgba(0,0,0,0.03) 2px, transparent 1px, transparent 6rem)
+                radial-gradient(ellipse 75rem 50rem at 50% 20%, rgba(2,62,138,0.08) 0%, transparent 80%),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.035) 0rem, rgba(0,0,0,0.03) 0.125rem, transparent 0.063rem, transparent 6rem),
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.035) 0rem, rgba(0,0,0,0.03) 0.125rem, transparent 0.063rem, transparent 6rem)
             `,
             homeHeroOrbitalRingDesktop: `
-                radial-gradient(ellipse 900px 600px at 50% 15%, rgba(2,62,138,0.06) 0%, transparent 80%),
-                repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 1px, transparent 6rem),
-                repeating-linear-gradient(90deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 1px, transparent 6rem)
+                radial-gradient(ellipse 56.25rem 37.5rem at 50% 15%, rgba(2,62,138,0.06) 0%, transparent 80%),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0rem, rgba(0,0,0,0.02) 0.125rem, transparent 0.063rem, transparent 6rem),
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.02) 0rem, rgba(0,0,0,0.02) 0.125rem, transparent 0.063rem, transparent 6rem)
             `,
             homeHeroOrbitalRingMobile: `
-                radial-gradient(ellipse 600px 400px at 50% 10%, rgba(2,62,138,0.08) 0%, transparent 80%),
-                repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 1px, transparent 6rem),
-                repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 1px, transparent 6rem)
+                radial-gradient(ellipse 37.5rem 25rem at 50% 10%, rgba(2,62,138,0.08) 0%, transparent 80%),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0rem, rgba(0,0,0,0.03) 0.125rem, transparent 0.063rem, transparent 6rem),
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0rem, rgba(0,0,0,0.03) 0.125rem, transparent 0.063rem, transparent 6rem)
             `,
 
             // Experience Page Styles
@@ -155,8 +155,8 @@ export const themes: Record<string, Theme> = {
             educationCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
             educationBadgeBackground: 'bg-white',
             educationCertVerifyLink: 'text-blue-600 hover:text-blue-800',
-            educationCertHoverShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.08)',
-            educationCertLeaveShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            educationCertHoverShadow: '0 1.25rem 1.5rem -0.313rem rgba(0, 0, 0, 0.08)',
+            educationCertLeaveShadow: '0 0.25rem 0.375rem -0.063rem rgba(0, 0, 0, 0.1)',
             educationSkillBadge: 'bg-gray-100 text-gray-600',
 
 
@@ -198,11 +198,11 @@ export const themes: Record<string, Theme> = {
             homeHeroText: 'text-white',
             homeSubText: 'text-white/60',
             homeTechIconBackground: 'rgba(255, 255, 255, 0.05)',
-            homeTechIconBorder: '1px solid rgba(255, 255, 255, 0.1)',
+            homeTechIconBorder: '0.063rem solid rgba(255, 255, 255, 0.1)',
             homeSectionDivider: 'border-white/20',
-            homeHeroGradientOverlay: 'bg-[radial-gradient(ellipse_1200px_800px_at_50%_20%,_rgba(58,90,64,0.2)_0%,_rgba(58,90,64,0.15)_30%,_rgba(58,90,64,0.1)_50%,_transparent_70%)]',
-            homeHeroOrbitalRingDesktop: `radial-gradient(ellipse 900px 600px at 50% 15%, rgba(88,129,87,0.15) 0%, rgba(58,90,64,0.1) 30%, rgba(52,78,65,0.08) 50%, transparent 70%)`,
-            homeHeroOrbitalRingMobile: `radial-gradient(ellipse 600px 400px at 50% 10%, rgba(88,129,87,0.2) 0%, rgba(58,90,64,0.12) 40%, transparent 70%)`,
+            homeHeroGradientOverlay: 'bg-[radial-gradient(ellipse_75rem_50rem_at_50%_20%,_rgba(58,90,64,0.2)_0%,_rgba(58,90,64,0.15)_30%,_rgba(58,90,64,0.1)_50%,_transparent_70%)]',
+            homeHeroOrbitalRingDesktop: `radial-gradient(ellipse 56.25rem 37.5rem at 50% 15%, rgba(88,129,87,0.15) 0%, rgba(58,90,64,0.1) 30%, rgba(52,78,65,0.08) 50%, transparent 70%)`,
+            homeHeroOrbitalRingMobile: `radial-gradient(ellipse 37.5rem 25rem at 50% 10%, rgba(88,129,87,0.2) 0%, rgba(58,90,64,0.12) 40%, transparent 70%)`,
 
             // Experience Page Styles
             experienceDescriptionDivider: 'bg-gradient-to-r from-[#3a3a3c] via-[#555] to-[#3a3a3c]',
@@ -242,8 +242,8 @@ export const themes: Record<string, Theme> = {
             educationCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
             educationBadgeBackground: 'bg-white',
             educationCertVerifyLink: 'text-blue-400 hover:text-blue-300',
-            educationCertHoverShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
-            educationCertLeaveShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)',
+            educationCertHoverShadow: '0 1.5rem 3.125rem -0.75rem rgba(0, 0, 0, 0.7)',
+            educationCertLeaveShadow: '0 0.625rem 0.9rem -0.188rem rgba(0, 0, 0, 0.5)',
             educationSkillBadge: 'bg-white/10 text-gray-300',
 
 
