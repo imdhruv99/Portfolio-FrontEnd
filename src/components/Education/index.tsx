@@ -3,7 +3,7 @@
 import gsap from 'gsap';
 import Image from 'next/image';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import educationData from '../../constants/EducationData';
 import certificateData from '../../constants/CertificateData';
@@ -33,6 +33,20 @@ const Education = () => {
         educationRefs.current = Array(educationData.length).fill(null);
         certificateRefs.current = Array(certificateData.length).fill(null);
         setMounted(true);
+    }, []);
+
+    // sorting certificate data based on priority
+    const certificateDataByPriority = useMemo(() => {
+        const proficiencyLevelOrder = {
+            'Specialist': 0,
+            'Advanced': 1,
+            'Intermediate': 2,
+            'Beginner': 3
+        };
+
+        return [...certificateData].sort((a, b) =>
+            proficiencyLevelOrder[a.proficiencyLevel] - proficiencyLevelOrder[b.proficiencyLevel]
+        );
     }, []);
 
     useLayoutEffect(() => {
@@ -157,18 +171,6 @@ const Education = () => {
     if (!mounted) return null;
 
     const formatPeriod = (period: string) => period.replace(' - ', ' - ');
-
-    // sorting certificate data based on priority
-    const proficiencyLevelOrder = {
-        'Specialist': 0,
-        'Advanced': 1,
-        'Intermediate': 2,
-        'Beginner': 3
-    };
-
-    const certificateDataByPriority = [...certificateData].sort((a, b) => {
-        return proficiencyLevelOrder[a.proficiencyLevel] - proficiencyLevelOrder[b.proficiencyLevel];
-    });
 
     if (isLoading) {
         return (
