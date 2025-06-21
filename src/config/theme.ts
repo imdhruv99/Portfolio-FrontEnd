@@ -24,11 +24,12 @@ export interface ThemeColors {
     experienceDescriptionText: string;
     experienceListItemBorder: string;
     experienceTechIcon: string;
+    experienceLinkButton: string;
 
     // Project Page Styles
     projectPatternBackground: string;
     projectIndexText: string;
-    projecHeroText: string;
+    projectHeroText: string;
     projectCategoryText: string;
     projectMetaText: string;
     projectDescriptionText: string
@@ -50,6 +51,9 @@ export interface ThemeColors {
     educationCard: string,
     educationBadgeBackground: string;
     educationCertVerifyLink: string;
+    educationCertHoverShadow: string;
+    educationCertLeaveShadow: string;
+    educationSkillBadge: string;
 
     // Contact Page Styles
     contactIcon: string;
@@ -124,11 +128,12 @@ export const themes: Record<string, Theme> = {
             experienceDescriptionText: 'text-gray-700',
             experienceListItemBorder: 'border-gray-200/90',
             experienceTechIcon: 'text-gray-700',
+            experienceLinkButton: 'bg-white/80 hover:bg-white text-gray-700 border border-gray-200/50',
 
             // Project Page Styles
             projectPatternBackground: 'modern-pattern-light',
             projectIndexText: 'text-gray-900 opacity-80',
-            projecHeroText: 'text-gray-900',
+            projectHeroText: 'text-gray-900',
             projectCategoryText: 'text-gray-600',
             projectMetaText: 'text-gray-500',
             projectDescriptionText: 'text-gray-700',
@@ -150,6 +155,10 @@ export const themes: Record<string, Theme> = {
             educationCard: 'bg-gradient-to-br from-white/90 to-gray-50/90 border border-white/50',
             educationBadgeBackground: 'bg-white',
             educationCertVerifyLink: 'text-blue-600 hover:text-blue-800',
+            educationCertHoverShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.08)',
+            educationCertLeaveShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            educationSkillBadge: 'bg-gray-100 text-gray-600',
+
 
             // Contact Page Styles
             contactIcon: 'text-gray-400',
@@ -206,11 +215,12 @@ export const themes: Record<string, Theme> = {
             experienceDescriptionText: 'text-white/80',
             experienceListItemBorder: 'border-white/10',
             experienceTechIcon: 'text-white/80',
+            experienceLinkButton: 'bg-neutral-900 border border-neutral-700',
 
             // Project Page Styles
             projectPatternBackground: 'modern-pattern-dark',
             projectIndexText: 'text-white/50',
-            projecHeroText: 'text-white',
+            projectHeroText: 'text-white',
             projectCategoryText: 'text-white/70',
             projectMetaText: 'text-white/50',
             projectDescriptionText: 'text-white/80',
@@ -232,6 +242,10 @@ export const themes: Record<string, Theme> = {
             educationCard: 'bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10',
             educationBadgeBackground: 'bg-white',
             educationCertVerifyLink: 'text-blue-400 hover:text-blue-300',
+            educationCertHoverShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+            educationCertLeaveShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)',
+            educationSkillBadge: 'bg-white/10 text-gray-300',
+
 
             // Contact Page Styles
             contactIcon: 'text-white/30',
