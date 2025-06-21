@@ -419,7 +419,7 @@ const Projects = () => {
                     </div>
                 </div>
 
-                {/* Tech Stack - Top Right */}
+                {/* Tech Stack */}
                 <div
                     ref={techRef}
                     className="absolute top-4 sm:top-8 right-4 sm:right-8 z-20"
@@ -438,7 +438,7 @@ const Projects = () => {
                                 return (
                                     <div
                                         key={tech}
-                                        className={`${fontClasses.eireneSansBold} flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-full ${theme.projectTechBadge} backdrop-blur-md`}
+                                        className={`${fontClasses.eireneSansBold} flex items-center gap-1 sm:gap-1.5 text-[0.625rem] sm:text-xs font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-full ${theme.projectTechBadge} backdrop-blur-md`}
                                     >
                                         <Icon
                                             icon={icon}
@@ -460,10 +460,11 @@ const Projects = () => {
                     className="relative w-full max-w-6xl will-change-transform"
                 >
                     <div
-                        className={`relative rounded-3xl sm:rounded-[2rem] overflow-hidden ${theme.projectCard} ${theme.projectGradientOverlay}  backdrop-blur-xl shadow-2xl w-full`}
+                        className={`relative rounded-3xl sm:rounded-[2rem] overflow-hidden ${theme.projectCard} ${theme.projectGradientOverlay} backdrop-blur-xl shadow-2xl w-full`}
                     >
-                        <div className="grid grid-cols-1 md:grid-cols-2 w-full h-full min-h-[400px] lg:min-h-[480px]">
-                            {/*Text Content */}
+                        {/* Desktop Layout */}
+                        <div className="hidden md:grid md:grid-cols-2 w-full h-full min-h-[25rem] lg:min-h-[30rem]">
+                            {/* Text Content */}
                             <div className="p-6 sm:p-8 lg:p-12 flex flex-col justify-between">
                                 {/* Year Badge */}
                                 <div className="flex justify-between items-start">
@@ -508,6 +509,54 @@ const Projects = () => {
                                     </div>
                                 </div>
                             )}
+                        </div>
+
+                        {/* Mobile Layout */}
+                        <div className="md:hidden flex flex-col w-full min-h-[34.37rem]">
+                            {/* Year Badge */}
+                            <div className="p-6 pb-0">
+                                <div
+                                    className={`${fontClasses.eireneSans} inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium ${theme.projectYearBadge} backdrop-blur-md`}
+                                >
+                                    {projectToDisplay.yearOfDevelopment}
+                                </div>
+                            </div>
+
+                            {/* Image Section */}
+                            <div className="flex-1 flex items-center justify-center p-6 py-8">
+                                {projectToDisplay.image ? (
+                                    <div className="relative w-[70%] h-[17.5rem] max-w-[18.75rem]">
+                                        <Image
+                                            src={
+                                                projectToDisplay.image as string
+                                            }
+                                            alt={projectToDisplay.title}
+                                            fill
+                                            className="object-contain rounded-2xl"
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="w-full h-[17.5rem] flex items-center justify-center">
+                                        {/* Empty space to maintain layout structure */}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Text Content */}
+                            <div className="p-6 pt-0 pb-8">
+                                <div className="space-y-4">
+                                    <h1
+                                        className={`${fontClasses.classyVogue} text-3xl sm:text-4xl font-black tracking-tight ${theme.projectHeroText} leading-[0.85] break-words`}
+                                    >
+                                        {projectToDisplay.title.toUpperCase()}
+                                    </h1>
+                                    <p
+                                        className={`${fontClasses.eireneSans} text-sm leading-relaxed ${theme.projectDescriptionText} opacity-80`}
+                                    >
+                                        {projectToDisplay.description}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
