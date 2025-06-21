@@ -43,8 +43,11 @@ const Projects = () => {
     const linksRef = useRef<HTMLDivElement>(null);
     const descRef = useRef<HTMLParagraphElement>(null);
     const scrollLocked = useRef(false);
-    const touchStartX = useRef(0);
-    const touchEndX = useRef(0);
+
+    // Touch handling for mobile swipe
+    const touchStartY = useRef(0);
+    const touchEndY = useRef(0);
+
     const dotsRef = useRef<HTMLDivElement>(null);
     const rotationTargetX = useRef(0);
     const rotationTargetY = useRef(0);
@@ -70,40 +73,43 @@ const Projects = () => {
             onComplete: () => {
                 setCurrentProject(newIndex);
                 scrollLocked.current = false;
+                gsap.set(cardElement, { y: '0%', opacity: 1 });
             },
         });
 
+        // Current card animating out
         if (direction === 'next') {
             tl.to(cardElement, {
-                y: '-=100%',
+                y: '-100%',
                 opacity: 0,
                 duration: 0.5,
                 ease: 'power2.in',
             });
         } else {
             tl.to(cardElement, {
-                y: '+=100%',
+                y: '100%',
                 opacity: 0,
                 duration: 0.5,
                 ease: 'power2.in',
             });
         }
 
+        // Set up the new project to enter
         tl.add(() => {
             setDisplayProject(projectData[newIndex]);
-            setTimeout(() => setCurrentProject(newIndex), 50);
             gsap.set(cardElement, {
                 y: direction === 'next' ? '100%' : '-100%',
                 opacity: 0,
             });
         });
 
+        // New card animating in
         tl.to(cardElement, {
             y: '0%',
             opacity: 1,
             duration: 0.6,
             ease: 'power2.out',
-        });
+        }, "<");
 
         tl.to(cardElement, { rotateX: 0, rotateY: 0, duration: 0.4, ease: 'power2.out' }, "<0.3");
     }, []);
@@ -173,26 +179,43 @@ const Projects = () => {
         });
     }, [isMobile, deviceMotionPermissionGranted]);
 
-    const handleTouchStart = (e: React.TouchEvent) => {
-        touchStartX.current = e.targetTouches[0].clientX;
-    };
+    // Mobile touch handlers
+    const handleTouchStart = useCallback((e: React.TouchEvent) => {
+        touchStartY.current = e.touches[0].clientY;
+        touchEndY.current = e.touches[0].clientY;
+    }, []);
 
-    const handleTouchMove = (e: React.TouchEvent) => {
-        touchEndX.current = e.targetTouches[0].clientX;
-    };
+    const handleTouchMove = useCallback((e: React.TouchEvent) => {
+        // Prevent default scrolling behavior during swipe
+        if (Math.abs(touchStartY.current - e.touches[0].clientY) > 10) {
+            e.preventDefault();
+        }
+        touchEndY.current = e.touches[0].clientY;
+    }, []);
 
-    const handleTouchEnd = () => {
+    const handleTouchEnd = useCallback(() => {
         if (scrollLocked.current) return;
-        const swipeDistance = touchStartX.current - touchEndX.current;
-        if (Math.abs(swipeDistance) > 50) {
-            const direction = swipeDistance > 0 ? 'next' : 'prev';
-            const newIndex = direction === 'next'
-                ? (currentProject + 1) % projectData.length
-                : (currentProject - 1 + projectData.length) % projectData.length;
+
+        const swipeDistanceY = touchStartY.current - touchEndY.current;
+        const swipeThreshold = 50;
+
+        if (Math.abs(swipeDistanceY) > swipeThreshold) {
+            const direction = swipeDistanceY > 0 ? 'next' : 'prev';
+
+            let newIndex;
+            if (direction === 'next') {
+                newIndex = (currentProject + 1) % projectData.length;
+            } else {
+                newIndex = (currentProject - 1 + projectData.length) % projectData.length;
+            }
 
             animateProjectChange(direction, newIndex);
         }
-    };
+
+        // Reset touch positions
+        touchStartY.current = 0;
+        touchEndY.current = 0;
+    }, [currentProject, animateProjectChange]);
 
     const handleScroll = useCallback((e: WheelEvent) => {
         if (scrollLocked.current || isMobile || Math.abs(e.deltaY) < 30) return;
@@ -218,6 +241,7 @@ const Projects = () => {
                 'requestPermission' in DeviceMotionEvent &&
                 typeof DeviceMotionEvent.requestPermission === 'function'
             ) {
+                // Permission will be requested via button
             } else {
                 setDeviceMotionPermissionGranted(true);
                 window.addEventListener('deviceorientation', handleDeviceOrientation);
@@ -241,7 +265,7 @@ const Projects = () => {
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({ defaults: { ease: 'power2.out', force3D: true } });
-            if (indexRef.current && cardRef.current && dotsRef.current) {
+            if (indexRef.current && cardRef.current) {
                 tl.from(indexRef.current, { opacity: 0, x: -30, duration: 0.5 });
                 tl.from(cardRef.current, {
                     opacity: 0,
@@ -249,16 +273,20 @@ const Projects = () => {
                     scale: 0.97,
                     duration: 0.7,
                 }, '-=0.3');
-                tl.from(dotsRef.current, { x: -50, opacity: 0, duration: 0.8 }, '<0.1');
+                if (!isMobile && dotsRef.current) {
+                    tl.from(dotsRef.current, { x: -50, opacity: 0, duration: 0.8 }, '<0.1');
+                }
             }
         });
         return () => ctx.revert();
-    }, []);
+    }, [isMobile]);
 
     useEffect(() => {
         if (!isMobile) {
             window.addEventListener('wheel', handleScroll, { passive: true });
             return () => window.removeEventListener('wheel', handleScroll);
+        } else {
+            window.removeEventListener('wheel', handleScroll);
         }
     }, [handleScroll, isMobile]);
 
@@ -286,10 +314,8 @@ const Projects = () => {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            style={{ touchAction: 'pan-y' }}
         >
-            {/* Background Pattern */}
-            <div className={`fixed inset-0 ${theme.projectPatternBackground}`} />
-
             <div
                 className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-8"
                 onMouseMove={!isMobile ? handleMouseMove : undefined}
@@ -361,14 +387,14 @@ const Projects = () => {
 
                         {/* Content Area */}
                         <div className="absolute inset-0 z-20 flex flex-col justify-between p-6 sm:p-8 lg:p-12">
-                            {/* Top Area - Year Badge */}
+                            {/* Year Badge */}
                             <div className="flex justify-between items-start">
                                 <div className={`${fontClasses.eireneSans} inline-flex items-center px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.projectYearBadge} backdrop-blur-md`}>
                                     {projectToDisplay.yearOfDevelopment}
                                 </div>
                             </div>
 
-                            {/* Bottom Area - Main Content */}
+                            {/* Main Content */}
                             <div className="space-y-4 sm:space-y-6">
                                 {/* Project Title */}
                                 <div className="space-y-2 sm:space-y-3">
@@ -411,15 +437,30 @@ const Projects = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Mobile swipe indicator*/}
+                {isMobile && (
+                    <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20">
+                        <div className={`flex flex-col items-center gap-2 ${theme.projectIndexText} opacity-40`}>
+                            <div className="w-6 h-10 border-2 border-current rounded-full flex justify-center">
+                                <div className="w-1 h-3 bg-current rounded-full mt-2 animate-bounce"></div>
+                            </div>
+                            <span className={`${fontClasses.eireneSans} text-xs`}>Swipe</span>
+                        </div>
+                    </div>
+                )}
             </div>
 
-            <NavigationDots
-                currentIndex={currentProject}
-                total={projectData.length}
-                isDark={isDarkTheme}
-                setCurrentProject={setCurrentProject}
-                isMobile={isMobile}
-            />
+            {/* Navigation Dots */}
+            {!isMobile && (
+                <NavigationDots
+                    currentIndex={currentProject}
+                    total={projectData.length}
+                    isDark={isDarkTheme}
+                    setCurrentProject={setCurrentProject}
+                    isMobile={isMobile}
+                />
+            )}
         </div>
     );
 };

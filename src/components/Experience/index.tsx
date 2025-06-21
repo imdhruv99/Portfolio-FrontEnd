@@ -322,7 +322,7 @@ const ExpandedExperienceContent = ({
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
                 <div className="flex flex-col space-y-6">
                     <h3
-                        className={`${fontClasses.classyVogue} text-3xl sm:text-4xl ${theme.experienceText}`}
+                        className={`${fontClasses.classyVogue} text-2xl sm:text-2xl ${theme.experienceText}`}
                     >
                         {experience.designation}
                     </h3>
